@@ -8,10 +8,10 @@ body {
 h1 {
   font-size: 120%;
   font-weight: bolder;
-  margin-bottom: 60px;
+  margin: 20px;
   text-align: center;
   text-transform: uppercase;
-  color: gray;
+  color: #aaa;
   letter-spacing: 5px;
 }
 
@@ -21,12 +21,44 @@ h2 {
 
 #container {
   width: 1020px;
-  margin: 0 auto;
+  margin: 60px auto;
 }
+
+.calendar {
+  list-style-type: none;
+  margin: 40px 0;
+  padding: 0;
+  text-align: center;
+}
+
+.calendar-day {
+  display: inline-block;
+  padding: 0;
+  vertical-align: middle;
+}
+
+.calendar-day a {
+  display: block;
+  padding: 5px 10px;
+  color: black;
+  text-decoration: underline;
+}
+
+.calendar-day a:hover {
+  color: gray;
+}
+
+.calendar-day.active a {
+  text-decoration: none;
+  cursor: default;
+  font-weight: bolder;
+}
+
+.calendar-day.active a:hover { color: black; }
 
 .list {
   list-style-type: none;
-  margin: -30px;
+  margin: 30px -30px;
   padding: 0;
 }
 
@@ -53,7 +85,7 @@ h2 {
 
 .load-more-container {
   text-align: center;
-  margin: 60px 0;
+  margin: 30px 0;
 }
 
 .load-more-button {

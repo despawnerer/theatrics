@@ -1,4 +1,4 @@
-import * as request from 'superagent';
+import request from 'superagent';
 
 import {capfirst} from './utils';
 
@@ -6,7 +6,7 @@ import {capfirst} from './utils';
 const API_PREFIX = 'http://kudago.com/public-api/v1';
 
 
-export class Feed {
+export default class Feed {
   constructor(container, path, query) {
     this.container = container;
     this.path = path;
@@ -40,6 +40,13 @@ export class Feed {
     thisRequest
       .set('Accept', 'application/json')
       .end(this.onLoaded.bind(this));
+  }
+
+  reset() {
+    this.nextURL = null;
+    this.listContainer.innerHTML = '';
+    this.listContainer.setAttribute('hidden', 'hidden');
+    this.loadMoreContainer.setAttribute('hidden', 'hidden');
   }
 
   onLoaded(err, res) {

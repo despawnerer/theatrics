@@ -6,6 +6,10 @@
     "watch": "gulp watch"
   },
   "dependencies": {
+    "add-class": "^1.0.3",
+    "extend": "^3.0.0",
+    "moment": "^2.10.6",
+    "remove-class": "^1.0.0",
     "superagent": "^1.4.0"
   },
   "devDependencies": {

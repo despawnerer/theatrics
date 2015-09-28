@@ -13,7 +13,7 @@ body {
 
 #header h1 {
   display: inline;
-  font-size: 120%;
+  font-size: 140%;
   font-weight: bolder;
   text-transform: uppercase;
   color: #aaa;
@@ -22,7 +22,9 @@ body {
 }
 
 #header .city {
-  padding-left: 10px;
+  display: inline-block;
+  vertical-align: middle;
+  padding-left: 13px;
   margin-left: 5px;
   border-left: 1px solid silver;
 }

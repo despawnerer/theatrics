@@ -5,14 +5,27 @@ body {
   font-family: Times, sans-serif;
 }
 
-h1 {
+#header {
+  color: #aaa;
+  text-align: center;
+  margin: 20px;
+}
+
+#header h1 {
+  display: inline;
   font-size: 120%;
   font-weight: bolder;
-  margin: 20px;
-  text-align: center;
   text-transform: uppercase;
   color: #aaa;
   letter-spacing: 5px;
+  vertical-align: middle;
+}
+
+#header .city {
+  font-size: 90%;
+  padding-left: 10px;
+  margin-left: 5px;
+  border-left: 1px solid silver;
 }
 
 h2 {

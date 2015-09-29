@@ -10,8 +10,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
     {
         location: 'spb',
         categories: 'theater',
-        fields: 'place,description,dates,images,tagline,id,age_restriction,price,title',
-        expand: 'place',
+        fields: 'place,dates,images,tagline,id,age_restriction,title',
+        expand: 'place,images',
     });
 
   let calendarElement = document.querySelector('.calendar');

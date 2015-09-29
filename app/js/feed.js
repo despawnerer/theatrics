@@ -59,12 +59,12 @@ export default class Feed {
 
     let itemList = res.body.results;
     for (let item of itemList) {
-      let firstImage = item.images[0].image;
+      let firstImage = item.images[0];
       let li = document.createElement('li');
       li.setAttribute('class', "list-item");
       li.innerHTML = `
         <div class="list-image-container">
-          <img src="${firstImage}" class="list-image"/>
+          <img src="${firstImage.thumbnails['640x384']}" class="list-image"/>
         </div>
         <h2>${capfirst(item.title)}</h2>
         <div>${item.place ? capfirst(item.place.title) : ''}</div>`;

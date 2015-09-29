@@ -7,18 +7,25 @@ const API_PREFIX = 'http://kudago.com/public-api/v1';
 
 
 export default class Feed {
-  constructor(container, path, query) {
-    this.container = container;
+  constructor(element, path, query) {
+    this.element = element;
     this.path = path;
     this.query = query;
 
     this.nextURL = null;
 
-    this.listContainer = this.container.querySelector('.list');
-    this.loadMoreContainer = this.container.querySelector('.load-more-container');
-    this.loadMoreButton = this.container.querySelector('.load-more-button');
+    this.listContainer = this.element.querySelector('.list');
+    this.loadMoreContainer = this.element.querySelector('.load-more-container');
+    this.loadMoreButton = this.element.querySelector('.load-more-button');
 
     this.loadMoreButton.addEventListener('click', this.onLoadMoreClicked.bind(this));
+
+    this.query.on('update', this.onQueryUpdate.bind(this));
+  }
+
+  onQueryUpdate() {
+    this.reset();
+    this.loadMore();
   }
 
   onLoadMoreClicked(event) {
@@ -34,7 +41,7 @@ export default class Feed {
     } else {
       thisRequest = request
         .get(API_PREFIX + this.path)
-        .query(this.query);
+        .query(this.query.get());
     }
 
     thisRequest

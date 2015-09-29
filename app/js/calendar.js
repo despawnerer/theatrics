@@ -9,24 +9,22 @@ const DAYS = 14;
 
 
 export default class Calendar {
-  constructor(container, feed) {
-    this.container = container;
-    this.feed = feed;
-
-    this.baseQuery = this.feed.query;
+  constructor(element, query) {
+    this.element = element;
+    this.query = query;
 
     let anyDateElement = this.buildAnyDateElement();
     addClass(anyDateElement, 'active');
-    this.container.appendChild(anyDateElement);
+    this.element.appendChild(anyDateElement);
 
     let today = moment().startOf('day');
     for (let n = 0; n < DAYS; n++) {
       let day = today.clone().add(n, 'days');
       let element = this.buildDayElement(day);
-      this.container.appendChild(element);
+      this.element.appendChild(element);
     }
 
-    this.container.addEventListener('click', this.onClicked.bind(this));
+    this.element.addEventListener('click', this.onClicked.bind(this));
   }
 
   // event handlers
@@ -43,36 +41,32 @@ export default class Calendar {
     let dateString = dayElement.getAttribute('data-date');
     if (dateString) {
       let day = moment(dateString);
-      this.load(this.getDayQuery(day))
+      this.loadDay(day);
     } else {
-      this.load(this.getAnyDateQuery())
+      this.loadAnyDay();
     }
 
     removeClass(
-      this.container.querySelector('.active'),
+      this.element.querySelector('.active'),
       'active');
     addClass(
       dayElement, 'active');
   }
 
-  load(query) {
-    let newQuery = extend({}, this.baseQuery, query);
-    this.feed.reset();
-    this.feed.query = newQuery;
-    this.feed.loadMore();
-  }
-
-  getDayQuery(day) {
-    return {
+  loadDay(day) {
+    this.query.update({
       actual_since: day.unix(),
       actual_until: day.clone().add(1, 'days').unix(),
-    }
+    });
   }
 
-  getAnyDateQuery() {
-    return {
-      actual_since: moment().unix(),
-    }
+  loadAnyDay() {
+    this.query.begin()
+      .remove('actual_until')
+      .update({
+        actual_since: moment().unix()
+      })
+      .commit();
   }
 
   // elements

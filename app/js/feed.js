@@ -73,7 +73,7 @@ export default class Feed {
         <div class="list-image-container">
           <img src="${firstImage.thumbnails['640x384']}" class="list-image"/>
         </div>
-        <h2>${capfirst(item.title)}</h2>
+        <h2>${capfirst(item.short_title || item.title)}</h2>
         <div>${item.place ? capfirst(item.place.title) : ''}</div>`;
       this.listContainer.appendChild(li);
     }

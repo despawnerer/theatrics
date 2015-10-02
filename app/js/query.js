@@ -39,7 +39,7 @@ export default class Query {
   }
 
   remove(fieldList) {
-    for (field of fieldList) {
+    for (let field of fieldList) {
       delete fieldList[field];
     }
     this._emitUpdate();

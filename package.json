@@ -19,7 +19,6 @@
     "browserify": "^11.2.0",
     "gulp": "^3.9.0",
     "gulp-postcss": "^6.0.0",
-    "gulp-sourcemaps": "^1.6.0",
     "gulp-watch": "^4.3.5",
     "postcss": "^5.0.8",
     "postcss-import": "^7.0.0",

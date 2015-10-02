@@ -1,6 +1,5 @@
 var gulp = require('gulp');
 var postcss = require('gulp-postcss');
-var sourcemaps = require('gulp-sourcemaps');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var browserify = require('browserify');
@@ -41,8 +40,6 @@ function buildBrowserify(options) {
 		return b.bundle()
 			.pipe(source(options.entry))
 			.pipe(buffer())
-			.pipe(sourcemaps.init({loadMaps: true}))
-			.pipe(sourcemaps.write('.'))
 			.pipe(gulp.dest('app/build'));
 	};
 
@@ -51,10 +48,7 @@ function buildBrowserify(options) {
 	}
 
 	b.on('update', buildBundle);
-
-	b.transform(babelify, {
-		sourceMaps: 'both',
-	});
+	b.transform(babelify);
 
 	return buildBundle();
 }

@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
   let calendarElement = document.querySelector('.calendar');
   let calendar = new Calendar(calendarElement, query);
+  calendar.loadAnyDay();
 
   let feedContainer = document.querySelector('.feed-container');
   let feed = new Feed(feedContainer, '/events/', query);

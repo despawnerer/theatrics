@@ -1,6 +1,7 @@
 import Query from './query';
 import Feed from './feed';
 import Calendar from './calendar';
+import CityChooser from './city-chooser';
 
 
 document.addEventListener('DOMContentLoaded', function(event) {
@@ -13,12 +14,15 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
   query.lock();
 
-  let calendarElement = document.querySelector('.calendar');
-  let calendar = new Calendar(calendarElement, query);
+  const calendarElement = document.querySelector('.calendar');
+  const calendar = new Calendar(calendarElement, query);
   calendar.loadAnyDay();
 
-  let feedContainer = document.querySelector('.feed-container');
-  let feed = new Feed(feedContainer, '/events/', query);
+  const feedContainer = document.querySelector('.feed-container');
+  const feed = new Feed(feedContainer, '/events/', query);
+
+  const cityContainer = document.querySelector('.city');
+  const cityChooser = new CityChooser(cityContainer, query);
 
   query.apply();
 });

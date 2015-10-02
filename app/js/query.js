@@ -38,9 +38,9 @@ export default class Query {
     return this;
   }
 
-  remove(fieldList) {
+  remove(...fieldList) {
     for (let field of fieldList) {
-      delete fieldList[field];
+      delete this._query[field];
     }
     this._maybeNotify();
     return this;

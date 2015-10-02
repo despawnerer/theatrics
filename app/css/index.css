@@ -31,6 +31,7 @@ body {
 
 h2 {
   font-size: 140%;
+  margin: 20px 0 10px 0;
 }
 
 #container {
@@ -95,6 +96,16 @@ h2 {
 .list-image {
   flex-shrink: 0;
   max-height: 100%;
+}
+
+.tagline {
+  margin: 10px 0;
+}
+
+.place {
+  margin-top: 10px;
+  font-size: 14px;
+  color: gray;
 }
 
 .load-more-container {

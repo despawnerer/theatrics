@@ -6,21 +6,21 @@ export default class Query {
 	constructor(query) {
 		this._query = query;
 		this._emitter = new Emitter();
-    this._blocked = false;
+    this._locked = 0;
 	}
 
   get() {
     return this._query;
   }
 
-  begin() {
-    this._blocked = true;
+  lock() {
+    this._locked += 1;
     return this;
   }
 
-  commit() {
-    this._blocked = false;
-    this._emitUpdate()
+  apply() {
+    this._locked -= 1;
+    this._maybeNotify();
     return this;
   }
 
@@ -28,13 +28,13 @@ export default class Query {
 
   replace(query) {
     this._query = query;
-    this._emitUpdate();
+    this._maybeNotify();
     return this;
   }
 
   update(query) {
     extend(this._query, query);
-    this._emitUpdate();
+    this._maybeNotify();
     return this;
   }
 
@@ -42,12 +42,12 @@ export default class Query {
     for (let field of fieldList) {
       delete fieldList[field];
     }
-    this._emitUpdate();
+    this._maybeNotify();
     return this;
   }
 
-  _emitUpdate() {
-    if (!this._blocked) {
+  _maybeNotify() {
+    if (this._locked == 0) {
       this._emitter.emit('update');
     }
   }

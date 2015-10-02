@@ -61,12 +61,12 @@ export default class Calendar {
   }
 
   loadAnyDay() {
-    this.query.begin()
+    this.query.lock()
       .remove('actual_until')
       .update({
         actual_since: moment().unix()
       })
-      .commit();
+      .apply();
   }
 
   // elements

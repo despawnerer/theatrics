@@ -11,11 +11,13 @@ document.addEventListener('DOMContentLoaded', function(event) {
     expand: 'place,images',
   });
 
+  query.lock();
+
   let calendarElement = document.querySelector('.calendar');
   let calendar = new Calendar(calendarElement, query);
 
   let feedContainer = document.querySelector('.feed-container');
   let feed = new Feed(feedContainer, '/events/', query);
 
-  feed.loadMore();
+  query.apply();
 });

@@ -75,7 +75,7 @@ export default class Feed {
     li.setAttribute('class', "list-item");
     li.innerHTML = `
       <div class="list-image-container">
-        <img src="${firstImage.thumbnails['640x384']}" class="list-image"/>
+        <img data-src="${firstImage.thumbnails['640x384']}" class="list-image lazyload"/>
       </div>
       <h2>${capfirst(item.short_title || item.title)}</h2>
       <div class="tagline">${item.tagline}</div>

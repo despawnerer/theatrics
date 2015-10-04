@@ -1,4 +1,5 @@
 import ru from 'moment/locale/ru';
+import lazysizes from 'lazysizes';
 
 import Query from './query';
 import Feed from './feed';

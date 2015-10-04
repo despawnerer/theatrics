@@ -1,3 +1,5 @@
+import ru from 'moment/locale/ru';
+
 import Query from './query';
 import Feed from './feed';
 import Calendar from './calendar';

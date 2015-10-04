@@ -62,20 +62,24 @@ export default class Feed {
     }
 
     const itemList = response.data.results;
-    for (let item of itemList) {
-      let firstImage = item.images[0];
-      let li = document.createElement('li');
-      li.setAttribute('class', "list-item");
-      li.innerHTML = `
-        <div class="list-image-container">
-          <img src="${firstImage.thumbnails['640x384']}" class="list-image"/>
-        </div>
-        <h2>${capfirst(item.short_title || item.title)}</h2>
-        <div class="tagline">${item.tagline}</div>
-        <div class="place">${item.place ? capfirst(item.place.short_title || item.place.title) : ''}</div>`;
-      this.listContainer.appendChild(li);
-    }
-
+    itemList.forEach(item => {
+      const element = this.buildItemElement(item);
+      this.listContainer.appendChild(element);
+    });
     this.listContainer.removeAttribute('hidden');
+  }
+
+  buildItemElement(item) {
+    const firstImage = item.images[0];
+    const li = document.createElement('li');
+    li.setAttribute('class', "list-item");
+    li.innerHTML = `
+      <div class="list-image-container">
+        <img src="${firstImage.thumbnails['640x384']}" class="list-image"/>
+      </div>
+      <h2>${capfirst(item.short_title || item.title)}</h2>
+      <div class="tagline">${item.tagline}</div>
+      <div class="place">${item.place ? capfirst(item.place.short_title || item.place.title) : ''}</div>`;
+    return li;
   }
 }

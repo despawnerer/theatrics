@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
   let query = new Query({
     location: 'spb',
     categories: 'theater',
-    fields: 'place,dates,images,tagline,id,age_restriction,title,short_title',
+    fields: 'place,images,tagline,id,age_restriction,title,short_title',
     expand: 'place,images',
   });
 

@@ -1,5 +1,4 @@
 import moment from 'moment';
-import ru from 'moment/locale/ru';
 import addClass from 'add-class';
 import removeClass from 'remove-class';
 import extend from 'extend';
@@ -74,7 +73,7 @@ export default class Calendar {
   buildAnyDateElement() {
     let element = document.createElement('li');
     element.setAttribute('class', 'calendar-day');
-    element.innerHTML = '<a href="#">Всё</a>'
+    element.innerHTML = '<a href="#">Самое</a>'
     return element;
   }
 

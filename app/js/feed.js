@@ -1,9 +1,6 @@
-import request from 'superagent';
+import axios from 'axios';
 
-import {capfirst} from './utils';
-
-
-const API_PREFIX = 'http://kudago.com/public-api/v1';
+import {capfirst, buildAPIURL} from './utils';
 
 
 export default class Feed {
@@ -34,19 +31,19 @@ export default class Feed {
   }
 
   loadMore() {
-    let thisRequest;
-
     if (this.nextURL) {
-      thisRequest = request.get(this.nextURL);
+      return axios
+        .get(this.nextURL)
+        .then(this.onLoaded.bind(this));
     } else {
-      thisRequest = request
-        .get(API_PREFIX + this.path)
-        .query(this.query.get());
+      return axios
+        .get(
+          buildAPIURL(this.path),
+          {
+            params: this.query.get()
+          })
+        .then(this.onLoaded.bind(this));
     }
-
-    thisRequest
-      .set('Accept', 'application/json')
-      .end(this.onLoaded.bind(this));
   }
 
   reset() {
@@ -56,8 +53,8 @@ export default class Feed {
     this.loadMoreContainer.setAttribute('hidden', 'hidden');
   }
 
-  onLoaded(err, res) {
-    this.nextURL = res.body.next;
+  onLoaded(response) {
+    this.nextURL = response.data.next;
     if (this.nextURL) {
       this.loadMoreContainer.removeAttribute('hidden');
     } else {

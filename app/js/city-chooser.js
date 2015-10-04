@@ -1,7 +1,6 @@
-import request from 'superagent';
+import axios from 'axios';
 
-
-const API_PREFIX = 'http://kudago.com/public-api/v1';
+import {buildAPIURL} from './utils';
 
 
 export default class CityChooser {
@@ -22,20 +21,22 @@ export default class CityChooser {
   }
 
   loadCityList() {
-    request
-      .get(API_PREFIX + '/locations/')
-      .query({
-        lang: 'ru',
-        fields: 'name,slug,timezone',
-        order_by: 'name'
-      })
-      .set('Accept', 'application/json')
-      .end(this.onLoaded.bind(this));
+    return axios
+      .get(
+        buildAPIURL('/locations/'),
+        {
+          params: {
+            lang: 'ru',
+            fields: 'name,slug,timezone',
+            order_by: 'name'
+          }
+        })
+      .then(this.onLoaded.bind(this));
   }
 
-  onLoaded(err, res) {
+  onLoaded(response) {
     this.select.innerHTML = '';
-    for (let location of res.body) {
+    for (let location of response.data) {
       let option = document.createElement('option');
       option.value = location.slug;
       option.textContent = location.name;

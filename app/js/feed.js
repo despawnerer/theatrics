@@ -61,7 +61,7 @@ export default class Feed {
       this.loadMoreContainer.setAttribute('hidden', 'hidden');
     }
 
-    let itemList = res.body.results;
+    const itemList = response.data.results;
     for (let item of itemList) {
       let firstImage = item.images[0];
       let li = document.createElement('li');

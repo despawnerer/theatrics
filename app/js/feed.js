@@ -77,7 +77,7 @@ export default class Feed {
       <div class="list-image-container">
         <img data-src="${firstImage.thumbnails['640x384']}" class="list-image lazyload"/>
       </div>
-      <h2>${capfirst(item.short_title || item.title)}</h2>
+      <h2 class="item-header">${capfirst(item.short_title || item.title)}</h2>
       <div class="tagline">${item.tagline}</div>
       <div class="place">${item.place ? capfirst(item.place.short_title || item.place.title) : ''}</div>`;
     return li;

@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
   const feedContainer = document.querySelector('.feed-container');
   const feed = new Feed(feedContainer, '/events/', query);
 
-  const cityContainer = document.querySelector('.city');
+  const cityContainer = document.querySelector('#city');
   const cityChooser = new CityChooser(cityContainer, query);
 
   query.apply();

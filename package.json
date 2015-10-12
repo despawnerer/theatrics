@@ -8,6 +8,7 @@
   "dependencies": {
     "add-class": "^1.0.3",
     "axios": "^0.7.0",
+    "events": "^1.1.0",
     "extend": "^3.0.0",
     "lazysizes": "^1.2.2",
     "moment": "^2.10.6",

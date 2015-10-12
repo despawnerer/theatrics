@@ -5,11 +5,11 @@ var buffer = require('vinyl-buffer');
 var browserify = require('browserify');
 var babelify = require('babelify');
 var watchify = require('watchify');
-var gutil = require('gulp-util');
+var util = require('gulp-util');
 
 
 function logError(e) {
-  gutil.log(e.message);
+  util.log(util.colors.red('Error'), e.message);
 }
 
 
@@ -68,7 +68,7 @@ gulp.task('build-js', function () {
 });
 
 gulp.task('watch-js', function () {
-  return buildBrowserify({
+  buildBrowserify({
     entry: 'index.js',
     watch: true
   });

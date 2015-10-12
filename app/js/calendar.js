@@ -1,5 +1,4 @@
 import moment from 'moment';
-import extend from 'extend';
 
 
 const DAYS = 14;

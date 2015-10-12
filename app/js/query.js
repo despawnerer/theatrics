@@ -1,11 +1,12 @@
-import Emitter from 'tiny-emitter';
 import extend from 'extend';
 
+import {EventEmitter} from 'events';
 
-export default class Query {
+
+export default class Query extends EventEmitter {
 	constructor(query) {
+    super();
 		this._query = query;
-		this._emitter = new Emitter();
     this._locked = 0;
 	}
 
@@ -48,17 +49,7 @@ export default class Query {
 
   _maybeNotify() {
     if (this._locked == 0) {
-      this._emitter.emit('update');
+      this.emit('update');
     }
   }
-
-  // events
-
-	on(event, listener) {
-		this._emitter.on(event, listener);
-	}
-
-	off(event, listener) {
-		this._emitter.off(event, listener);
-	}
 }

@@ -5,73 +5,81 @@ var buffer = require('vinyl-buffer');
 var browserify = require('browserify');
 var babelify = require('babelify');
 var watchify = require('watchify');
+var gutil = require('gulp-util');
+
+
+function logError(e) {
+  gutil.log(e.message);
+}
 
 
 /* CSS */
 
 gulp.task('build-css', function() {
-	return gulp.src('app/css/**/*.css')
-		.pipe(postcss([
-			require('postcss-import')(),
-			require('autoprefixer')()
-		]))
-		.pipe(gulp.dest('app/build'));
+  return gulp.src('app/css/**/*.css')
+    .on('error', logError)
+    .pipe(postcss([
+      require('postcss-import')(),
+      require('autoprefixer')()
+    ]))
+    .pipe(gulp.dest('app/build'));
 });
 
 
 gulp.task('watch-css', function () {
-	gulp.start(['build-css']);
-	gulp.watch('app/css/**/*.css', ['build-css']);
+  gulp.start(['build-css']);
+  gulp.watch('app/css/**/*.css', ['build-css']);
 });
 
 
 /* JS */
 
 function buildBrowserify(options) {
-	var b = browserify({
-		entries: 'app/js/' + options.entry,
-		debug: true,
-		//these properties are needed for watchify
-		cache: {},
-		packageCache: {}
-	});
+  var b = browserify({
+    entries: 'app/js/' + options.entry,
+    debug: true,
+    //these properties are needed for watchify
+    cache: {},
+    packageCache: {}
+  });
 
-	var buildBundle = function() {
-		return b.bundle()
-			.pipe(source(options.entry))
-			.pipe(buffer())
-			.pipe(gulp.dest('app/build'));
-	};
+  var buildBundle = function() {
+    return b.bundle()
+      .on('error', logError)
+      .pipe(source(options.entry))
+      .pipe(buffer())
+      .pipe(gulp.dest('app/build'));
+  };
 
-	if (options.watch) {
-		b = watchify(b);
-	}
+  if (options.watch) {
+    b = watchify(b);
+  }
 
-	b.on('update', buildBundle);
-	b.transform(babelify);
+  b.on('update', buildBundle);
+  b.transform(babelify);
 
-	return buildBundle();
+  return buildBundle();
 }
 
 gulp.task('build-js', function () {
-	return buildBrowserify({
-		entry: 'index.js',
-	});
+  return buildBrowserify({
+    entry: 'index.js',
+  });
 });
 
 gulp.task('watch-js', function () {
-	buildBrowserify({
-		entry: 'index.js',
-		watch: true
-	});
+  return buildBrowserify({
+    entry: 'index.js',
+    watch: true
+  });
 });
 
 
 /* Big tasks */
 
 gulp.task('watch', function () {
-	gulp.start('watch-css');
-	gulp.start('watch-js');
+  gulp.start('watch-css');
+  gulp.start('watch-js');
 });
 
 gulp.task('build', ['build-css', 'build-js']);

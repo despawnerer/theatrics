@@ -12,7 +12,7 @@
     "extend": "^3.0.0",
     "lazysizes": "^1.2.2",
     "moment": "^2.10.6",
-    "remove-class": "^1.0.0",
+    "remove-class": "^1.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.0.3",

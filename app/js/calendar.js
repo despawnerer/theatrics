@@ -1,6 +1,4 @@
 import moment from 'moment';
-import addClass from 'add-class';
-import removeClass from 'remove-class';
 import extend from 'extend';
 
 
@@ -19,7 +17,7 @@ export default class Calendar {
 
   render() {
     let anyDateElement = this.buildAnyDateElement();
-    addClass(anyDateElement, 'active');
+    anyDateElement.classList.add('active');
     this.element.appendChild(anyDateElement);
 
     let today = moment().startOf('day');
@@ -48,11 +46,8 @@ export default class Calendar {
       this.setAnyDay();
     }
 
-    removeClass(
-      this.element.querySelector('.active'),
-      'active');
-    addClass(
-      dayElement, 'active');
+    this.element.querySelector('.active').classList.remove('active');
+    dayElement.classList.add('active');
   }
 
   setDay(dateString) {

@@ -14,7 +14,6 @@ export default class LocationChooser {
     select.addEventListener('change', this.onSelectChange.bind(this));
 
     this.locations.forEach(location => {
-      console.log(location)
       const option = document.createElement('option');
       option.value = location.slug;
       option.textContent = location.name;

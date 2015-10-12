@@ -8,10 +8,16 @@ const DAYS = 14;
 
 
 export default class Calendar {
-  constructor(element, query) {
-    this.element = element;
+  constructor(query) {
     this.query = query;
 
+    this.element = document.createElement('ol');
+    this.element.setAttribute('class', 'calendar');
+
+    this.element.addEventListener('click', this.onClicked.bind(this));
+  }
+
+  render() {
     let anyDateElement = this.buildAnyDateElement();
     addClass(anyDateElement, 'active');
     this.element.appendChild(anyDateElement);
@@ -22,8 +28,6 @@ export default class Calendar {
       let element = this.buildDayElement(day);
       this.element.appendChild(element);
     }
-
-    this.element.addEventListener('click', this.onClicked.bind(this));
   }
 
   // event handlers
@@ -39,10 +43,9 @@ export default class Calendar {
     let dayElement = element.parentNode;
     let dateString = dayElement.getAttribute('data-date');
     if (dateString) {
-      let day = moment(dateString);
-      this.loadDay(day);
+      this.setDay(dateString);
     } else {
-      this.loadAnyDay();
+      this.setAnyDay();
     }
 
     removeClass(
@@ -52,14 +55,15 @@ export default class Calendar {
       dayElement, 'active');
   }
 
-  loadDay(day) {
+  setDay(dateString) {
+    let day = moment(dateString);
     this.query.update({
       actual_since: day.unix(),
       actual_until: day.clone().add(1, 'days').unix(),
     });
   }
 
-  loadAnyDay() {
+  setAnyDay() {
     this.query.lock()
       .remove('actual_until')
       .update({

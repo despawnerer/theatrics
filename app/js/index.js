@@ -4,10 +4,10 @@ import lazysizes from 'lazysizes';
 import Locations from './locations';
 import Options from './options';
 
-import Query from './query';
-import Feed from './feed';
-import Calendar from './calendar';
 import LocationChooser from './location-chooser';
+import EventsView from './events';
+
+import {show, hide} from './utils';
 
 
 document.addEventListener('DOMContentLoaded', function(event) {
@@ -18,29 +18,19 @@ document.addEventListener('DOMContentLoaded', function(event) {
     locations.fetch(),
     options.fetch()
   ]).then(() => {
-    const query = new Query({
-      location: options.get('location'),
-      categories: 'theater',
-      fields: 'place,images,tagline,id,age_restriction,title,short_title',
-      expand: 'place,images',
-    });
+    const headerSep = document.querySelector('#header-separator');
+    const locationContainer = document.querySelector('#city');
+    const viewContainer = document.querySelector('#view-container');
 
-    options.on('change', (key, value) => { if (key == 'location') { query.update({location: value})} })
-
-    query.lock();
-
-    const locationChooserElement = document.querySelector('#city');
-    const locationChooser = new LocationChooser(locationChooserElement, locations, options);
+    const locationChooser = new LocationChooser(locations, options);
     locationChooser.render();
+    locationContainer.appendChild(locationChooser.element);
 
-    const calendarElement = document.querySelector('.calendar');
-    const calendar = new Calendar(calendarElement, query);
-    calendar.loadAnyDay();
+    const eventsView = new EventsView(options);
+    eventsView.render();
+    viewContainer.appendChild(eventsView.element);
 
-    const feedContainer = document.querySelector('.feed-container');
-    const feed = new Feed(feedContainer, '/events/', query);
-
-    query.apply();
-
-  })
+    show(locationContainer);
+    show(headerSep);
+  });
 });

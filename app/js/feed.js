@@ -1,24 +1,42 @@
 import axios from 'axios';
 
-import {capfirst, buildAPIURL} from './utils';
+import {capfirst, buildAPIURL, toggle, show, hide} from './utils';
 
 
 export default class Feed {
-  constructor(element, path, query) {
-    this.element = element;
+  constructor(path, query) {
     this.path = path;
     this.query = query;
 
+    this.element = document.createElement('div');
+    this.element.setAttribute('class', 'feed-container');
+
     this.nextURL = null;
-
-    this.listContainer = this.element.querySelector('.list');
-    this.loadMoreContainer = this.element.querySelector('.load-more-container');
-    this.loadMoreButton = this.element.querySelector('.load-more-button');
-
-    this.loadMoreButton.addEventListener('click', this.onLoadMoreClicked.bind(this));
 
     this.query.on('update', this.onQueryUpdate.bind(this));
   }
+
+  render() {
+    this.listContainer = document.createElement('ol');
+    this.listContainer.className = 'list';
+    this.listContainer.setAttribute('hidden', 'hidden');
+    this.element.appendChild(this.listContainer);
+
+    this.loadMoreContainer = document.createElement('div');
+    this.loadMoreContainer.className = 'load-more-container';
+    this.loadMoreContainer.setAttribute('hidden', 'hidden');
+    this.element.appendChild(this.loadMoreContainer);
+
+    this.loadMoreButton = document.createElement('a');
+    this.loadMoreButton.className = 'load-more-button';
+    this.loadMoreButton.setAttribute('href', '#')
+    this.loadMoreButton.textContent = "Загрузить ещё";
+    this.loadMoreContainer.appendChild(this.loadMoreButton);
+
+    this.loadMoreButton.addEventListener('click', this.onLoadMoreClicked.bind(this));
+  }
+
+  // event handlers
 
   onQueryUpdate() {
     this.reset();
@@ -29,6 +47,8 @@ export default class Feed {
     event.preventDefault();
     this.loadMore();
   }
+
+  // loading
 
   loadMore() {
     if (this.nextURL) {
@@ -49,25 +69,23 @@ export default class Feed {
   reset() {
     this.nextURL = null;
     this.listContainer.innerHTML = '';
-    this.listContainer.setAttribute('hidden', 'hidden');
-    this.loadMoreContainer.setAttribute('hidden', 'hidden');
+    hide(this.listContainer);
+    hide(this.loadMoreContainer);
   }
 
   onLoaded(response) {
     this.nextURL = response.data.next;
-    if (this.nextURL) {
-      this.loadMoreContainer.removeAttribute('hidden');
-    } else {
-      this.loadMoreContainer.setAttribute('hidden', 'hidden');
-    }
+    toggle(this.loadMoreContainer, this.nextURL);
 
     const itemList = response.data.results;
     itemList.forEach(item => {
       const element = this.buildItemElement(item);
       this.listContainer.appendChild(element);
     });
-    this.listContainer.removeAttribute('hidden');
+    show(this.listContainer);
   }
+
+  // elements
 
   buildItemElement(item) {
     const firstImage = item.images[0];

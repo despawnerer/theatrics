@@ -2,37 +2,37 @@ const OPTION_NAME = 'location';
 
 
 export default class LocationChooser {
-  constructor(element, locations, options) {
-    this.element = element;
+  constructor(locations, options) {
     this.locations = locations;
     this.options = options;
+
+    this.element = document.createElement('select');
+
+    this.element.addEventListener('change', this.onSelectChange.bind(this));
   }
 
   render() {
-    const currentSlug = this.getValue();
-    const select = document.createElement('select');
-    select.addEventListener('change', this.onSelectChange.bind(this));
-
+    const currentValue = this.getCurrentValue();
     this.locations.forEach(location => {
       const option = document.createElement('option');
       option.value = location.slug;
       option.textContent = location.name;
-      if (location.slug == currentSlug) {
+      if (location.slug == currentValue) {
         option.setAttribute('selected', true);
       }
-      select.appendChild(option);
+      this.element.appendChild(option);
     });
-
-    this.element.appendChild(select);
   }
 
   onSelectChange(event) {
-    const select = event.target;
-    const newValue = select.options[select.selectedIndex].value;
-    this.options.set(OPTION_NAME, newValue);
+    this.options.set(OPTION_NAME, this.getNewValue());
   }
 
-  getValue() {
+  getCurrentValue() {
     return this.options.get(OPTION_NAME);
+  }
+
+  getNewValue() {
+    return this.element.options[this.element.selectedIndex].value;
   }
 }

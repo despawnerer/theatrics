@@ -14,13 +14,13 @@ export function buildAPIURL(path) {
 export function toggle(element, condition) {
   if (condition) {
     show(element);
-  } {
+  } else {
     hide(element);
   }
 }
 
 export function show(element) {
-	element.removeAttribute('hidden');
+  element.removeAttribute('hidden');
 }
 
 

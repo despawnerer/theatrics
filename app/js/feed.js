@@ -4,8 +4,7 @@ import {capfirst, buildAPIURL, toggle, show, hide} from './utils';
 
 
 export default class Feed {
-  constructor(path, query) {
-    this.path = path;
+  constructor(query) {
     this.query = query;
 
     this.element = document.createElement('div');
@@ -58,9 +57,9 @@ export default class Feed {
     } else {
       return axios
         .get(
-          buildAPIURL(this.path),
+          buildAPIURL(this.query.path),
           {
-            params: this.query.get()
+            params: this.query.params
           })
         .then(this.onLoaded.bind(this));
     }

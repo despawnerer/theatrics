@@ -51,18 +51,18 @@ export default class Calendar {
 
   setDay(dateString) {
     let day = moment(dateString);
-    this.query.update({
-      actual_since: day.unix(),
-      actual_until: day.clone().add(1, 'days').unix(),
-    });
+    this.query
+      .lock()
+      .set('actual_since', day.unix())
+      .set('actual_until', day.clone().add(1, 'days').unix())
+      .apply();
   }
 
   setAnyDay() {
-    this.query.lock()
+    this.query
+      .lock()
+      .set('actual_since', moment().unix())
       .remove('actual_until')
-      .update({
-        actual_since: moment().unix()
-      })
       .apply();
   }
 

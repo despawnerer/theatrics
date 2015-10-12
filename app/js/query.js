@@ -1,17 +1,20 @@
-import extend from 'extend';
-
 import {EventEmitter} from 'events';
 
 
 export default class Query extends EventEmitter {
-	constructor(query) {
+  constructor(path, params) {
     super();
-		this._query = query;
+    this._path = path;
+    this._params = params;
     this._locked = 0;
-	}
+  }
 
-  get() {
-    return this._query;
+  get params() {
+    return this._params;
+  }
+
+  get path() {
+    return this._path;
   }
 
   lock() {
@@ -25,23 +28,15 @@ export default class Query extends EventEmitter {
     return this;
   }
 
-  // updating
-
-  replace(query) {
-    this._query = query;
+  set(key, value) {
+    this._params[key] = value;
     this._maybeNotify();
     return this;
   }
 
-  update(query) {
-    extend(this._query, query);
-    this._maybeNotify();
-    return this;
-  }
-
-  remove(...fieldList) {
-    for (let field of fieldList) {
-      delete this._query[field];
+  remove(...keyList) {
+    for (let key of keyList) {
+      delete this._params[key];
     }
     this._maybeNotify();
     return this;

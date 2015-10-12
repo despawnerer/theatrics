@@ -10,15 +10,17 @@ export default class EventsView {
 
     this.element = document.createElement('div');
 
-    this.query = new Query({
-      location: options.get('location'),
-      categories: 'theater',
-      fields: 'place,images,tagline,id,age_restriction,title,short_title',
-      expand: 'place,images',
-    });
+    this.query = new Query(
+      '/events/',
+      {
+        location: options.get('location'),
+        categories: 'theater',
+        fields: 'place,images,tagline,id,age_restriction,title,short_title',
+        expand: 'place,images',
+      });
 
     this.calendar = new Calendar(this.query);
-    this.feed = new Feed('/events/', this.query);
+    this.feed = new Feed(this.query);
 
     options.on('change', this.onOptionsChange.bind(this));
   }
@@ -38,7 +40,7 @@ export default class EventsView {
 
   onOptionsChange(key, value) {
     if (key == 'location') {
-      this.query.update({location: value});
+      this.query.set('location', value);
     }
   }
 }

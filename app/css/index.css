@@ -224,15 +224,12 @@ a:hover {
 .list-image-container {
   width: 100%;
   height: 200px;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .list-image {
-  flex-shrink: 0;
-  max-height: 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .load-more-container {

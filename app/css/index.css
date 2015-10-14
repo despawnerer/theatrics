@@ -1,9 +1,10 @@
 body {
   background: white;
-  font-size: 16px;
   margin: 0;
   padding: 0;
-  font-family: Times, serif;
+  font-family: sans-serif;
+  font-size: 14px;
+
 }
 
 a {
@@ -71,7 +72,7 @@ a:hover {
 
 #logo {
   display: inline;
-  font-size: 140%;
+  font-size: 150%;
   font-weight: bolder;
   text-transform: uppercase;
   color: #aaa;
@@ -79,19 +80,11 @@ a:hover {
   letter-spacing: 5px;
   margin: 0;
   padding: 0;
-}
-
-#header-separator {
-  border-left: 1px solid silver;
-  display: inline-block;
-  vertical-align: middle;
-  height: 20px;
-  margin: 0 12px 0 7px;
+  font-family: Times, serif;
 }
 
 #city {
-  display: inline-block;
-  vertical-align: middle;
+  margin-left: 15px;
 }
 
 #city select {
@@ -110,7 +103,7 @@ a:hover {
   }
 
   #logo {
-    letter-spacing: 2px;
+    letter-spacing: 3px;
   }
 }
 
@@ -293,12 +286,12 @@ a:hover {
 /* Items */
 
 .item-header {
-  font-size: 140%;
-  margin: 20px 0 10px 0;
+  font-size: 150%;
+  margin: 20px 0 11px 0;
 }
 
 .tagline {
-  margin: 10px 0;
+  margin: 11px 0;
 }
 
 .place {
@@ -306,7 +299,6 @@ a:hover {
   font-size: 11px;
   color: gray;
   text-transform: uppercase;
-  font-family: sans-serif;
 }
 
 @media (max-width: 689px) {
@@ -316,5 +308,9 @@ a:hover {
 
   .tagline {
     margin: 7px 0;
+  }
+
+  .place {
+    margin-top: 9px;
   }
 }

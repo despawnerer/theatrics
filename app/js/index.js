@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', function(event) {
     locations.fetch(),
     options.fetch()
   ]).then(() => {
-    const headerSep = document.querySelector('#header-separator');
     const locationContainer = document.querySelector('#city');
     const viewContainer = document.querySelector('#view-container');
 
@@ -31,6 +30,5 @@ document.addEventListener('DOMContentLoaded', function(event) {
     viewContainer.appendChild(eventsView.element);
 
     show(locationContainer);
-    show(headerSep);
   });
 });

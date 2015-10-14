@@ -6,6 +6,15 @@ body {
   font-family: Times, serif;
 }
 
+a {
+  color: black;
+  text-decoration: none;
+}
+
+a:hover {
+  color: gray;
+}
+
 
 /* Main container */
 
@@ -114,59 +123,76 @@ body {
   padding: 0;
   text-align: center;
   white-space: nowrap;
+  font-family: sans-serif;
+  font-size: 14px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .calendar-day {
-  display: inline-block;
   padding: 0;
   margin: 0;
   vertical-align: middle;
+  position: relative;
+  height: 42px;
+}
+
+.calendar-day.any {
+  line-height: 32px;
 }
 
 .calendar-day a {
   display: block;
   padding: 5px 10px;
-  color: black;
-  text-decoration: underline;
 }
 
-.calendar-day a:hover {
-  color: gray;
+.calendar-day.active::after {
+  content: ' ';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0 9px;
+  height: 2px;
+  background: black;
 }
 
 .calendar-day.active a {
-  text-decoration: none;
   cursor: default;
   font-weight: bolder;
 }
 
-.calendar-day.active a:hover { color: black; }
+.calendar-day.active a:hover {
+  color: black;
+}
 
-@media (max-width: 359px) {
+
+@media (max-width: 689px) {
   .calendar {
-    margin: 10px -10px;
+    margin: 10px -9px;
+  }
+
+  .calendar-day {
+    flex: auto;
   }
 
   .calendar-day a {
-    padding: 5px 8px;
-  }
-}
-
-@media (min-width: 360px) and (max-width: 719px) {
-  .calendar {
-    margin: 10px -10px;
+    padding: 5px 0;
   }
 
-  .calendar-day a {
-    padding: 5px 9px;
-  }
-}
-
-@media (max-width: 719px) {
   .calendar-day:nth-child(n+8) {
     display: none;
   }
 }
+
+
+@media (min-width: 690px) and (max-width: 1079px) {
+  .calendar {
+    margin: 20px 0;
+  }
+}
+
 
 @media (max-width: 1079px) {
   .calendar-day:nth-child(n+15) {

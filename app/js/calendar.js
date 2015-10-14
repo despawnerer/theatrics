@@ -70,7 +70,7 @@ export default class Calendar {
 
   buildAnyDateElement() {
     let element = document.createElement('li');
-    element.setAttribute('class', 'calendar-day');
+    element.setAttribute('class', 'calendar-day any');
     element.innerHTML = '<a href="#">Самое</a>'
     return element;
   }

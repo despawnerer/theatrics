@@ -1,11 +1,23 @@
 import axios from 'axios';
+import domify from 'domify';
 
-import {capfirst, buildAPIURL, toggle, show, hide} from './utils';
+import {buildAPIURL, toggle, show, hide} from './utils';
+
+
+const template = () => `
+<div class="feed-container">
+  <ol class="list" hidden></ol>
+  <div class="load-more-container" hidden>
+    <a href="#" class="load-more-button" hidden>Загрузить ещё</a>
+  </div>
+</div>
+`;
 
 
 export default class Feed {
-  constructor(query) {
+  constructor(query, itemTemplate) {
     this.query = query;
+    this.itemTemplate = itemTemplate;
 
     this.element = document.createElement('div');
     this.element.setAttribute('class', 'feed-container');
@@ -16,21 +28,11 @@ export default class Feed {
   }
 
   render() {
-    this.listContainer = document.createElement('ol');
-    this.listContainer.className = 'list';
-    this.listContainer.setAttribute('hidden', 'hidden');
-    this.element.appendChild(this.listContainer);
+    this.element = domify(template());
 
-    this.loadMoreContainer = document.createElement('div');
-    this.loadMoreContainer.className = 'load-more-container';
-    this.loadMoreContainer.setAttribute('hidden', 'hidden');
-    this.element.appendChild(this.loadMoreContainer);
-
-    this.loadMoreButton = document.createElement('a');
-    this.loadMoreButton.className = 'load-more-button';
-    this.loadMoreButton.setAttribute('href', '#')
-    this.loadMoreButton.textContent = "Загрузить ещё";
-    this.loadMoreContainer.appendChild(this.loadMoreButton);
+    this.listContainer = this.element.querySelector('.list');
+    this.loadMoreContainer = this.element.querySelector('.load-more-container');
+    this.loadMoreButton = this.element.querySelector('.load-more-button');
 
     this.loadMoreButton.addEventListener('click', this.onLoadMoreClicked.bind(this));
   }
@@ -78,25 +80,9 @@ export default class Feed {
 
     const itemList = response.data.results;
     itemList.forEach(item => {
-      const element = this.buildItemElement(item);
+      const element = domify(this.itemTemplate(item));
       this.listContainer.appendChild(element);
     });
     show(this.listContainer);
-  }
-
-  // elements
-
-  buildItemElement(item) {
-    const firstImage = item.images[0];
-    const li = document.createElement('li');
-    li.setAttribute('class', "list-item");
-    li.innerHTML = `
-      <div class="list-image-container">
-        <img data-src="${firstImage.thumbnails['640x384']}" class="list-image lazyload"/>
-      </div>
-      <h2 class="item-header">${capfirst(item.short_title || item.title)}</h2>
-      <div class="tagline">${item.tagline}</div>
-      <div class="place">${item.place ? capfirst(item.place.short_title || item.place.title) : ''}</div>`;
-    return li;
   }
 }

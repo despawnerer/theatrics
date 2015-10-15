@@ -1,4 +1,4 @@
-const API_PREFIX = 'http://kudago.com/public-api/v1';
+const API_PREFIX = '/api';
 
 
 export function capfirst(s) {

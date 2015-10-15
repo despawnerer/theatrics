@@ -16,19 +16,19 @@ function logError(e) {
 /* CSS */
 
 gulp.task('build-css', function() {
-  return gulp.src('app/css/**/*.css')
+  return gulp.src('theatrics/static/css/**/*.css')
     .on('error', logError)
     .pipe(postcss([
       require('postcss-import')(),
       require('autoprefixer')()
     ]))
-    .pipe(gulp.dest('app/build'));
+    .pipe(gulp.dest('theatrics/static/build'));
 });
 
 
 gulp.task('watch-css', function () {
   gulp.start(['build-css']);
-  gulp.watch('app/css/**/*.css', ['build-css']);
+  gulp.watch('theatrics/static/css/**/*.css', ['build-css']);
 });
 
 
@@ -36,7 +36,7 @@ gulp.task('watch-css', function () {
 
 function buildBrowserify(options) {
   var b = browserify({
-    entries: 'app/js/' + options.entry,
+    entries: 'theatrics/static/js/' + options.entry,
     debug: true,
     //these properties are needed for watchify
     cache: {},
@@ -48,7 +48,7 @@ function buildBrowserify(options) {
       .on('error', logError)
       .pipe(source(options.entry))
       .pipe(buffer())
-      .pipe(gulp.dest('app/build'));
+      .pipe(gulp.dest('theatrics/static/build'));
   };
 
   if (options.watch) {

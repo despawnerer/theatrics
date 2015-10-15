@@ -8,7 +8,7 @@ const template = () => `
 <div class="feed-container">
   <ol class="list" hidden></ol>
   <div class="load-more-container" hidden>
-    <a href="#" class="load-more-button" hidden>Загрузить ещё</a>
+    <button class="load-more-button" hidden>Загрузить ещё</button>
   </div>
 </div>
 `;

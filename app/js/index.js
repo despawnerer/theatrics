@@ -14,21 +14,19 @@ document.addEventListener('DOMContentLoaded', function(event) {
   const options = new Options();
   const locations = new Locations();
 
-  Promise.all([
-    locations.fetch(),
-    options.fetch()
-  ]).then(() => {
+  locations.fetch().then(() => {
     const locationContainer = document.querySelector('#city');
-    const viewContainer = document.querySelector('#view-container');
-
     const locationChooser = new LocationChooser(locations, options);
     locationChooser.render();
     locationContainer.appendChild(locationChooser.element);
+    show(locationContainer);
+  });
+
+  options.fetch().then(() => {
+    const viewContainer = document.querySelector('#view-container');
 
     const eventsView = new EventsView(options);
     eventsView.render();
     viewContainer.appendChild(eventsView.element);
-
-    show(locationContainer);
   });
 });

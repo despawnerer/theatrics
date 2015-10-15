@@ -37,6 +37,7 @@ export default class EventsView {
         categories: 'theater',
         fields: 'place,images,tagline,id,age_restriction,title,short_title',
         expand: 'place,images',
+        page_size: 24,
       });
 
     this.calendar = new Calendar(this.query);

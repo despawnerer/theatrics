@@ -6,6 +6,8 @@ var browserify = require('browserify');
 var babelify = require('babelify');
 var watchify = require('watchify');
 var util = require('gulp-util');
+var handlebars = require('gulp-compile-handlebars');
+var rename = require('gulp-rename');
 
 
 function logError(e) {
@@ -16,19 +18,19 @@ function logError(e) {
 /* CSS */
 
 gulp.task('build-css', function() {
-  return gulp.src('theatrics/static/css/**/*.css')
+  return gulp.src('client/css/**/*.css')
     .on('error', logError)
     .pipe(postcss([
       require('postcss-import')(),
       require('autoprefixer')()
     ]))
-    .pipe(gulp.dest('theatrics/static/build'));
+    .pipe(gulp.dest('client/build'));
 });
 
 
 gulp.task('watch-css', function () {
   gulp.start(['build-css']);
-  gulp.watch('theatrics/static/css/**/*.css', ['build-css']);
+  gulp.watch('client/css/**/*.css', ['build-css']);
 });
 
 
@@ -36,7 +38,7 @@ gulp.task('watch-css', function () {
 
 function buildBrowserify(options) {
   var b = browserify({
-    entries: 'theatrics/static/js/' + options.entry,
+    entries: 'client/js/' + options.entry,
     debug: true,
     //these properties are needed for watchify
     cache: {},
@@ -48,7 +50,7 @@ function buildBrowserify(options) {
       .on('error', logError)
       .pipe(source(options.entry))
       .pipe(buffer())
-      .pipe(gulp.dest('theatrics/static/build'));
+      .pipe(gulp.dest('client/build'));
   };
 
   if (options.watch) {
@@ -75,11 +77,30 @@ gulp.task('watch-js', function () {
 });
 
 
+/* HTML */
+
+gulp.task('build-html', function() {
+  var context = {}
+  var options = {}
+  return gulp.src('client/*.hbs')
+    .on('error', logError)
+    .pipe(handlebars(context, options))
+    .pipe(rename({extname: '.html'}))
+    .pipe(gulp.dest('client/build'));
+});
+
+gulp.task('watch-html', function() {
+  gulp.start(['build-html']);
+  gulp.watch('client/*.hbs', ['build-html']);
+});
+
+
 /* Big tasks */
 
 gulp.task('watch', function () {
   gulp.start('watch-css');
   gulp.start('watch-js');
+  gulp.start('watch-html');
 });
 
-gulp.task('build', ['build-css', 'build-js']);
+gulp.task('build', ['build-css', 'build-js', 'build-html']);

@@ -1,10 +1,10 @@
-const OPTION_NAME = 'location';
+const SETTING_NAME = 'location';
 
 
 export default class LocationChooser {
-  constructor(locations, options) {
+  constructor(locations, settings) {
     this.locations = locations;
-    this.options = options;
+    this.settings = settings;
 
     this.element = document.createElement('select');
 
@@ -25,14 +25,14 @@ export default class LocationChooser {
   }
 
   onSelectChange(event) {
-    this.options.set(OPTION_NAME, this.getNewValue());
+    this.settings.set(SETTING_NAME, this.getNewValue());
   }
 
   getCurrentValue() {
-    return this.options.get(OPTION_NAME);
+    return this.settings.get(SETTING_NAME);
   }
 
   getNewValue() {
-    return this.element.options[this.element.selectedIndex].value;
+    return this.element.settings[this.element.selectedIndex].value;
   }
 }

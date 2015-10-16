@@ -24,14 +24,14 @@ const itemTemplate = (item) => `
 
 
 export default class EventsView {
-  constructor(options, date=null) {
-    this.options = options;
+  constructor(settings, date=null) {
+    this.settings = settings;
     this.date = date;
 
     this.query = new Query(
       '/events/',
       {
-        location: options.get('location'),
+        location: settings.get('location'),
         categories: 'theater',
         fields: 'place,images,tagline,id,age_restriction,title,short_title',
         expand: 'place,images',
@@ -41,7 +41,7 @@ export default class EventsView {
     this.calendar = new Calendar(this.query);
     this.feed = new Feed(this.query, itemTemplate);
 
-    options.on('change', this.onOptionsChange.bind(this));
+    settings.on('change', this.onSettingsChange.bind(this));
   }
 
   render() {
@@ -59,7 +59,7 @@ export default class EventsView {
     }
   }
 
-  onOptionsChange(key, value) {
+  onSettingsChange(key, value) {
     if (key == 'location') {
       this.query.set('location', value);
     }

@@ -18,19 +18,19 @@ function logError(e) {
 /* CSS */
 
 gulp.task('build-css', function() {
-  return gulp.src('client/css/**/*.css')
+  return gulp.src('app/css/**/*.css')
     .on('error', logError)
     .pipe(postcss([
       require('postcss-import')(),
       require('autoprefixer')()
     ]))
-    .pipe(gulp.dest('client/build'));
+    .pipe(gulp.dest('app/build'));
 });
 
 
 gulp.task('watch-css', function () {
   gulp.start(['build-css']);
-  gulp.watch('client/css/**/*.css', ['build-css']);
+  gulp.watch('app/css/**/*.css', ['build-css']);
 });
 
 
@@ -38,7 +38,7 @@ gulp.task('watch-css', function () {
 
 function buildBrowserify(options) {
   var b = browserify({
-    entries: 'client/js/' + options.entry,
+    entries: 'app/js/' + options.entry,
     debug: true,
     //these properties are needed for watchify
     cache: {},
@@ -50,7 +50,7 @@ function buildBrowserify(options) {
       .on('error', logError)
       .pipe(source(options.entry))
       .pipe(buffer())
-      .pipe(gulp.dest('client/build'));
+      .pipe(gulp.dest('app/build'));
   };
 
   if (options.watch) {
@@ -82,16 +82,16 @@ gulp.task('watch-js', function () {
 gulp.task('build-html', function() {
   var context = {}
   var options = {}
-  return gulp.src('client/*.hbs')
+  return gulp.src('app/*.hbs')
     .on('error', logError)
     .pipe(handlebars(context, options))
     .pipe(rename({extname: '.html'}))
-    .pipe(gulp.dest('client/build'));
+    .pipe(gulp.dest('app/build'));
 });
 
 gulp.task('watch-html', function() {
   gulp.start(['build-html']);
-  gulp.watch('client/*.hbs', ['build-html']);
+  gulp.watch('app/*.hbs', ['build-html']);
 });
 
 

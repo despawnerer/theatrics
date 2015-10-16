@@ -1,5 +1,5 @@
-node_modules
-client/build
+client/node_modules
+client/app/build
 .tern-project
 *.pyc
 __pycache__

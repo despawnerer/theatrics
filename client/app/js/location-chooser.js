@@ -1,6 +1,5 @@
 const SETTING_NAME = 'location';
 
-
 export default class LocationChooser {
   constructor(locations, settings) {
     this.locations = locations;
@@ -33,6 +32,6 @@ export default class LocationChooser {
   }
 
   getNewValue() {
-    return this.element.settings[this.element.selectedIndex].value;
+    return this.element.options[this.element.selectedIndex].value;
   }
 }

@@ -59,12 +59,12 @@ export default class App {
 
   visitIndex() {
     const location = this.settings.get('location');
-    this.navigateToEvents(location);
+    this.navigateToEvents(location, false);
   }
 
   visitLocation(location) {
     this.settings.set('location', location);
-    this.navigateToEvents(location);
+    this.navigateToEvents(location, false);
   }
 
   visitEvents(location, date) {
@@ -119,11 +119,11 @@ export default class App {
 
   // useful navigation shortcuts
 
-  navigateToEvents(location) {
-    this.router.navigate(`/${location}/events/`);
+  navigateToEvents(location, saveToHistory=true) {
+    this.router.navigate(`/${location}/events/`, saveToHistory);
   }
 
-  navigateToPlaces(location) {
-    this.router.navigate(`/${location}/places/`);
+  navigateToPlaces(location, saveToHistory=true) {
+    this.router.navigate(`/${location}/places/`, saveToHistory);
   }
 }

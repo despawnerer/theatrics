@@ -37,9 +37,13 @@ export default class Router {
     this.callHandlerForCurrentLocation();
   }
 
-  navigate(path) {
+  navigate(path, saveToHistory=true) {
     const [handler, args] = this.resolve(path);
-    history.pushState({handler, args}, handler, path);
+    if (saveToHistory) {
+      history.pushState({handler, args}, handler, path);
+    } else {
+      history.replaceState({handler, args}, handler, path);
+    }
     this.callHandler(handler, args);
   }
 

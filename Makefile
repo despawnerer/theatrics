@@ -14,6 +14,9 @@ install:
 build:
 	cd client && npm run build
 
+build-min:
+	cd client && npm run build-min
+
 watch:
 	cd client && npm run watch
 

@@ -35,6 +35,15 @@ gulp.task('watch-css', function () {
   gulp.watch('app/css/**/*.css', ['build-css']);
 });
 
+gulp.task('build-min-css', ['build-css'], function () {
+  return gulp.src('app/build/*.css')
+    .pipe(postcss([
+      require('csswring')()
+    ]))
+    .pipe(rename({suffix: '.min'}))
+    .pipe(gulp.dest('app/build'));
+});
+
 
 /* JS */
 
@@ -99,11 +108,10 @@ gulp.task('build-min-js', ['build-js'], function () {
 /* HTML */
 
 gulp.task('build-html', function() {
-  var context = {}
-  var options = {}
+  var context = {'min': false}
   return gulp.src('app/*.hbs')
     .on('error', logError)
-    .pipe(handlebars(context, options))
+    .pipe(handlebars(context, {}))
     .pipe(rename({extname: '.html'}))
     .pipe(gulp.dest('app/build'));
 });
@@ -113,6 +121,14 @@ gulp.task('watch-html', function() {
   gulp.watch('app/*.hbs', ['build-html']);
 });
 
+gulp.task('build-min-html', function() {
+  var context = {'min': true}
+  return gulp.src('app/*.hbs')
+    .on('error', logError)
+    .pipe(handlebars(context, {}))
+    .pipe(rename({extname: '.html'}))
+    .pipe(gulp.dest('app/build'));
+});
 
 /* Big tasks */
 
@@ -123,3 +139,4 @@ gulp.task('watch', function () {
 });
 
 gulp.task('build', ['build-css', 'build-js', 'build-html']);
+gulp.task('build-min', ['build-min-css', 'build-min-js', 'build-min-html']);

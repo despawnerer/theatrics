@@ -46,6 +46,16 @@ export default class App {
     });
   }
 
+  setupLocationChooser() {
+    const locationContainer = document.querySelector('#city');
+    const locationChooser = new LocationChooser(this.locations, this.settings);
+    locationChooser.render();
+    locationContainer.appendChild(locationChooser.element);
+    show(locationContainer);
+  }
+
+  // route handling
+
   visitIndex() {
     const location = this.settings.get('location');
     this.navigateToEvents(location);
@@ -67,20 +77,14 @@ export default class App {
     this.currentView.visit(location);
   }
 
-  setupLocationChooser() {
-    const locationContainer = document.querySelector('#city');
-    const locationChooser = new LocationChooser(this.locations, this.settings);
-    locationChooser.render();
-    locationContainer.appendChild(locationChooser.element);
-    show(locationContainer);
-  }
-
   switchView(view) {
     view.render();
     this.viewContainer.innerHTML = '';
     this.viewContainer.appendChild(view.element);
     this.currentView = view;
   }
+
+  // event handlers
 
   onAnchorClick(event) {
     const element = event.target;
@@ -106,6 +110,8 @@ export default class App {
       this.navigateToEvents(location)
     }
   }
+
+  // useful navigation shortcuts
 
   navigateToEvents(location) {
     this.router.navigate(`/${location}/events/`);

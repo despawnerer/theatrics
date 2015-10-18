@@ -36,7 +36,7 @@ gulp.task('watch-css', function () {
 });
 
 gulp.task('build-min-css', ['build-css'], function () {
-  return gulp.src('app/build/*.css')
+  return gulp.src(['app/build/*.css', '!app/build/*.min.css'])
     .pipe(postcss([
       require('csswring')()
     ]))

@@ -83,6 +83,14 @@ a:hover {
   font-family: Times, serif;
 }
 
+#logo a {
+  color: #aaa;
+}
+
+#logo a:hover {
+  color: #ccc;
+}
+
 #city {
   margin-left: 15px;
 }

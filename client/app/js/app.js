@@ -23,6 +23,7 @@ export default class App {
 
     this.router = new Router(this);
     this.router.addRoute('/', 'visitIndex');
+    this.router.addRoute('/{location:[a-z]+}/', 'visitLocation');
     this.router.addRoute('/{location:[a-z]+}/events/', 'visitEvents');
     this.router.addRoute(
       '/{location:[a-z]+}/events/{date:\\d\\d\\d\\d-\\d\\d-\\d\\d}/',
@@ -58,6 +59,11 @@ export default class App {
 
   visitIndex() {
     const location = this.settings.get('location');
+    this.navigateToEvents(location);
+  }
+
+  visitLocation(location) {
+    this.settings.set('location', location);
     this.navigateToEvents(location);
   }
 

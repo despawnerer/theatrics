@@ -8,6 +8,8 @@ var watchify = require('watchify');
 var util = require('gulp-util');
 var handlebars = require('gulp-compile-handlebars');
 var rename = require('gulp-rename');
+var closurecompiler = require('closurecompiler');
+var map = require('map-stream');
 
 
 function logError(e) {
@@ -76,6 +78,21 @@ gulp.task('watch-js', function () {
     entry: 'index.js',
     watch: true
   });
+});
+
+gulp.task('build-min-js', ['build-js'], function () {
+  return gulp.src(['app/build/*.js', '!app/build/*.min.js'])
+    .pipe(map(function(data, cb) {
+      closurecompiler.compile([data.path], {
+        language_in: 'ECMASCRIPT5',
+        warning_level: 'QUIET',
+      }, function(error, result) {
+        data.contents = new Buffer(result);
+        cb(null, data);
+      });
+    }))
+    .pipe(rename({suffix: '.min'}))
+    .pipe(gulp.dest('app/build'));
 });
 
 

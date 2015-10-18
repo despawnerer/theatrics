@@ -113,7 +113,7 @@ export default class App {
     } else if (this.currentView instanceof PlacesView) {
       this.navigateToPlaces(location);
     } else {
-      this.navigateToEvents(location)
+      this.navigateToEvents(location);
     }
   }
 

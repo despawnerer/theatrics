@@ -47,7 +47,7 @@ export default class App {
 
   visitIndex() {
     const location = this.settings.get('location');
-    this.router.navigate(`/${location}/events/`);
+    this.navigateToEvents(location);
   }
 
   visitEvents(location, date) {
@@ -90,9 +90,13 @@ export default class App {
 
   handleLocationChange(location) {
     if (this.currentView instanceof EventsView) {
-      this.currentView.visit(location);
+      this.navigateToEvents(location);
     } else {
-      this.visitEvents(location);
+      this.navigateToEvents(location)
     }
+  }
+
+  navigateToEvents(location) {
+    this.router.navigate(`/${location}/events/`);
   }
 }

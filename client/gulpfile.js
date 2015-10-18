@@ -58,7 +58,9 @@ function buildBrowserify(options) {
   }
 
   b.on('update', buildBundle);
-  b.transform(babelify);
+  b.transform(babelify.configure({
+    optional: ['runtime']
+  }));
 
   return buildBundle();
 }

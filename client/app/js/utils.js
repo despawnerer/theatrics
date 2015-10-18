@@ -27,3 +27,8 @@ export function show(element) {
 export function hide(element) {
   element.setAttribute('hidden', 'hidden');
 }
+
+
+export function regexpEscape(s) {
+  return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+}

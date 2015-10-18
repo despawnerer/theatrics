@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 import Query from './query';
 import Calendar from './calendar';
 import Feed from './feed';
@@ -24,44 +26,49 @@ const itemTemplate = (item) => `
 
 
 export default class EventsView {
-  constructor(settings, date=null) {
-    this.settings = settings;
-    this.date = date;
+  constructor() {
+    this.element = document.createElement('div');
 
     this.query = new Query(
       '/events/',
       {
-        location: settings.get('location'),
         categories: 'theater',
         fields: 'place,images,tagline,id,age_restriction,title,short_title',
         expand: 'place,images',
         page_size: 24,
       });
 
-    this.calendar = new Calendar(this.query);
+    this.calendar = new Calendar();
     this.feed = new Feed(this.query, itemTemplate);
-
-    settings.on('change', this.onSettingsChange.bind(this));
   }
 
   render() {
-    this.element = document.createElement('div');
-
     for (let view of [this.calendar, this.feed]) {
       view.render();
       this.element.appendChild(view.element);
     }
-
-    if (this.date == null) {
-      this.calendar.setAnyDay();
-    } else {
-      this.calendar.setDay(this.date);
-    }
   }
 
-  onSettingsChange(key, value) {
-    if (key == 'location') {
-      this.query.set('location', value);
+  visit(location, date) {
+    this.updateQuery(location, date);
+    this.calendar.setLocation(location);
+    this.calendar.setDate(date);
+  }
+
+  updateQuery(location, date) {
+    this.query.lock();
+
+    this.query.set('location', location);
+
+    if (date) {
+      const day = moment(date);
+      this.query.set('actual_since', day.unix());
+      this.query.set('actual_until', day.clone().add(1, 'days').unix());
+    } else {
+      this.query.set('actual_since', moment().unix());
+      this.query.remove('actual_until');
     }
+
+    this.query.apply();
   }
 }

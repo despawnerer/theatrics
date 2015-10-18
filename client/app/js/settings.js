@@ -16,8 +16,10 @@ export default class Settings extends EventEmitter {
   }
 
   set(key, value) {
-    this._settings.set(key, value);
-    this.emit('change', key, value);
+    if (this._settings.get(key) !== value) {
+      this._settings.set(key, value);
+      this.emit('change', key, value);
+    }
   }
 
   getDefaults() {

@@ -23,7 +23,6 @@ export default class App {
 
     this.router = new Router(this);
     this.router.addRoute('/', 'visitIndex');
-    this.router.addRoute('/index.html', 'visitIndex');
     this.router.addRoute('/{location:[a-z]+}/events/', 'visitEvents');
     this.router.addRoute(
       '/{location:[a-z]+}/events/{date:\\d\\d\\d\\d-\\d\\d-\\d\\d}/',

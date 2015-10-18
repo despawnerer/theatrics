@@ -9,6 +9,7 @@ import Router from './router';
 
 import LocationChooser from './location-chooser';
 import EventsView from './events';
+import PlacesView from './places';
 
 import {show, hide} from './utils';
 
@@ -27,6 +28,7 @@ export default class App {
     this.router.addRoute(
       '/{location:.+}/events/{date:\\d\\d\\d\\d-\\d\\d-\\d\\d}/',
       'visitEvents');
+    this.router.addRoute('/{location:.+}/places/', 'visitPlaces');
 
     this.events = new Events(document, this);
     this.events.bind('click a', 'onAnchorClick');
@@ -56,6 +58,14 @@ export default class App {
       this.switchView(events);
     }
     this.currentView.visit(location, date);
+  }
+
+  visitPlaces(location) {
+    if (!(this.currentView instanceof PlacesView)) {
+      const places = new PlacesView();
+      this.switchView(places);
+    }
+    this.currentView.visit(location);
   }
 
   setupLocationChooser() {
@@ -91,6 +101,8 @@ export default class App {
   handleLocationChange(location) {
     if (this.currentView instanceof EventsView) {
       this.navigateToEvents(location);
+    } else if (this.currentView instanceof PlacesView) {
+      this.navigateToPlaces(location);
     } else {
       this.navigateToEvents(location)
     }
@@ -98,5 +110,9 @@ export default class App {
 
   navigateToEvents(location) {
     this.router.navigate(`/${location}/events/`);
+  }
+
+  navigateToPlaces(location) {
+    this.router.navigate(`/${location}/places/`);
   }
 }

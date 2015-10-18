@@ -24,11 +24,11 @@ export default class App {
     this.router = new Router(this);
     this.router.addRoute('/', 'visitIndex');
     this.router.addRoute('/index.html', 'visitIndex');
-    this.router.addRoute('/{location:.+}/events/', 'visitEvents');
+    this.router.addRoute('/{location:[a-z]+}/events/', 'visitEvents');
     this.router.addRoute(
-      '/{location:.+}/events/{date:\\d\\d\\d\\d-\\d\\d-\\d\\d}/',
+      '/{location:[a-z]+}/events/{date:\\d\\d\\d\\d-\\d\\d-\\d\\d}/',
       'visitEvents');
-    this.router.addRoute('/{location:.+}/places/', 'visitPlaces');
+    this.router.addRoute('/{location:[a-z]+}/places/', 'visitPlaces');
 
     this.events = new Events(document, this);
     this.events.bind('click a', 'onAnchorClick');

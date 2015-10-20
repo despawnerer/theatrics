@@ -136,11 +136,11 @@ a:hover {
   margin: 0;
   vertical-align: middle;
   position: relative;
-  height: 42px;
+  line-height: 1.2;
 }
 
 .calendar-day.any {
-  line-height: 32px;
+  line-height: 2.4;
 }
 
 .calendar-day a {

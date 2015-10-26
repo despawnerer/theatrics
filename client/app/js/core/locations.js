@@ -1,21 +1,15 @@
 import axios from 'axios';
 
-import {buildAPIURL} from './utils';
+import {buildAPIURL} from '../utils';
 
 
 export default class Locations {
   constructor() {
-    this._map = new Map();
-  }
-
-  get(slug) {
-    return this._map.get(slug);
+    this._locations = [];
   }
 
   forEach(func) {
-    for (let location of this._map.values()){
-      func(location);
-    }
+    this._locations.forEach(func);
   }
 
   fetch() {
@@ -33,9 +27,6 @@ export default class Locations {
   }
 
   onFetched(response) {
-    for (let location of response.data) {
-      this._map.set(location.slug, location);
-    }
-    return this;
+    this._locations = response.data;
   }
 }

@@ -32,3 +32,21 @@ export function hide(element) {
 export function regexpEscape(s) {
   return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 }
+
+
+export function getKeys(obj) {
+  const keys = [];
+  for (let x in obj) {
+    keys.push(x);
+  }
+  return keys;
+}
+
+
+export function zipIntoObject(keys, values) {
+  const obj = {}
+  for (let x = 0; x < values.length; x++) {
+    obj[keys[x]] = values[x];
+  }
+  return obj;
+}

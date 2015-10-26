@@ -6,7 +6,7 @@ var browserify = require('browserify');
 var babelify = require('babelify');
 var watchify = require('watchify');
 var util = require('gulp-util');
-var handlebars = require('gulp-compile-handlebars');
+var ejs = require('gulp-ejs');
 var rename = require('gulp-rename');
 var closurecompiler = require('closurecompiler');
 var map = require('map-stream');
@@ -109,23 +109,23 @@ gulp.task('build-min-js', ['build-js'], function () {
 
 gulp.task('build-html', function() {
   var context = {'min': false}
-  return gulp.src('app/*.hbs')
+  return gulp.src('app/*.ejs')
     .on('error', logError)
-    .pipe(handlebars(context, {}))
+    .pipe(ejs(context))
     .pipe(rename({extname: '.html'}))
     .pipe(gulp.dest('app/build'));
 });
 
 gulp.task('watch-html', function() {
   gulp.start(['build-html']);
-  gulp.watch('app/*.hbs', ['build-html']);
+  gulp.watch('app/*.ejs', ['build-html']);
 });
 
 gulp.task('build-min-html', function() {
   var context = {'min': true}
-  return gulp.src('app/*.hbs')
+  return gulp.src('app/*.ejs')
     .on('error', logError)
-    .pipe(handlebars(context, {}))
+    .pipe(ejs(context))
     .pipe(rename({extname: '.html'}))
     .pipe(gulp.dest('app/build'));
 });

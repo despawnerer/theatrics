@@ -1,18 +1,23 @@
+import View from '../base/view';
+
+
 const SETTING_NAME = 'location';
 
-export default class LocationChooser {
-  constructor(locations, settings) {
-    this.locations = locations;
-    this.settings = settings;
 
-    this.element = document.createElement('select');
+export default class LocationChooser extends View {
+  constructor({app, model}) {
+    super({app, model});
 
-    this.element.addEventListener('change', this.onSelectChange.bind(this));
+    this.events.bind('change', 'onSelectChange');
+  }
+
+  createElement() {
+    return document.createElement('select');
   }
 
   render() {
     const currentValue = this.getCurrentValue();
-    this.locations.forEach(location => {
+    this.app.locations.forEach(location => {
       const option = document.createElement('option');
       option.value = location.slug;
       option.textContent = location.name;
@@ -24,11 +29,11 @@ export default class LocationChooser {
   }
 
   onSelectChange(event) {
-    this.settings.set(SETTING_NAME, this.getNewValue());
+    this.app.settings.set(SETTING_NAME, this.getNewValue());
   }
 
   getCurrentValue() {
-    return this.settings.get(SETTING_NAME);
+    return this.app.settings.get(SETTING_NAME);
   }
 
   getNewValue() {

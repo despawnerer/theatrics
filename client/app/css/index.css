@@ -16,6 +16,10 @@ a:hover {
   color: gray;
 }
 
+.special_links {
+  display: none;
+}
+
 
 /* Main container */
 
@@ -318,4 +322,42 @@ a:hover {
   .place {
     margin-top: 9px;
   }
+}
+
+
+/* Item */
+
+.item-view {
+  width: 750px;
+  margin: 0 auto;
+}
+
+.item-images {
+  list-style-type: none;
+  padding: 0;
+  margin: 30px 0;
+  display: flex;
+  flex-direction: row;
+}
+
+.item-image {
+  padding: 0;
+  margin: 0;
+}
+
+.item-image img {
+  max-height: 400px;
+}
+
+.big-item-title {
+  font-size: 220%;
+}
+
+.item-description {
+  font-size: 20px;
+}
+
+.item-text {
+  font-size: 17px;
+  font-family: serif;
 }

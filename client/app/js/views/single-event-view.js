@@ -1,23 +1,12 @@
 import axios from 'axios';
+import moment from 'moment-timezone';
 
 import View from '../base/view';
 import Event from '../models/event';
 import {capfirst, buildAPIURL} from '../utils';
 
 
-const template = ({app, event}) => `
-<ul class="item-images">
-  <li class="item-image">
-    <img data-src="${event.images[0].thumbnails['640x384']}" class="lazyload"/>
-  </li>
-</ul>
-<h2 class="big-item-title">
-  ${capfirst(event.short_title || event.title)}
-</h2>
-<div class="tagline">${event.tagline}</div>
-<div class="item-description">${event.description}</div>
-<div class="item-text">${event.body_text}</div>
-`;
+const template = require('../../templates/single-event.ejs');
 
 
 export default class SingleEventView extends View {
@@ -38,10 +27,17 @@ export default class SingleEventView extends View {
 
   render() {
     if (this.model.isFetched()) {
-      console.log('rendering')
+      const app = this.app;
+      const event = this.model.data;
+      const dates = this.model.getDisplayDates();
+      const location = this.app.locations.get(event.location.slug);
       this.element.innerHTML = template({
-        app: this.app,
-        event: this.model.data,
+        moment,
+        capfirst,
+        app,
+        location,
+        event,
+        dates,
       });
     }
   }

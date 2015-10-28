@@ -8,6 +8,10 @@ export default class Locations {
     this._locations = [];
   }
 
+  get(slug) {
+    return this._locations.find(x => x.slug == slug);
+  }
+
   forEach(func) {
     this._locations.forEach(func);
   }
@@ -28,5 +32,11 @@ export default class Locations {
 
   onFetched(response) {
     this._locations = response.data;
+    this._locations.forEach(location => {
+      if (location.timezone === 'GMT+03:00') {
+        // FIXME: this seems like an issue with moment
+        location.timezone = 'Etc/GMT-3';
+      }
+    });
   }
 }

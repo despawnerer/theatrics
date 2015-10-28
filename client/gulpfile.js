@@ -10,6 +10,7 @@ var ejs = require('gulp-ejs');
 var rename = require('gulp-rename');
 var closurecompiler = require('closurecompiler');
 var map = require('map-stream');
+var ejsBrowserify = require('ejs-browserify-transformer');
 
 
 function logError(e) {
@@ -69,6 +70,7 @@ function buildBrowserify(options) {
   }
 
   b.on('update', buildBundle);
+  b.transform(ejsBrowserify.create());
   b.transform(babelify.configure({
     optional: ['runtime']
   }));

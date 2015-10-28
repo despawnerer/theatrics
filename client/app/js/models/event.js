@@ -1,4 +1,5 @@
 import axios from 'axios';
+import moment from 'moment';
 
 import Model from '../base/model';
 import {buildAPIURL} from '../utils';
@@ -23,5 +24,12 @@ export default class Event extends Model {
 
   isFetched() {
     return this.has('title');
+  }
+
+  getDisplayDates() {
+    const now = moment().unix();
+    const allDates = this.data.dates;
+    const futureDates = this.data.dates.filter(d => d.start > now);
+    return futureDates.length ? futureDates : allDates;
   }
 }

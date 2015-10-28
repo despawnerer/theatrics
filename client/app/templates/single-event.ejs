@@ -1,0 +1,42 @@
+<div class="item-images-container">
+  <ul class="item-images">
+    <% event.images.forEach(function(image) { %>
+      <li class="item-image">
+        <img data-src="<%= image.image %>" class="lazyload"/>
+      </li>
+    <% }) %>
+  </ul>
+</div>
+<h2 class="big-item-title">
+  <%= capfirst(event.short_title || event.title) %>
+  <span class="big-item-tagline"><%= event.tagline %></span>
+</h2>
+<div class="item-information">
+  <div class="item-information-item item-place"><%= capfirst(event.place.title) %></div>
+  <div class="item-information-item"><%= event.price %></div>
+  <ol class="item-dates">
+  <% dates.forEach(function(date) { %>
+    <% const start = moment.tz(date.start * 1000, location.timezone) %>
+    <% const end = date.end ? moment.tz(date.end * 1000, location.timezone) : null %>
+    <li>
+      <div>
+        <div class="item-day"><%= start.format('D MMMM') %></div>
+        <div class="item-day-of-week"><%= start.format('dddd') %></div>
+      </div>
+      <% if (!end) { %>
+        <div class="item-time"><%= start.format('LT') %></div>
+      <% } else if (start.isSame(end, 'day')) { %>
+        <div class="item-time"><%= start.format('LT') %>&ndash;<%= end.format('LT') %></div>
+      <% } else { %>
+        &ndash;
+        <div>
+          <div class="item-day"><%= end.format('D MMMM') %></div>
+          <div class="item-day-of-week"><%= end.format('dddd') %></div>
+        </div>
+      <% } %>
+    </li>
+  <% }) %>
+  </ol>
+</div>
+<div class="item-description"><%- event.description %></div>
+<div class="item-text"><%- event.body_text %></div>

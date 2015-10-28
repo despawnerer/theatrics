@@ -1,10 +1,15 @@
+body, html {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   background: white;
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   font-size: 14px;
-
 }
 
 a {
@@ -78,7 +83,7 @@ a:hover {
   letter-spacing: 5px;
   margin: 0;
   padding: 0;
-  font-family: Times, serif;
+  font-family: Times New Roman, Times, serif;
 }
 
 #logo a {
@@ -122,7 +127,6 @@ a:hover {
   padding: 0;
   text-align: center;
   white-space: nowrap;
-  font-family: sans-serif;
   font-size: 14px;
   display: flex;
   flex-direction: row;
@@ -329,28 +333,52 @@ a:hover {
 
 .item-view {
   width: 750px;
-  margin: 0 auto;
+  margin: 45px auto;
+}
+
+.item-images-container {
+  margin: 35px 0;
 }
 
 .item-images {
   list-style-type: none;
   padding: 0;
-  margin: 30px 0;
-  display: flex;
+  margin: 0 -15px;
+  display: inline-flex;
   flex-direction: row;
+  justify-content: flex-start;
 }
 
 .item-image {
   padding: 0;
-  margin: 0;
+  margin: 0 15px;
+  flex: 0 0 auto;
 }
 
 .item-image img {
-  max-height: 400px;
+  height: 500px;
+  min-width: 500px;
+  object-fit: cover;
 }
 
 .big-item-title {
   font-size: 220%;
+}
+
+.big-item-tagline {
+  font-family: Times New Roman, Times, serif;
+  font-weight: normal;
+  margin-left: 5px;
+  font-size: 90%;
+}
+
+.item-information {
+  font-size: 110%;
+  margin: 30px 0;
+}
+
+.item-information-item {
+  margin: 20px 0;
 }
 
 .item-description {
@@ -359,5 +387,115 @@ a:hover {
 
 .item-text {
   font-size: 17px;
-  font-family: serif;
+  font-family: Times New Roman, Times, serif;
+}
+
+.item-place {
+  font-weight: bolder;
+}
+
+.item-dates {
+  list-style: none;
+  padding: 0;
+  margin: -6px -12px;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.item-dates > li {
+  margin: 6px 12px;
+  width: 100px;
+}
+
+.item-day {
+  font-size: 110%;
+}
+
+.item-day-of-week {
+  font-size: 80%;
+  margin: 2px 0;
+  color: #333;
+}
+
+.item-time {
+  font-size: 90%;
+  color: #333;
+}
+
+@media (min-width: 690px) and (max-width: 1079px) {
+  .item-view {
+    width: 630px;
+    margin: 35px auto;
+  }
+
+  .item-images-container {
+    margin: 30px 0;
+  }
+
+  .item-image img {
+    height: 350px;
+    min-width: 350px;
+  }
+}
+
+@media (max-width: 689px) {
+  .big-item-title {
+    font-size: 180%;
+  }
+
+  .big-item-tagline {
+    display: block;
+    margin: 10px 0;
+    font-size: 80%;
+  }
+}
+
+@media (min-width: 360px) and (max-width: 689px) {
+  .item-view {
+    width: 100%;
+    margin: 20px 0;
+  }
+
+  .item-images-container {
+    margin: 10px 0;
+  }
+
+  .item-images {
+    margin: 0 -5px;
+  }
+
+  .item-image {
+    margin: 0 5px;
+  }
+
+  .item-image img {
+    height: 200px;
+    min-width: 200px;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 359px) {
+  .item-view {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .item-images-container {
+    margin: 10px -15px;
+  }
+
+  .item-images {
+    padding: 0;
+    margin: 0;
+  }
+
+  .item-image {
+    margin: 0;
+  }
+
+  .item-image img {
+    height: 200px;
+    width: 1vw;
+  }
 }

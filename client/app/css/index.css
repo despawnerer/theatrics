@@ -25,38 +25,36 @@ a:hover {
   display: none;
 }
 
-
-/* Main container */
+/* Main header */
 
 #container {
   min-width: 290px;
 }
 
 @media (max-width: 359px) {
-  #container {
-    width: auto;
-    margin: 15px;
-  }
+  #container { margin: 15px; }
 }
 
 @media (min-width: 360px) and (max-width: 689px) {
-  #container {
-    width: 300px;
-    margin: 30px auto;
-  }
+  #container { margin: 30px; }
 }
 
 @media (min-width: 690px) and (max-width: 1079px) {
-  #container {
-    width: 630px;
-    margin: 45px auto;
-  }
+  #container { margin: 45px; }
 }
 
 @media (min-width: 1080px) {
-  #container {
-    width: 1020px;
-    margin: 60px auto;
+  #container { margin: 60px; }
+}
+
+.nav-container {
+  width: auto;
+}
+
+@media (min-width: 360px) and (max-width: 689px) {
+  .nav-container {
+    width: 300px;
+    margin: 0 auto;
   }
 }
 
@@ -66,7 +64,7 @@ a:hover {
 #header {
   color: #aaa;
   white-space: nowrap;
-  margin: 20px;
+  margin: 20px 0;
   text-align: center;
   display: flex;
   justify-content: center;
@@ -100,21 +98,39 @@ a:hover {
 
 #city select {
   margin: 0;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  padding: 1px 0px;
 }
 
-@media (max-width: 689px) {
+@media (max-width: 359px) {
   #header {
     margin: 10px 0;
     text-align: left;
     justify-content: space-between;
   }
 
-  #header-separator {
-    margin: 0;
+  #logo {
+    letter-spacing: 3px;
+  }
+
+  #city {
+    margin-left: 0;
+  }
+}
+
+@media (min-width: 360px) and (max-width: 689px) {
+  #header {
+    width: 300px;
+    margin: 10px auto;
   }
 
   #logo {
-    letter-spacing: 3px;
+    letter-spacing: 4px;
+  }
+
+  #city {
+    margin-left: 10px;
   }
 }
 
@@ -171,7 +187,7 @@ a:hover {
 }
 
 
-@media (max-width: 689px) {
+@media (max-width: 359px) {
   .calendar {
     margin: 10px -9px;
   }
@@ -183,7 +199,20 @@ a:hover {
   .calendar-day a {
     padding: 5px 0;
   }
+}
 
+
+@media (min-width: 360px) and (max-width: 689px) {
+  .calendar {
+    margin: 10px -10px;
+  }
+
+  .calendar-day {
+    flex: auto;
+  }
+}
+
+@media (max-width: 689px) {
   .calendar-day:nth-child(n+8) {
     display: none;
   }
@@ -207,29 +236,28 @@ a:hover {
 /* Feed */
 
 .feed-container {
-  margin: 45px 0;
 }
 
-.list {
+.feed {
   list-style-type: none;
   margin: -30px;
   padding: 0;
   overflow: hidden;
 }
 
-.list-item {
+.feed-item {
   margin: 30px;
   display: inline-block;
   width: 300px;
   vertical-align: top;
 }
 
-.list-image-container {
+.feed-image-container {
   width: 100%;
   height: 200px;
 }
 
-.list-image {
+.feed-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -257,16 +285,28 @@ a:hover {
   background: #f5f5f5;
 }
 
+@media (max-width: 359px) {
+  .feed-container {
+    width: auto;
+  }
+}
+
+@media (min-width: 360px) and (max-width: 689px) {
+  .feed-container {
+    width: 300px;
+  }
+}
+
 @media (max-width: 689px) {
   .feed-container {
-    margin: 15px 0;
+    margin: 15px auto;
   }
 
-  .list {
+  .feed {
     margin: -25px -15px;
   }
 
-  .list-item {
+  .feed-item {
     margin: 25px 15px;
     display: block;
     width: auto;
@@ -279,19 +319,27 @@ a:hover {
 
 @media (min-width: 690px) and (max-width: 1079px) {
   .feed-container {
-    margin: 30px 0;
+    width: 630px;
+    margin: 30px auto;
   }
 
-  .list {
+  .feed {
     margin: -15px;
   }
 
-  .list-item {
+  .feed-item {
     margin: 15px;
   }
 
   .load-more-container {
     margin: 45px 0;
+  }
+}
+
+@media (min-width: 1080px) {
+  .feed-container {
+    width: 1020px;
+    margin: 45px auto;
   }
 }
 
@@ -314,17 +362,17 @@ a:hover {
   text-transform: uppercase;
 }
 
-@media (max-width: 689px) {
+@media (max-width: 1079px) {
   .item-header {
-    margin: 15px 0 7px 0;
+    margin: 14px 0 6px 0;
   }
 
   .tagline {
-    margin: 7px 0;
+    margin: 6px 0;
   }
 
   .place {
-    margin-top: 9px;
+    margin-top: 8px;
   }
 }
 
@@ -356,8 +404,6 @@ a:hover {
 }
 
 .item-image img {
-  height: 500px;
-  min-width: 500px;
   object-fit: cover;
 }
 
@@ -422,31 +468,28 @@ a:hover {
   color: #333;
 }
 
-@media (min-width: 690px) and (max-width: 1079px) {
+@media (max-width: 359px) {
   .item-view {
-    width: 630px;
-    margin: 35px auto;
+    width: 100%;
+    margin: 15px 0;
   }
 
   .item-images-container {
-    margin: 30px 0;
+    margin: 15px 0;
+  }
+
+  .item-images {
+    margin: 0 -2.5px;
+  }
+
+  .item-image {
+    margin: 0 2.5px;
   }
 
   .item-image img {
-    height: 350px;
-    min-width: 350px;
-  }
-}
-
-@media (max-width: 689px) {
-  .big-item-title {
-    font-size: 180%;
-  }
-
-  .big-item-tagline {
-    display: block;
-    margin: 10px 0;
-    font-size: 80%;
+    height: 200px;
+    max-width: 290px;
+    min-width: 200px;
   }
 }
 
@@ -467,35 +510,62 @@ a:hover {
   .item-image {
     margin: 0 5px;
   }
+}
 
+@media (min-width: 360px) and (max-width: 574px) {
   .item-image img {
     height: 200px;
-    min-width: 200px;
     max-width: 300px;
+    min-width: 200px;
   }
 }
 
-@media (max-width: 359px) {
+@media (min-width: 360px) and (max-width: 450px) {
   .item-view {
-    width: 100%;
+    width: 300px;
+    margin: 20px auto;
+  }
+}
+
+@media (min-width: 575px) and (max-width: 689px) {
+  .item-image img {
+    height: 250px;
+    min-width: 250px;
+  }
+}
+
+@media (max-width: 689px) {
+  .big-item-title {
+    font-size: 180%;
+  }
+
+  .big-item-tagline {
+    display: block;
     margin: 10px 0;
+    font-size: 80%;
+  }
+}
+
+@media (min-width: 690px) and (max-width: 1079px) {
+  .item-view {
+    width: 630px;
+    margin: 35px auto;
   }
 
   .item-images-container {
-    margin: 10px -15px;
-  }
-
-  .item-images {
-    padding: 0;
-    margin: 0;
-  }
-
-  .item-image {
-    margin: 0;
+    margin: 30px 0;
   }
 
   .item-image img {
-    height: 200px;
-    width: 1vw;
+    height: 350px;
+    min-width: 350px;
+  }
+}
+
+
+@media (min-width: 1080px) {
+  .item-image img {
+    height: 500px;
+    min-width: 500px;
   }
 }

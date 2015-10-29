@@ -6,7 +6,7 @@ import {buildAPIURL, toggle, show, hide} from '../utils';
 
 
 const template = () => `
-<ol class="list" hidden></ol>
+<ol class="feed" hidden></ol>
 <div class="load-more-container" hidden>
   <button class="load-more-button" hidden>Загрузить ещё</button>
 </div>
@@ -37,7 +37,7 @@ export default class FeedView extends View {
 
   render() {
     this.element.innerHTML = template();
-    this.listContainer = this.element.querySelector('.list');
+    this.listContainer = this.element.querySelector('.feed');
     this.loadMoreContainer = this.element.querySelector('.load-more-container');
   }
 
@@ -68,7 +68,7 @@ export default class FeedView extends View {
 
   buildItemElement(item) {
     const element = document.createElement('li');
-    element.setAttribute('class', 'list-item');
+    element.setAttribute('class', 'feed-item');
     element.innerHTML = this.itemTemplate({
       item,
       app: this.app

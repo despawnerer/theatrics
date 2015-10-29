@@ -5,17 +5,21 @@ import View from '../base/view';
 
 export default class Calendar extends View {
   createElement() {
-    const element = document.createElement('ol');
-    element.setAttribute('class', 'calendar');
+    const element = document.createElement('div');
+    element.setAttribute('class', 'nav-container');
     return element;
   }
 
   render() {
     this.element.innerHTML = '';
 
+    const listElement = document.createElement('ol');
+    listElement.setAttribute('class', 'calendar');
+    this.element.appendChild(listElement);
+
     const anyDateElement = this.buildAnyDateElement();
     anyDateElement.classList.toggle('active', !this.model.has('date'));
-    this.element.appendChild(anyDateElement);
+    listElement.appendChild(anyDateElement);
 
     const today = moment().startOf('day');
     for (let n = 0; n < 14; n++) {
@@ -23,7 +27,7 @@ export default class Calendar extends View {
       const element = this.buildDayElement(day);
       const date = day.format('YYYY-MM-DD');
       element.classList.toggle('active', this.model.get('date') === date);
-      this.element.appendChild(element);
+      listElement.appendChild(element);
     }
   }
 

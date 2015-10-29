@@ -71,9 +71,7 @@ function buildBrowserify(options) {
 
   b.on('update', buildBundle);
   b.transform(ejsBrowserify.create());
-  b.transform(babelify.configure({
-    optional: ['runtime']
-  }));
+  b.transform(babelify);
 
   return buildBundle();
 }

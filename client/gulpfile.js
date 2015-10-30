@@ -21,7 +21,7 @@ function logError(e) {
 /* CSS */
 
 gulp.task('build-css', function() {
-  return gulp.src('app/css/**/*.css')
+  return gulp.src('app/css/index.css')
     .on('error', logError)
     .pipe(postcss([
       require('postcss-import')(),
@@ -130,13 +130,28 @@ gulp.task('build-min-html', function() {
     .pipe(gulp.dest('app/build'));
 });
 
+
+/* Fonts */
+
+gulp.task('build-fonts', function() {
+  return gulp.src('app/fonts/*').pipe(gulp.dest('app/build/fonts'));
+});
+
+gulp.task('watch-fonts', function() {
+  gulp.start(['build-fonts']);
+  gulp.watch('app/fonts/*', ['build-fonts']);
+});
+
+
 /* Big tasks */
 
 gulp.task('watch', function () {
   gulp.start('watch-css');
   gulp.start('watch-js');
   gulp.start('watch-html');
+  gulp.start('watch-fonts');
 });
 
-gulp.task('build', ['build-css', 'build-js', 'build-html']);
-gulp.task('build-min', ['build-min-css', 'build-min-js', 'build-min-html']);
+gulp.task('build', ['build-css', 'build-js', 'build-html', 'build-fonts']);
+gulp.task('build-min', [
+  'build-min-css', 'build-min-js', 'build-min-html', 'build-fonts']);

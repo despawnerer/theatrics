@@ -31,15 +31,15 @@ a:hover {
   #container { margin: 15px; }
 }
 
-@media (min-width: 360px) and (max-width: 689px) {
+@media (min-width: 360px) and (max-width: 719px) {
   #container { margin: 30px; }
 }
 
-@media (min-width: 690px) and (max-width: 1079px) {
+@media (min-width: 720px) and (max-width: 1139px) {
   #container { margin: 45px; }
 }
 
-@media (min-width: 1080px) {
+@media (min-width: 1140px) {
   #container { margin: 60px; }
 }
 
@@ -47,7 +47,7 @@ a:hover {
   width: auto;
 }
 
-@media (min-width: 360px) and (max-width: 689px) {
+@media (min-width: 360px) and (max-width: 719px) {
   .nav-container {
     width: 300px;
     margin: 0 auto;
@@ -115,7 +115,7 @@ a:hover {
   }
 }
 
-@media (min-width: 360px) and (max-width: 689px) {
+@media (min-width: 360px) and (max-width: 719px) {
   #header {
     width: 300px;
     margin: 10px auto;
@@ -198,7 +198,7 @@ a:hover {
 }
 
 
-@media (min-width: 360px) and (max-width: 689px) {
+@media (min-width: 360px) and (max-width: 719px) {
   .calendar {
     margin: 10px -10px;
   }
@@ -208,21 +208,21 @@ a:hover {
   }
 }
 
-@media (max-width: 689px) {
+@media (max-width: 719px) {
   .calendar-day:nth-child(n+8) {
     display: none;
   }
 }
 
 
-@media (min-width: 690px) and (max-width: 1079px) {
+@media (min-width: 720px) and (max-width: 1139px) {
   .calendar {
     margin: 20px 0;
   }
 }
 
 
-@media (max-width: 1079px) {
+@media (max-width: 1139px) {
   .calendar-day:nth-child(n+15) {
     display: none;
   }
@@ -287,13 +287,13 @@ a:hover {
   }
 }
 
-@media (min-width: 360px) and (max-width: 689px) {
+@media (min-width: 360px) and (max-width: 719px) {
   .feed-container {
     width: 300px;
   }
 }
 
-@media (max-width: 689px) {
+@media (max-width: 719px) {
   .feed-container {
     margin: 15px auto;
   }
@@ -313,7 +313,7 @@ a:hover {
   }
 }
 
-@media (min-width: 690px) and (max-width: 1079px) {
+@media (min-width: 720px) and (max-width: 1139px) {
   .feed-container {
     width: 630px;
     margin: 30px auto;
@@ -332,7 +332,7 @@ a:hover {
   }
 }
 
-@media (min-width: 1080px) {
+@media (min-width: 1140px) {
   .feed-container {
     width: 1020px;
     margin: 45px auto;
@@ -358,7 +358,7 @@ a:hover {
   text-transform: uppercase;
 }
 
-@media (max-width: 1079px) {
+@media (max-width: 1139px) {
   .item-header {
     margin: 14px 0 6px 0;
   }
@@ -525,7 +525,7 @@ a:hover {
   }
 }
 
-@media (min-width: 360px) and (max-width: 689px) {
+@media (min-width: 360px) and (max-width: 719px) {
   .item-view { margin: 20px 0; }
   .item-view-inner { width: 100%; }
   .item-images-container { margin: 15px -30px; }
@@ -550,14 +550,14 @@ a:hover {
   }
 }
 
-@media (min-width: 575px) and (max-width: 689px) {
+@media (min-width: 575px) and (max-width: 719px) {
   .item-image img {
     height: 250px;
     min-width: 250px;
   }
 }
 
-@media (max-width: 689px) {
+@media (max-width: 719px) {
   .big-item-title {
     font-size: 180%;
   }
@@ -580,7 +580,7 @@ a:hover {
   .item-images-container .previous-button span { left: 5px; }
 }
 
-@media (min-width: 690px) and (max-width: 1079px) {
+@media (min-width: 720px) and (max-width: 1139px) {
   .item-view { margin: 35px 0; }
   .item-view-inner { width: 600px; }
   .item-images-container { margin: 25px -45px; }
@@ -602,7 +602,7 @@ a:hover {
   .item-images-container .previous-button span { left: 50px; }
 }
 
-@media (min-width: 1080px) {
+@media (min-width: 1140px) {
   .item-view { margin: 45px 0; }
   .item-view-inner { width: 750px; }
   .item-images-container { margin: 35px -60px; }

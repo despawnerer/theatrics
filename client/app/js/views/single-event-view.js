@@ -3,6 +3,7 @@ import moment from 'moment-timezone';
 
 import View from '../base/view';
 import Event from '../models/event';
+import Slider from '../components/slider';
 import {capfirst, buildAPIURL} from '../utils';
 
 
@@ -17,6 +18,8 @@ export default class SingleEventView extends View {
     if (!model.isFetched()) {
       model.fetch();
     }
+
+    this.slider = null;
   }
 
   createElement() {
@@ -39,6 +42,16 @@ export default class SingleEventView extends View {
         event,
         dates,
       });
+
+      this.slider = new Slider(
+        this.element.querySelector('.item-images-container'));
     }
+  }
+
+  unbind() {
+    if (this.slider) {
+      this.slider.unbind();
+    }
+    super.unbind();
   }
 }

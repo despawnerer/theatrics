@@ -486,6 +486,7 @@ a:hover {
   margin: -6px -12px;
   display: flex;
   flex-flow: row wrap;
+  font-size: 110%;
 }
 
 .item-dates > li {
@@ -493,18 +494,23 @@ a:hover {
   width: 100px;
 }
 
-.item-day {
-  font-size: 110%;
+.item-dates > li.double-size {
+  width: 212px;
+}
+
+.item-date {
+  display: inline-block;
+  vertical-align: top;
 }
 
 .item-day-of-week {
-  font-size: 80%;
+  font-size: 70%;
   margin: 2px 0;
   color: #333;
 }
 
 .item-time {
-  font-size: 90%;
+  font-size: 80%;
   color: #333;
 }
 

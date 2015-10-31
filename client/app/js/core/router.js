@@ -43,7 +43,7 @@ export default class Router {
       // this is a fake pop state event so don't handle it
       return;
     }
-    const {name, args} = this.resolver.resolve(window.location.path);
+    const {name, args} = this.resolver.resolve(window.location.pathname);
     this.callHandler(name, args);
   }
 

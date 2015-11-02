@@ -27,8 +27,12 @@ a:hover {
   min-width: 290px;
 }
 
-@media (max-width: 359px) {
-  #container { margin: 15px; }
+@media (max-width: 329px) {
+  #container { margin: 20px 15px; }
+}
+
+@media (min-width: 330px) and (max-width: 359px) {
+  #container { width: 300px; margin: 20px auto; }
 }
 
 @media (min-width: 360px) and (max-width: 719px) {

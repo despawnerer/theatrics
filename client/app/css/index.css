@@ -148,7 +148,7 @@ a:hover {
 }
 
 @media (min-width: 360px) and (max-width: 719px) {
-  .events-view { margin: 25px 0; }
+  .events-view { margin: 20px 0; }
 }
 
 @media (min-width: 720px) and (max-width: 1139px) {
@@ -212,11 +212,19 @@ a:hover {
 }
 
 
-@media (max-width: 719px) {
+@media (max-width: 359px) {
   .calendar {
     margin: 10px -9px;
   }
+}
 
+@media (min-width: 360px) and (max-width: 719px) {
+  .calendar {
+    margin: 20px -9px;
+  }
+}
+
+@media (max-width: 719px) {
   .calendar-day {
     flex: auto;
   }
@@ -224,9 +232,7 @@ a:hover {
   .calendar-day a {
     padding: 5px 0;
   }
-}
 
-@media (max-width: 719px) {
   .calendar-day:nth-child(n+8) {
     display: none;
   }

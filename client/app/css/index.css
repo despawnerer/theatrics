@@ -1,3 +1,4 @@
+@import 'fonts.css';
 @import 'icons.css';
 
 body {
@@ -81,7 +82,7 @@ a:hover {
   letter-spacing: 5px;
   margin: 0;
   padding: 0;
-  font-family: Times New Roman, Times, serif;
+  font-family: Liberation Serif, Times New Roman, serif;
 }
 
 #logo a {
@@ -475,7 +476,7 @@ a:hover {
 }
 
 .big-item-tagline {
-  font-family: Times New Roman, Times, serif;
+  font-family: Liberation Serif, Times New Roman, serif;
   font-weight: normal;
   margin-left: 5px;
   font-size: 90%;
@@ -496,7 +497,7 @@ a:hover {
 
 .item-text {
   font-size: 17px;
-  font-family: Times New Roman, Times, serif;
+  font-family: Liberation Serif, Times New Roman, serif;
 }
 
 .item-place {

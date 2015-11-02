@@ -478,7 +478,7 @@ a:hover {
 
 .item-information {
   font-size: 110%;
-  margin: 20px 0 30px 0;
+  margin: 30px 0;
 }
 
 .item-information-item {
@@ -533,6 +533,7 @@ a:hover {
 }
 
 @media (max-width: 359px) {
+  .item-view { margin: 20px 0; }
   .item-view-inner { width: 100%; }
   .item-images-container { margin: 15px -15px; }
   .item-images { margin: 0 15px; }
@@ -549,8 +550,9 @@ a:hover {
 }
 
 @media (min-width: 360px) and (max-width: 719px) {
+  .item-view { margin: 25px 0; }
   .item-view-inner { width: 100%; }
-  .item-images-container { margin: 30px -30px; }
+  .item-images-container { margin: 25px -30px; }
   .item-images { margin: 0 30px; }
 
   .item-image {
@@ -581,12 +583,17 @@ a:hover {
 @media (max-width: 719px) {
   .big-item-title {
     font-size: 180%;
+    margin: 20px 0;
   }
 
   .big-item-tagline {
     display: block;
-    margin: 10px 0;
+    margin: 5px 0;
     font-size: 80%;
+  }
+
+  .item-information {
+    margin: 20px 0;
   }
 
   .item-images-container .slide-button span {
@@ -602,6 +609,7 @@ a:hover {
 }
 
 @media (min-width: 720px) and (max-width: 1139px) {
+  .item-view { margin: 45px 0; }
   .item-view-inner { width: 600px; }
   .item-images-container { margin: 35px -45px; }
 
@@ -623,6 +631,7 @@ a:hover {
 }
 
 @media (min-width: 1140px) {
+  .item-view { margin: 45px 0; }
   .item-view-inner { width: 750px; }
   .item-images-container { margin: 35px -60px; }
 

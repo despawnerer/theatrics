@@ -42,6 +42,12 @@ export default class EventsView extends View {
     this.feedView = new FeedView({app, itemTemplate, model: this.feed});
   }
 
+  createElement() {
+    const element = document.createElement('div');
+    element.setAttribute('class', 'events-view');
+    return element;
+  }
+
   render() {
     this.element.innerHTML = '';
     [this.calendar, this.feedView].forEach(view => {

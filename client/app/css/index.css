@@ -515,7 +515,6 @@ a:hover {
 }
 
 @media (max-width: 359px) {
-  .item-view { margin: 15px 0; }
   .item-view-inner { width: 100%; }
   .item-images-container { margin: 15px -15px; }
   .item-images { margin: 0 15px; }
@@ -532,9 +531,8 @@ a:hover {
 }
 
 @media (min-width: 360px) and (max-width: 719px) {
-  .item-view { margin: 20px 0; }
   .item-view-inner { width: 100%; }
-  .item-images-container { margin: 15px -30px; }
+  .item-images-container { margin: 30px -30px; }
   .item-images { margin: 0 30px; }
 
   .item-image {
@@ -543,7 +541,6 @@ a:hover {
 }
 
 @media (min-width: 360px) and (max-width: 450px) {
-  .item-view { margin: 20px 0; }
   .item-view-inner { width: 300px; }
   .item-images { margin: 0; }
 }
@@ -587,9 +584,8 @@ a:hover {
 }
 
 @media (min-width: 720px) and (max-width: 1139px) {
-  .item-view { margin: 35px 0; }
   .item-view-inner { width: 600px; }
-  .item-images-container { margin: 25px -45px; }
+  .item-images-container { margin: 35px -45px; }
 
   .item-image img {
     height: 350px;
@@ -609,7 +605,6 @@ a:hover {
 }
 
 @media (min-width: 1140px) {
-  .item-view { margin: 45px 0; }
   .item-view-inner { width: 750px; }
   .item-images-container { margin: 35px -60px; }
 

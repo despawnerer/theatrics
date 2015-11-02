@@ -17,7 +17,9 @@
     <span class="big-item-tagline"><%= event.tagline %></span>
   </h2>
   <div class="item-information">
-    <div class="item-information-item item-place"><%= capfirst(event.place.title) %></div>
+    <% if (event.place) { %>
+      <div class="item-information-item item-place"><%= capfirst(event.place.title) %></div>
+    <% } %>
     <div class="item-information-item"><%= event.price %></div>
     <ol class="item-dates">
     <% dates.forEach(function(date) { %>

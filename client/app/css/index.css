@@ -212,7 +212,7 @@ a:hover {
 }
 
 
-@media (max-width: 359px) {
+@media (max-width: 719px) {
   .calendar {
     margin: 10px -9px;
   }
@@ -223,17 +223,6 @@ a:hover {
 
   .calendar-day a {
     padding: 5px 0;
-  }
-}
-
-
-@media (min-width: 360px) and (max-width: 719px) {
-  .calendar {
-    margin: 10px -10px;
-  }
-
-  .calendar-day {
-    flex: auto;
   }
 }
 

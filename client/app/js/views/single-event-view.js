@@ -15,10 +15,6 @@ export default class SingleEventView extends View {
     model = Event.from(model);
     super({app, model});
 
-    if (!model.isFetched()) {
-      model.fetch();
-    }
-
     this.slider = null;
   }
 
@@ -30,22 +26,29 @@ export default class SingleEventView extends View {
 
   render() {
     if (this.model.isFetched()) {
-      const app = this.app;
-      const event = this.model.data;
-      const dates = this.model.getDisplayDates();
-      const location = this.app.locations.get(event.location.slug);
-      this.element.innerHTML = template({
-        moment,
-        capfirst,
-        app,
-        location,
-        event,
-        dates,
-      });
-
-      this.slider = new Slider(
-        this.element.querySelector('.item-images-container'));
+      this.renderItem();
+    } else {
+      this.model.fetch();
     }
+  }
+
+  renderItem() {
+    const event = this.model.data;
+    const location = this.app.locations.get(event.location.slug);
+
+    this.element.innerHTML = template({
+      moment,
+      capfirst,
+      app: this.app,
+      location: location,
+      event: event,
+      dates: this.model.getDisplayDates(),
+    });
+
+    const imagesElement = this.element.querySelector('.item-images-container');
+    this.slider = new Slider(imagesElement);
+
+    this.app.setTitle(`${capfirst(event.title)} – ${location.name}`);
   }
 
   unbind() {

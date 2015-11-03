@@ -56,6 +56,7 @@ export default class EventsView extends View {
     });
 
     this.feed.loadMore();
+    this.updateTitle();
   }
 
   unbind() {
@@ -65,6 +66,18 @@ export default class EventsView extends View {
 
   onModelChange() {
     this.updateFeedQuery();
+    this.updateTitle();
+  }
+
+  updateTitle() {
+    const state = this.model.data;
+    const location = this.app.locations.get(state.location);
+    const date = state.date ? moment(state.date).format('D MMMM') : null;
+    if (date) {
+      this.app.setTitle(`${date} – Спектакли – ${location.name}`);
+    } else {
+      this.app.setTitle(`Спектакли – ${location.name}`);
+    }
   }
 
   updateFeedQuery() {

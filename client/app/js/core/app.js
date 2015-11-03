@@ -62,6 +62,16 @@ export default class App {
     show(locationContainer);
   }
 
+  setTitle(title) {
+    const fullTitle = `${title} – Theatrics`;
+    document.title = fullTitle;
+    history.replaceState(
+      history.state,
+      fullTitle,
+      window.location.pathname
+    );
+  }
+
   // route handlers
 
   visitIndex() {

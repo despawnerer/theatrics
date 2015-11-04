@@ -1,6 +1,6 @@
 import Events from 'events-mixin';
 
-import {show, toggle} from '../utils';
+import {show, toggle, toggleClass} from '../utils';
 
 
 export default class Slider {
@@ -189,7 +189,7 @@ export default class Slider {
   }
 
   set isTouching(value) {
-    this.element.classList.toggle('touching', value);
+    toggleClass(this.element, 'touching', value);
   }
 
   get isTouching() {

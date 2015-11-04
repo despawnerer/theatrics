@@ -2,6 +2,8 @@ import moment from 'moment';
 
 import View from '../base/view';
 
+import {toggleClass} from '../utils';
+
 
 export default class Calendar extends View {
   createElement() {
@@ -18,7 +20,7 @@ export default class Calendar extends View {
     this.element.appendChild(listElement);
 
     const anyDateElement = this.buildAnyDateElement();
-    anyDateElement.classList.toggle('active', !this.model.has('date'));
+    toggleClass(anyDateElement, 'active', !this.model.has('date'));
     listElement.appendChild(anyDateElement);
 
     const today = moment().startOf('day');
@@ -26,7 +28,7 @@ export default class Calendar extends View {
       const day = today.clone().add(n, 'days');
       const element = this.buildDayElement(day);
       const date = day.format('YYYY-MM-DD');
-      element.classList.toggle('active', this.model.get('date') === date);
+      toggleClass(element, 'active', this.model.get('date') === date);
       listElement.appendChild(element);
     }
   }

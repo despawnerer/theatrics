@@ -11,6 +11,21 @@ export function buildAPIURL(path) {
 }
 
 
+export function toggleClass(element, className, condition) {
+  /* This shim is used because older Safari and IE don't support
+     the second arg to classList.toggle */
+  if (condition === undefined) {
+    condition = element.classList.contains(className);
+  }
+
+  if (condition) {
+    element.classList.add(className);
+  } else {
+    element.classList.remove(className);
+  }
+}
+
+
 export function toggle(element, condition) {
   if (condition) {
     show(element);

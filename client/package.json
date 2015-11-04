@@ -9,6 +9,7 @@
   "dependencies": {
     "axios": "^0.7.0",
     "ejs": "^2.3.4",
+    "equals": "^1.0.1",
     "events": "^1.1.0",
     "events-mixin": "^1.2.0",
     "lazysizes": "^1.2.2",

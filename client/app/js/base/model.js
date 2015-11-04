@@ -1,6 +1,7 @@
 import {EventEmitter} from 'events';
 
 import extend from 'xtend';
+import equal from 'equals';
 
 
 export default class Model extends EventEmitter {
@@ -24,7 +25,11 @@ export default class Model extends EventEmitter {
   }
 
   clone() {
-    return new this.constructor(extend(this._data));
+    return new this.constructor(extend({}, this._data));
+  }
+
+  equals(other) {
+    return equal(this._data, other._data);
   }
 
   fetch() {

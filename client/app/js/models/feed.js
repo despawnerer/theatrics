@@ -12,10 +12,7 @@ export default class Feed extends EventEmitter {
     this.path = path;
     this.query = new Model(params);
 
-    this.onQueryChange = this.onQueryChange.bind(this);
-    this.onLoaded = this.onLoaded.bind(this);
-
-    this.query.on('change', this.onQueryChange);
+    this.query.on('change', this.onQueryChange.bind(this));
 
     this.nextURL = null;
     this.items = null;
@@ -32,10 +29,11 @@ export default class Feed extends EventEmitter {
   }
 
   loadMore() {
+    const loadingQuery = this.query.clone();
     if (this.nextURL) {
       return axios
         .get(this.nextURL)
-        .then(this.onLoaded);
+        .then(this.onLoaded.bind(this, loadingQuery));
     } else {
       return axios
         .get(
@@ -43,7 +41,7 @@ export default class Feed extends EventEmitter {
           {
             params: this.query.data
           })
-        .then(this.onLoaded);
+        .then(this.onLoaded.bind(this, loadingQuery));
     }
   }
 
@@ -51,7 +49,11 @@ export default class Feed extends EventEmitter {
     return this.nextURL !== null || this.items === null;
   }
 
-  onLoaded(response) {
+  onLoaded(loadedQuery, response) {
+    if (!loadedQuery.equals(this.query)) {
+      return;
+    }
+
     if (this.items === null) {
       this.items = [];
     }

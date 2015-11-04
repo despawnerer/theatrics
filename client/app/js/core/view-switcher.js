@@ -22,8 +22,9 @@ export default class ViewSwitcher {
 
     const model = new Model(args);
     const view = new ViewClass({app: this.app, model: model});
-    this.element.appendChild(view.element)
     view.render();
+
+    this.element.appendChild(view.element);
 
     this.currentView = view;
   }

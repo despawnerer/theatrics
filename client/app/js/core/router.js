@@ -39,7 +39,7 @@ export default class Router {
   }
 
   onWindowPopState(event) {
-    if (!event.state) {
+    if (event.state === null) {
       // this is a fake pop state event so don't handle it
       return;
     }

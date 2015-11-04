@@ -4,6 +4,7 @@ import moment from 'moment-timezone';
 import View from '../base/view';
 import Event from '../models/event';
 import Slider from '../components/slider';
+import Loader from '../components/loader';
 import {capfirst, buildAPIURL} from '../utils';
 
 
@@ -28,6 +29,7 @@ export default class SingleEventView extends View {
     if (this.model.isFetched()) {
       this.renderItem();
     } else {
+      this.renderLoader();
       this.model.fetch();
     }
   }
@@ -49,6 +51,15 @@ export default class SingleEventView extends View {
     this.slider = new Slider(imagesElement);
 
     this.app.setTitle(`${capfirst(event.title)} – ${location.name}`);
+  }
+
+  renderLoader() {
+    const loader = new Loader({progress: 0.25});
+    const container = document.createElement('div');
+    container.setAttribute('class', 'big-loader-container');
+    container.appendChild(loader.element);
+    this.element.appendChild(container);
+    this.app.setTitle("Спектакль");
   }
 
   unbind() {

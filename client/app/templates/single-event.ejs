@@ -5,7 +5,18 @@
     <ul class="item-images">
       <% event.images.forEach(function(image) { %>
         <li class="item-image">
-          <img data-src="<%= image.image %>" class="lazyload"/>
+          <img
+            data-sizes="
+              (min-width: 1140px) 500px,
+              (min-width: 720px) 350px,
+              200px
+            "
+            data-srcset="
+              <%= image.image %> 500w,
+              <%= image.thumbnails["640x384"] %> 450w
+            "
+            data-src="<%= image.thumbnails["640x384"] %>"
+            class="lazyload"/>
         </li>
       <% }) %>
     </ul>

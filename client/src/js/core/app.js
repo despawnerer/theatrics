@@ -37,7 +37,7 @@ export default class App {
     this.router.addHandler('places', this.visitPlaces.bind(this));
     this.router.addHandler('single-event', this.visitSingleEvent.bind(this));
 
-    const viewContainer = document.querySelector('#view-container')
+    const viewContainer = document.querySelector('#view-container');
     this.viewSwitcher = new ViewSwitcher(this, viewContainer);
   }
 

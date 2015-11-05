@@ -1,5 +1,8 @@
+import 'core-js/es5';
 import 'core-js/es6/promise';
 import 'core-js/es6/symbol';
+import 'core-js/es6/array';
+
 import 'moment-timezone/moment-timezone';
 import 'moment/locale/ru';
 

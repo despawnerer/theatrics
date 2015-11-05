@@ -6,14 +6,12 @@ import FeedView from './feed-view';
 
 
 const itemTemplate = ({app, item}) => `
-<a href="/place/${item.id}/">
-  <div class="list-image-container">
-    <img data-src="${item.images[0].thumbnails['640x384']}" class="list-image lazyload"/>
-  </div>
-  <h2 class="item-header">
-    ${capfirst(item.title)}
-  </h2>
-</a>
+<div class="feed-image-container">
+  <img data-src="${item.images[0].thumbnails['640x384']}" class="feed-image lazyload"/>
+</div>
+<h2 class="item-header">
+  ${capfirst(item.title)}
+</h2>
 <div class="place">${item.address}</div>
 `;
 
@@ -31,18 +29,14 @@ export default class PlacesView extends View {
         page_size: 24,
       });
 
-    this.updateFeedQuery();
-
     this.feedView = new FeedView({app, itemTemplate, model: this.feed});
   }
 
   render() {
     this.element.innerHTML = '';
-
     this.feedView.render();
     this.element.appendChild(this.feedView.element);
-
-    this.feed.loadMore();
+    this.update()
   }
 
   unbind() {
@@ -51,10 +45,25 @@ export default class PlacesView extends View {
   }
 
   onModelChange() {
+    this.update();
+  }
+
+  update() {
     this.updateFeedQuery();
+    this.updateTitle();
+    this.updateLocationSetting();
   }
 
   updateFeedQuery() {
     this.feed.query.set('location', this.model.get('location'));
+  }
+
+  updateTitle() {
+    const location = this.app.locations.get(this.model.get('location'));
+    this.app.setTitle(`Театры – ${location.name}`);
+  }
+
+  updateLocationSetting() {
+    this.app.settings.set('location', this.model.get('location'));
   }
 }

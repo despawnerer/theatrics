@@ -34,9 +34,9 @@
     <div class="item-information-item"><%= event.price %></div>
     <ol class="item-dates">
     <% dates.forEach(function(date) { %>
-      <% const start = moment.tz(date.start * 1000, location.timezone) %>
-      <% const end = date.end ? moment.tz(date.end * 1000, location.timezone) : null %>
-      <% const isRange = end && !start.isSame(end, 'day') %>
+      <% var start = moment.tz(date.start * 1000, location.timezone) %>
+      <% var end = date.end ? moment.tz(date.end * 1000, location.timezone) : null %>
+      <% var isRange = end && !start.isSame(end, 'day') %>
       <li<% if (isRange) { %> class="double-size"<% } %>>
         <div class="item-date">
           <div class="item-day"><%= start.format('D MMMM') %></div>

@@ -1,5 +1,4 @@
-import ru from 'moment/locale/ru';
-import lazysizes from 'lazysizes';
+import 'lazysizes';
 
 import Resolver from './resolver';
 import Locations from './locations';

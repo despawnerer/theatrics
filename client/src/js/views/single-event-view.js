@@ -50,6 +50,7 @@ export default class SingleEventView extends View {
     const imagesElement = this.element.querySelector('.item-images-container');
     this.slider = new Slider(imagesElement);
 
+    this.app.settings.set('location', location.slug);
     this.app.setTitle(`${capfirst(event.title)} – ${location.name}`);
   }
 

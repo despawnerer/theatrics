@@ -18,8 +18,6 @@ import {show, hide} from '../utils';
 export default class App {
   constructor() {
     this.settings = new Settings();
-    this.settings.on('change', this.onSettingsChange.bind(this));
-
     this.locations = new Locations();
 
     this.resolver = new Resolver();
@@ -94,20 +92,5 @@ export default class App {
 
   visitSingleEvent(args) {
     this.viewSwitcher.switchView(SingleEventView, args);
-  }
-
-  // event handlers
-
-  onSettingsChange() {
-    if (this.settings.hasChanged('location')) {
-      this.handleLocationChange(this.settings.get('location'));
-    }
-  }
-
-  handleLocationChange(location) {
-    const view = this.currentView instanceof PlacesView ? 'places' : 'events';
-    const args = {location};
-    const path = this.resolver.reverse(view, args)
-    this.router.navigate(path);
   }
 }

@@ -36,8 +36,6 @@ export default class EventsView extends View {
         page_size: 24,
       });
 
-    this.updateFeedQuery();
-
     this.calendar = new Calendar({app, model});
     this.feedView = new FeedView({app, itemTemplate, model: this.feed});
   }
@@ -50,34 +48,30 @@ export default class EventsView extends View {
 
   render() {
     this.element.innerHTML = '';
-    [this.calendar, this.feedView].forEach(view => {
-      view.render();
-      this.element.appendChild(view.element);
-    });
 
-    this.feed.loadMore();
-    this.updateTitle();
+    this.calendar.render();
+    this.feedView.render();
+
+    this.element.appendChild(this.calendar.element);
+    this.element.appendChild(this.feedView.element);
+
+    this.update();
   }
 
   unbind() {
-    [this.calendar, this.feedView].forEach(view => view.unbind());
+    this.calendar.unbind();
+    this.feedView.unbind();
     super.unbind();
   }
 
   onModelChange() {
-    this.updateFeedQuery();
-    this.updateTitle();
+    this.update();
   }
 
-  updateTitle() {
-    const state = this.model.data;
-    const location = this.app.locations.get(state.location);
-    const date = state.date ? moment(state.date).format('D MMMM') : null;
-    if (date) {
-      this.app.setTitle(`${date} – Спектакли – ${location.name}`);
-    } else {
-      this.app.setTitle(`Спектакли – ${location.name}`);
-    }
+  update() {
+    this.updateFeedQuery();
+    this.updateTitle();
+    this.updateLocationSetting();
   }
 
   updateFeedQuery() {
@@ -98,5 +92,20 @@ export default class EventsView extends View {
     }
 
     query.apply();
+  }
+
+  updateTitle() {
+    const state = this.model.data;
+    const location = this.app.locations.get(state.location);
+    const date = state.date ? moment(state.date).format('D MMMM') : null;
+    if (date) {
+      this.app.setTitle(`${date} – Спектакли – ${location.name}`);
+    } else {
+      this.app.setTitle(`Спектакли – ${location.name}`);
+    }
+  }
+
+  updateLocationSetting() {
+    this.app.settings.set('location', this.model.get('location'));
   }
 }

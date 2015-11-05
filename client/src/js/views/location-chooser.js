@@ -1,7 +1,5 @@
 import View from '../base/view';
-
-
-const SETTING_NAME = 'location';
+import PlacesView from '../views/places-view';
 
 
 export default class LocationChooser extends View {
@@ -9,6 +7,7 @@ export default class LocationChooser extends View {
     super({app, model});
 
     this.events.bind('change', 'onSelectChange');
+    this.app.settings.on('change', this.onSettingsChange.bind(this));
   }
 
   createElement() {
@@ -16,27 +15,29 @@ export default class LocationChooser extends View {
   }
 
   render() {
-    const currentValue = this.getCurrentValue();
     this.app.locations.forEach(location => {
       const option = document.createElement('option');
       option.value = location.slug;
       option.textContent = location.name;
-      if (location.slug == currentValue) {
-        option.setAttribute('selected', true);
-      }
       this.element.appendChild(option);
     });
+
+    this.element.value = this.app.settings.get('location');
   }
 
   onSelectChange(event) {
-    this.app.settings.set(SETTING_NAME, this.getNewValue());
+    const location = this.element.value;
+    if (location !== this.app.settings.get('location')) {
+      const view = this.app.viewSwitcher.currentView instanceof PlacesView ? 'places' : 'events';
+      const path = this.app.resolver.reverse(view, {location})
+      this.app.router.navigate(path);
+      this.app.settings.set('location', location);
+    }
   }
 
-  getCurrentValue() {
-    return this.app.settings.get(SETTING_NAME);
-  }
-
-  getNewValue() {
-    return this.element.options[this.element.selectedIndex].value;
+  onSettingsChange() {
+    if (this.app.settings.hasChanged('location')) {
+      this.element.value = this.app.settings.get('location');
+    }
   }
 }

@@ -71,7 +71,9 @@ function buildBrowserify(options) {
 
   b.on('update', buildBundle);
   b.transform(ejsBrowserify.create());
-  b.transform(babelify);
+  b.transform(babelify.configure({
+    presets: ['es2015']
+  }));
 
   return buildBundle();
 }

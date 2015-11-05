@@ -1,7 +1,7 @@
 import {EventEmitter} from 'events';
 
 import extend from 'xtend';
-import equal from 'equals';
+import equal from 'deep-equal';
 
 
 export default class Model extends EventEmitter {

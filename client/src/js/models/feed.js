@@ -59,7 +59,7 @@ export default class Feed extends EventEmitter {
     }
 
     this.nextURL = response.data.next;
-    this.items.concat(response.data.results);
+    this.items = this.items.concat(response.data.results);
 
     this.emit('load', response.data.results);
   }

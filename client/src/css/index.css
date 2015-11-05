@@ -395,6 +395,12 @@ a:hover {
 .load-more-container.loading .load-more-button { visibility: hidden; }
 .load-more-container.loading .loader { display: block; }
 
+.nothing-more, .nothing-at-all {
+  font-size: 24px;
+  color: silver;
+  text-align: center;
+  margin: 90px 0;
+}
 
 @media (max-width: 359px) {
   .feed-container {

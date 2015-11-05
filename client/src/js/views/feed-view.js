@@ -11,6 +11,8 @@ const template = () => `
 <div class="load-more-container" hidden>
   <button class="load-more-button" hidden>Загрузить ещё</button>
 </div>
+<div class="nothing-more" hidden>Больше ничего нет</div>
+<div class="nothing-at-all" hidden>Ничего нет</div>
 <div class="big-loader-container" hidden></div>
 `;
 
@@ -46,6 +48,8 @@ export default class FeedView extends View {
     this.listContainer = this.element.querySelector('.feed');
     this.loadMoreContainer = this.element.querySelector('.load-more-container');
     this.feedLoaderContainer = this.element.querySelector('.big-loader-container');
+    this.nothingMore = this.element.querySelector('.nothing-more');
+    this.nothingAtAll = this.element.querySelector('.nothing-at-all');
 
     this.feedLoaderContainer.appendChild(this.feedLoader.element);
     this.loadMoreContainer.appendChild(this.moreLoader.element);
@@ -67,6 +71,9 @@ export default class FeedView extends View {
   }
 
   onLoaded(items) {
+    const hasMore = this.model.hasMore();
+    const hasAnything = this.model.items.length !== 0;
+
     if (this.needsClearing) {
       this.needsClearing = false;
       this.listContainer.innerHTML = '';
@@ -79,7 +86,9 @@ export default class FeedView extends View {
 
     hide(this.feedLoaderContainer);
     show(this.listContainer);
-    toggle(this.loadMoreContainer, this.model.hasMore());
+    toggle(this.loadMoreContainer, hasMore);
+    toggle(this.nothingMore, !hasMore && hasAnything);
+    toggle(this.nothingAtAll, !hasAnything);
 
     this.loadMoreContainer.classList.remove('loading');
   }

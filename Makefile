@@ -3,7 +3,7 @@ host = localhost:9001
 .PHONY: install clean watch build run
 
 clean:
-	rm -rf client/app/build
+	rm -rf client/build
 	rm -rf client/node_modules
 	rm -rf server/app/__pycache__
 

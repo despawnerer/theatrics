@@ -21,28 +21,28 @@ function logError(e) {
 /* CSS */
 
 gulp.task('build-css', function() {
-  return gulp.src('app/css/index.css')
+  return gulp.src('src/css/index.css')
     .on('error', logError)
     .pipe(postcss([
       require('postcss-import')(),
       require('autoprefixer')()
     ]))
-    .pipe(gulp.dest('app/build'));
+    .pipe(gulp.dest('build'));
 });
 
 
 gulp.task('watch-css', function () {
   gulp.start(['build-css']);
-  gulp.watch('app/css/**/*.css', ['build-css']);
+  gulp.watch('src/css/**/*.css', ['build-css']);
 });
 
 gulp.task('build-min-css', ['build-css'], function () {
-  return gulp.src(['app/build/*.css', '!app/build/*.min.css'])
+  return gulp.src(['build/*.css', '!build/*.min.css'])
     .pipe(postcss([
       require('csswring')()
     ]))
     .pipe(rename({suffix: '.min'}))
-    .pipe(gulp.dest('app/build'));
+    .pipe(gulp.dest('build'));
 });
 
 
@@ -50,7 +50,7 @@ gulp.task('build-min-css', ['build-css'], function () {
 
 function buildBrowserify(options) {
   var b = browserify({
-    entries: 'app/js/' + options.entry,
+    entries: 'src/js/' + options.entry,
     debug: true,
     //these properties are needed for watchify
     cache: {},
@@ -62,7 +62,7 @@ function buildBrowserify(options) {
       .on('error', logError)
       .pipe(source(options.entry))
       .pipe(buffer())
-      .pipe(gulp.dest('app/build'));
+      .pipe(gulp.dest('build'));
   };
 
   if (options.watch) {
@@ -92,7 +92,7 @@ gulp.task('watch-js', function () {
 });
 
 gulp.task('build-min-js', ['build-js'], function () {
-  return gulp.src(['app/build/*.js', '!app/build/*.min.js'])
+  return gulp.src(['build/*.js', '!build/*.min.js'])
     .pipe(map(function(data, cb) {
       closurecompiler.compile([data.path], {
         language_in: 'ECMASCRIPT5',
@@ -103,7 +103,7 @@ gulp.task('build-min-js', ['build-js'], function () {
       });
     }))
     .pipe(rename({suffix: '.min'}))
-    .pipe(gulp.dest('app/build'));
+    .pipe(gulp.dest('build'));
 });
 
 
@@ -111,37 +111,37 @@ gulp.task('build-min-js', ['build-js'], function () {
 
 gulp.task('build-html', function() {
   var context = {'min': false}
-  return gulp.src('app/*.ejs')
+  return gulp.src('src/*.ejs')
     .on('error', logError)
     .pipe(ejs(context))
     .pipe(rename({extname: '.html'}))
-    .pipe(gulp.dest('app/build'));
+    .pipe(gulp.dest('build'));
 });
 
 gulp.task('watch-html', function() {
   gulp.start(['build-html']);
-  gulp.watch('app/*.ejs', ['build-html']);
+  gulp.watch('src/*.ejs', ['build-html']);
 });
 
 gulp.task('build-min-html', function() {
   var context = {'min': true}
-  return gulp.src('app/*.ejs')
+  return gulp.src('src/*.ejs')
     .on('error', logError)
     .pipe(ejs(context))
     .pipe(rename({extname: '.html'}))
-    .pipe(gulp.dest('app/build'));
+    .pipe(gulp.dest('build'));
 });
 
 
 /* Fonts */
 
 gulp.task('build-fonts', function() {
-  return gulp.src('app/fonts/*').pipe(gulp.dest('app/build/fonts'));
+  return gulp.src('src/fonts/*').pipe(gulp.dest('build/fonts'));
 });
 
 gulp.task('watch-fonts', function() {
   gulp.start(['build-fonts']);
-  gulp.watch('app/fonts/*', ['build-fonts']);
+  gulp.watch('src/fonts/*', ['build-fonts']);
 });
 
 

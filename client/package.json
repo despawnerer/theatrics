@@ -16,7 +16,7 @@
     "lazysizes": "^1.2.2",
     "moment": "^2.10.6",
     "moment-timezone": "^0.4.1",
-    "xtend": "^4.0.0"
+    "xtend": "^4.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.0.3",

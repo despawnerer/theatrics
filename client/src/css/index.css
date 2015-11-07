@@ -8,6 +8,8 @@ body {
   padding: 0;
   font-family: Helvetica, Arial, sans-serif;
   font-size: 14px;
+  height: 100%;
+  min-height: 100%;
 }
 
 a {

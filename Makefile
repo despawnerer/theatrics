@@ -21,4 +21,4 @@ watch:
 	cd client && npm run watch
 
 run-dev:
-	cd server && gunicorn app:app -k aiohttp.worker.GunicornWebWorker -b $(host) --reload
+	cd server && gunicorn app:app -k aiohttp.worker.GunicornWebWorker -b $(host) -e THEATRICS_DEBUG=true --reload

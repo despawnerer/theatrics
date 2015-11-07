@@ -3,7 +3,7 @@ import aiohttp
 import ujson
 from aiohttp import web
 
-from .settings import DEBUG, KUDAGO_API_BASE_URL, CLIENT_DIR
+from .consts import KUDAGO_API_BASE_URL, CLIENT_DIR
 
 
 async def serve_api(request):

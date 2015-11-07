@@ -1,7 +1,8 @@
 from aiohttp import web
 
 from .handlers import serve_api, serve_client
-from .settings import CLIENT_DIR, DEBUG
+from .consts import CLIENT_DIR
+from .settings import DEBUG
 
 
 app = web.Application()

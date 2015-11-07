@@ -8,7 +8,7 @@ import {toggleClass} from '../utils';
 export default class Calendar extends View {
   createElement() {
     const element = document.createElement('div');
-    element.setAttribute('class', 'nav-container');
+    element.setAttribute('class', 'nav-container calendar-container');
     return element;
   }
 

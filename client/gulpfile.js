@@ -110,7 +110,10 @@ gulp.task('build-min-js', ['build-js'], function () {
 /* HTML */
 
 gulp.task('build-html', function() {
-  var context = {'min': false}
+  var context = {
+    min: false,
+    buildDate: new Date(),
+  }
   return gulp.src('src/*.ejs')
     .on('error', logError)
     .pipe(ejs(context))
@@ -124,7 +127,10 @@ gulp.task('watch-html', function() {
 });
 
 gulp.task('build-min-html', function() {
-  var context = {'min': true}
+  var context = {
+    min: true,
+    buildDate: new Date(),
+  }
   return gulp.src('src/*.ejs')
     .on('error', logError)
     .pipe(ejs(context))

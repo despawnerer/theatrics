@@ -1,7 +1,9 @@
 Theatrics
 =========
 
-A nice little theater playbill sort of app using KudaGo API.
+A nice little theater playbill sort of app using KudaGo API. Only in Russian language right now.
+
+Available at http://theatrics.plansfortheday.org/
 
 
 Prerequisites
@@ -73,3 +75,9 @@ Use supplied `Dockerfile` to build and run a Docker image.
 The nginx configuration in `deploy/nginx.conf` assumes that the code is built and resides in `/www/theatrics/`
 
 	$ make run
+
+
+Credits
+-------
+
+Using data from KudaGo.com.

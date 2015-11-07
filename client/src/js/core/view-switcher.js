@@ -9,7 +9,7 @@ export default class ViewSwitcher {
     this.currentView = null;
   }
 
-  switchView(ViewClass, args) {
+  switchView(ViewClass, args={}) {
     if (this.currentView instanceof ViewClass) {
       this.currentView.model.replace(args);
       return;

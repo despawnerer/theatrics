@@ -12,30 +12,33 @@ Prerequisites
 - python 3.5
 
 
-Setting up
-----------
+Development
+-----------
+
+### Setting up
 
 Make sure you're within configured and activated virtualenv with python 3.5.
 
-	$ make install build
+	$ make clean install-deps build
 
 
-Cleaning up
------------
+### Cleaning up
 
-To remove installed node modules and built files, as well as python's compiled files.
+Remove installed node modules and built files, as well as python's compiled files:
 
 	$ make clean
 
+Remove only node modules:
 
-Automatically rebuilding client
--------------------------------
+	$ make clean-deps
+
+
+### Automatically rebuilding client
 
 	$ make watch
 
 
-Running the server in development
----------------------------------
+### Running
 
 This will automatically reload the app on any python file changes.
 
@@ -43,4 +46,30 @@ This will automatically reload the app on any python file changes.
 
 The server runs on `localhost:9001` by default. If you want a different port, you can change it using `host` variable:
 
-	$ make host="localhost:9005" run-dev
+	$ make run-dev host="localhost:9005"
+
+
+Deploying
+---------
+
+### Docker
+
+Use supplied `Dockerfile` to build and run a Docker image.
+
+
+### Prerequisites
+
+- nginx
+- honcho (via pip)
+
+
+### Building
+
+	$ make build-min
+
+
+### Running
+
+The nginx configuration in `deploy/nginx.conf` assumes that the code is built and resides in `/www/theatrics/`
+
+	$ make run

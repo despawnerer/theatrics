@@ -1,0 +1,2 @@
+backend: gunicorn app:app -k aiohttp.worker.GunicornWebWorker -b 127.0.0.1:9001 -w 5 --pythonpath $PWD/server
+frontend: nginx -c $PWD/deploy/nginx.conf

@@ -1,15 +1,30 @@
 host = localhost:9001
 
-.PHONY: install clean watch build run
+.PHONY: clean install-deps install-server-deps install-client-deps build build-min watch run run-dev
+
+# clean up
 
 clean:
 	rm -rf client/build
 	rm -rf client/node_modules
 	rm -rf server/app/__pycache__
 
-install:
-	cd client && npm install
+clean-deps:
+	rm -rf client/node_modules
+
+# dependencies installation
+
+install-deps:
 	cd server && pip install -r requirements.pip
+	cd client && npm install
+
+install-server-deps:
+	cd server && pip install -r requirements.pip
+
+install-client-deps:
+	cd client && npm install
+
+# building
 
 build:
 	cd client && npm run build
@@ -19,6 +34,11 @@ build-min:
 
 watch:
 	cd client && npm run watch
+
+# running
+
+run:
+	honcho start -f deploy/Procfile
 
 run-dev:
 	cd server && gunicorn app:app -k aiohttp.worker.GunicornWebWorker -b $(host) -e THEATRICS_DEBUG=true --reload

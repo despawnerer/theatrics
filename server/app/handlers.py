@@ -21,7 +21,10 @@ async def serve_api(request):
             if value:
                 body[field] = value.replace(KUDAGO_API_BASE_URL, '/api')
 
-    return web.Response(body=json.dumps(body).encode('utf-8'))
+    return web.Response(
+        text=json.dumps(body),
+        content_type='application/json'
+    )
 
 
 async def serve_client(request):

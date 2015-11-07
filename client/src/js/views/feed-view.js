@@ -86,6 +86,7 @@ export default class FeedView extends View {
     show(this.listContainer);
     toggle(this.loadMoreContainer, hasMore);
     toggle(this.nothingAtAll, !hasAnything);
+    toggle(this.listContainer, hasAnything);
 
     this.loadMoreContainer.classList.remove('loading');
   }

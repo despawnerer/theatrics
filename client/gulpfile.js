@@ -25,7 +25,10 @@ gulp.task('build-css', function() {
     .on('error', logError)
     .pipe(postcss([
       require('postcss-import')(),
-      require('autoprefixer')()
+      require('autoprefixer')(),
+      require('postcss-assets')({
+        loadPaths: ['src']
+      }),
     ]))
     .pipe(gulp.dest('build'));
 });

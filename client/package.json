@@ -34,6 +34,7 @@
     "gulp-watch": "^4.3.5",
     "map-stream": "0.0.6",
     "postcss": "^5.0.8",
+    "postcss-assets": "^3.0.2",
     "postcss-import": "7.1.1",
     "through": "^2.3.8",
     "vinyl-buffer": "^1.0.0",

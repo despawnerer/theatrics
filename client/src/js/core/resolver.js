@@ -41,7 +41,8 @@ export default class Resolver {
       const args = zipIntoObject(argNames, argValues);
       return {name, args};
     }
-    throw new Error(`No route found for '${path}'.`);
+
+    return null;
   }
 
   reverse(routeName, args) {
@@ -63,7 +64,7 @@ export default class Resolver {
       return path;
     }
 
-    throw new Error(`No reverse found for '${name}' with args ${args}.`);
+    return null;
   }
 
   _getNamedVarExpression(name) {

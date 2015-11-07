@@ -257,6 +257,39 @@ a:hover {
 }
 
 
+/* Not found view */
+
+.not-found-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #eee;
+}
+
+.not-found-message {
+  padding: 30px;
+}
+
+
+.not-found-message a {
+  text-decoration: underline;
+}
+
+.not-found-message p {
+  margin: 0;
+}
+
+.not-found-message h2 {
+  font-size: 36px;
+  margin: 0 0 20px 0;
+}
+
+.not-found-message .tagline {
+  font-weight: normal;
+  font-size: 20px;
+}
+
 /* Events view */
 
 .events-view {

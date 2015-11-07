@@ -16,16 +16,18 @@ export default class Router {
     this.handlers[name] = handler;
   }
 
+  setNotFoundHandler(handler) {
+    this.notFoundHandler = handler;
+  }
+
   navigate(path) {
-    const {name, args} = this.resolver.resolve(path);
-    history.pushState({name, args}, null, path);
-    this.callHandler(name, args);
+    const state = this.handlePath(path);
+    history.pushState(state, null, path);
   }
 
   redirect(path) {
-    const {name, args} = this.resolver.resolve(path);
-    history.replaceState({name, args}, null, path);
-    this.callHandler(name, args);
+    const state = this.handlePath(path);
+    history.replaceState(state, null, path);
   }
 
   onAnchorClick(event) {
@@ -42,12 +44,19 @@ export default class Router {
     if (event.state === null) {
       // this is a fake pop state event so don't handle it
       return;
+    } else {
+      this.handlePath(window.location.pathname);
     }
-    const {name, args} = this.resolver.resolve(window.location.pathname);
-    this.callHandler(name, args);
   }
 
-  callHandler(name, args) {
-    this.handlers[name].call(this, args);
+  handlePath(path) {
+    const state = this.resolver.resolve(path);
+    if (state === null) {
+      this.notFoundHandler.call(this);
+    } else {
+      const {name, args} = state;
+      this.handlers[name].call(this, args);
+    }
+    return state;
   }
 }

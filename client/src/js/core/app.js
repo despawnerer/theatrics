@@ -11,6 +11,7 @@ import LocationChooser from '../views/location-chooser';
 import EventsView from '../views/events-view';
 import PlacesView from '../views/places-view';
 import SingleEventView from '../views/single-event-view';
+import NotFoundView from '../views/not-found';
 
 import {show, hide} from '../utils';
 
@@ -36,6 +37,7 @@ export default class App {
     this.router.addHandler('events', this.visitEvents.bind(this));
     this.router.addHandler('places', this.visitPlaces.bind(this));
     this.router.addHandler('single-event', this.visitSingleEvent.bind(this));
+    this.router.setNotFoundHandler(this.notFound.bind(this));
 
     const viewContainer = document.querySelector('#view-container');
     this.viewSwitcher = new ViewSwitcher(this, viewContainer);
@@ -92,5 +94,9 @@ export default class App {
 
   visitSingleEvent(args) {
     this.viewSwitcher.switchView(SingleEventView, args);
+  }
+
+  notFound() {
+    this.viewSwitcher.switchView(NotFoundView);
   }
 }

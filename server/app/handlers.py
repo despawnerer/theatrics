@@ -1,6 +1,6 @@
 import os
 import aiohttp
-import ujson
+import json
 from aiohttp import web
 
 from .consts import KUDAGO_API_BASE_URL, CLIENT_DIR
@@ -13,7 +13,7 @@ async def serve_api(request):
         request.query_string,
     )
     response = await aiohttp.get(url)
-    body = await response.json(loads=ujson.loads)
+    body = await response.json()
 
     if isinstance(body, dict):
         for field in ('next', 'previous'):
@@ -21,7 +21,7 @@ async def serve_api(request):
             if value:
                 body[field] = value.replace(KUDAGO_API_BASE_URL, '/api')
 
-    return web.Response(body=ujson.dumps(body).encode('utf-8'))
+    return web.Response(body=json.dumps(body).encode('utf-8'))
 
 
 async def serve_client(request):

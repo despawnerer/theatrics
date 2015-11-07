@@ -7,6 +7,7 @@ A nice little theater playbill sort of app using KudaGo API.
 Prerequisites
 -------------
 
+- make
 - node
 - python 3.5
 

@@ -80,4 +80,4 @@ The nginx configuration in `deploy/nginx.conf` assumes that the code is built an
 Credits
 -------
 
-Using data from KudaGo.com.
+Powered by data from KudaGo.com.

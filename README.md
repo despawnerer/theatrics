@@ -81,3 +81,5 @@ Credits
 -------
 
 Powered by data from KudaGo.com.
+
+Using modified versions of Liberation fonts, see copyright notice in `client/src/fonts/LiberationSerif.LICENSE`.

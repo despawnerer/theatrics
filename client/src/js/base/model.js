@@ -45,7 +45,7 @@ export default class Model extends EventEmitter {
 
   apply() {
     this._locked -= 1;
-    this._maybeNotify();
+    this._maybeChange();
     return this;
   }
 
@@ -71,23 +71,23 @@ export default class Model extends EventEmitter {
 
   set(key, value) {
     this._data[key] = value;
-    this._maybeNotify();
+    this._maybeChange();
     return this;
   }
 
   remove(key) {
     delete this._data[key];
-    this._maybeNotify();
+    this._maybeChange();
     return this;
   }
 
   replace(data) {
     this._data = data;
-    this._maybeNotify();
+    this._maybeChange();
     return this;
   }
 
-  _maybeNotify() {
+  _maybeChange() {
     if (this._locked == 0 && this.hasChanged()) {
       this._change();
     }

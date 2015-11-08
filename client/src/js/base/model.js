@@ -89,8 +89,12 @@ export default class Model extends EventEmitter {
 
   _maybeNotify() {
     if (this._locked == 0 && this.hasChanged()) {
-      this.emit('change');
-      this._previousData = extend(this._data);
+      this._change();
     }
+  }
+
+  _change() {
+    this.emit('change');
+    this._previousData = extend(this._data);
   }
 }

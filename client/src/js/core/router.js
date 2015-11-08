@@ -48,7 +48,7 @@ export default class Router {
       return;
     } else {
       const state = this.resolver.resolve(window.location.pathname);
-      this.handleState();
+      this.handleState(state);
     }
   }
 

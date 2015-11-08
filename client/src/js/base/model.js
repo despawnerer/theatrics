@@ -51,8 +51,12 @@ export default class Model extends EventEmitter {
 
   // querying
 
-  hasChanged(key) {
-    return this._data[key] !== this._previousData[key];
+  hasChanged(key=undefined) {
+    if (key === undefined) {
+      return !equal(this._data, this._previousData);
+    } else {
+      return this._data[key] !== this._previousData[key];
+    }
   }
 
   get(key) {

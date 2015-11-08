@@ -21,13 +21,15 @@ export default class Router {
   }
 
   navigate(path) {
-    const state = this.handlePath(path);
+    const state = this.resolver.resolve(path);
     history.pushState(state, null, path);
+    this.handleState(state);
   }
 
   redirect(path) {
-    const state = this.handlePath(path);
+    const state = this.resolver.resolve(path);
     history.replaceState(state, null, path);
+    this.handleState(state);
   }
 
   onAnchorClick(event) {
@@ -45,18 +47,17 @@ export default class Router {
       // this is a fake pop state event so don't handle it
       return;
     } else {
-      this.handlePath(window.location.pathname);
+      const state = this.resolver.resolve(window.location.pathname);
+      this.handleState();
     }
   }
 
-  handlePath(path) {
-    const state = this.resolver.resolve(path);
+  handleState(state) {
     if (state === null) {
       this.notFoundHandler.call(this);
     } else {
       const {name, args} = state;
       this.handlers[name].call(this, args);
     }
-    return state;
   }
 }

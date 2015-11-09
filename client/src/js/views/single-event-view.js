@@ -50,8 +50,9 @@ export default class SingleEventView extends View {
     const imagesElement = this.element.querySelector('.item-images-container');
     this.slider = new Slider(imagesElement);
 
-    this.app.settings.set('location', location.slug);
     this.app.setTitle(`${capfirst(event.title)} – ${location.name}`);
+    this.app.setSourceURL(event.site_url);
+    this.app.settings.set('location', location.slug);
   }
 
   renderLoader() {
@@ -61,6 +62,7 @@ export default class SingleEventView extends View {
     container.appendChild(loader.element);
     this.element.appendChild(container);
     this.app.setTitle("Спектакль");
+    this.app.resetSourceURL();
   }
 
   unbind() {

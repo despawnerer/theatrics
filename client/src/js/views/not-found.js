@@ -21,5 +21,6 @@ export default class NotFound extends View {
     `;
 
     this.app.setTitle("404");
+    this.app.resetSourceURL();
   }
 }

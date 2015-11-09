@@ -19,5 +19,7 @@ export default class NotFound extends View {
       </p>
     </div>
     `;
+
+    this.app.setTitle("404");
   }
 }

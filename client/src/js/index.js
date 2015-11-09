@@ -13,7 +13,5 @@ import App from './core/app';
 
 moment.tz.load(timezones);
 
-document.addEventListener('DOMContentLoaded', (event) => {
-  const app = new App();
-  app.run();
-});
+const app = new App();
+app.run();

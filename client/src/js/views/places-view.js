@@ -60,7 +60,6 @@ export default class PlacesView extends View {
   updateAppState() {
     const location = this.app.locations.get(this.model.get('location'));
     this.app.setTitle(`Театры – ${location.name}`);
-    this.app.resetSourceURL();
     this.app.settings.set('location', location.slug);
   }
 }

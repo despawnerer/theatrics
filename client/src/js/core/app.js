@@ -71,16 +71,6 @@ export default class App {
     );
   }
 
-  resetSourceURL() {
-    const location = this.settings.get('location');
-    this.setSourceURL(`http://kudago.com/${location}/`);
-  }
-
-  setSourceURL(url) {
-    const sourceLink = document.querySelector('#source-link');
-    sourceLink.href = url;
-  }
-
   // route handlers
 
   visitIndex() {

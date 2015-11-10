@@ -51,7 +51,6 @@ export default class SingleEventView extends View {
     this.slider = new Slider(imagesElement);
 
     this.app.setTitle(`${capfirst(event.title)} – ${location.name}`);
-    this.app.setSourceURL(event.site_url);
     this.app.settings.set('location', location.slug);
   }
 
@@ -62,7 +61,6 @@ export default class SingleEventView extends View {
     container.appendChild(loader.element);
     this.element.appendChild(container);
     this.app.setTitle("Спектакль");
-    this.app.resetSourceURL();
   }
 
   unbind() {

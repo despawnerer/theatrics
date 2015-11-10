@@ -72,7 +72,6 @@ export default class EventsView extends View {
     this.updateFeedQuery();
     this.updateTitle();
     this.updateLocationSetting();
-    this.app.resetSourceURL();
   }
 
   updateFeedQuery() {

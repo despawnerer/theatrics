@@ -47,8 +47,8 @@ export default class SingleEventView extends View {
       dates: this.model.getDisplayDates(),
     });
 
-    const imagesElement = this.element.querySelector('.item-images-container');
-    this.slider = new Slider(imagesElement);
+    const sliderElement = this.element.querySelector('.item-slider');
+    this.slider = new Slider(sliderElement);
 
     this.app.setTitle(`${capfirst(event.title)} – ${location.name}`);
     this.app.settings.set('location', location.slug);

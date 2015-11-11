@@ -1,10 +1,10 @@
-<div class="item-images-container" data-next-button=".next-button" data-previous-button=".previous-button" data-container=".item-images" data-items=".item-image">
+<div class="item-slider" data-next-button=".next-button" data-previous-button=".previous-button" data-container=".item-slide-list" data-items=".item-slide">
   <a class="slide-button next-button"<% if (event.images.length < 2) { %> hidden<% } %>><span class="icon-chevron-thin-right"></span></a>
   <a class="slide-button previous-button" hidden><span class="icon-chevron-thin-left"></span></a>
   <div class="item-view-inner">
-    <ul class="item-images">
+    <ul class="item-slide-list">
       <% event.images.forEach(function(image) { %>
-        <li class="item-image">
+        <li class="item-slide">
           <img
             data-sizes="
               (min-width: 1140px) 750px,
@@ -16,7 +16,7 @@
               <%= image.thumbnails["640x384"] %> 640w
             "
             data-src="<%= image.thumbnails["640x384"] %>"
-            class="lazyload"/>
+            class="item-slide-image lazyload"/>
         </li>
       <% }) %>
     </ul>

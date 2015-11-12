@@ -1,0 +1,57 @@
+
+<div class="item-view-inner">
+  <h2 class="big-item-title">
+    <%= capfirst(place.title) %>
+  </h2>
+  <div class="item-information">
+    <div class="item-information-group">
+      <% if (place.address) { %>
+        <div class="item-information-item item-address"><%= place.address %></div>
+      <% } %>
+      <% if (place.subway) { %>
+        <div class="item-information-item"><%= place.subway %></div>
+      <% } %>
+    </div>
+    <div class="item-information-group">
+      <% if (place.timetable) { %>
+        <div class="item-information-item"><%= place.timetable %></div>
+      <% } %>
+      <% if (place.phone) { %>
+        <div class="item-information-item">
+          <% if (place.phone) { %><%= place.phone %><% } %>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</div>
+<div class="item-slider" data-next-button=".next-button" data-previous-button=".previous-button" data-container=".item-slide-list" data-items=".item-slide">
+  <a class="slide-button next-button"<% if (place.images.length < 2) { %> hidden<% } %>><span class="icon-chevron-thin-right"></span></a>
+  <a class="slide-button previous-button" hidden><span class="icon-chevron-thin-left"></span></a>
+  <div class="item-view-inner">
+    <ul class="item-slide-list">
+      <% place.images.forEach(function(image) { %>
+        <li class="item-slide">
+          <img
+            data-sizes="
+              (min-width: 1140px) 750px,
+              (min-width: 720px) 525px,
+              300px
+            "
+            data-srcset="
+              <%= image.image %> 1500w,
+              <%= image.thumbnails["640x384"] %> 640w
+            "
+            data-src="<%= image.thumbnails["640x384"] %>"
+            class="item-slide-image lazyload"/>
+        </li>
+      <% }) %>
+    </ul>
+  </div>
+</div>
+<div class="item-view-inner">
+  <div class="item-description"><%- place.description %></div>
+  <div class="item-text"><%- place.body_text %></div>
+  <div class="source-information">
+    Источник данных: <a href="<%= place.site_url %>" target="_blank">kudago.com</a>.
+  </div>
+</div>

@@ -28,34 +28,40 @@
     <span class="big-item-tagline"><%= event.tagline %></span>
   </h2>
   <div class="item-information">
-    <% if (event.place) { %>
-      <div class="item-information-item item-place"><%= capfirst(event.place.title) %></div>
-    <% } %>
-    <div class="item-information-item"><%= event.price %></div>
-    <ol class="item-dates">
-    <% dates.forEach(function(date) { %>
-      <% var start = moment.tz(date.start * 1000, location.timezone) %>
-      <% var end = date.end ? moment.tz(date.end * 1000, location.timezone) : null %>
-      <% var isRange = end && !start.isSame(end, 'day') %>
-      <li<% if (isRange) { %> class="double-size"<% } %>>
-        <div class="item-date">
-          <div class="item-day"><%= start.format('D MMMM') %></div>
-          <div class="item-day-of-week"><%= start.format('dddd') %></div>
+    <div class="item-information-group">
+      <% if (event.place) { %>
+        <div class="item-information-item item-place">
+          <a href="<%= app.resolver.reverse('single-place', {id: event.place.id}) %>">
+            <span class="link-text"><%= capfirst(event.place.title) %></span>
+          </a>
         </div>
-        <% if (!end) { %>
-          <div class="item-time"><%= start.format('LT') %></div>
-        <% } else if (start.isSame(end, 'day')) { %>
-          <div class="item-time"><%= start.format('LT') %>&ndash;<%= end.format('LT') %></div>
-        <% } else { %>
-          &ndash;
+      <% } %>
+      <div class="item-information-item"><%= event.price %></div>
+      <ol class="item-dates">
+      <% dates.forEach(function(date) { %>
+        <% var start = moment.tz(date.start * 1000, location.timezone) %>
+        <% var end = date.end ? moment.tz(date.end * 1000, location.timezone) : null %>
+        <% var isRange = end && !start.isSame(end, 'day') %>
+        <li<% if (isRange) { %> class="double-size"<% } %>>
           <div class="item-date">
-            <div class="item-day"><%= end.format('D MMMM') %></div>
-            <div class="item-day-of-week"><%= end.format('dddd') %></div>
+            <div class="item-day"><%= start.format('D MMMM') %></div>
+            <div class="item-day-of-week"><%= start.format('dddd') %></div>
           </div>
-        <% } %>
-      </li>
-    <% }) %>
-    </ol>
+          <% if (!end) { %>
+            <div class="item-time"><%= start.format('LT') %></div>
+          <% } else if (start.isSame(end, 'day')) { %>
+            <div class="item-time"><%= start.format('LT') %>&ndash;<%= end.format('LT') %></div>
+          <% } else { %>
+            &ndash;
+            <div class="item-date">
+              <div class="item-day"><%= end.format('D MMMM') %></div>
+              <div class="item-day-of-week"><%= end.format('dddd') %></div>
+            </div>
+          <% } %>
+        </li>
+      <% }) %>
+      </ol>
+    </div>
   </div>
   <div class="item-description"><%- event.description %></div>
   <div class="item-text"><%- event.body_text %></div>

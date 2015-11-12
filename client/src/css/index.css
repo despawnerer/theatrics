@@ -636,6 +636,7 @@ p {
 .item-slide-image {
   object-fit: cover;
   vertical-align: top;
+  height: 100%;
 }
 
 .big-item-title {
@@ -747,26 +748,15 @@ p {
   .item-view-inner { width: 100%; }
   .item-slider { margin: 0 -15px 15px -15px; }
   .item-slide-list { margin: 0 15px; }
-
-  .item-slide {
-    margin: 0 2.5px;
-  }
-
-  .item-slide-image {
-    height: 200px;
-    max-width: 290px;
-    min-width: 200px;
-  }
+  .item-slide { height: 200px; margin: 0 2.5px; }
+  .item-slide-image { min-width: 200px; max-width: 290px; }
 }
 
 @media (min-width: 360px) and (max-width: 719px) {
   .item-view-inner { width: 100%; }
   .item-slider { margin: 0 -30px 25px -30px; }
   .item-slide-list { margin: 0 30px; }
-
-  .item-slide {
-    margin: 0 5px;
-  }
+  .item-slide { margin: 0 5px; }
 }
 
 @media (min-width: 360px) and (max-width: 450px) {
@@ -775,17 +765,13 @@ p {
 }
 
 @media (min-width: 360px) and (max-width: 574px) {
-  .item-slide-image {
-    height: 200px;
-    max-width: 300px;
-    min-width: 200px;
-  }
+  .item-slide { height: 200px; }
+  .item-slide-image { min-width: 200px; max-width: 300px; }
 }
 
 @media (min-width: 575px) and (max-width: 719px) {
-  .item-slide-image {
-    height: 250px;
-    min-width: 250px;
+  .item-slide { height: 250px; }
+  .item-slide-image { min-width: 250px; }
 }
 
 @media (max-width: 450px) {
@@ -837,11 +823,8 @@ p {
 @media (min-width: 720px) and (max-width: 1139px) {
   .item-view-inner { width: 600px; }
   .item-slider { margin: 0 -45px 35px -45px; }
-
-  .item-slide-image {
-    height: 350px;
-    min-width: 350px;
-  }
+  .item-slide { height: 350px; }
+  .item-slide-image { min-width: 350px; }
 
   .item-slider .slide-button span {
     font-size: 25px;
@@ -858,11 +841,8 @@ p {
 @media (min-width: 1140px) {
   .item-view-inner { width: 750px; }
   .item-slider { margin: 0 -60px 35px -60px; }
-
-  .item-slide-image {
-    height: 500px;
-    min-width: 500px;
-  }
+  .item-slide { height: 500px; }
+  .item-slide-image { min-width: 500px; }
 
   .item-slider .slide-button span {
     font-size: 35px;

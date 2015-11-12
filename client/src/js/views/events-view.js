@@ -8,20 +8,7 @@ import Calendar from './calendar';
 import FeedView from './feed-view';
 
 
-const itemTemplate = ({app, item}) => `
-<a href="${app.resolver.reverse('single-event', {id: item.id})}">
-  <div class="feed-image-container">
-    <img data-src="${item.images[0].thumbnails['640x384']}" class="feed-image lazyload"/>
-  </div>
-  <h2 class="item-header">
-    ${capfirst(item.short_title || item.title)}
-  </h2>
-</a>
-<div class="tagline">${item.tagline}</div>
-<div class="place">
-  ${item.place ? capfirst(item.place.title) : ''}
-</div>
-`;
+const itemTemplate = require('../../templates/feed-event.ejs');
 
 
 export default class EventsView extends View {

@@ -552,7 +552,18 @@ p {
   font-size: 11px;
   color: gray;
   text-transform: uppercase;
+  line-height: 1.7em;
 }
+
+.place a {
+  color: #888;
+  display: block;
+  padding: 5px;
+  margin: -5px;
+}
+
+.place a:hover { color: #aaa; }
+.place .link-text { border-color: #ddd; }
 
 @media (max-width: 1139px) {
   .item-header {

@@ -3,7 +3,7 @@ import axios from 'axios';
 import View from '../base/view';
 import Feed from '../models/feed';
 import Loader from '../components/loader';
-import {buildAPIURL, toggle, show, hide} from '../utils';
+import {buildAPIURL, toggle, show, hide, capfirst} from '../utils';
 
 
 const template = () => `
@@ -96,7 +96,8 @@ export default class FeedView extends View {
     element.setAttribute('class', 'feed-item');
     element.innerHTML = this.itemTemplate({
       item,
-      app: this.app
+      capfirst,
+      app: this.app,
     });
     return element;
   }

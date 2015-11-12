@@ -524,7 +524,7 @@ p {
 
 @media (min-width: 1140px) {
   .feed-container { width: 1020px; }
-  .load-more-container { margin-top: 60px }
+  .load-more-container { margin-top: 60px; }
 }
 
 

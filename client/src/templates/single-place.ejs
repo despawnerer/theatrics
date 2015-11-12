@@ -4,24 +4,23 @@
     <%= capfirst(place.title) %>
   </h2>
   <div class="item-information">
-    <div class="item-information-group">
-      <% if (place.address) { %>
-        <div class="item-information-item item-address"><%= place.address %></div>
-      <% } %>
-      <% if (place.subway) { %>
+    <% if (place.address && place.subway && place.timetable && place.phone) { %>
+      <div class="item-information-group">
+        <div class="item-information-item"><%= place.address %></div>
         <div class="item-information-item"><%= place.subway %></div>
-      <% } %>
-    </div>
-    <div class="item-information-group">
-      <% if (place.timetable) { %>
+      </div>
+      <div class="item-information-group">
         <div class="item-information-item"><%= place.timetable %></div>
-      <% } %>
-      <% if (place.phone) { %>
-        <div class="item-information-item">
-          <% if (place.phone) { %><%= place.phone %><% } %>
-        </div>
-      <% } %>
-    </div>
+        <div class="item-information-item"><%= place.phone %></div>
+      </div>
+    <% } else { %>
+      <div class="item-information-group">
+        <% if (place.address) { %><div class="item-information-item"><%= place.address %></div><% } %>
+        <% if (place.subway) { %><div class="item-information-item"><%= place.subway %></div><% } %>
+        <% if (place.timetable) { %><div class="item-information-item"><%= place.timetable %></div><% } %>
+        <% if (place.phone) { %><div class="item-information-item"><%= place.phone %></div><% } %>
+      </div>
+    <% } %>
   </div>
 </div>
 <div class="item-slider" data-next-button=".next-button" data-previous-button=".previous-button" data-container=".item-slide-list" data-items=".item-slide">

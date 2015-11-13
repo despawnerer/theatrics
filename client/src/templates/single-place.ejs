@@ -8,7 +8,9 @@
       <div class="item-information-group">
         <div class="item-information-item">
           <span class="item-information-icon icon-place"></span>
-          <%= place.address %>
+          <a href="<% if (isiOS()) { %>//maps.apple.com/?q=<%= place.title %>&address=<%= place.address %>, <%= location.name %><% } else { %>//maps.google.com/?q=<%= place.title %>, <%= place.address %>, <%= location.name %><% } %>" class="map-link" target="_blank">
+            <span class="link-text"><%= place.address %></span>
+          </a>
         </div>
         <div class="item-information-item">
           <span class="item-information-icon icon-subway"></span>
@@ -30,7 +32,9 @@
         <% if (place.address) { %>
           <div class="item-information-item">
             <span class="item-information-icon icon-place"></span>
-            <%= place.address %>
+            <a href="<% if (isiOS()) { %>//maps.apple.com/?q=<%= place.title %>&address=<%= place.address %>, <%= location.name %><% } else { %>//maps.google.com/?q=<%= place.title %>, <%= place.address %>, <%= location.name %><% } %>" class="map-link" target="_blank">
+              <span class="link-text"><%= place.address %></span>
+            </a>
           </div>
         <% } %>
         <% if (place.subway) { %>

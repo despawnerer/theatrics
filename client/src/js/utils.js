@@ -11,6 +11,11 @@ export function buildAPIURL(path) {
 }
 
 
+export function isiOS() {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent);
+}
+
+
 export function toggleClass(element, className, condition) {
   /* This shim is used because older Safari and IE don't support
      the second arg to classList.toggle */

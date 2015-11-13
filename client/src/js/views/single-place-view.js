@@ -4,7 +4,7 @@ import View from '../base/view';
 import Place from '../models/place';
 import Slider from '../components/slider';
 import Loader from '../components/loader';
-import {capfirst, buildAPIURL} from '../utils';
+import {capfirst, buildAPIURL, isiOS} from '../utils';
 
 
 const template = require('../../templates/single-place.ejs');
@@ -39,6 +39,7 @@ export default class SinglePlaceView extends View {
 
     this.element.innerHTML = template({
       capfirst,
+      isiOS,
       app: this.app,
       location: location,
       place: place,

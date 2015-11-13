@@ -38,7 +38,7 @@ export default class PlacesView extends View {
     this.element.innerHTML = '';
     this.feedView.render();
     this.element.appendChild(this.feedView.element);
-    this.update()
+    this.update();
   }
 
   unbind() {

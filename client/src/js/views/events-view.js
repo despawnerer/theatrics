@@ -7,8 +7,7 @@ import {capfirst} from '../utils';
 import Calendar from './calendar';
 import FeedView from './feed-view';
 
-
-const itemTemplate = require('../../templates/feed-event.ejs');
+import itemTemplate from '../../templates/feed-event.ejs';
 
 
 export default class EventsView extends View {

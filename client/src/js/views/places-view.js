@@ -13,8 +13,8 @@ export default class PlacesView extends View {
 
     this.feed = new Feed(
       '/places/', {
-        categories: 'theatre',
         fields: 'images,title,id,address',
+        categories: 'theatre,-cafe',
         expand: 'images',
         order_by: '-favorites_count',
         page_size: 24,

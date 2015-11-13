@@ -10,7 +10,7 @@ import {capfirst, buildAPIURL} from '../utils';
 const template = require('../../templates/single-place.ejs');
 
 
-export default class SingleEventView extends View {
+export default class SinglePlaceView extends View {
   constructor({app, model}) {
     model = Place.from(model);
     super({app, model});

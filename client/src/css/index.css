@@ -564,8 +564,8 @@ p {
 .place a {
   color: #888;
   display: block;
-  padding: 5px;
-  margin: -5px;
+  padding: 2.5px 5px;
+  margin: -2.5px -5px;
 }
 
 .place a:hover { color: #aaa; }
@@ -729,8 +729,8 @@ p {
 
 .place-information .map-link {
   display: inline-block;
-  padding: 5px;
-  margin: -5px;
+  padding: 2.5px 5px;
+  margin: -2.5px -5px;
 }
 
 .place-information .map-link .link-text {
@@ -751,8 +751,8 @@ p {
 }
 
 .item-place a {
-  padding: 5px;
-  margin: -5px;
+  padding: 2.5px 5px;
+  margin: -2.5px -5px;
 }
 
 .item-place .link-text {

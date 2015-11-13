@@ -4,18 +4,7 @@ import {capfirst} from '../utils';
 
 import FeedView from './feed-view';
 
-
-const itemTemplate = ({app, item}) => `
-<a href="${app.resolver.reverse('single-place', {id: item.id})}">
-  <div class="feed-image-container">
-    <img data-src="${item.images[0].thumbnails['640x384']}" class="feed-image lazyload"/>
-  </div>
-  <h2 class="item-header">
-    ${capfirst(item.title)}
-  </h2>
-</a>
-<div class="place">${item.address}</div>
-`;
+import itemTemplate from '../../templates/feed-place.ejs';
 
 
 export default class PlacesView extends View {

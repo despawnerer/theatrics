@@ -727,6 +727,16 @@ p {
   margin-right: 15px;
 }
 
+.place-information .map-link {
+  display: inline-block;
+  padding: 5px;
+  margin: -5px;
+}
+
+.place-information .map-link .link-text {
+  border-bottom-style: dashed;
+}
+
 .item-description {
   font-size: 20px;
 }

@@ -18,7 +18,7 @@
       <div class="item-information-group">
         <div class="item-information-item">
           <span class="item-information-icon icon-clock"></span>
-          <%= capfirst(place.timetable) %>
+          <%= place.timetable %>
         </div>
         <div class="item-information-item">
           <span class="item-information-icon icon-phone"></span>
@@ -42,7 +42,7 @@
         <% if (place.timetable) { %>
           <div class="item-information-item">
             <span class="item-information-icon icon-clock"></span>
-            <%= capfirst(place.timetable) %>
+            <%= place.timetable %>
           </div>
         <% } %>
         <% if (place.phone) { %>

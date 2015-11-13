@@ -268,6 +268,12 @@ p {
   text-decoration: underline;
 }
 
+#footer .icon-heart {
+  font-size: 10px;
+  color: red;
+  margin-right: 5px;
+}
+
 
 /* Not found view */
 
@@ -682,17 +688,49 @@ p {
 }
 
 .item-information-group {
-  flex: 1 1 50%;
+  flex: 1 1 auto;
   margin-right: 20px;
 }
 
-.item-information-group:last-child { margin-right: 0; }
+.item-information-group:last-child { margin: 0; }
+
+.item-information-item {
+  margin: 20px 0;
+  display: flex;
+  align-items: flex-start;
+}
 
 .item-information-item:first-child { margin-top: 0; }
 .item-information-item:last-child { margin-bottom: 0; }
 
-.item-information-item {
-  margin: 20px 0;
+.item-information-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 18px;
+  margin-right: 20px;
+  flex: 0 0 auto;
+  text-align: center;
+  line-height: inherit;
+  box-sizing: border-box;
+  padding-top: 1px;
+}
+
+.item-information-icon.icon-place {
+  padding-top: 0;
+}
+
+.item-information-icon.icon-calendar {
+  font-size: 14px;
+  padding: 2px;
+}
+
+.item-information-icon.icon-subway {
+  font-size: 14px;
+  padding: 2px;
+}
+
+.place-information .item-information-icon {
+  margin-right: 15px;
 }
 
 .item-description {
@@ -706,7 +744,7 @@ p {
 
 .item-place {
   font-weight: bolder;
-  padding-bottom: 2px;
+  line-height: 1.6em;
 }
 
 .item-place a {
@@ -725,10 +763,12 @@ p {
   display: flex;
   flex-flow: row wrap;
   font-size: 110%;
+  flex: 0 1 auto;
 }
 
 .item-dates > li {
   margin: 6px 12px;
+  white-space: nowrap;
   width: 100px;
 }
 
@@ -801,10 +841,10 @@ p {
   .item-information-group {
     flex-basis: auto;
     margin-right: 0;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
   }
 
-  .item-information-group:last-child { margin-bottom: 0; }
+  .item-information-group:last-child { margin: 0; }
 }
 
 @media (max-width: 719px) {
@@ -825,6 +865,22 @@ p {
 
   .item-information-item {
     margin: 15px 0;
+  }
+
+  .item-information-icon {
+    margin-right: 15px;
+  }
+
+  .item-dates {
+    margin: -6px;
+  }
+
+  .item-dates > li {
+    margin: 6px;
+  }
+
+  .item-dates > li.double-size {
+    width: 212px;
   }
 
   .item-slider .slide-button span {

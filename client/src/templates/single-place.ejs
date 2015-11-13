@@ -3,22 +3,54 @@
   <h2 class="big-item-title">
     <%= capfirst(place.title) %>
   </h2>
-  <div class="item-information">
+  <div class="item-information place-information">
     <% if (place.address && place.subway && place.timetable && place.phone) { %>
       <div class="item-information-group">
-        <div class="item-information-item"><%= place.address %></div>
-        <div class="item-information-item"><%= place.subway %></div>
+        <div class="item-information-item">
+          <span class="item-information-icon icon-place"></span>
+          <%= place.address %>
+        </div>
+        <div class="item-information-item">
+          <span class="item-information-icon icon-subway"></span>
+          <%= place.subway %>
+        </div>
       </div>
       <div class="item-information-group">
-        <div class="item-information-item"><%= place.timetable %></div>
-        <div class="item-information-item"><%= place.phone %></div>
+        <div class="item-information-item">
+          <span class="item-information-icon icon-clock"></span>
+          <%= capfirst(place.timetable) %>
+        </div>
+        <div class="item-information-item">
+          <span class="item-information-icon icon-phone"></span>
+          <%= place.phone %>
+        </div>
       </div>
     <% } else { %>
       <div class="item-information-group">
-        <% if (place.address) { %><div class="item-information-item"><%= place.address %></div><% } %>
-        <% if (place.subway) { %><div class="item-information-item"><%= place.subway %></div><% } %>
-        <% if (place.timetable) { %><div class="item-information-item"><%= place.timetable %></div><% } %>
-        <% if (place.phone) { %><div class="item-information-item"><%= place.phone %></div><% } %>
+        <% if (place.address) { %>
+          <div class="item-information-item">
+            <span class="item-information-icon icon-place"></span>
+            <%= place.address %>
+          </div>
+        <% } %>
+        <% if (place.subway) { %>
+          <div class="item-information-item">
+            <span class="item-information-icon icon-subway"></span>
+            <%= place.subway %>
+          </div>
+        <% } %>
+        <% if (place.timetable) { %>
+          <div class="item-information-item">
+            <span class="item-information-icon icon-clock"></span>
+            <%= capfirst(place.timetable) %>
+          </div>
+        <% } %>
+        <% if (place.phone) { %>
+          <div class="item-information-item">
+            <span class="item-information-icon icon-phone"></span>
+            <%= place.phone %>
+          </div>
+        <% } %>
       </div>
     <% } %>
   </div>

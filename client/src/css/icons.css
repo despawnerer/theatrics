@@ -19,19 +19,30 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.icon-chevron-thin-left:before {
-	content: "\e908";
-}
 .icon-chevron-thin-right:before {
-	content: "\e907";
-}
-.icon-calendar:before {
 	content: "\e900";
 }
-.icon-location-pin:before {
+.icon-chevron-thin-left:before {
 	content: "\e901";
 }
-.icon-wallet:before {
-	content: "\e902";
+.icon-heart:before {
+	content: "\f004";
 }
-
+.icon-clock:before {
+	content: "\f017";
+}
+.icon-place:before {
+	content: "\f041";
+}
+.icon-phone:before {
+	content: "\f095";
+}
+.icon-calendar:before {
+	content: "\f133";
+}
+.icon-rouble:before {
+	content: "\f158";
+}
+.icon-subway:before {
+	content: "\f239";
+}

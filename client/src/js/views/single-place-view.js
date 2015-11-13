@@ -35,7 +35,7 @@ export default class SingleEventView extends View {
 
   renderItem() {
     const place = this.model.data;
-    const location = this.app.locations.get('spb');
+    const location = this.app.locations.get(place.location);
 
     this.element.innerHTML = template({
       capfirst,

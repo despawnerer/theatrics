@@ -551,6 +551,7 @@ p {
 
 .tagline {
   margin: 11px 0;
+  line-height: 18px;
 }
 
 .place {
@@ -569,7 +570,11 @@ p {
 }
 
 .place a:hover { color: #aaa; }
-.place .link-text { border-color: #ddd; }
+.place .link-text {
+  border-color: #ddd;
+  letter-spacing: 0.05ex;
+  font-size: 0.96em;
+}
 
 @media (max-width: 1139px) {
   .item-header {

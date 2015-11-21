@@ -574,6 +574,7 @@ p {
   border-color: #ddd;
   letter-spacing: 0.05ex;
   font-size: 0.96em;
+  line-height: 18px;
 }
 
 @media (max-width: 1139px) {

@@ -37,10 +37,14 @@
           </a>
         </div>
       <% } %>
-      <div class="item-information-item">
-        <span class="item-information-icon icon-rouble"></span>
-        <%= event.price %>
-      </div>
+
+      <% if (event.price) { %>
+        <div class="item-information-item">
+          <span class="item-information-icon icon-rouble"></span>
+          <%= event.price %>
+        </div>
+      <% } %>
+
       <div class="item-information-item">
         <span class="item-information-icon icon-calendar"></span>
         <ol class="item-dates">

@@ -22,11 +22,13 @@
     </ul>
   </div>
 </div>
+
 <div class="item-view-inner">
   <h2 class="big-item-title">
     <%= capfirst(event.short_title || event.title) %>
     <span class="big-item-tagline"><%= event.tagline %></span>
   </h2>
+
   <div class="item-information">
     <div class="item-information-group">
       <% if (event.place) { %>
@@ -74,6 +76,7 @@
       </div>
     </div>
   </div>
+
   <div class="item-description"><%- event.description %></div>
   <div class="item-text"><%- event.body_text %></div>
   <div class="source-information">

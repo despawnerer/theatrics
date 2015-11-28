@@ -1,8 +1,8 @@
-
 <div class="item-view-inner">
   <h2 class="big-item-title">
     <%= capfirst(place.title) %>
   </h2>
+
   <div class="item-information place-information">
     <% if (place.address && place.subway && place.timetable && place.phone) { %>
       <div class="item-information-group">
@@ -59,6 +59,7 @@
     <% } %>
   </div>
 </div>
+
 <div class="item-slider" data-next-button=".next-button" data-previous-button=".previous-button" data-container=".item-slide-list" data-items=".item-slide">
   <a class="slide-button next-button"<% if (place.images.length < 2) { %> hidden<% } %>><span class="icon-chevron-thin-right"></span></a>
   <a class="slide-button previous-button" hidden><span class="icon-chevron-thin-left"></span></a>
@@ -83,6 +84,7 @@
     </ul>
   </div>
 </div>
+
 <div class="item-view-inner">
   <div class="item-description"><%- place.description %></div>
   <div class="item-text"><%- place.body_text %></div>

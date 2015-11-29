@@ -20,15 +20,8 @@ export default class SinglePlaceView extends View {
     super({app, model});
 
     this.slider = null;
-
-    this.schedule = new Feed(
-      '/events/', {
-        categories: 'theater',
-        fields: 'id,title,short_title,dates,location,tagline',
-        page_size: 100,
-        place_id: model.get('id'),
-        actual_since: moment().unix(),
-      });
+    this.pager = null;
+    this.scheduleView = null;
   }
 
   createElement() {
@@ -58,22 +51,31 @@ export default class SinglePlaceView extends View {
       place: place,
     });
 
-    const sliderElement = this.element.querySelector('.item-slider');
-    this.slider = new Slider(sliderElement);
-
-    const pagerElement = this.element.querySelector('.pager');
-    this.pager = new Pager(pagerElement);
-
-    const scheduleElement = this.element.querySelector('.schedule-page > div');
-    this.scheduleView = new ScheduleView({
-      app: this.app,
-      model: this.schedule,
-    });
-    this.scheduleView.render();
-    scheduleElement.appendChild(this.scheduleView.element);
+    this.slider = new Slider(this.element.querySelector('.item-slider'));
+    this.pager = new Pager(this.element.querySelector('.pager'));
+    this.scheduleView = this.createScheduleView('.schedule-page > div');
 
     this.app.setTitle(`${capfirst(place.title)} – ${location.name}`);
     this.app.settings.set('location', location.slug);
+  }
+
+  createScheduleView(selector) {
+    const container = this.element.querySelector(selector);
+    const schedule = new Feed(
+      '/events/', {
+        categories: 'theater',
+        fields: 'id,title,short_title,dates,location,tagline',
+        page_size: 100,
+        place_id: this.model.get('id'),
+        actual_since: moment().unix(),
+      });
+    const view = new ScheduleView({
+      app: this.app,
+      model: schedule,
+    });
+    view.render();
+    container.appendChild(view.element);
+    return view;
   }
 
   renderLoader() {
@@ -86,15 +88,15 @@ export default class SinglePlaceView extends View {
   }
 
   unbind() {
-    if (this.pager) {
-      this.pager.unbind();
-    }
-    if (this.slider) {
-      this.slider.unbind();
-    }
-    if (this.scheduleView) {
-      this.scheduleView.unbind();
-    }
+    this.unbindIfPresent(this.pager);
+    this.unbindIfPresent(this.slider);
+    this.unbindIfPresent(this.scheduleView);
     super.unbind();
+  }
+
+  unbindIfPresent(something) {
+    if (something) {
+      something.unbind();
+    }
   }
 }

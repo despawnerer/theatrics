@@ -559,7 +559,8 @@ p {
   font-size: 11px;
   color: gray;
   text-transform: uppercase;
-  line-height: 1.7em;
+  letter-spacing: 0.05ex;
+  line-height: 18px;
 }
 
 .place a {
@@ -570,10 +571,9 @@ p {
 }
 
 .place a:hover { color: #aaa; }
+
 .place .link-text {
   border-color: #ddd;
-  letter-spacing: 0.05ex;
-  line-height: 18px;
 }
 
 @media (max-width: 1139px) {

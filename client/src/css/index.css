@@ -1160,3 +1160,14 @@ p {
     margin-left: 48px;
   }
 }
+
+@media (min-width: 451px) and (max-width: 719px) {
+  .schedule-row td {
+    padding-bottom: 10px;
+  }
+
+  .schedule-day-row td {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}

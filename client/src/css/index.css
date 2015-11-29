@@ -1015,6 +1015,8 @@ p {
   transition: transform 0.25s;
 }
 
+.pager-pages-slider.touching .pager-pages-list { transition: none; }
+
 .pager-page {
   width: 100vw;
   box-sizing: border-box;

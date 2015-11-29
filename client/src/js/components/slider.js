@@ -70,6 +70,7 @@ export default class Slider {
         this.isTouching = false;
       } else {
         event.preventDefault();
+        event.stopPropagation();
         this.move(this.initialOffset + offsetX);
       }
     }

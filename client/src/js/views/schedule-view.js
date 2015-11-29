@@ -2,6 +2,7 @@ import moment from 'moment';
 
 import View from '../base/view';
 import Event from '../models/event';
+import {BigLoader} from '../components/loader';
 import {capfirst} from '../utils';
 
 import template from '../../templates/schedule.ejs';
@@ -32,7 +33,9 @@ export default class ScheduleView extends View {
   }
 
   renderLoader() {
+    const loader = new BigLoader({progress: 0.25});
     this.element.innerHTML = '';
+    this.element.appendChild(loader.element);
   }
 
   renderItems() {

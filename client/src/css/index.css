@@ -1035,6 +1035,8 @@ p {
 .schedule {
   margin: 0;
   padding: 0;
+  position: relative;
+  min-height: 200px;
 }
 
 .schedule-table {

@@ -1031,19 +1031,19 @@ p {
 }
 
 @media (max-width: 359px) {
-  .pager-nav { margin-bottom: 10px; }
+  .pager-nav { margin-bottom: 15px; }
   .pager-pages-slider { margin: 0 -15px; }
   .pager-page { padding: 0 15px; }
 }
 
 @media (min-width: 360px) and (max-width: 719px) {
-  .pager-nav { margin-bottom: 15px; }
+  .pager-nav { margin-bottom: 20px; }
   .pager-pages-slider { margin: 0 -30px; }
   .pager-page { padding: 0 30px; }
 }
 
 @media (min-width: 720px) and (max-width: 1139px) {
-  .pager-nav { margin-bottom: 20px; }
+  .pager-nav { margin-bottom: 25px; }
   .pager-pages-slider { margin: 0 -45px; }
   .pager-page { padding: 0 45px; }
 }

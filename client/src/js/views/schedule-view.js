@@ -40,12 +40,11 @@ export default class ScheduleView extends View {
 
   renderItems() {
     const eventList = this.model.items.map(item => new Event(item));
-    const eventsByDate = this.getFutureEventsByDate(eventList);
+    const eventsByDay = this.getFutureEventsByDay(eventList);
     this.element.innerHTML = template({
       capfirst,
-      moment,
       app: this.app,
-      items: eventsByDate,
+      days: eventsByDay,
     });
   }
 
@@ -58,7 +57,26 @@ export default class ScheduleView extends View {
     this.model.removeListener('load', this.onLoaded);
   }
 
-  getFutureEventsByDate(eventList) {
+  getFutureEventsByDay(eventList) {
+    let lastDayItem = null;
+    const groupedByDay = [];
+    const eventsByDate = this.splitEventsByDate(eventList);
+    eventsByDate.forEach(item => {
+      const location = this.app.locations.get(item.event.data.location.slug);
+      item.date.start = moment.unix(item.date.start).tz(location.timezone);
+      item.date.end = item.date.end ? moment.unix(item.date.end).tz(location.timezone) : null;
+      const date = item.date.start.clone().startOf('day');
+      if (lastDayItem && date.isSame(lastDayItem.date)) {
+        lastDayItem.items.push(item);
+      } else {
+        lastDayItem = {date, items: [item]};
+        groupedByDay.push(lastDayItem);
+      }
+    });
+    return groupedByDay;
+  }
+
+  splitEventsByDate(eventList) {
     const eventsByDate = [];
     eventList.forEach(event => {
       event.getFutureDates().forEach(date => {

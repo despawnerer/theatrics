@@ -746,6 +746,10 @@ p {
   font-family: Liberation Serif, Times New Roman, serif;
 }
 
+.item-text img {
+  max-width: 100%;
+}
+
 .item-place {
   font-weight: bolder;
 }

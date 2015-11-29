@@ -1124,18 +1124,19 @@ p {
   .schedule-date-cell .item-day-of-week { display: inline-block; }
 
   .schedule-date-cell {
-    margin-top: 10px;
+    margin: 10px 0 8px 0;
   }
 
   .schedule-table tr:first-child .schedule-date-cell { margin-top: 0; }
 
   .schedule-time-cell {
-    margin: 7px 0 8px;
+    margin: 0 0 8px 0;
     height: 17px;
     line-height: 17px;
   }
 
   .schedule-title-cell {
+    line-height: 17px;
     margin-top: -25px;
     margin-left: 48px;
   }

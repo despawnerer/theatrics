@@ -958,6 +958,7 @@ p {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  text-transform: uppercase;
 }
 
 .tab {

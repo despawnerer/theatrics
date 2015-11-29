@@ -26,7 +26,7 @@ export default class FeedView extends View {
     this.onLoaded = this.onLoaded.bind(this);
 
     this.events.bind('click .load-more-button', 'onLoadMoreClicked');
-    this.model.on('query-change', this.onQueryChange);
+    this.model.query.on('change', this.onQueryChange);
     this.model.on('load', this.onLoaded);
 
     this.needsClearing = false;

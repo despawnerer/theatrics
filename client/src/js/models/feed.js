@@ -12,14 +12,8 @@ export default class Feed extends EventEmitter {
     this.path = path;
     this.query = new Model(params);
 
-    this.query.on('change', this.onQueryChange.bind(this));
-
     this.nextURL = null;
     this.items = null;
-  }
-
-  onQueryChange() {
-    this.emit('query-change');
   }
 
   clear() {

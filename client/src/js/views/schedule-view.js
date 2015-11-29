@@ -26,7 +26,7 @@ export default class ScheduleView extends View {
   render() {
     if (this.model.items === null) {
       this.renderLoader();
-      this.model.loadMore().catch(err => console.error(err)); // FIXME: loadAll()
+      this.model.fetchMore(); // FIXME: fetchAll()
     } else {
       this.renderItems();
     }

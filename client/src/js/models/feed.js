@@ -22,7 +22,7 @@ export default class Feed extends EventEmitter {
     this.emit('clear');
   }
 
-  loadMore() {
+  fetchMore() {
     const loadingQuery = this.query.clone();
     if (this.nextURL) {
       return axios

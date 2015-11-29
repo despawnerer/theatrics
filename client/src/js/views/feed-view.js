@@ -58,13 +58,13 @@ export default class FeedView extends View {
   onQueryChange() {
     this.needsClearing = true;
     this.model.clear();
-    this.model.loadMore();
+    this.model.fetchMore();
     show(this.feedLoaderContainer);
   }
 
   onLoadMoreClicked(event) {
     event.preventDefault();
-    this.model.loadMore();
+    this.model.fetchMore();
     this.loadMoreContainer.classList.add('loading');
   }
 

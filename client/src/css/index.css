@@ -1029,6 +1029,8 @@ p {
   overflow: visible;
 }
 
+.pager-page .item-slider { margin-left: 0; margin-right: 0; }
+
 
 /* Schedule */
 

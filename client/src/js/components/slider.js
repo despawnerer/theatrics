@@ -80,7 +80,6 @@ export default class Slider {
     const wasTouching = this.isTouching;
     this.isTouching = false;
     if (wasTouching) {
-      event.preventDefault();
       const delta = this.offset - this.initialOffset;
       if (Math.abs(delta) < 100) {
         this.toActive();

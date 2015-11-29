@@ -750,6 +750,10 @@ p {
   max-width: 100%;
 }
 
+.item-text :last-child {
+  margin-bottom: 0;
+}
+
 .item-place {
   font-weight: bolder;
 }

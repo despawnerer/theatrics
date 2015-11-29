@@ -1103,3 +1103,38 @@ p {
   padding: 0;
 }
 
+
+@media (max-width: 450px) {
+  .schedule-table { display: block; }
+  .schedule-table tbody { display: block; }
+
+  .schedule-table tr {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+
+  .schedule-table td {
+    padding: 0;
+  }
+
+  .schedule-date-cell .item-day { display: inline-block; }
+  .schedule-date-cell .item-day-of-week { display: inline-block; }
+
+  .schedule-date-cell {
+    margin-top: 10px;
+  }
+
+  .schedule-table tr:first-child .schedule-date-cell { margin-top: 0; }
+
+  .schedule-time-cell {
+    margin: 7px 0 8px;
+    height: 17px;
+    line-height: 17px;
+  }
+
+  .schedule-title-cell {
+    margin-top: -25px;
+    margin-left: 48px;
+  }
+}

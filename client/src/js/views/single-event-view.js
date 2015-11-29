@@ -7,8 +7,7 @@ import Slider from '../components/slider';
 import {BigLoader} from '../components/loader';
 import {capfirst, buildAPIURL} from '../utils';
 
-
-const template = require('../../templates/single-event.ejs');
+import template from '../../templates/single-event.ejs';
 
 
 export default class SingleEventView extends View {

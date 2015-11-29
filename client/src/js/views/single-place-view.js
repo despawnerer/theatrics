@@ -10,8 +10,7 @@ import {capfirst, buildAPIURL, isiOS} from '../utils';
 
 import ScheduleView from './schedule-view';
 
-
-const template = require('../../templates/single-place.ejs');
+import template from '../../templates/single-place.ejs';
 
 
 export default class SinglePlaceView extends View {

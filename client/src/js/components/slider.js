@@ -146,6 +146,13 @@ export default class Slider {
     }
   }
 
+  toSpecific(item) {
+    const active = this.getActiveItem();
+    active.classList.remove('active');
+    item.classList.add('active');
+    this.moveTo(item);
+  }
+
   moveTo(item) {
     this.move(this.getItemOffset(item));
   }
@@ -163,6 +170,12 @@ export default class Slider {
   }
 
   // getting and working with items
+
+  getActiveItem() {
+    const items = this.getItems();
+    const index = this.findActiveIndex(items);
+    return items[index];
+  }
 
   findActiveIndex(items) {
     for (let index = 0; index < items.length; index++) {

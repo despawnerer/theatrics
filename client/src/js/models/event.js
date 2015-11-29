@@ -27,9 +27,14 @@ export default class Event extends Model {
   }
 
   getDisplayDates() {
+    const allDates = this.data.dates;
+    const futureDates = this.getFutureDates();
+    return futureDates.length ? futureDates : allDates;
+  }
+
+  getFutureDates() {
     const now = moment().unix();
     const allDates = this.data.dates;
-    const futureDates = this.data.dates.filter(d => d.start > now);
-    return futureDates.length ? futureDates : allDates;
+    return this.data.dates.filter(d => d.start > now);
   }
 }

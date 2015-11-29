@@ -940,3 +940,143 @@ p {
   .item-slider .next-button span { right: 60px; }
   .item-slider .previous-button span { left: 60px; }
 }
+
+
+/* Tabs */
+
+.tabs {
+  list-style: none;
+  margin: -5px -10px 0 -10px;
+  padding: 0;
+  text-align: center;
+  white-space: nowrap;
+  font-size: 14px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.tab {
+  padding: 0;
+  margin: 0;
+  vertical-align: middle;
+  position: relative;
+  line-height: 2.4;
+}
+
+.tab a {
+  display: block;
+  padding: 5px 10px;
+}
+
+.tab.active::after {
+  content: ' ';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0 9px;
+  height: 2px;
+  background: black;
+}
+
+.tab.active a {
+  cursor: default;
+  font-weight: bolder;
+}
+
+.tab.active a:hover {
+  color: black;
+}
+
+/* Pager */
+
+.pager-nav {
+  margin-bottom: 30px;
+}
+
+.pager-nav a {
+  cursor: pointer;
+}
+
+.pager-pages-slider {
+  position: relative;
+  overflow-x: hidden;
+
+  /* todo: responsive */
+  margin: 0 -60px;
+}
+
+.pager-pages-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  transition: transform 0.25s;
+}
+
+.pager-page {
+  width: 100vw;
+  height: 100%;
+  overflow: hidden;
+}
+
+.pager-page.active {
+  height: auto;
+  overflow: visible;
+}
+
+
+/* Schedule */
+
+.schedule {
+  margin: 0;
+  padding: 0;
+}
+
+.schedule-table {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.schedule-table td {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  vertical-align: baseline;
+}
+
+.schedule-table tr:first-child td {
+  padding-top: 0;
+}
+
+.schedule-date-cell {
+  white-space: nowrap;
+  padding-right: 20px;
+  font-size: 17px;
+  line-height: 24px;
+}
+
+.schedule-time-cell {
+  white-space: nowrap;
+  font-size: 15px;
+  padding-right: 20px;
+}
+
+.schedule-item-title {
+  font-size: 15px;
+  font-weight: bolder;
+  margin: 0;
+  padding: 0;
+}
+
+.schedule-item-tagline {
+  font-size: 14px;
+  display: block;
+  margin: 8px 0 0 0;
+  padding: 0;
+}
+

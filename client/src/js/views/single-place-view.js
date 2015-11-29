@@ -1,10 +1,14 @@
-import axios from 'axios';
+import moment from 'moment';
 
 import View from '../base/view';
 import Place from '../models/place';
+import Feed from '../models/feed';
 import Slider from '../components/slider';
 import Loader from '../components/loader';
+import Pager from '../components/pager';
 import {capfirst, buildAPIURL, isiOS} from '../utils';
+
+import ScheduleView from './schedule-view';
 
 
 const template = require('../../templates/single-place.ejs');
@@ -16,6 +20,15 @@ export default class SinglePlaceView extends View {
     super({app, model});
 
     this.slider = null;
+
+    this.schedule = new Feed(
+      '/events/', {
+        categories: 'theater',
+        fields: 'id,title,short_title,dates,location,tagline',
+        page_size: 100,
+        place_id: model.get('id'),
+        actual_since: moment().unix(),
+      });
   }
 
   createElement() {
@@ -48,6 +61,17 @@ export default class SinglePlaceView extends View {
     const sliderElement = this.element.querySelector('.item-slider');
     this.slider = new Slider(sliderElement);
 
+    const pagerElement = this.element.querySelector('.pager');
+    this.pager = new Pager(pagerElement);
+
+    const scheduleElement = this.element.querySelector('.schedule-page > div');
+    this.scheduleView = new ScheduleView({
+      app: this.app,
+      model: this.schedule,
+    });
+    this.scheduleView.render();
+    scheduleElement.appendChild(this.scheduleView.element);
+
     this.app.setTitle(`${capfirst(place.title)} – ${location.name}`);
     this.app.settings.set('location', location.slug);
   }
@@ -62,8 +86,14 @@ export default class SinglePlaceView extends View {
   }
 
   unbind() {
+    if (this.pager) {
+      this.pager.unbind();
+    }
     if (this.slider) {
       this.slider.unbind();
+    }
+    if (this.scheduleView) {
+      this.scheduleView.unbind();
     }
     super.unbind();
   }

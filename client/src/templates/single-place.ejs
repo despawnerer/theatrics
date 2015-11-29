@@ -60,34 +60,53 @@
   </div>
 </div>
 
-<div class="item-slider" data-next-button=".next-button" data-previous-button=".previous-button" data-container=".item-slide-list" data-items=".item-slide">
-  <a class="slide-button next-button"<% if (place.images.length < 2) { %> hidden<% } %>><span class="icon-chevron-thin-right"></span></a>
-  <a class="slide-button previous-button" hidden><span class="icon-chevron-thin-left"></span></a>
-  <div class="item-view-inner">
-    <ul class="item-slide-list">
-      <% place.images.forEach(function(image) { %>
-        <li class="item-slide">
-          <img
-            data-sizes="
-              (min-width: 1140px) 750px,
-              (min-width: 720px) 525px,
-              300px
-            "
-            data-srcset="
-              <%= image.image %> 1500w,
-              <%= image.thumbnails["640x384"] %> 640w
-            "
-            data-src="<%= image.thumbnails["640x384"] %>"
-            class="item-slide-image lazyload"/>
-        </li>
-      <% }) %>
+<div class="pager" data-nav-items=".tab" data-slider=".pager-pages-slider">
+  <nav class="pager-nav item-view-inner">
+    <ul class="tabs">
+      <li class="tab active" for=".description-page"><a>Описание</a></li>
+      <li class="tab" for=".schedule-page"><a>Афиша</a></li>
     </ul>
+  </nav>
+  <div class="pager-pages-slider" data-container=".pager-pages-list" data-items=".pager-page">
+    <div class="pager-pages-list">
+      <div class="pager-page description-page">
+        <div class="item-slider" data-next-button=".next-button" data-previous-button=".previous-button" data-container=".item-slide-list" data-items=".item-slide">
+          <a class="slide-button next-button"<% if (place.images.length < 2) { %> hidden<% } %>><span class="icon-chevron-thin-right"></span></a>
+          <a class="slide-button previous-button" hidden><span class="icon-chevron-thin-left"></span></a>
+          <div class="item-view-inner">
+            <ul class="item-slide-list">
+              <% place.images.forEach(function(image) { %>
+                <li class="item-slide">
+                  <img
+                    data-sizes="
+                      (min-width: 1140px) 750px,
+                      (min-width: 720px) 525px,
+                      300px
+                    "
+                    data-srcset="
+                      <%= image.image %> 1500w,
+                      <%= image.thumbnails["640x384"] %> 640w
+                    "
+                    data-src="<%= image.thumbnails["640x384"] %>"
+                    class="item-slide-image lazyload"/>
+                </li>
+              <% }) %>
+            </ul>
+          </div>
+        </div>
+        <div class="item-view-inner">
+          <div class="item-description"><%- place.description %></div>
+          <div class="item-text"><%- place.body_text %></div>
+        </div>
+      </div>
+      <div class="pager-page schedule-page">
+        <div class="item-view-inner"></div>
+      </div>
+    </div>
   </div>
 </div>
 
 <div class="item-view-inner">
-  <div class="item-description"><%- place.description %></div>
-  <div class="item-text"><%- place.body_text %></div>
   <div class="source-information">
     Источник данных: <a href="<%= place.site_url %>" target="_blank">kudago.com</a>.
   </div>

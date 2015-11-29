@@ -1,0 +1,31 @@
+<table class="schedule-table" cellspacing="0" cellpadding="0">
+  <tbody>
+  <% items.forEach(function(item) { %>
+    <% var date = item.date %>
+    <% var event = item.event.data %>
+    <% var location = app.locations.get(event.location.slug) %>
+
+    <% var start = moment.unix(date.start).tz(location.timezone) %>
+    <% var end = moment.unix(date.end).tz(location.timezone) %>
+    <tr>
+      <td class="schedule-date-cell">
+        <div class="item-day"><%= start.format('D MMMM')%></div>
+        <div class="item-day-of-week"><%= start.format('dddd') %></div>
+      </td>
+      <td class="schedule-time-cell">
+        <div class="schedule-time"><%= start.format('LT') %></div>
+      </td>
+      <td>
+        <h3 class="schedule-item-title">
+          <a href="<%= app.resolver.reverse('single-event', {id: event.id }) %>">
+            <span class="link-text"><%= capfirst(event.short_title || event.title) %></span>
+          </a>
+        </h3>
+        <% if (event.tagline) { %>
+          <p class="schedule-item-tagline"><%= event.tagline %></p>
+        <% } %>
+      </td>
+    </tr>
+  <% }); %>
+  </tbody>
+</table>

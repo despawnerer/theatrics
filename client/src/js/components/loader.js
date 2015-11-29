@@ -39,3 +39,14 @@ export default class Loader {
     return element;
   }
 }
+
+
+export class BigLoader extends Loader {
+  constructor(options) {
+    super(options);
+    this.loaderElement = this.element;
+    this.element = document.createElement('div');
+    this.element.setAttribute('class', 'big-loader-container');
+    this.element.appendChild(this.loaderElement);
+  }
+}

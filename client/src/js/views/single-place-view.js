@@ -4,7 +4,7 @@ import View from '../base/view';
 import Place from '../models/place';
 import Feed from '../models/feed';
 import Slider from '../components/slider';
-import Loader from '../components/loader';
+import {BigLoader} from '../components/loader';
 import Pager from '../components/pager';
 import {capfirst, buildAPIURL, isiOS} from '../utils';
 
@@ -59,6 +59,13 @@ export default class SinglePlaceView extends View {
     this.app.settings.set('location', location.slug);
   }
 
+  renderLoader() {
+    const loader = new BigLoader({progress: 0.25});
+    this.element.innerHTML = '';
+    this.element.appendChild(loader.element);
+    this.app.setTitle("Площадка");
+  }
+
   createScheduleView(selector) {
     const container = this.element.querySelector(selector);
     const schedule = new Feed(
@@ -76,15 +83,6 @@ export default class SinglePlaceView extends View {
     view.render();
     container.appendChild(view.element);
     return view;
-  }
-
-  renderLoader() {
-    const loader = new Loader({progress: 0.25});
-    const container = document.createElement('div');
-    container.setAttribute('class', 'big-loader-container');
-    container.appendChild(loader.element);
-    this.element.appendChild(container);
-    this.app.setTitle("Площадка");
   }
 
   unbind() {

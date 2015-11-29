@@ -4,7 +4,7 @@ import moment from 'moment';
 import View from '../base/view';
 import Event from '../models/event';
 import Slider from '../components/slider';
-import Loader from '../components/loader';
+import {BigLoader} from '../components/loader';
 import {capfirst, buildAPIURL} from '../utils';
 
 
@@ -55,11 +55,9 @@ export default class SingleEventView extends View {
   }
 
   renderLoader() {
-    const loader = new Loader({progress: 0.25});
-    const container = document.createElement('div');
-    container.setAttribute('class', 'big-loader-container');
-    container.appendChild(loader.element);
-    this.element.appendChild(container);
+    const loader = new BigLoader({progress: 0.25});
+    this.element.innerHTML = '';
+    this.element.appendChild(loader.element);
     this.app.setTitle("Спектакль");
   }
 

@@ -991,10 +991,6 @@ p {
 
 /* Pager */
 
-.pager-nav {
-  margin-bottom: 30px;
-}
-
 .pager-nav a {
   cursor: pointer;
 }
@@ -1002,9 +998,6 @@ p {
 .pager-pages-slider {
   position: relative;
   overflow-x: hidden;
-
-  /* todo: responsive */
-  margin: 0 -60px;
 }
 
 .pager-pages-list {
@@ -1020,6 +1013,7 @@ p {
 
 .pager-page {
   width: 100vw;
+  box-sizing: border-box;
   height: 100%;
   overflow: hidden;
 }
@@ -1029,8 +1023,29 @@ p {
   overflow: visible;
 }
 
-.pager-page .item-slider { margin-left: 0; margin-right: 0; }
+@media (max-width: 359px) {
+  .pager-nav { margin-bottom: 15px; }
+  .pager-pages-slider { margin: 0 -15px; }
+  .pager-page { padding: 0 15px; }
+}
 
+@media (min-width: 360px) and (max-width: 719px) {
+  .pager-nav { margin-bottom: 25px; }
+  .pager-pages-slider { margin: 0 -30px; }
+  .pager-page { padding: 0 30px; }
+}
+
+@media (min-width: 720px) and (max-width: 1139px) {
+  .pager-nav { margin-bottom: 30px; }
+  .pager-pages-slider { margin: 0 -45px; }
+  .pager-page { padding: 0 45px; }
+}
+
+@media (min-width: 1140px) {
+  .pager-nav { margin-bottom: 30px; }
+  .pager-pages-slider { margin: 0 -60px; }
+  .pager-page { padding: 0 60px; }
+}
 
 /* Schedule */
 

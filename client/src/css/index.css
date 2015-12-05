@@ -308,6 +308,25 @@ p {
   font-size: 20px;
 }
 
+
+/* Nice little badge for festivals */
+
+.festival-badge-block {
+  margin-bottom: 10px;
+}
+
+.festival-badge {
+  background: red;
+  border-radius: 2px;
+  display: inline-block;
+  font-size: 11px;
+  color: white;
+  padding: 2px 3px;
+  vertical-align: middle;
+  font-weight: normal;
+}
+
+
 /* Events view */
 
 .events-view {

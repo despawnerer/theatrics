@@ -24,6 +24,12 @@
 </div>
 
 <div class="item-view-inner">
+  <% if (event.categories.indexOf('festival') !== -1) { %>
+  <div class="festival-badge-block">
+    <span class="festival-badge">Фестиваль</span>
+  </div>
+  <% } %>
+
   <h2 class="big-item-title">
     <%= capfirst(event.short_title || event.title) %>
     <span class="big-item-tagline"><%= event.tagline %></span>

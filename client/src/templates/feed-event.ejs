@@ -4,6 +4,9 @@
   </div>
   <h2 class="item-header">
     <%= capfirst(item.short_title || item.title) %>
+    <% if (item.categories.indexOf('festival') !== -1) { %>
+      <span class="festival-badge">Фестиваль</span>
+    <% } %>
   </h2>
 </a>
 <% if (item.tagline) { %>

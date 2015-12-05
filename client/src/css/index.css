@@ -400,13 +400,13 @@ p {
     padding: 5px 0;
   }
 
-  .calendar-day:nth-child(n+8) {
+  .calendar-day:nth-child(n+9) {
     display: none;
   }
 }
 
 @media (max-width: 1139px) {
-  .calendar-day:nth-child(n+15) {
+  .calendar-day:nth-child(n+17) {
     display: none;
   }
 }

@@ -24,7 +24,7 @@ export default class Calendar extends View {
     listElement.appendChild(anyDateElement);
 
     const today = moment().startOf('day');
-    for (let n = 0; n < 14; n++) {
+    for (let n = 0; n < 16; n++) {
       const day = today.clone().add(n, 'days');
       const element = this.buildDayElement(day);
       const date = day.format('YYYY-MM-DD');

@@ -1034,7 +1034,7 @@ p {
 
 .pager-pages-slider {
   position: relative;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .pager-pages-list {

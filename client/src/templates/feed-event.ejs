@@ -19,3 +19,9 @@
     </a>
   </div>
 <% } %>
+
+<% if (!item.tagline && !item.place && item.description) { %>
+  <div class="tagline">
+  <%- item.description %>
+  </div>
+<% } %>

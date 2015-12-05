@@ -11,7 +11,6 @@ export default class Place extends Model {
         buildAPIURL(`/places/${this.get('id')}/`),
         {
           params: {
-            fields: 'id,location,title,images,address,subway,timetable,coords,phone,site_url,description,body_text,foreign_url',
             expand: 'images,location',
           }
         })

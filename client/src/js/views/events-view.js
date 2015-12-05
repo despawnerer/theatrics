@@ -17,7 +17,7 @@ export default class EventsView extends View {
     this.feed = new Feed(
       '/events/', {
         categories: 'theater,-kids',
-        fields: 'place,images,tagline,id,age_restriction,title,short_title',
+        fields: 'place,images,tagline,id,title,short_title,categories',
         expand: 'place,images',
         page_size: 24,
       });

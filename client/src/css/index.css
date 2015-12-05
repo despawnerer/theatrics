@@ -348,7 +348,7 @@ p {
 
 .calendar-day a {
   display: block;
-  padding: 5px 10px;
+  padding: 5px 11px;
 }
 
 .calendar-day.active::after {
@@ -357,7 +357,7 @@ p {
   left: 0;
   right: 0;
   bottom: 0;
-  margin: 0 9px;
+  margin: 0 10px;
   height: 2px;
   background: black;
 }
@@ -389,7 +389,7 @@ p {
 
 @media (max-width: 719px) {
   .calendar {
-    margin: -5px -9px;
+    margin: -5px -11px;
   }
 
   .calendar-day {

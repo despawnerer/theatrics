@@ -1026,8 +1026,7 @@ p {
 .pager-page {
   width: 100vw;
   box-sizing: border-box;
-  height: 100%;
-  overflow: hidden;
+  height: 0;
 }
 
 .pager-page.active {

@@ -248,7 +248,7 @@ p {
 }
 
 @media (min-width: 1140px) {
-  #view-container { margin: 45px 0 60px 0; }
+  #view-container { margin: 50px 0 60px 0; }
 }
 
 
@@ -410,7 +410,7 @@ p {
 }
 
 @media (min-width: 1140px) {
-  .calendar-container { margin-bottom: 50px; }
+  .calendar-container { margin-bottom: 60px; }
 }
 
 @media (max-width: 719px) {

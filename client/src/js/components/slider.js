@@ -4,7 +4,7 @@ import {show, toggle, toggleClass} from '../utils';
 
 
 export default class Slider {
-  constructor(element) {
+  constructor(element, isTouchEnabled=true) {
     this.element = element;
 
     this.isTouching = false;
@@ -24,9 +24,12 @@ export default class Slider {
     this.events = new Events(element, this);
     this.events.bind(`click ${this.selectors.next}`, 'onNextClicked');
     this.events.bind(`click ${this.selectors.previous}`, 'onPreviousClicked');
-    this.events.bind('touchstart', 'onTouchStart');
-    this.events.bind('touchend', 'onTouchEnd');
-    this.events.bind('touchmove', 'onTouchMove');
+
+    if (isTouchEnabled) {
+      this.events.bind('touchstart', 'onTouchStart');
+      this.events.bind('touchend', 'onTouchEnd');
+      this.events.bind('touchmove', 'onTouchMove');
+    }
 
     element.querySelector(this.selectors.items).classList.add('active');
   }

@@ -16,7 +16,7 @@ export default class Pager {
     this.events.bind(`click ${this.selectors.nav}`, 'onNavClicked');
 
     this.sliderElement = element.querySelector(this.selectors.slider);
-    this.slider = new Slider(this.sliderElement);
+    this.slider = new Slider(this.sliderElement, false);
   }
 
   unbind() {

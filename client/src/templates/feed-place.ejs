@@ -3,7 +3,7 @@
     <img data-src="<%= item.images[0].thumbnails['640x384'] %>" class="feed-image lazyload"/>
   </div>
   <h2 class="item-header">
-    <%= capfirst(item.title) %>
+    <span class="link-text"><%= capfirst(item.title) %></span>
   </h2>
 </a>
 <div class="tagline"><%= item.address %></div>

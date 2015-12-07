@@ -415,7 +415,7 @@ p {
 
 @media (max-width: 719px) {
   .calendar {
-    margin: -5px -11px;
+    margin: -5px -10px;
   }
 
   .calendar-day {

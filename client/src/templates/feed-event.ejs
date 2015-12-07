@@ -3,7 +3,7 @@
     <img data-src="<%= item.images[0].thumbnails['640x384'] %>" class="feed-image lazyload"/>
   </div>
   <h2 class="item-header">
-    <span class="link-text"><%= capfirst(item.short_title || item.title) %></span>
+    <%= capfirst(item.short_title || item.title) %>
     <% if (item.categories.indexOf('festival') !== -1) { %>
       <span class="festival-badge">Фестиваль</span>
     <% } %>

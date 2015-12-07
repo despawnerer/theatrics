@@ -61,15 +61,16 @@ export default class EventsView extends View {
   }
 
   updateFeedQuery() {
+    const location = this.app.locations.get(this.model.get('location'));
     const query = this.feed.query;
 
     query.lock();
 
-    query.set('location', this.model.get('location'));
+    query.set('location', location.slug);
 
     const date = this.model.get('date');
     if (date) {
-      const day = moment(date);
+      const day = moment.tz(date, location.timezone);
       query.set('actual_since', day.unix());
       query.set('actual_until', day.clone().add(1, 'days').unix());
     } else {

@@ -34,7 +34,7 @@ export default class SinglePlaceView extends View {
       this.renderItem();
     } else {
       this.renderLoader();
-      this.model.fetch().catch(err => console.error(err))
+      this.model.fetch();
     }
   }
 

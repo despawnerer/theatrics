@@ -22,39 +22,60 @@ export default class Feed extends EventEmitter {
     this.emit('clear');
   }
 
+  fetchAll() {
+    const loadingQuery = this.query.clone();
+    let items = null;
+    let nextURL = null;
+
+    const hasMore = () => nextURL !== null || items == null;
+    const fetchNextPage = () => {
+      if (!hasMore()) {
+        this._handleLoaded(loadingQuery, items, nextURL);
+        return;
+      }
+
+      this._doFetchMore(loadingQuery, nextURL).then(response => {
+        if (!loadingQuery.equals(this.query)) {
+          return;
+        }
+        items = (items || []).concat(response.data.results);
+        nextURL = response.data.next;
+        fetchNextPage();
+      });
+    }
+
+    fetchNextPage();
+  }
+
   fetchMore() {
     const loadingQuery = this.query.clone();
-    if (this.nextURL) {
-      return axios
-        .get(this.nextURL)
-        .then(this.onLoaded.bind(this, loadingQuery));
-    } else {
-      return axios
-        .get(
-          buildAPIURL(this.path),
-          {
-            params: this.query.data
-          })
-        .then(this.onLoaded.bind(this, loadingQuery));
-    }
+    this._doFetchMore(this.query, this.nextURL).then(response => {
+      const items = (this.items || []).concat(response.data.results);
+      const nextURL = response.data.next;
+      this._handleLoaded(loadingQuery, items, nextURL);
+    });
   }
 
   hasMore() {
     return this.nextURL !== null || this.items === null;
   }
 
-  onLoaded(loadedQuery, response) {
-    if (!loadedQuery.equals(this.query)) {
-      return;
+  _doFetchMore(query, nextURL) {
+    if (nextURL) {
+      return axios.get(nextURL);
+    } else {
+      return axios.get(
+        buildAPIURL(this.path),
+        {params: query.data}
+      );
     }
+  }
 
-    if (this.items === null) {
-      this.items = [];
+  _handleLoaded(loadedQuery, items, nextURL) {
+    if (loadedQuery.equals(this.query)) {
+      this.items = items;
+      this.nextURL = nextURL;
+      this.emit('load', items);
     }
-
-    this.nextURL = response.data.next;
-    this.items = this.items.concat(response.data.results);
-
-    this.emit('load', response.data.results);
   }
 }

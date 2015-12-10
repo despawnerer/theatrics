@@ -1,6 +1,6 @@
 <div class="item-view-inner">
   <h2 class="big-item-title">
-    <%= capfirst(place.title) %>
+    <%- capfirst(place.title) %>
   </h2>
 
   <div class="item-information place-information">
@@ -8,23 +8,23 @@
       <div class="item-information-group">
         <div class="item-information-item">
           <span class="item-information-icon icon-place"></span>
-          <a href="<% if (isiOS()) { %>//maps.apple.com/?q=<%= place.title %>&address=<%= place.address %>, <%= location.name %><% } else { %>//maps.google.com/?q=<%= place.title %>, <%= place.address %>, <%= location.name %><% } %>" class="map-link" target="_blank">
-            <span class="link-text"><%= place.address %></span>
+          <a href="<% if (isiOS()) { %>//maps.apple.com/?q=<%- place.title %>&address=<%- place.address %>, <%- location.name %><% } else { %>//maps.google.com/?q=<%- place.title %>, <%- place.address %>, <%- location.name %><% } %>" class="map-link" target="_blank">
+            <span class="link-text"><%- place.address %></span>
           </a>
         </div>
         <div class="item-information-item">
           <span class="item-information-icon icon-subway"></span>
-          <%= place.subway %>
+          <%- place.subway %>
         </div>
       </div>
       <div class="item-information-group">
         <div class="item-information-item">
           <span class="item-information-icon icon-clock"></span>
-          <%= place.timetable %>
+          <%- place.timetable %>
         </div>
         <div class="item-information-item">
           <span class="item-information-icon icon-phone"></span>
-          <%= place.phone %>
+          <%- place.phone %>
         </div>
       </div>
     <% } else { %>
@@ -32,27 +32,27 @@
         <% if (place.address) { %>
           <div class="item-information-item">
             <span class="item-information-icon icon-place"></span>
-            <a href="<% if (isiOS()) { %>//maps.apple.com/?q=<%= place.title %>&address=<%= place.address %>, <%= location.name %><% } else { %>//maps.google.com/?q=<%= place.title %>, <%= place.address %>, <%= location.name %><% } %>" class="map-link" target="_blank">
-              <span class="link-text"><%= place.address %></span>
+            <a href="<% if (isiOS()) { %>//maps.apple.com/?q=<%- place.title %>&address=<%- place.address %>, <%- location.name %><% } else { %>//maps.google.com/?q=<%- place.title %>, <%- place.address %>, <%- location.name %><% } %>" class="map-link" target="_blank">
+              <span class="link-text"><%- place.address %></span>
             </a>
           </div>
         <% } %>
         <% if (place.subway) { %>
           <div class="item-information-item">
             <span class="item-information-icon icon-subway"></span>
-            <%= place.subway %>
+            <%- place.subway %>
           </div>
         <% } %>
         <% if (place.timetable) { %>
           <div class="item-information-item">
             <span class="item-information-icon icon-clock"></span>
-            <%= place.timetable %>
+            <%- place.timetable %>
           </div>
         <% } %>
         <% if (place.phone) { %>
           <div class="item-information-item">
             <span class="item-information-icon icon-phone"></span>
-            <%= place.phone %>
+            <%- place.phone %>
           </div>
         <% } %>
       </div>
@@ -84,10 +84,10 @@
                       300px
                     "
                     data-srcset="
-                      <%= image.image %> 1500w,
-                      <%= image.thumbnails["640x384"] %> 640w
+                      <%- image.image %> 1500w,
+                      <%- image.thumbnails["640x384"] %> 640w
                     "
-                    data-src="<%= image.thumbnails["640x384"] %>"
+                    data-src="<%- image.thumbnails["640x384"] %>"
                     class="item-slide-image lazyload"/>
                 </li>
               <% }) %>
@@ -95,8 +95,8 @@
           </div>
         </div>
         <div class="item-view-inner">
-          <div class="item-description"><%- place.description %></div>
-          <div class="item-text"><%- place.body_text %></div>
+          <div class="item-description"><%= place.description %></div>
+          <div class="item-text"><%= place.body_text %></div>
         </div>
       </div>
       <div class="pager-page schedule-page">
@@ -108,6 +108,6 @@
 
 <div class="item-view-inner">
   <div class="source-information">
-    Источник данных: <a href="<%= place.site_url %>" target="_blank">kudago.com</a>.
+    Источник данных: <a href="<%- place.site_url %>" target="_blank">kudago.com</a>.
   </div>
 </div>

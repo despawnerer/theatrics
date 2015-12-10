@@ -1,20 +1,20 @@
 var gulp = require('gulp');
-var postcss = require('gulp-postcss');
+var util = require('gulp-util');
+
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
+
 var browserify = require('browserify');
-var babelify = require('babelify');
 var watchify = require('watchify');
-var util = require('gulp-util');
-var ejs = require('gulp-ejs');
+
+var postcss = require('gulp-postcss');
 var rename = require('gulp-rename');
-var closurecompiler = require('closurecompiler');
-var map = require('map-stream');
-var ejsBrowserify = require('ejs-browserify-transformer');
+var uglify = require('gulp-uglify');
+var template = require('gulp-template');
 
 
 function logError(e) {
-  util.log(util.colors.red('Error'), e.message);
+  util.log(util.colors.red('Error'), e);
 }
 
 
@@ -51,60 +51,51 @@ gulp.task('build-min-css', ['build-css'], function () {
 
 /* JS */
 
-function buildBrowserify(options) {
+const JS_ENTRIES = ['src/js/index.js'];
+const JS_TARGET_FILENAME = 'index.js';
+
+function buildJS(options) {
   var b = browserify({
-    entries: 'src/js/' + options.entry,
-    debug: true,
-    //these properties are needed for watchify
+    entries: JS_ENTRIES,
+    debug: options.debug,
+
+    // watchify support
+    plugin: options.watch ? [watchify] : [],
     cache: {},
     packageCache: {}
   });
 
   var buildBundle = function() {
-    return b.bundle()
+    var stream = b.bundle()
       .on('error', logError)
-      .pipe(source(options.entry))
+      .pipe(source(JS_TARGET_FILENAME))
       .pipe(buffer())
       .pipe(gulp.dest('build'));
-  };
-
-  if (options.watch) {
-    b = watchify(b);
   }
 
-  b.on('update', buildBundle);
-  b.transform(ejsBrowserify.create());
-  b.transform(babelify.configure({
-    presets: ['es2015']
-  }));
+  if (options.watch) {
+    b.on('update', buildBundle);
+  }
 
   return buildBundle();
 }
 
 gulp.task('build-js', function () {
-  return buildBrowserify({
-    entry: 'index.js',
+  return buildJS({
+    debug: true,
   });
 });
 
 gulp.task('watch-js', function () {
-  buildBrowserify({
-    entry: 'index.js',
-    watch: true
+  buildJS({
+    debug: true,
+    watch: true,
   });
 });
 
 gulp.task('build-min-js', ['build-js'], function () {
-  return gulp.src(['build/*.js', '!build/*.min.js'])
-    .pipe(map(function(data, cb) {
-      closurecompiler.compile([data.path], {
-        language_in: 'ECMASCRIPT5',
-        warning_level: 'QUIET',
-      }, function(error, result) {
-        data.contents = new Buffer(result);
-        cb(null, data);
-      });
-    }))
+  return gulp.src('build/index.js')
+    .pipe(uglify())
     .pipe(rename({suffix: '.min'}))
     .pipe(gulp.dest('build'));
 });
@@ -119,7 +110,7 @@ gulp.task('build-html', function() {
   }
   return gulp.src('src/*.ejs')
     .on('error', logError)
-    .pipe(ejs(context))
+    .pipe(template(context))
     .pipe(rename({extname: '.html'}))
     .pipe(gulp.dest('build'));
 });
@@ -136,7 +127,7 @@ gulp.task('build-min-html', function() {
   }
   return gulp.src('src/*.ejs')
     .on('error', logError)
-    .pipe(ejs(context))
+    .pipe(template(context))
     .pipe(rename({extname: '.html'}))
     .pipe(gulp.dest('build'));
 });

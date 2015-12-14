@@ -1,7 +1,12 @@
 'use strict';
 
+import 'moment-timezone/moment-timezone';
+import 'moment-timezone/moment-timezone-utils';
+
 import gulp from 'gulp';
 import util from 'gulp-util';
+
+import moment from 'moment';
 
 import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
@@ -19,6 +24,7 @@ import rename from 'gulp-rename';
 import uglify from 'gulp-uglify';
 import template from 'gulp-template';
 
+import timezones from 'moment-timezone/data/unpacked/latest.json';
 import pkginfo from './package.json';
 
 
@@ -159,6 +165,19 @@ gulp.task('watch-fonts', () => {
   gulp.start(['build-fonts']);
   gulp.watch('src/fonts/*', ['build-fonts']);
 });
+
+
+/* Data */
+
+gulp.task('update-timezones', () => {
+  const currentYear = new Date().getFullYear();
+  const filteredTimezones = moment.tz.filterLinkPack(
+    timezones, currentYear - 3, currentYear + 1);
+  const stream = source('timezones.json');
+  stream.end(JSON.stringify(filteredTimezones))
+  return stream.pipe(gulp.dest('src/data'));
+});
+
 
 
 /* Big tasks */

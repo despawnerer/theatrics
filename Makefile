@@ -1,6 +1,6 @@
 host = localhost:9001
 
-.PHONY: clean install-deps install-server-deps install-client-deps build build-min watch run run-dev
+.PHONY: clean install-deps install-server-deps install-client-deps update-timezones build build-min watch run run-dev
 
 # clean up
 
@@ -23,6 +23,11 @@ install-server-deps:
 
 install-client-deps:
 	cd client && npm install
+
+# data updates
+
+update-timezones:
+	cd client && npm run update-timezones
 
 # building
 

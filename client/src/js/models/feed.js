@@ -50,9 +50,10 @@ export default class Feed extends EventEmitter {
   fetchMore() {
     const loadingQuery = this.query.clone();
     this._doFetchMore(this.query, this.nextURL).then(response => {
-      const items = (this.items || []).concat(response.data.results);
+      const newItems = response.data.results;
+      const items = (this.items || []).concat(newItems);
       const nextURL = response.data.next;
-      this._handleLoaded(loadingQuery, items, nextURL);
+      this._handleLoaded(loadingQuery, newItems, nextURL);
     });
   }
 

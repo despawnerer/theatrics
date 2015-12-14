@@ -184,9 +184,8 @@ gulp.task('update-timezones', () => {
   const currentYear = new Date().getFullYear();
   const filteredTimezones = moment.tz.filterLinkPack(
     timezones, currentYear - 3, currentYear + 1);
-  const stream = source('timezones.json');
-  stream.end(JSON.stringify(filteredTimezones))
-  return stream.pipe(gulp.dest('src/data'));
+  return stringSrc('timezones.json', JSON.stringify(filteredTimezones))
+    .pipe(gulp.dest('src/data'));
 });
 
 gulp.task('update-locations', () => {
@@ -245,4 +244,11 @@ gulp.task('build-min', [
 
 function logError(e) {
   util.log(util.colors.red('Error'), e);
+}
+
+
+function stringSrc(filename, str) {
+  const stream = source(filename);
+  stream.end(str)
+  return stream;
 }

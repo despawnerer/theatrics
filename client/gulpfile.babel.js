@@ -19,6 +19,8 @@ import rename from 'gulp-rename';
 import uglify from 'gulp-uglify';
 import template from 'gulp-template';
 
+import pkginfo from './package.json';
+
 
 /* CSS */
 
@@ -113,6 +115,8 @@ gulp.task('build-html', () => {
   const context = {
     min: false,
     buildDate: new Date(),
+    repositoryURL: pkginfo.repositoryURL,
+    revision: process.env.GIT_REV || null,
   }
   return gulp
     .src('src/*.ejs')
@@ -131,6 +135,8 @@ gulp.task('build-min-html', () => {
   const context = {
     min: true,
     buildDate: new Date(),
+    repositoryURL: pkginfo.repositoryURL,
+    revision: process.env.GIT_REV || null,
   }
   return gulp
     .src('src/*.ejs')

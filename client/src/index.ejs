@@ -13,5 +13,9 @@
   <div id="view-container"></div>
   <footer id="footer">
     <span class="icon-heart"></span> Сделано с любовью в Санкт-Петербурге, <%= buildDate.getFullYear() %>.
+    <% if (revision) { %>
+      <br>
+      Сборка <a href="<%- repositoryURL %>/commit/<%- revision %>"><%= revision %></a>.
+    <% } %>
   </footer>
 </div>

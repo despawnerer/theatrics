@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "author": "Aleksei Voronov",
   "repository": "despawnerer/theatrics",
+  "repositoryURL": "https://github.com/despawnerer/theatrics",
   "license": "MIT",
   "description": "A nice little theater playbill sort of app using KudaGo API",
   "scripts": {

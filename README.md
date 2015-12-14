@@ -51,6 +51,16 @@ The server runs on `localhost:9001` by default. If you want a different port, yo
 	$ make run-dev host="localhost:9005"
 
 
+### Updating timezones list
+
+	$ make update-timezones
+
+
+### Updating locations list
+
+	$ make update-locations
+
+
 Deploying
 ---------
 

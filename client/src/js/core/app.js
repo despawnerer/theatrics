@@ -47,10 +47,7 @@ export default class App {
   }
 
   run() {
-    Promise.all([
-      this.locations.fetch(),
-      this.settings.fetch(),
-    ]).then(() => {
+    this.settings.fetch().then(() => {
       this.setupLocationChooser();
       this.router.redirect(window.location.pathname);
     });

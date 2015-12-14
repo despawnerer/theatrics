@@ -2,10 +2,12 @@ import axios from 'axios';
 
 import {buildAPIURL} from '../utils';
 
+import locations from '../../data/locations.json';
+
 
 export default class Locations {
   constructor() {
-    this._locations = [];
+    this._locations = locations;
   }
 
   get(slug) {
@@ -14,29 +16,5 @@ export default class Locations {
 
   forEach(func) {
     this._locations.forEach(func);
-  }
-
-  fetch() {
-    return axios
-      .get(
-        buildAPIURL('/locations/'),
-        {
-          params: {
-            lang: 'ru',
-            fields: 'name,slug,timezone,coords',
-            order_by: 'name'
-          }
-        })
-      .then(this.onFetched.bind(this));
-  }
-
-  onFetched(response) {
-    this._locations = response.data;
-    this._locations.forEach(location => {
-      if (location.timezone === 'GMT+03:00') {
-        // FIXME: this seems like an issue with moment
-        location.timezone = 'Etc/GMT-3';
-      }
-    });
   }
 }

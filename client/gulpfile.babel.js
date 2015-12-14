@@ -3,13 +3,19 @@
 import 'moment-timezone/moment-timezone';
 import 'moment-timezone/moment-timezone-utils';
 
+import moment from 'moment';
+import request from 'request';
+
 import gulp from 'gulp';
 import util from 'gulp-util';
-
-import moment from 'moment';
+import postcss from 'gulp-postcss';
+import rename from 'gulp-rename';
+import uglify from 'gulp-uglify';
+import template from 'gulp-template';
 
 import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
+import through from 'through2';
 
 import csswring from 'csswring';
 import autoprefixer  from 'autoprefixer';
@@ -18,11 +24,6 @@ import postcssAssets from 'postcss-assets';
 
 import browserify from 'browserify';
 import watchify from 'watchify';
-
-import postcss from 'gulp-postcss';
-import rename from 'gulp-rename';
-import uglify from 'gulp-uglify';
-import template from 'gulp-template';
 
 import timezones from 'moment-timezone/data/unpacked/latest.json';
 import pkginfo from './package.json';
@@ -169,6 +170,16 @@ gulp.task('watch-fonts', () => {
 
 /* Data */
 
+const LOCATION_TIMEZONE_OVERRIDES = {
+  spb: 'Europe/Moscow',
+  msk: 'Europe/Moscow',
+  vbg: 'Europe/Moscow',
+  nnv: 'Europe/Moscow',
+  kzn: 'Europe/Moscow',
+  sochi: 'Europe/Moscow',
+  krd: 'Europe/Moscow',
+}
+
 gulp.task('update-timezones', () => {
   const currentYear = new Date().getFullYear();
   const filteredTimezones = moment.tz.filterLinkPack(
@@ -178,6 +189,32 @@ gulp.task('update-timezones', () => {
   return stream.pipe(gulp.dest('src/data'));
 });
 
+gulp.task('update-locations', () => {
+  const url = 'http://kudago.com/public-api/v1/locations/';
+  const qs = {
+    lang: 'ru',
+    fields: 'name,slug,timezone,coords',
+    order_by: 'name'
+  };
+  return request.get(url, {qs})
+    .pipe(source('locations.json'))
+    .pipe(buffer())
+    .pipe(through.obj((file, encoding, callback) => {
+      const contents = file.contents.toString(encoding);
+      const locations = JSON.parse(contents);
+      const updatedLocations = locations.map(overrideLocationTimezone);
+      file.contents = new Buffer(JSON.stringify(updatedLocations));
+      callback(null, file);
+    }))
+    .pipe(gulp.dest('src/data'));
+});
+
+function overrideLocationTimezone(location) {
+  if (location.slug in LOCATION_TIMEZONE_OVERRIDES) {
+    location.timezone = LOCATION_TIMEZONE_OVERRIDES[location.slug];
+  }
+  return location;
+}
 
 
 /* Big tasks */

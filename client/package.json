@@ -1,6 +1,10 @@
 {
   "name": "theatrics",
   "version": "1.0.0",
+  "author": "Aleksei Voronov",
+  "repository": "despawnerer/theatrics",
+  "license": "MIT",
+  "description": "A nice little theater playbill sort of app using KudaGo API",
   "scripts": {
     "build": "gulp build",
     "build-min": "gulp build-min",
@@ -57,7 +61,5 @@
     "presets": [
       "es2015"
     ]
-  },
-  "author": "Aleksei Voronov",
-  "license": "MIT"
+  }
 }

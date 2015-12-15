@@ -170,6 +170,7 @@ gulp.task('watch-fonts', () => {
 
 /* Data */
 
+const DISABLED_LOCATIONS = ['ufa', 'vbg', 'smr', 'krd'];
 const LOCATION_TIMEZONE_OVERRIDES = {
   spb: 'Europe/Moscow',
   msk: 'Europe/Moscow',
@@ -192,7 +193,7 @@ gulp.task('update-locations', () => {
   const url = 'http://kudago.com/public-api/v1/locations/';
   const qs = {
     lang: 'ru',
-    fields: 'name,slug,timezone,coords',
+    fields: 'name,slug,timezone,coords,language',
     order_by: 'name'
   };
   return request.get(url, {qs})
@@ -200,20 +201,21 @@ gulp.task('update-locations', () => {
     .pipe(buffer())
     .pipe(through.obj((file, encoding, callback) => {
       const contents = file.contents.toString(encoding);
-      const locations = JSON.parse(contents);
-      const updatedLocations = locations.map(overrideLocationTimezone);
-      file.contents = new Buffer(JSON.stringify(updatedLocations));
+      const fetchedLocations = JSON.parse(contents);
+      const locations = fetchedLocations
+        .filter(location => location.language == 'ru')
+        .filter(location => DISABLED_LOCATIONS.indexOf(location.slug) < 0)
+        .map(location => {
+          if (location.slug in LOCATION_TIMEZONE_OVERRIDES) {
+            location.timezone = LOCATION_TIMEZONE_OVERRIDES[location.slug];
+          }
+          return location;
+        });
+      file.contents = new Buffer(JSON.stringify(locations));
       callback(null, file);
     }))
     .pipe(gulp.dest('src/data'));
 });
-
-function overrideLocationTimezone(location) {
-  if (location.slug in LOCATION_TIMEZONE_OVERRIDES) {
-    location.timezone = LOCATION_TIMEZONE_OVERRIDES[location.slug];
-  }
-  return location;
-}
 
 
 /* Big tasks */

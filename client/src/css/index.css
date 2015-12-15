@@ -235,6 +235,10 @@ p {
   flex: 1 0 auto;
 }
 
+#view-container > *[hidden] {
+  display: none;
+}
+
 @media (max-width: 359px) {
   #view-container { margin: 20px 0; }
 }

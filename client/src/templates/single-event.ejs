@@ -44,7 +44,7 @@
             <%- capfirst(event.place.title) %>
           <% } else { %>
             <a href="<%- app.resolver.reverse('single-place', {id: event.place.id}) %>">
-              <span class="link-text"></span>
+              <span class="link-text"><%- capfirst(event.place.title) %></span>
             </a>
           <% } %>
         </div>

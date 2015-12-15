@@ -3,6 +3,7 @@
 import 'moment-timezone/moment-timezone';
 import 'moment-timezone/moment-timezone-utils';
 
+import fs from 'fs';
 import moment from 'moment';
 import request from 'request';
 
@@ -25,7 +26,7 @@ import postcssAssets from 'postcss-assets';
 import browserify from 'browserify';
 import watchify from 'watchify';
 
-import timezones from 'moment-timezone/data/unpacked/latest.json';
+import allTimezones from 'moment-timezone/data/unpacked/latest.json';
 import pkginfo from './package.json';
 
 
@@ -182,10 +183,18 @@ const LOCATION_TIMEZONE_OVERRIDES = {
 }
 
 gulp.task('update-timezones', () => {
-  const currentYear = new Date().getFullYear();
-  const filteredTimezones = moment.tz.filterLinkPack(
-    timezones, currentYear - 3, currentYear + 1);
-  return stringSrc('timezones.json', JSON.stringify(filteredTimezones))
+  const locations = readJSON('src/data/locations.json');
+  const locationTimezones = locations.map(location => location.timezone);
+  const timezones = {
+    version: allTimezones.version,
+    zones: allTimezones.zones
+      .filter(zone => locationTimezones.indexOf(zone.name) >= 0),
+    links: [],
+  }
+
+  const year = new Date().getFullYear();
+  const tzBundle = moment.tz.filterLinkPack(timezones, year - 5, year + 20);
+  return stringSrc('timezones.json', JSON.stringify(tzBundle))
     .pipe(gulp.dest('src/data'));
 });
 
@@ -253,4 +262,9 @@ function stringSrc(filename, str) {
   const stream = source(filename);
   stream.end(str)
   return stream;
+}
+
+
+function readJSON(filename) {
+  return JSON.parse(fs.readFileSync(filename));
 }

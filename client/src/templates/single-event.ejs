@@ -40,9 +40,13 @@
       <% if (event.place) { %>
         <div class="item-information-item item-place">
           <span class="item-information-icon icon-place"></span>
-          <a href="<%- app.resolver.reverse('single-place', {id: event.place.id}) %>">
-            <span class="link-text"><%- capfirst(event.place.title) %></span>
-          </a>
+          <% if (event.place.is_stub) { %>
+            <%- capfirst(event.place.title) %>
+          <% } else { %>
+            <a href="<%- app.resolver.reverse('single-place', {id: event.place.id}) %>">
+              <span class="link-text"></span>
+            </a>
+          <% } %>
         </div>
       <% } %>
 

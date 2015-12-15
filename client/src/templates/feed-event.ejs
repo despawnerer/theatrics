@@ -9,14 +9,20 @@
     <% } %>
   </h2>
 </a>
+
 <% if (item.tagline) { %>
   <div class="tagline"><%- item.tagline %></div>
 <% } %>
+
 <% if (item.place) { %>
   <div class="place">
-    <a href="<%- app.resolver.reverse('single-place', {id: item.place.id}) %>">
-      <span class="link-text"><%- item.place.title %></span>
-    </a>
+    <% if (item.place.is_stub) { %>
+      <%- capfirst(item.place.title) %>
+    <% } else { %>
+      <a href="<%- app.resolver.reverse('single-place', {id: item.place.id}) %>">
+        <span class="link-text"><%- capfirst(item.place.title) %></span>
+      </a>
+    <% } %>
   </div>
 <% } %>
 

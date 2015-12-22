@@ -30,7 +30,7 @@ export default class Feed extends EventEmitter {
     const hasMore = () => nextURL !== null || items == null;
     const fetchNextPage = () => {
       if (!hasMore()) {
-        this._handleLoaded(loadingQuery, items, nextURL);
+        this._handleLoaded(loadingQuery, items, items, nextURL);
         return;
       }
 
@@ -51,9 +51,9 @@ export default class Feed extends EventEmitter {
     const loadingQuery = this.query.clone();
     this._doFetchMore(this.query, this.nextURL).then(response => {
       const newItems = response.data.results;
-      const items = (this.items || []).concat(newItems);
+      const allItems = (this.items || []).concat(newItems);
       const nextURL = response.data.next;
-      this._handleLoaded(loadingQuery, newItems, nextURL);
+      this._handleLoaded(loadingQuery, newItems, allItems, nextURL);
     });
   }
 
@@ -72,11 +72,11 @@ export default class Feed extends EventEmitter {
     }
   }
 
-  _handleLoaded(loadedQuery, items, nextURL) {
+  _handleLoaded(loadedQuery, newItems, allItems, nextURL) {
     if (loadedQuery.equals(this.query)) {
-      this.items = items;
+      this.items = allItems;
       this.nextURL = nextURL;
-      this.emit('load', items);
+      this.emit('load', newItems);
     }
   }
 }

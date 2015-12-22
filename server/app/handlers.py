@@ -22,7 +22,7 @@ async def serve_api(request):
                 body[field] = value.replace(KUDAGO_API_BASE_URL, '/api')
 
     return web.Response(
-        text=json.dumps(body),
+        text=json.dumps(body, ensure_ascii=False),
         content_type='application/json'
     )
 

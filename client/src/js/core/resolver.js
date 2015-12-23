@@ -1,4 +1,4 @@
-import {regexpEscape, zipIntoObject, getKeys} from '../utils';
+import {regexpEscape, zipIntoObject} from '../utils';
 
 
 export default class Resolver {
@@ -46,7 +46,7 @@ export default class Resolver {
   }
 
   reverse(routeName, args) {
-    const routeArgNames = getKeys(args);
+    const routeArgNames = Object.keys(args);
 
     for (let route of this.routes) {
       const {name, argNames, pathSpec} = route;

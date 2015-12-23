@@ -54,15 +54,6 @@ export function regexpEscape(s) {
 }
 
 
-export function getKeys(obj) {
-  const keys = [];
-  for (let x in obj) {
-    keys.push(x);
-  }
-  return keys;
-}
-
-
 export function zipIntoObject(keys, values) {
   const obj = {}
   for (let x = 0; x < values.length; x++) {

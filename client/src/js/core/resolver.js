@@ -45,21 +45,21 @@ export default class Resolver {
     return null;
   }
 
-  reverse(routeName, args) {
-    const routeArgNames = Object.keys(args);
+  reverse(name, args) {
+    const argNames = Object.keys(args);
 
     for (let route of this.routes) {
-      const {name, argNames, pathSpec} = route;
-      const nameMatches = routeName == name;
-      const argsMatch = routeArgNames.every(x => argNames.indexOf(x) > -1);
+      const nameMatches = route.name === name;
+      const argsMatch = argNames.every(x => route.argNames.indexOf(x) > -1);
       if (!nameMatches || !argsMatch) {
         continue;
       }
 
-      let path = pathSpec;
-      argNames.forEach(arg => {
-        const argExpression = this._getNamedVarExpression(arg);
-        path = path.replace(argExpression, args[arg]);
+      let path = route.pathSpec;
+      argNames.forEach(name => {
+        const expression = this._getNamedVarExpression(name);
+        const value = args[name];
+        path = path.replace(expression, value);
       });
       return path;
     }

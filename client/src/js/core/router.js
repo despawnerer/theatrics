@@ -33,6 +33,12 @@ export default class Router {
   }
 
   onAnchorClick(event) {
+    const isLeftClick = event.button == 0;
+    const isModified = event.ctrlKey || event.shiftKey || event.metaKey;
+    if (!isLeftClick || isModified) {
+      return;
+    }
+
     const element = event.delegateTarget;
     if (element.origin !== window.location.origin) {
       return;

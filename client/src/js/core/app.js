@@ -62,13 +62,7 @@ export default class App {
   }
 
   setTitle(title) {
-    const fullTitle = `${title} – Theatrics`;
-    document.title = fullTitle;
-    history.replaceState(
-      history.state,
-      fullTitle,
-      window.location.pathname
-    );
+    this.viewSwitcher.setTitle(title);
   }
 
   // route handlers

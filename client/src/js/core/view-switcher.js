@@ -20,31 +20,25 @@ export default class ViewSwitcher {
   }
 
   switchView(ViewClass, args={}) {
-    const currentState = this.state;
-    const currentView = currentState.view;
-
-    if (currentView instanceof ViewClass) {
-      currentView.model.update(args);
-      return;
-    }
-
-    if (currentView) {
-      this.element.removeChild(currentView.element);
+    if (this.state.view) {
+      this.element.removeChild(this.state.view.element);
     }
 
     const cacheKey = [ViewClass, args];
     const cachedState = this.cache.get(cacheKey);
-    const newState = cachedState || this.buildNewState(ViewClass, args)
-    this.state = newState;
-
-    this.element.appendChild(newState.view.element);
-    if (cachedState) {
-      newState.view.model.update(args);
+    if (this.state.view instanceof ViewClass) {
+      this.state.view.model.replace(args);
+    } else if (cachedState) {
+      this.state = cachedState;
+      this.state.view.model.replace(args);
     } else {
-      newState.view.render();
+      this.state = this.buildNewState(ViewClass, args);
+      this.state.view.render();
     }
 
-    this.cache.put(cacheKey, newState);
+    this.element.appendChild(this.state.view.element);
+    document.title = this.state.title;
+    this.cache.put(cacheKey, this.state);
   }
 
   setTitle(title) {
@@ -61,7 +55,10 @@ export default class ViewSwitcher {
   buildNewState(ViewClass, args) {
     const model = new Model(args);
     const view = new ViewClass({app: this.app, model: model});
-    return {view: view, title: document.title};
+    return {
+      view: view,
+      title: null
+    };
   }
 
   onStateCacheRemove(key, state) {

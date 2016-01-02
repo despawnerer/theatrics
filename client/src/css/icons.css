@@ -1,18 +1,18 @@
 @font-face {
 	font-family: 'icons';
-	src: inline('fonts/icons.woff?pjm8bv') format('woff');
+	src: inline('fonts/icons.woff?t7iy1y') format('woff');
 	font-weight: normal;
 	font-style: normal;
 }
 
 [class^="icon-"], [class*=" icon-"] {
-	font-family: 'icons';
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
+    font-family: 'icons' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
 
 	/* Better Font Rendering =========== */
 	-webkit-font-smoothing: antialiased;
@@ -20,29 +20,35 @@
 }
 
 .icon-chevron-thin-right:before {
-	content: "\e900";
+    content: "\e900";
 }
 .icon-chevron-thin-left:before {
-	content: "\e901";
+    content: "\e901";
 }
 .icon-heart:before {
-	content: "\f004";
+    content: "\f004";
 }
 .icon-clock:before {
-	content: "\f017";
+    content: "\f017";
 }
 .icon-place:before {
-	content: "\f041";
+    content: "\f041";
 }
 .icon-phone:before {
-	content: "\f095";
+    content: "\f095";
+}
+.icon-octocat:before {
+    content: "\f09b";
+}
+.icon-globe:before {
+    content: "\f0ac";
 }
 .icon-calendar:before {
-	content: "\f133";
+    content: "\f133";
 }
 .icon-rouble:before {
-	content: "\f158";
+    content: "\f158";
 }
 .icon-subway:before {
-	content: "\f239";
+    content: "\f239";
 }

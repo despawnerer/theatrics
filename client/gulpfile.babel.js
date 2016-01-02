@@ -124,7 +124,6 @@ gulp.task('build-html', () => {
     min: false,
     buildDate: new Date(),
     repositoryURL: pkginfo.repositoryURL,
-    revision: process.env.GIT_REV || null,
   }
   return gulp
     .src('src/*.ejs')
@@ -144,7 +143,6 @@ gulp.task('build-min-html', () => {
     min: true,
     buildDate: new Date(),
     repositoryURL: pkginfo.repositoryURL,
-    revision: process.env.GIT_REV || null,
   }
   return gulp
     .src('src/*.ejs')

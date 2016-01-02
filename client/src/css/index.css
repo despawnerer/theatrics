@@ -264,7 +264,7 @@ p {
   color: #444;
   text-align: center;
   font-size: 12px;
-  line-height: 2em;
+  line-height: 24px;
 }
 
 #footer a {
@@ -275,6 +275,11 @@ p {
 #footer .icon-heart {
   font-size: 10px;
   color: red;
+  margin-right: 5px;
+}
+
+#footer .icon-octocat {
+  color: black;
   margin-right: 5px;
 }
 

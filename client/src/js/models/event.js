@@ -22,10 +22,6 @@ export default class Event extends Model {
     this.replace(response.data);
   }
 
-  isFetched() {
-    return this.has('title');
-  }
-
   getDisplayDates() {
     const allDates = this.data.dates;
     const futureDates = this.getFutureDates();

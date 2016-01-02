@@ -87,12 +87,6 @@ export default class Model extends EventEmitter {
     return this;
   }
 
-  update(data) {
-    this._data = extend(this._data, data);
-    this._maybeChange();
-    return this;
-  }
-
   _maybeChange() {
     if (this._locked == 0 && this.hasChanged()) {
       this._change();

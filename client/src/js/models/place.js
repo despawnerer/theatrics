@@ -20,8 +20,4 @@ export default class Place extends Model {
   onFetched(response) {
     this.replace(response.data);
   }
-
-  isFetched() {
-    return this.has('title');
-  }
 }

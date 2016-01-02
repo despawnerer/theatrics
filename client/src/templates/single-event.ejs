@@ -69,7 +69,7 @@
               <div class="item-day"><%- start.format('D MMMM') %></div>
               <div class="item-day-of-week"><%- start.format('dddd') %></div>
             </div>
-            <% if (!end) { %>
+            <% if (!end || start.isSame(end, 'minute')) { %>
               <div class="item-time"><%- start.format('LT') %></div>
             <% } else if (start.isSame(end, 'day')) { %>
               <div class="item-time"><%- start.format('LT') %>&ndash;<%- end.format('LT') %></div>

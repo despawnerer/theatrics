@@ -465,6 +465,10 @@ p {
   vertical-align: top;
 }
 
+.feed-item-link {
+  display: block;
+}
+
 .feed-image-container {
   width: 100%;
   height: 200px;
@@ -474,6 +478,7 @@ p {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  vertical-align: top;
 }
 
 .load-more-container {

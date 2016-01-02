@@ -1180,8 +1180,8 @@ p {
 
   .schedule-day-row {
     border-top: 1px silver dotted;
-    padding-top: 13px;
-    margin-top: 13px;
+    padding-top: 15px;
+    margin-top: 15px;
   }
 
   .schedule-day-row:first-child {
@@ -1190,7 +1190,7 @@ p {
     border: 0;
   }
 
-  .schedule-date-cell { margin-bottom: 8px; }
+  .schedule-date-cell { margin-bottom: 10px; }
   .schedule-date-cell .item-day { display: inline-block; }
   .schedule-date-cell .item-day-of-week { display: inline-block; }
 

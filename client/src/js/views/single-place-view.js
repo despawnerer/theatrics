@@ -80,17 +80,4 @@ export default class SinglePlaceView extends View {
     container.appendChild(view.element);
     return view;
   }
-
-  unbind() {
-    this.unbindIfPresent(this.pager);
-    this.unbindIfPresent(this.slider);
-    this.unbindIfPresent(this.scheduleView);
-    super.unbind();
-  }
-
-  unbindIfPresent(something) {
-    if (something) {
-      something.unbind();
-    }
-  }
 }

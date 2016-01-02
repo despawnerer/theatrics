@@ -19,11 +19,6 @@ export default class Pager {
     this.slider = new Slider(this.sliderElement, false);
   }
 
-  unbind() {
-    this.slider.unbind();
-    this.events.unbind();
-  }
-
   // event handlers
 
   onNavClicked(event) {

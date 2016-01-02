@@ -44,12 +44,6 @@ export default class EventsView extends View {
     this.update();
   }
 
-  unbind() {
-    this.calendar.unbind();
-    this.feedView.unbind();
-    super.unbind();
-  }
-
   onModelChange() {
     this.update();
   }

@@ -34,10 +34,6 @@ export default class Slider {
     element.querySelector(this.selectors.items).classList.add('active');
   }
 
-  unbind() {
-    this.events.unbind();
-  }
-
   // event handlers
 
   onNextClicked(event) {

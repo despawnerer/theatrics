@@ -52,11 +52,6 @@ export default class ScheduleView extends View {
     this.render();
   }
 
-  unbind() {
-    super.unbind();
-    this.model.removeListener('load', this.onLoaded);
-  }
-
   getFutureEventsByDay(eventList) {
     let lastDayItem = null;
     const groupedByDay = [];

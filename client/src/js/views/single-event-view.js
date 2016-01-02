@@ -56,11 +56,4 @@ export default class SingleEventView extends View {
     this.element.appendChild(loader.element);
     this.app.setTitle("Спектакль");
   }
-
-  unbind() {
-    if (this.slider) {
-      this.slider.unbind();
-    }
-    super.unbind();
-  }
 }

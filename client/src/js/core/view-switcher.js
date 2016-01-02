@@ -16,7 +16,6 @@ export default class ViewSwitcher {
     }
 
     this.cache = new Cache(5);
-    this.cache.on('remove', this.onStateCacheRemove.bind(this));
   }
 
   switchView(ViewClass, args={}) {
@@ -59,9 +58,5 @@ export default class ViewSwitcher {
       view: view,
       title: null
     };
-  }
-
-  onStateCacheRemove(key, state) {
-    state.view.unbind();
   }
 }

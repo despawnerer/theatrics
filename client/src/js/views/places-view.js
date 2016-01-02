@@ -30,11 +30,6 @@ export default class PlacesView extends View {
     this.update();
   }
 
-  unbind() {
-    this.feedView.unbind();
-    super.unbind();
-  }
-
   onModelChange() {
     this.update();
   }

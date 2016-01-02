@@ -12,8 +12,9 @@ import template from '../../templates/single-event.ejs';
 
 export default class SingleEventView extends View {
   constructor({app, model}) {
-    model = Event.from(model);
     super({app, model});
+
+    this.item = Event.from(model);
 
     this.slider = null;
   }
@@ -25,16 +26,12 @@ export default class SingleEventView extends View {
   }
 
   render() {
-    if (this.model.isFetched()) {
-      this.renderItem();
-    } else {
-      this.renderLoader();
-      this.model.fetch();
-    }
+    this.renderLoader();
+    this.item.fetch().then(this.renderItem.bind(this));
   }
 
   renderItem() {
-    const event = this.model.data;
+    const event = this.item.data;
     const location = this.app.locations.get(event.location.slug);
 
     this.element.innerHTML = template({
@@ -43,7 +40,7 @@ export default class SingleEventView extends View {
       app: this.app,
       location: location,
       event: event,
-      dates: this.model.getDisplayDates(),
+      dates: this.item.getDisplayDates(),
     });
 
     const sliderElement = this.element.querySelector('.item-slider');

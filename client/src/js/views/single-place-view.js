@@ -15,8 +15,9 @@ import template from '../../templates/single-place.ejs';
 
 export default class SinglePlaceView extends View {
   constructor({app, model}) {
-    model = Place.from(model);
     super({app, model});
+
+    this.item = Place.from(model);
 
     this.slider = null;
     this.pager = null;
@@ -30,16 +31,12 @@ export default class SinglePlaceView extends View {
   }
 
   render() {
-    if (this.model.isFetched()) {
-      this.renderItem();
-    } else {
-      this.renderLoader();
-      this.model.fetch();
-    }
+    this.renderLoader();
+    this.item.fetch().then(this.renderItem.bind(this));
   }
 
   renderItem() {
-    const place = this.model.data;
+    const place = this.item.data;
     const location = this.app.locations.get(place.location);
 
     this.element.innerHTML = template({
@@ -72,7 +69,7 @@ export default class SinglePlaceView extends View {
         categories: 'theater',
         fields: 'id,title,short_title,dates,location,tagline',
         page_size: 100,
-        place_id: this.model.get('id'),
+        place_id: this.item.get('id'),
         actual_since: moment().unix(),
       });
     const view = new ScheduleView({

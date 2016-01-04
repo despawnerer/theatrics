@@ -10,39 +10,36 @@ export default class ViewSwitcher {
     this.app = app;
     this.element = element;
 
-    this.state = {
-      view: null,
-      title: document.title,
-    }
-
+    this.currentView = null;
     this.cache = new Cache(5);
   }
 
-  switchView(ViewClass, args={}) {
-    if (this.state.view) {
-      this.element.removeChild(this.state.view.element);
+  switchView(constructor, args={}) {
+    if (this.currentView) {
+      this.element.removeChild(this.currentView.element);
     }
 
-    const cacheKey = [ViewClass, args];
+    const cacheKey = [constructor, args];
     const cachedState = this.cache.get(cacheKey);
-    if (this.state.view instanceof ViewClass) {
-      this.state.view.model.replace(args);
+    let newState;
+    if (this.currentView instanceof constructor) {
+      newState = this.getState();
+      this.currentView.model.replace(args);
     } else if (cachedState) {
-      this.state = cachedState;
-      this.state.view.model.replace(args);
+      newState = cachedState;
+      newState.view.model.replace(args);
     } else {
-      this.state = this.buildNewState(ViewClass, args);
-      this.state.view.render();
+      newState = this.getState();
+      newState.view = this.buildView(constructor, args);
+      newState.view.render();
     }
 
-    this.element.appendChild(this.state.view.element);
-    document.title = this.state.title;
-    this.cache.put(cacheKey, this.state);
+    this.applyState(newState);
+    this.cache.put(cacheKey, newState);
   }
 
   setTitle(title) {
     const fullTitle = `${title} – Theatrics`;
-    this.state.title = fullTitle;
     document.title = fullTitle;
     history.replaceState(
       history.state,
@@ -51,12 +48,21 @@ export default class ViewSwitcher {
     );
   }
 
-  buildNewState(ViewClass, args) {
-    const model = new Model(args);
-    const view = new ViewClass({app: this.app, model: model});
+  applyState(state) {
+    this.currentView = state.view;
+    this.element.appendChild(state.view.element);
+    document.title = state.title;
+  }
+
+  getState() {
     return {
-      view: view,
-      title: null
-    };
+      view: this.currentView,
+      title: document.title,
+    }
+  }
+
+  buildView(constructor, args) {
+    const model = new Model(args);
+    return new constructor({app: this.app, model: model});
   }
 }

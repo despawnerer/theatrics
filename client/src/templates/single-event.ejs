@@ -1,7 +1,7 @@
 <div class="item-slider" data-next-button=".next-button" data-previous-button=".previous-button" data-container=".item-slide-list" data-items=".item-slide">
   <a class="slide-button next-button"<% if (event.images.length < 2) { %> hidden<% } %>><span class="icon-chevron-thin-right"></span></a>
   <a class="slide-button previous-button" hidden><span class="icon-chevron-thin-left"></span></a>
-  <div class="item-view-inner">
+  <div class="content-container">
     <ul class="item-slide-list">
       <% event.images.forEach(function(image) { %>
         <li class="item-slide">
@@ -23,7 +23,7 @@
   </div>
 </div>
 
-<div class="item-view-inner">
+<div class="content-container">
   <% if (event.categories.indexOf('festival') !== -1) { %>
   <div class="festival-badge-block">
     <span class="festival-badge">Фестиваль</span>

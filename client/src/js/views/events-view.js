@@ -28,7 +28,7 @@ export default class EventsView extends View {
 
   createElement() {
     const element = document.createElement('div');
-    element.setAttribute('class', 'events-view');
+    element.setAttribute('class', 'events-view content-container unconstrained');
     return element;
   }
 

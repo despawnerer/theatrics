@@ -23,6 +23,12 @@ export default class PlacesView extends View {
     this.feedView = new FeedView({app, itemTemplate, model: this.feed});
   }
 
+  createElement() {
+    const element = document.createElement('div');
+    element.setAttribute('class', 'content-container unconstrained');
+    return element;
+  }
+
   render() {
     this.element.innerHTML = '';
     this.feedView.render();

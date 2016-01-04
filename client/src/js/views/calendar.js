@@ -50,7 +50,7 @@ export default class Calendar extends View {
     element.setAttribute('class', 'calendar-day');
     element.setAttribute('data-date', dateString);
     element.innerHTML = `
-      <a href="${target}">${day.format('D')}<br/>${day.format('dd')}</a>`;
+      <a href="${target}">${day.format('D')}<br/>${day.format('dd').toLowerCase()}</a>`;
     return element;
   }
 

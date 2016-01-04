@@ -1095,7 +1095,6 @@ p {
   position: relative;
   display: inline-flex;
   flex-direction: row;
-  justify-content: flex-start;
   transition: transform 0.25s;
 }
 
@@ -1104,7 +1103,6 @@ p {
 .pager-page {
   width: 100vw;
   height: 0;
-  overflow: visible;
 }
 
 .pager-page.active {

@@ -2,8 +2,8 @@
   <% days.forEach(function(day) { %>
     <tr class="schedule-day-row">
       <td rowspan="<%- day.items.length %>" class="schedule-date-cell">
-        <div class="item-day"><%- day.date.format('D MMMM')%></div>
-        <div class="item-day-of-week"><%- day.date.format('dddd') %></div>
+        <div class="item-day"><%- day.date.format('D MMMM').toLowerCase() %></div>
+        <div class="item-day-of-week"><%- day.date.format('dddd').toLowerCase() %></div>
       </td>
       <% day.items.forEach(function(item, index) { %>
         <% var event = item.event.data %>

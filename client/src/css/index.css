@@ -117,6 +117,7 @@ p {
 
 .content-container.unconstrained {
   max-width: none;
+  margin: 0; /* margin: 0 auto; causes a bug in Chrome when used together with max-width */
 }
 
 @media (max-width: 359px) {

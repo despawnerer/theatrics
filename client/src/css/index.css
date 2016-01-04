@@ -1111,6 +1111,17 @@ p {
   height: auto;
 }
 
+.pager-page::after {
+  /*
+  Fix pages not actually becoming 100vw wide on older renderers
+  because of blocks with automatic margins inside (.content-container)
+  */
+  content: ' ';
+  width: 100%;
+  display: table;
+  height: 0;
+}
+
 @media (max-width: 359px) {
   .pager-nav { margin-bottom: 15px; }
 }

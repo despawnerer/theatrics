@@ -102,11 +102,11 @@ p {
 /* Main container */
 
 #container {
-  min-width: 290px;
+  min-width: 320px;
   max-width: 100%;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
-  min-height: 100%;
   box-sizing: border-box;
 }
 

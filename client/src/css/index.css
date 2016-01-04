@@ -261,27 +261,40 @@ p {
 
 #footer {
   flex: 0 1 auto;
-  margin: 0;
   color: #444;
   text-align: center;
   font-size: 12px;
-  line-height: 24px;
+  line-height: 18px;
 }
+
+#footer p {
+  margin-bottom: 6px;
+}
+
+#footer p:last-child { margin-bottom: 0; }
 
 #footer a {
   color: #444;
   text-decoration: underline;
 }
 
+.footer-icon {
+  margin-right: 5px;
+}
+
 #footer .icon-heart {
   font-size: 10px;
   color: red;
-  margin-right: 5px;
 }
 
 #footer .icon-octocat {
   color: black;
-  margin-right: 5px;
+}
+
+@media (max-width: 450px) {
+  #footer {
+    text-align: left;
+  }
 }
 
 

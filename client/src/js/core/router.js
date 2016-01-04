@@ -1,5 +1,7 @@
 import Events from 'events-mixin';
 
+import {forceScroll} from '../utils';
+
 
 export default class Router {
   constructor(resolver) {
@@ -24,6 +26,7 @@ export default class Router {
     const state = this.resolver.resolve(path);
     history.pushState(state, null, path);
     this.handleState(state);
+    forceScroll(0, 0);
   }
 
   redirect(path) {

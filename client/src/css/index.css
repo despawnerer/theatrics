@@ -1208,7 +1208,7 @@ p {
   .schedule-table tr {
     display: flex;
     flex-direction: column;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
   }
 
   .schedule-table td {
@@ -1228,7 +1228,11 @@ p {
     border: 0;
   }
 
-  .schedule-date-cell { margin-bottom: 10px; }
+  .schedule-table tr:last-child {
+    margin-bottom: 0;
+  }
+
+  .schedule-date-cell { margin-bottom: 15px; }
   .schedule-date-cell .item-day { display: inline-block; }
   .schedule-date-cell .item-day-of-week { display: inline-block; }
 
@@ -1238,13 +1242,8 @@ p {
   }
 }
 
-@media (min-width: 451px) and (max-width: 719px) {
-  .schedule-row td {
-    padding-bottom: 10px;
-  }
-
-  .schedule-day-row td {
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
+@media (min-width: 360px) and (max-width: 450px) {
+  .schedule-day-row { padding-top: 20px; margin-top: 20px; }
+  .schedule-date-cell { margin-bottom: 15px; }
+  .schedule-table tr { margin-bottom: 15px; }
 }

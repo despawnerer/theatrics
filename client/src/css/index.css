@@ -918,11 +918,7 @@ p {
 
 @media (min-width: 360px) and (max-width: 719px) {
   .item-slider { margin-bottom: 25px; }
-  .item-slide { margin: 0 5px; }
-}
-
-@media (min-width: 360px) and (max-width: 719px) {
-  .item-slide { height: 250px; }
+  .item-slide { height: 250px; margin: 0 5px; }
   .item-slide-image { min-width: 250px; }
 }
 

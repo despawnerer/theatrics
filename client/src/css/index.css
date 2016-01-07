@@ -1151,7 +1151,7 @@ p {
 .schedule-row:last-child td { padding-bottom: 20px; }
 
 .schedule-day-body:first-child td { padding-top: 0; border-top: 0; }
-.schedule-day-body:last-child td { padding-bottom: 0; }
+.schedule-day-body:last-child .schedule-row:last-child td { padding-bottom: 0; }
 
 .schedule-date-cell {
   white-space: nowrap;

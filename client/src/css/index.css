@@ -755,7 +755,7 @@ p {
   object-fit: cover;
   vertical-align: top;
   height: 100%;
-  max-width: 90vw;
+  max-width: 85vw;
 }
 
 .big-item-title {
@@ -921,12 +921,7 @@ p {
   .item-slide { margin: 0 5px; }
 }
 
-@media (min-width: 360px) and (max-width: 574px) {
-  .item-slide { height: 200px; }
-  .item-slide-image { min-width: 200px; }
-}
-
-@media (min-width: 575px) and (max-width: 719px) {
+@media (min-width: 360px) and (max-width: 719px) {
   .item-slide { height: 250px; }
   .item-slide-image { min-width: 250px; }
 }

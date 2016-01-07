@@ -1,28 +1,30 @@
 <table class="schedule-table" cellspacing="0" cellpadding="0">
   <% days.forEach(function(day) { %>
-    <tr class="schedule-day-row">
-      <td rowspan="<%- day.items.length %>" class="schedule-date-cell">
-        <div class="item-day"><%- day.date.format('D MMMM').toLowerCase() %></div>
-        <div class="item-day-of-week"><%- day.date.format('dddd').toLowerCase() %></div>
-      </td>
-      <% day.items.forEach(function(item, index) { %>
-        <% var event = item.event.data %>
-        <% var isLastThisDay = index === day.items.length - 1 %>
-        <td class="schedule-time-cell">
-          <div class="schedule-time"><%- item.date.start.format('LT') %></div>
+    <tbody class="schedule-day-body">
+      <tr class="schedule-row">
+        <td rowspan="<%- day.items.length %>" class="schedule-date-cell">
+          <div class="item-day"><%- day.date.format('D MMMM').toLowerCase() %></div>
+          <div class="item-day-of-week"><%- day.date.format('dddd').toLowerCase() %></div>
         </td>
-        <td class="schedule-title-cell">
-          <h3 class="schedule-item-title">
-            <a href="<%- app.resolver.reverse('single-event', {id: event.id }) %>">
-              <span class="link-text"><%- capfirst(event.short_title || event.title) %></span>
-            </a>
-          </h3>
-          <% if (event.tagline) { %>
-            <p class="schedule-item-tagline"><%- event.tagline %></p>
-          <% } %>
-        </td>
-      </tr><% if (!isLastThisDay) { %><tr class="schedule-row"><% } %>
-      <% }) %>
-    </tr>
+        <% day.items.forEach(function(item, index) { %>
+          <% var event = item.event.data %>
+          <% var isLastThisDay = index === day.items.length - 1 %>
+          <td class="schedule-time-cell">
+            <div class="schedule-time"><%- item.date.start.format('LT') %></div>
+          </td>
+          <td class="schedule-title-cell">
+            <h3 class="schedule-item-title">
+              <a href="<%- app.resolver.reverse('single-event', {id: event.id }) %>">
+                <span class="link-text"><%- capfirst(event.short_title || event.title) %></span>
+              </a>
+            </h3>
+            <% if (event.tagline) { %>
+              <p class="schedule-item-tagline"><%- event.tagline %></p>
+            <% } %>
+          </td>
+        </tr><% if (!isLastThisDay) { %><tr class="schedule-row"><% } %>
+        <% }) %>
+      </tr>
+    </tbody>
   <% }) %>
 </table>

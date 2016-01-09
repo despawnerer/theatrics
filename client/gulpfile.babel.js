@@ -35,7 +35,6 @@ import pkginfo from './package.json';
 gulp.task('build-css', () => {
   return gulp
     .src('src/css/index.css')
-    .on('error', logError)
     .pipe(postcss([
       postcssImport,
       autoprefixer,
@@ -43,6 +42,7 @@ gulp.task('build-css', () => {
         loadPaths: ['src']
       }),
     ]))
+    .on('error', e => logError('build-css', e.message))
     .pipe(gulp.dest('build'));
 });
 
@@ -82,7 +82,7 @@ function buildJS(options) {
   const buildBundle = () => {
     return b
       .bundle()
-      .on('error', logError)
+      .on('error', e => logError(options.task, formatBrowserifyError(e)))
       .pipe(source(JS_TARGET_FILENAME))
       .pipe(buffer())
       .pipe(gulp.dest('build'));
@@ -98,6 +98,7 @@ function buildJS(options) {
 gulp.task('build-js', () => {
   return buildJS({
     debug: true,
+    task: 'build-js',
   });
 });
 
@@ -105,6 +106,7 @@ gulp.task('watch-js', () => {
   buildJS({
     debug: true,
     watch: true,
+    task: 'watch-js',
   });
 });
 
@@ -127,8 +129,8 @@ gulp.task('build-html', () => {
   }
   return gulp
     .src('src/*.ejs')
-    .on('error', logError)
     .pipe(template(context))
+    .on('error', e => logError('build-html', formatTemplateError(e)))
     .pipe(rename({extname: '.html'}))
     .pipe(gulp.dest('build'));
 });
@@ -146,7 +148,6 @@ gulp.task('build-min-html', () => {
   }
   return gulp
     .src('src/*.ejs')
-    .on('error', logError)
     .pipe(template(context))
     .pipe(rename({extname: '.html'}))
     .pipe(gulp.dest('build'));
@@ -251,8 +252,21 @@ gulp.task('build-min', [
 
 /* Utils */
 
-function logError(e) {
-  util.log(util.colors.red('Error'), e);
+function logError(task, message) {
+  util.log(
+    `${util.colors.red('Error')} in '${util.colors.cyan(task)}':\n`,
+    message
+  );
+}
+
+
+function formatBrowserifyError(error) {
+  return `${error.name}: ${error.message}\n${error.codeFrame}`;
+}
+
+
+function formatTemplateError(error) {
+  return `${error.name}: ${error.fileName}: ${error.message}`
 }
 
 

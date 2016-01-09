@@ -41,7 +41,7 @@ export default class SingleEventView extends View {
 
     this.slider = new Slider(this.element.querySelector('.item-slider'));
 
-    this.app.setTitle(`${item.getLongTitle()} – ${location.name}`);
+    this.app.setTitle(`${this.item.getLongTitle()} – ${location.name}`);
     this.app.settings.set('location', location.slug);
   }
 

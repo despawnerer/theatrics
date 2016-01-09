@@ -2,7 +2,9 @@ import axios from 'axios';
 import moment from 'moment';
 
 import Model from '../base/model';
-import {buildAPIURL} from '../utils';
+import {buildAPIURL, capfirst} from '../utils';
+
+import Place from './place';
 
 
 export default class Event extends Model {
@@ -20,6 +22,26 @@ export default class Event extends Model {
 
   onFetched(response) {
     this.replace(response.data);
+  }
+
+  isFestival() {
+    return this.data.categories.indexOf('festival') !== -1;
+  }
+
+  getShortTitle() {
+    return this.data.short_title || this.getLongTitle();
+  }
+
+  getLongTitle() {
+    return capfirst(this.data.title);
+  }
+
+  getPlace() {
+    if (this.data.place) {
+      return new Place(this.data.place);
+    } else {
+      return undefined;
+    }
   }
 
   getDisplayDates() {

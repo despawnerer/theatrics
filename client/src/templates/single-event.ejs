@@ -1,9 +1,9 @@
 <div class="item-slider" data-next-button=".next-button" data-previous-button=".previous-button" data-container=".item-slide-list" data-items=".item-slide">
-  <a class="slide-button next-button"<% if (event.images.length < 2) { %> hidden<% } %>><span class="icon-chevron-thin-right"></span></a>
+  <a class="slide-button next-button"<% if (event.data.images.length < 2) { %> hidden<% } %>><span class="icon-chevron-thin-right"></span></a>
   <a class="slide-button previous-button" hidden><span class="icon-chevron-thin-left"></span></a>
   <div class="content-container">
     <ul class="item-slide-list">
-      <% event.images.forEach(function(image) { %>
+      <% event.data.images.forEach(function(image) { %>
         <li class="item-slide">
           <img
             data-sizes="
@@ -24,43 +24,44 @@
 </div>
 
 <div class="content-container">
-  <% if (event.categories.indexOf('festival') !== -1) { %>
+  <% if (event.isFestival()) { %>
   <div class="festival-badge-block">
     <span class="festival-badge">Фестиваль</span>
   </div>
   <% } %>
 
   <h2 class="big-item-title">
-    <%- capfirst(event.short_title || event.title) %>
-    <span class="big-item-tagline"><%- event.tagline %></span>
+    <%- event.getShortTitle() %>
+    <span class="big-item-tagline"><%- event.data.tagline %></span>
   </h2>
 
   <div class="item-information">
     <div class="item-information-group">
-      <% if (event.place) { %>
+      <% var place = event.getPlace() %>
+      <% if (place) { %>
         <div class="item-information-item item-place">
           <span class="item-information-icon icon-place"></span>
-          <% if (event.place.is_stub) { %>
-            <%- capfirst(event.place.title) %>
+          <% if (place.data.is_stub) { %>
+            <%- capfirst(place.data.title) %>
           <% } else { %>
-            <a href="<%- app.resolver.reverse('single-place', {id: event.place.id}) %>">
-              <span class="link-text"><%- capfirst(event.place.title) %></span>
+            <a href="<%- app.resolver.reverse('single-place', {id: place.data.id}) %>">
+              <span class="link-text"><%- capfirst(place.data.title) %></span>
             </a>
           <% } %>
         </div>
       <% } %>
 
-      <% if (event.price) { %>
+      <% if (event.data.price) { %>
         <div class="item-information-item">
           <span class="item-information-icon icon-rouble"></span>
-          <%- event.price %>
+          <%- event.data.price %>
         </div>
       <% } %>
 
       <div class="item-information-item">
         <span class="item-information-icon icon-calendar"></span>
         <ol class="item-dates">
-        <% dates.forEach(function(date) { %>
+        <% event.getDisplayDates().forEach(function(date) { %>
           <% var start = moment.tz(date.start * 1000, location.timezone) %>
           <% var end = date.end ? moment.tz(date.end * 1000, location.timezone) : null %>
           <% var isRange = end && !start.isSame(end, 'day') %>
@@ -87,9 +88,9 @@
     </div>
   </div>
 
-  <div class="item-description"><%= event.description %></div>
-  <div class="item-text"><%= event.body_text %></div>
+  <div class="item-description"><%= event.data.description %></div>
+  <div class="item-text"><%= event.data.body_text %></div>
   <div class="source-information">
-    Источник данных: <a href="<%- event.site_url %>" target="_blank">kudago.com</a>.
+    Источник данных: <a href="<%- event.data.site_url %>" target="_blank">kudago.com</a>.
   </div>
 </div>

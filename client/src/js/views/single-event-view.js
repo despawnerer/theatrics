@@ -15,8 +15,6 @@ export default class SingleEventView extends View {
     super({app, model});
 
     this.item = Event.from(model);
-
-    this.slider = null;
   }
 
   createElement() {
@@ -31,22 +29,19 @@ export default class SingleEventView extends View {
   }
 
   renderItem() {
-    const event = this.item.data;
-    const location = this.app.locations.get(event.location.slug);
+    const location = this.app.locations.get(this.item.data.location.slug);
 
     this.element.innerHTML = template({
       moment,
       capfirst,
       app: this.app,
       location: location,
-      event: event,
-      dates: this.item.getDisplayDates(),
+      event: this.item,
     });
 
-    const sliderElement = this.element.querySelector('.item-slider');
-    this.slider = new Slider(sliderElement);
+    this.slider = new Slider(this.element.querySelector('.item-slider'));
 
-    this.app.setTitle(`${capfirst(event.title)} – ${location.name}`);
+    this.app.setTitle(`${item.getLongTitle()} – ${location.name}`);
     this.app.settings.set('location', location.slug);
   }
 

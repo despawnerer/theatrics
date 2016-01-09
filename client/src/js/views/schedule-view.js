@@ -3,7 +3,7 @@ import moment from 'moment';
 import View from '../base/view';
 import Event from '../models/event';
 import {BigLoader} from '../components/loader';
-import {capfirst} from '../utils';
+import {capfirst, groupArray} from '../utils';
 
 import template from '../../templates/schedule.ejs';
 
@@ -39,12 +39,17 @@ export default class ScheduleView extends View {
   }
 
   renderItems() {
-    const eventList = this.model.items.map(item => new Event(item));
-    const eventsByDay = this.getFutureEventsByDay(eventList);
+    const events = this.model.items.map(item => new Event(item));
+    const dates = this.eventsToDates(events);
+    const dayGroups = groupArray(
+      dates, 'day',
+      date => date.start.clone().startOf('day'),
+      (day1, day2) => day1.isSame(day2)
+    )
     this.element.innerHTML = template({
       capfirst,
       app: this.app,
-      days: eventsByDay,
+      dayGroups: dayGroups,
     });
   }
 
@@ -52,34 +57,20 @@ export default class ScheduleView extends View {
     this.render();
   }
 
-  getFutureEventsByDay(eventList) {
-    let lastDayItem = null;
-    const groupedByDay = [];
-    const eventsByDate = this.splitEventsByDate(eventList);
-    eventsByDate.forEach(item => {
-      const location = this.app.locations.get(item.event.data.location.slug);
-      item.date.start = moment.unix(item.date.start).tz(location.timezone);
-      item.date.end = item.date.end ? moment.unix(item.date.end).tz(location.timezone) : null;
-      const date = item.date.start.clone().startOf('day');
-      if (lastDayItem && date.isSame(lastDayItem.date)) {
-        lastDayItem.items.push(item);
-      } else {
-        lastDayItem = {date, items: [item]};
-        groupedByDay.push(lastDayItem);
-      }
-    });
-    return groupedByDay;
+  eventsToDates(events) {
+    return events
+      .map(e => e.getFutureDates())
+      .reduce((a, b) => a.concat(b), [])
+      .sort((date1, date2) => date1.start - date2.start)
+      .map(this.momentizeDate.bind(this));
   }
 
-  splitEventsByDate(eventList) {
-    const eventsByDate = [];
-    eventList.forEach(event => {
-      event.getFutureDates().forEach(date => {
-        eventsByDate.push({date, event});
-      });
-    });
-    return eventsByDate.sort((item1, item2) => {
-      return item1.date.start - item2.date.start;
-    });
+  momentizeDate(date) {
+    const location = this.app.locations.get(date.event.data.location.slug);
+    return {
+      start: moment.unix(date.start).tz(location.timezone),
+      end: date.end ? moment.unix(date.end).tz(location.timezone) : null,
+      event: date.event,
+    }
   }
 }

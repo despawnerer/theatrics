@@ -45,14 +45,22 @@ export default class Event extends Model {
   }
 
   getDisplayDates() {
-    const allDates = this.data.dates;
     const futureDates = this.getFutureDates();
-    return futureDates.length ? futureDates : allDates;
+    return futureDates.length ? futureDates : this.getDates();
   }
 
   getFutureDates() {
     const now = moment().unix();
-    const allDates = this.data.dates;
-    return this.data.dates.filter(d => d.start > now);
+    return this.getDates().filter(date => date.start > now);
+  }
+
+  getDates() {
+    return this.data.dates.map(date => {
+      return {
+        start: date.start,
+        end: date.end,
+        event: this,
+      }
+    });
   }
 }

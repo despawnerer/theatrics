@@ -40,6 +40,23 @@ export function forceScroll(x, y, maxAttempts=100) {
 }
 
 
+export function groupArray(array, name, callback, equal=(a, b) => a == b) {
+  const groups = [];
+  let lastGroup = null;
+  array.forEach(item => {
+    const groupValue = callback(item);
+    if (lastGroup && equal(lastGroup[name], groupValue)) {
+      lastGroup.items.push(item);
+    } else {
+      lastGroup = {items: [item]};
+      lastGroup[name] = groupValue;
+      groups.push(lastGroup);
+    }
+  });
+  return groups;
+}
+
+
 export function toggleClass(element, className, condition) {
   /* This shim is used because older Safari and IE don't support
      the second arg to classList.toggle */

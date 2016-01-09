@@ -90,6 +90,7 @@ function buildJS(options) {
 
   if (options.watch) {
     b.on('update', buildBundle);
+    b.on('log', msg => util.log(`Generated ${JS_TARGET_FILENAME}: ${msg}`))
   }
 
   return buildBundle();

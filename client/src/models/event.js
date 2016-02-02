@@ -3,7 +3,7 @@ export default class Event {
     this.data = data;
   }
 
-  stringify() {
-    return JSON.stringify(this.data);
+  toJSON() {
+    return this.data;
   }
 }

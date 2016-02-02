@@ -15,7 +15,7 @@ export default class EventView {
     return `
       <div class="event-view" data-view="EventView">
         <script type="application/json" class="view-data">
-          ${this.event.stringify()}
+          ${JSON.stringify(this.event.toJSON())}
         </script>
         <h1>${this.event.data.title}</h1>
         <p>

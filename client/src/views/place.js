@@ -15,7 +15,7 @@ export default class PlaceView {
     return `
       <div class="place-view" data-view="PlaceView">
         <script type="application/json" class="view-data">
-          ${this.place.stringify()}
+          ${JSON.stringify(this.place.toJSON())}
         </script>
         <h1>${this.place.data.title}</h1>
         <p>

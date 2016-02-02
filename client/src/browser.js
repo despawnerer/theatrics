@@ -3,12 +3,14 @@ import 'whatwg-fetch';
 import TheatricsAPI from './core/api';
 import Resolver from './core/resolver';
 import Router from './core/router';
+import Context from './core/context';
+
 import MainView from './views/main';
 
-const context = {
+const context = new Context({
   api: new TheatricsAPI('/api', window.fetch),
   resolver: new Resolver,
-}
+})
 
 const router = new Router(context);
 

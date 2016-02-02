@@ -1,13 +1,5 @@
-const API_PREFIX = '/api';
-
-
 export function capfirst(s) {
   return s.slice(0, 1).toUpperCase() + s.slice(1);
-}
-
-
-export function buildAPIURL(path) {
-  return API_PREFIX + path;
 }
 
 

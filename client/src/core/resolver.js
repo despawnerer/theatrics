@@ -1,4 +1,4 @@
-import {regexpEscape, zipIntoObject} from '../utils';
+import {regexpEscape, zipIntoObject} from './utils';
 
 
 export default class Resolver {
@@ -42,7 +42,7 @@ export default class Resolver {
       return {name, args};
     }
 
-    return null;
+    return undefined;
   }
 
   reverse(name, args) {
@@ -64,7 +64,7 @@ export default class Resolver {
       return path;
     }
 
-    return null;
+    return undefined;
   }
 
   _getNamedVarExpression(name) {

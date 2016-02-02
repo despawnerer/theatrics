@@ -65,7 +65,7 @@ gulp.task('build-min-css', ['build-css'], () => {
 
 /* JS */
 
-const JS_ENTRIES = ['src/js/index.js'];
+const JS_ENTRIES = ['src/browser.js'];
 const JS_TARGET_FILENAME = 'index.js';
 
 function buildJS(options) {

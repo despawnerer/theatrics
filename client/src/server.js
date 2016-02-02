@@ -3,14 +3,19 @@ import httpProxy from 'http-proxy';
 import fetch from 'node-fetch';
 
 import TheatricsAPI from './core/api';
-import Handler from './core/handler';
+import Resolver from './core/resolver';
+import Router from './core/router';
 import MainView from './views/main';
 
 
 const API_SERVER = 'http://localhost:9001';
 
-const api = new TheatricsAPI(API_SERVER, fetch);
-const handler = new Handler(api);
+const context = {
+  api: new TheatricsAPI(API_SERVER, fetch),
+  resolver: new Resolver,
+}
+
+const router = new Router(context);
 
 const app = express();
 
@@ -23,10 +28,10 @@ app.use('/api', (req, res, next) => {
 });
 
 app.use((req, res, next) => {
-  handler
+  router
     .handle(req.originalUrl)
     .then(view => {
-      const mainView = new MainView(view);
+      const mainView = new MainView(context, view);
       const html = mainView.getHTML();
       res.send(html);
     })

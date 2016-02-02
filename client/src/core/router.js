@@ -5,10 +5,13 @@ import EventView from '../views/event';
 import PlaceView from '../views/place';
 
 
-export default class Handler {
-  constructor(api) {
-    this.api = api;
-    this.resolver = new Resolver;
+export default class Router {
+  constructor(context) {
+    this.context = context;
+
+    this.api = context.api;
+    this.resolver = context.resolver;
+
     this.resolver.addRoute('event', '/event/{id:\\d+}/');
     this.resolver.addRoute('place', '/place/{id:\\d+}/');
   }
@@ -25,13 +28,13 @@ export default class Handler {
   event({id}) {
     return this.api
       .fetchEvent(id)
-      .then(event => new EventView(event));
+      .then(data => new EventView(this.context, data));
   }
 
   place({id}) {
     return this.api
       .fetchPlace(id)
-      .then(place => new PlaceView(place));
+      .then(data => new PlaceView(this.context, data));
   }
 
   notFound() {

@@ -2,7 +2,8 @@ import Place from '../models/place';
 
 
 export default class PlaceView {
-  constructor(data) {
+  constructor(context, data) {
+    this.context = context;
     this.place = new Place(data);
   }
 

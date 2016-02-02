@@ -2,7 +2,8 @@ import Event from '../models/event';
 
 
 export default class EventView {
-  constructor(data) {
+  constructor(context, data) {
+    this.context = context;
     this.event = new Event(data);
   }
 

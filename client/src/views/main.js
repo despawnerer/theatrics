@@ -9,7 +9,8 @@ const pages = {
 
 
 export default class MainView {
-  constructor(pageView) {
+  constructor(context, pageView) {
+    this.context = context;
     this.pageView = pageView;
   }
 
@@ -31,7 +32,7 @@ export default class MainView {
   autoMountView(element) {
     const name = element.getAttribute('data-view');
     const data = element.querySelector('.view-data').innerHTML;
-    const view = new pages[name](JSON.parse(data));
+    const view = new pages[name](this.context, JSON.parse(data));
     view.mount(element);
   }
 

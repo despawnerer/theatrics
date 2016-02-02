@@ -1,14 +1,18 @@
 import 'whatwg-fetch';
 
 import TheatricsAPI from './core/api';
-import Handler from './core/handler';
+import Resolver from './core/resolver';
+import Router from './core/router';
 import MainView from './views/main';
 
+const context = {
+  api: new TheatricsAPI('/api', window.fetch),
+  resolver: new Resolver,
+}
 
-const api = new TheatricsAPI('/api', window.fetch);
-const handler = new Handler(api);
-const mainView = new MainView;
+const router = new Router(context);
 
+const mainView = new MainView(context);
 mainView.mount();
 
 history.replaceState(
@@ -50,7 +54,7 @@ document.addEventListener('click', event => {
 
 
 function handlePath(path) {
-  handler
+  router
     .handle(path)
     .then(view => {
       mainView.setPageView(view);

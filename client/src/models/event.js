@@ -1,9 +1,9 @@
 export default class Event {
-	constructor(data) {
-		this.data = data;
-	}
+  constructor(data) {
+    this.data = data;
+  }
 
-	stringify() {
-		return JSON.stringify(this.data);
-	}
+  stringify() {
+    return JSON.stringify(this.data);
+  }
 }

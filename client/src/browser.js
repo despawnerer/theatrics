@@ -28,18 +28,18 @@ window.addEventListener('popstate', event => {
 
 
 document.addEventListener('click', event => {
-    const isLeftClick = event.button == 0;
-    const isModified = event.ctrlKey || event.shiftKey || event.metaKey;
-    if (!isLeftClick || isModified) {
-      return;
-    }
+  const isLeftClick = event.button == 0;
+  const isModified = event.ctrlKey || event.shiftKey || event.metaKey;
+  if (!isLeftClick || isModified) {
+    return;
+  }
 
   const element = event.target;
   const isLink = element.tagName.toLowerCase() == 'a';
   const isLocal = element.origin == window.location.origin;
-    if (!isLink || !isLocal) {
-      return;
-    }
+  if (!isLink || !isLocal) {
+    return;
+  }
 
   event.preventDefault();
 

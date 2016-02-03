@@ -5,11 +5,11 @@ export default class TheatricsAPI {
   }
 
   fetchEvent(id) {
-    return this.get(`/events/${id}/`, {expand: 'place'});
+    return this.get(`/events/${id}/`, {expand: 'place,images'});
   }
 
   fetchPlace(id) {
-    return this.get(`/places/${id}/`);
+    return this.get(`/places/${id}/`, {expand: 'images'});
   }
 
   get(path, params) {

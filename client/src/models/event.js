@@ -1,9 +1,6 @@
-export default class Event {
-  constructor(data) {
-    this.data = data;
-  }
+import Model from '../base/model';
 
-  toJSON() {
-    return this.data;
-  }
+
+export default class Event extends Model {
+
 }

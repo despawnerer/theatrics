@@ -20,7 +20,11 @@ export default class TheatricsAPI {
   }
 
   buildURL(path) {
-    return this.prefix + path;
+    if (path.slice(0, 7) == 'http://') {
+      return path;
+    } else {
+      return this.prefix + path;
+    }
   }
 
   serializeParams(params) {

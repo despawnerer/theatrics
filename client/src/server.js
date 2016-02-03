@@ -15,7 +15,7 @@ const API_SERVER = 'http://localhost:9001';
 const context = new Context({
   api: new TheatricsAPI(API_SERVER, fetch),
   resolver: new Resolver,
-})
+});
 
 const router = new Router(context);
 

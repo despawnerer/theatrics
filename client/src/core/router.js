@@ -1,8 +1,8 @@
 import TheatricsAPI from './api';
 import Resolver from './resolver';
 
-import EventView from '../views/event';
-import PlaceView from '../views/place';
+import EventPage from '../pages/event';
+import PlacePage from '../pages/place';
 
 
 export default class Router {
@@ -28,13 +28,13 @@ export default class Router {
   event({id}) {
     return this.api
       .fetchEvent(id)
-      .then(data => new EventView(this.context, data));
+      .then(data => new EventPage(this.context, {id}, data));
   }
 
   place({id}) {
     return this.api
       .fetchPlace(id)
-      .then(data => new PlaceView(this.context, data));
+      .then(data => new PlacePage(this.context, {id}, data));
   }
 
   notFound() {

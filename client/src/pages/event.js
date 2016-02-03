@@ -1,9 +1,12 @@
 import Event from '../models/event';
 
 
-export default class EventView {
-  constructor(context, data) {
+export default class EventPage {
+  constructor(context, args, data) {
     this.context = context;
+    this.args = args;
+    this.data = data;
+
     this.event = new Event(data);
   }
 
@@ -13,17 +16,14 @@ export default class EventView {
 
   getHTML() {
     return `
-      <div class="event-view" data-view="EventView">
-        <script type="application/json" class="view-data">
-          ${JSON.stringify(this.event.toJSON())}
-        </script>
+      <div class="event-view">
         <h1>${this.event.data.title}</h1>
         <p>
           This is an event.
         </p>
         <p>
           This event's place is
-          <a href="/place/${this.event.data.place.id}/">
+          <a href="${this.context.resolver.reverse('place', {id: this.event.data.place.id})}">
             ${this.event.data.place.title}
           </a>
         </p>

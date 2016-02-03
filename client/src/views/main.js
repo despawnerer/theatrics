@@ -1,45 +1,61 @@
-import EventView from './event';
-import PlaceView from './place';
-
-
-const pages = {
-  EventView: EventView,
-  PlaceView: PlaceView,
-}
+import pages from '../pages/all';
 
 
 export default class MainView {
-  constructor(context, pageView) {
+  constructor(context, page) {
     this.context = context;
-    this.pageView = pageView;
+    this.page = page;
   }
 
   getHTML() {
     return `
-      <title>${this.pageView.getTitle()}</title>
+      <title>${this.getTitle()}</title>
       <script src="/static/index.js" async></script>
+      <script type="application/json" id="page-state">
+        ${JSON.stringify(this.serializePageState())}
+      </script>
       <div id="container">
-        ${this.pageView.getHTML()}
+        ${this.page.getHTML()}
       </div>
     `
   }
 
+  getTitle() {
+    return `${this.page.getTitle()} — Theatrics`;
+  }
+
+  serializePageState() {
+    return {
+      page: this.page.constructor.name,
+      args: this.page.args,
+      data: this.page.data,
+    }
+  }
+
   mount() {
     this.container = document.querySelector('#container');
-    this.autoMountView(this.container.children[0]);
+    this.bootstrapPageFromHTML();
   }
 
-  autoMountView(element) {
-    const name = element.getAttribute('data-view');
-    const data = element.querySelector('.view-data').innerHTML;
-    const view = new pages[name](this.context, JSON.parse(data));
-    view.mount(element);
+  setPage(page) {
+    document.title = this.getTitle();
+    this.container.innerHTML = page.getHTML();
+    page.mount(this.container.children[0]);
+    this.page = page;
   }
 
-  setPageView(view) {
-    this.pageView = view;
-    this.container.innerHTML = view.getHTML();
-    document.title = view.getTitle();
-    view.mount(this.container.children[0]);
+  bootstrapPageFromHTML() {
+    const state = this.getPageStateFromHTML();
+    const Page = pages[state.page];
+    const page = new Page(this.context, state.args, state.data);
+    page.mount(this.container.children[0]);
+    this.page = page;
+  }
+
+  getPageStateFromHTML() {
+    const element = document.querySelector('#page-state');
+    const state = JSON.parse(element.innerHTML);
+    element.parentNode.removeChild(element);
+    return state;
   }
 }

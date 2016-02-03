@@ -58,8 +58,8 @@ document.addEventListener('click', event => {
 function handlePath(path) {
   router
     .handle(path)
-    .then(view => {
-      mainView.setPageView(view);
+    .then(page => {
+      mainView.setPage(page);
     })
     .catch(error => {
       console.log(error);

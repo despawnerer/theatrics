@@ -1,7 +1,8 @@
+import View from '../base/view';
 import pages from '../pages/all';
 
 
-export default class MainView {
+export default class MainView extends View {
   constructor(context, page) {
     this.context = context;
     this.page = page;

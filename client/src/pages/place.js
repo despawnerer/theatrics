@@ -1,11 +1,10 @@
+import Page from '../base/page';
 import Place from '../models/place';
 
 
-export default class PlacePage {
+export default class PlacePage extends Page {
   constructor(context, args, data) {
-    this.context = context;
-    this.args = args;
-    this.data = data;
+    super(context, args, data);
 
     this.place = new Place(data);
   }

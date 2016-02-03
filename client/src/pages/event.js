@@ -1,11 +1,10 @@
+import Page from '../base/page';
 import Event from '../models/event';
 
 
-export default class EventPage {
+export default class EventPage extends Page {
   constructor(context, args, data) {
-    this.context = context;
-    this.args = args;
-    this.data = data;
+    super(context, args, data);
 
     this.event = new Event(data);
   }

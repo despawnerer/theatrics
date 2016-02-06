@@ -4,7 +4,7 @@ import pages from '../pages/all';
 
 export default class MainView extends View {
   constructor(context, page) {
-    this.context = context;
+    super(context);
     this.page = page;
   }
 

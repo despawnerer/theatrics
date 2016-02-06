@@ -31,7 +31,8 @@ app.use('/api', (req, res, next) => {
 
 app.use((req, res, next) => {
   router
-    .handle(req.originalUrl)
+    .getHandler(req.originalUrl)
+    .prepare()
     .then(page => {
       const mainView = new MainView(context, page);
       const html = mainView.getHTML();

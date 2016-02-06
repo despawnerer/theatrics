@@ -57,7 +57,8 @@ document.addEventListener('click', event => {
 
 function handlePath(path) {
   router
-    .handle(path)
+    .getHandler(path)
+    .prepareDynamic()
     .then(page => {
       mainView.setPage(page);
     })

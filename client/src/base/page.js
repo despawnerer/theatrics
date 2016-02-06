@@ -9,6 +9,6 @@ export default class Page extends View {
   }
 
   getTitle() {
-    throw new Error("Pages must have titles");
+    throw new Error("Page must implement getTitle()")
   }
 }

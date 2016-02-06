@@ -20,7 +20,7 @@ export default class TheatricsAPI {
   }
 
   buildURL(path) {
-    if (path.slice(0, 7) == 'http://') {
+    if (path.slice(0, this.prefix.length) == this.prefix) {
       return path;
     } else {
       return this.prefix + path;

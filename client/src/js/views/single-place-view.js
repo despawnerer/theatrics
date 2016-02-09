@@ -18,10 +18,6 @@ export default class SinglePlaceView extends View {
     super({app, model});
 
     this.item = Place.from(model);
-
-    this.slider = null;
-    this.pager = null;
-    this.scheduleView = null;
   }
 
   createElement() {
@@ -36,22 +32,21 @@ export default class SinglePlaceView extends View {
   }
 
   renderItem() {
-    const place = this.item.data;
-    const location = this.app.locations.get(place.location);
+    const location = this.app.locations.get(this.item.data.location);
 
     this.element.innerHTML = template({
       capfirst,
       isiOS,
       app: this.app,
       location: location,
-      place: place,
+      place: this.item,
     });
 
-    this.slider = new Slider(this.element.querySelector('.item-slider'));
-    this.pager = new Pager(this.element.querySelector('.pager'));
-    this.scheduleView = this.createScheduleView('.schedule-page > div');
+    new Slider(this.element.querySelector('.item-slider'));
+    new Pager(this.element.querySelector('.pager'));
+    this.createScheduleView('.schedule-page > div');
 
-    this.app.setTitle(`${capfirst(place.title)} – ${location.name}`);
+    this.app.setTitle(`${this.item.getTitle()} – ${location.name}`);
     this.app.settings.set('location', location.slug);
   }
 

@@ -8,11 +8,12 @@ import ViewSwitcher from './view-switcher';
 import Settings from '../models/settings';
 
 import LocationChooser from '../views/location-chooser';
-import EventsView from '../views/events-view';
-import PlacesView from '../views/places-view';
-import SingleEventView from '../views/single-event-view';
-import SinglePlaceView from '../views/single-place-view';
 import NotFoundView from '../views/not-found';
+
+import EventPageView from '../pages/event';
+import EventListPageView from '../pages/event-list';
+import PlacePageView from '../pages/place';
+import PlaceListPageView from '../pages/place-list';
 
 import {show, hide} from '../utils';
 
@@ -79,19 +80,19 @@ export default class App {
   }
 
   visitEvents(args) {
-    this.viewSwitcher.switchView(EventsView, args);
+    this.viewSwitcher.switchView(EventListPageView, args);
   }
 
   visitPlaces(args) {
-    this.viewSwitcher.switchView(PlacesView, args);
+    this.viewSwitcher.switchView(PlaceListPageView, args);
   }
 
   visitSingleEvent(args) {
-    this.viewSwitcher.switchView(SingleEventView, args);
+    this.viewSwitcher.switchView(EventPageView, args);
   }
 
   visitSinglePlace(args) {
-    this.viewSwitcher.switchView(SinglePlaceView, args);
+    this.viewSwitcher.switchView(PlacePageView, args);
   }
 
   notFound() {

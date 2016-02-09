@@ -7,10 +7,10 @@ import Slider from '../components/slider';
 import {BigLoader} from '../components/loader';
 import {capfirst, buildAPIURL} from '../utils';
 
-import template from '../../templates/single-event.ejs';
+import template from '../../templates/event.ejs';
 
 
-export default class SingleEventView extends View {
+export default class EventPageView extends View {
   constructor({app, model}) {
     super({app, model});
 

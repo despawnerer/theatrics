@@ -4,13 +4,13 @@ import View from '../base/view';
 import Feed from '../models/feed';
 import {capfirst} from '../utils';
 
-import Calendar from './calendar';
-import FeedView from './feed-view';
+import Calendar from '../views/calendar';
+import FeedView from '../views/feed-view';
 
 import itemTemplate from '../../templates/feed-event.ejs';
 
 
-export default class EventsView extends View {
+export default class EventListPageView extends View {
   constructor({app, model}) {
     super({app, model});
 

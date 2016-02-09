@@ -2,12 +2,12 @@ import View from '../base/view';
 import Feed from '../models/feed';
 import {capfirst} from '../utils';
 
-import FeedView from './feed-view';
+import FeedView from '../views/feed-view';
 
 import itemTemplate from '../../templates/feed-place.ejs';
 
 
-export default class PlacesView extends View {
+export default class PlaceListPageView extends View {
   constructor({app, model}) {
     super({app, model});
 

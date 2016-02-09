@@ -3,17 +3,16 @@ import moment from 'moment';
 import View from '../base/view';
 import Place from '../models/place';
 import Feed from '../models/feed';
+import ScheduleView from '../views/schedule-view';
 import Slider from '../components/slider';
 import {BigLoader} from '../components/loader';
 import Pager from '../components/pager';
 import {capfirst, buildAPIURL, isiOS} from '../utils';
 
-import ScheduleView from './schedule-view';
-
-import template from '../../templates/single-place.ejs';
+import template from '../../templates/place.ejs';
 
 
-export default class SinglePlaceView extends View {
+export default class PlacePageView extends View {
   constructor({app, model}) {
     super({app, model});
 

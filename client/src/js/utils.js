@@ -16,6 +16,15 @@ export function isiOS() {
 }
 
 
+export function range(bound) {
+  const range = [];
+  for (let n = 0; n <= bound; n++) {
+    range.push(n);
+  }
+  return range;
+}
+
+
 export function forceScroll(x, y, maxAttempts=100) {
   /*
   Sometimes, after navigating somewhere with .pushState, Chrome

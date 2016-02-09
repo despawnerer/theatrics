@@ -2,7 +2,9 @@ import moment from 'moment';
 
 import View from '../base/view';
 
-import {toggleClass} from '../utils';
+import {toggleClass, range} from '../utils';
+
+import template from '../../templates/calendar.ejs';
 
 
 export default class Calendar extends View {
@@ -13,45 +15,13 @@ export default class Calendar extends View {
   }
 
   render() {
-    this.element.innerHTML = '';
-
-    const listElement = document.createElement('ol');
-    listElement.setAttribute('class', 'calendar');
-    this.element.appendChild(listElement);
-
-    const anyDateElement = this.buildAnyDateElement();
-    toggleClass(anyDateElement, 'active', !this.model.has('date'));
-    listElement.appendChild(anyDateElement);
-
     const today = moment().startOf('day');
-    for (let n = 0; n < 16; n++) {
-      const day = today.clone().add(n, 'days');
-      const element = this.buildDayElement(day);
-      const date = day.format('YYYY-MM-DD');
-      toggleClass(element, 'active', this.model.get('date') === date);
-      listElement.appendChild(element);
-    }
-  }
-
-  buildAnyDateElement() {
-    const targetState = this.model.clone().remove('date');
-    const target = this.app.resolver.reverse('events', targetState.data);
-    const element = document.createElement('li');
-    element.setAttribute('class', 'calendar-day any');
-    element.innerHTML = `<a href="${target}">Самое</a>`
-    return element;
-  }
-
-  buildDayElement(day) {
-    const dateString = day.format('YYYY-MM-DD');
-    const targetState = this.model.clone().set('date', dateString);
-    const target = this.app.resolver.reverse('events', targetState.data);
-    const element = document.createElement('li');
-    element.setAttribute('class', 'calendar-day');
-    element.setAttribute('data-date', dateString);
-    element.innerHTML = `
-      <a href="${target}">${day.format('D')}<br/>${day.format('dd').toLowerCase()}</a>`;
-    return element;
+    const dates = range(15).map(n => today.clone().add(n, 'days'));
+    this.element.innerHTML = template({
+      app: this.app,
+      current: this.model.data,
+      dates: dates,
+    });
   }
 
   onModelChange() {

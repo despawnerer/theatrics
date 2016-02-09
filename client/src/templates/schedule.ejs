@@ -14,7 +14,7 @@
           </td>
           <td class="schedule-title-cell">
             <h3 class="schedule-item-title">
-              <a href="<%- app.resolver.reverse('single-event', {id: event.data.id }) %>">
+              <a href="<%- app.resolver.reverse('event', {id: event.data.id }) %>">
                 <span class="link-text"><%- event.getShortTitle() %></span>
               </a>
             </h3>

@@ -1,4 +1,4 @@
-<a href="<%- app.resolver.reverse('single-event', {id: item.id}) %>" class="feed-item-link">
+<a href="<%- app.resolver.reverse('event', {id: item.id}) %>" class="feed-item-link">
   <div class="feed-image-container">
     <img data-src="<%- item.images[0].thumbnails['640x384'] %>" class="feed-image lazyload"/>
   </div>
@@ -19,7 +19,7 @@
     <% if (item.place.is_stub) { %>
       <%- capfirst(item.place.title) %>
     <% } else { %>
-      <a href="<%- app.resolver.reverse('single-place', {id: item.place.id}) %>">
+      <a href="<%- app.resolver.reverse('place', {id: item.place.id}) %>">
         <span class="link-text"><%- capfirst(item.place.title) %></span>
       </a>
     <% } %>

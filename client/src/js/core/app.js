@@ -26,21 +26,21 @@ export default class App {
     this.resolver = new Resolver();
     this.resolver.addRoute('index', '/');
     this.resolver.addRoute('location', '/{location:[a-z\-]+}/');
-    this.resolver.addRoute('events', '/{location:[a-z\-]+}/events/');
+    this.resolver.addRoute('event-list', '/{location:[a-z\-]+}/events/');
     this.resolver.addRoute(
-      'events',
+      'event-list',
       '/{location:[a-z\-]+}/events/{date:\\d\\d\\d\\d-\\d\\d-\\d\\d}/');
-    this.resolver.addRoute('places', '/{location:[a-z\-]+}/places/');
-    this.resolver.addRoute('single-event', '/event/{id:\\d+}/');
-    this.resolver.addRoute('single-place', '/place/{id:\\d+}/');
+    this.resolver.addRoute('place-list', '/{location:[a-z\-]+}/places/');
+    this.resolver.addRoute('event', '/event/{id:\\d+}/');
+    this.resolver.addRoute('place', '/place/{id:\\d+}/');
 
     this.router = new Router(this.resolver);
     this.router.addHandler('index', this.visitIndex.bind(this));
     this.router.addHandler('location', this.visitLocation.bind(this));
-    this.router.addHandler('events', this.visitEvents.bind(this));
-    this.router.addHandler('places', this.visitPlaces.bind(this));
-    this.router.addHandler('single-event', this.visitSingleEvent.bind(this));
-    this.router.addHandler('single-place', this.visitSinglePlace.bind(this));
+    this.router.addHandler('event-list', this.visitEventList.bind(this));
+    this.router.addHandler('place-list', this.visitPlaceList.bind(this));
+    this.router.addHandler('event', this.visitEvent.bind(this));
+    this.router.addHandler('place', this.visitPlace.bind(this));
     this.router.setNotFoundHandler(this.notFound.bind(this));
 
     const viewContainer = document.querySelector('#view-container');
@@ -69,28 +69,28 @@ export default class App {
 
   visitIndex() {
     const location = this.settings.get('location');
-    const path = this.resolver.reverse('events', {location});
+    const path = this.resolver.reverse('event-list', {location});
     this.router.redirect(path);
   }
 
   visitLocation({location}) {
-    const path = this.resolver.reverse('events', {location});
+    const path = this.resolver.reverse('event-list', {location});
     this.router.redirect(path);
   }
 
-  visitEvents(args) {
+  visitEventList(args) {
     this.viewSwitcher.switchView(EventListPageView, args);
   }
 
-  visitPlaces(args) {
+  visitPlaceList(args) {
     this.viewSwitcher.switchView(PlaceListPageView, args);
   }
 
-  visitSingleEvent(args) {
+  visitEvent(args) {
     this.viewSwitcher.switchView(EventPageView, args);
   }
 
-  visitSinglePlace(args) {
+  visitPlace(args) {
     this.viewSwitcher.switchView(PlacePageView, args);
   }
 

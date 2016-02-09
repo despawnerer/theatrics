@@ -27,7 +27,7 @@ export default class LocationChooser extends View {
   onSelectChange() {
     const location = this.element.value;
     if (location !== this.app.settings.get('location')) {
-      const routeName = this.app.viewSwitcher.state.view instanceof PlaceListView ? 'places' : 'events';
+      const routeName = this.app.viewSwitcher.state.view instanceof PlaceListView ? 'place-list' : 'event-list';
       const path = this.app.resolver.reverse(routeName, {location})
       this.app.router.navigate(path);
       this.app.settings.set('location', location);

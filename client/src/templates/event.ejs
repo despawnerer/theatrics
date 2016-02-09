@@ -44,7 +44,7 @@
           <% if (place.data.is_stub) { %>
             <%- capfirst(place.data.title) %>
           <% } else { %>
-            <a href="<%- app.resolver.reverse('single-place', {id: place.data.id}) %>">
+            <a href="<%- app.resolver.reverse('place', {id: place.data.id}) %>">
               <span class="link-text"><%- capfirst(place.data.title) %></span>
             </a>
           <% } %>

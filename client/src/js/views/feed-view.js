@@ -6,29 +6,11 @@ import Loader from '../components/loader';
 import {buildAPIURL, toggle, show, hide, capfirst} from '../utils';
 
 
-const template = () => `
-<ol class="feed" hidden></ol>
-<div class="load-more-container" hidden>
-  <button class="load-more-button" hidden>Загрузить ещё</button>
-</div>
-<div class="nothing-at-all" hidden>Ничего нет</div>
-<div class="big-loader-container" hidden></div>
-`;
-
-
 export default class FeedView extends View {
   constructor({app, model, itemTemplate}) {
     super({app, model});
 
     this.itemTemplate = itemTemplate;
-
-    this.onQueryChange = this.onQueryChange.bind(this);
-    this.onLoaded = this.onLoaded.bind(this);
-
-    this.events.bind('click .load-more-button', 'onLoadMoreClicked');
-    this.model.query.on('change', this.onQueryChange);
-    this.model.on('load', this.onLoaded);
-
     this.needsClearing = false;
 
     this.feedLoader = new Loader({progress: 0.25});
@@ -41,18 +23,34 @@ export default class FeedView extends View {
     return element;
   }
 
-  render() {
-    this.element.innerHTML = template();
+  renderInnerHTML() {
+    return `
+      <ol class="feed" hidden></ol>
+      <div class="load-more-container" hidden>
+        <button class="load-more-button" hidden>Загрузить ещё</button>
+      </div>
+      <div class="nothing-at-all" hidden>Ничего нет</div>
+      <div class="big-loader-container" hidden></div>
+    `;
+  }
 
-    this.listContainer = this.element.querySelector('.feed');
-    this.loadMoreContainer = this.element.querySelector('.load-more-container');
-    this.feedLoaderContainer = this.element.querySelector('.big-loader-container');
-    this.nothingAtAll = this.element.querySelector('.nothing-at-all');
+  mount(element) {
+    this.element = element;
+
+    this.listContainer = element.querySelector('.feed');
+    this.loadMoreContainer = element.querySelector('.load-more-container');
+    this.feedLoaderContainer = element.querySelector('.big-loader-container');
+    this.nothingAtAll = element.querySelector('.nothing-at-all');
 
     this.feedLoaderContainer.appendChild(this.feedLoader.element);
     this.loadMoreContainer.appendChild(this.moreLoader.element);
 
     show(this.feedLoaderContainer);
+
+    const loadMoreButton = element.querySelector('.load-more-button');
+    loadMoreButton.addEventListener('click', event => this.onLoadMoreClicked(event));
+    this.model.query.on('change', () => this.onQueryChange());
+    this.model.on('load', items => this.onLoaded(items));
   }
 
   onQueryChange() {

@@ -25,7 +25,8 @@ export default class PlacePageView extends View {
     return element;
   }
 
-  render() {
+  mount(element) {
+    this.element = element;
     this.renderLoader();
     this.item.fetch().then(this.renderItem.bind(this));
   }
@@ -70,8 +71,7 @@ export default class PlacePageView extends View {
       app: this.app,
       model: schedule,
     });
-    view.render();
-    container.appendChild(view.element);
+    container.appendChild(view.render());
     return view;
   }
 }

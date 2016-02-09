@@ -1,29 +1,28 @@
-import Events from 'events-mixin';
-
-
 export default class View {
   constructor({app, model}) {
     this.app = app;
-
-    this.element = this.createElement();
-
-    this.events = new Events(this.element, this);
-
-    if (model) {
-      this.model = model;
-      this.model.on('change', this.onModelChange.bind(this));
-    }
-  }
-
-  createElement() {
-    return document.createElement('div');
+    this.model = model;
   }
 
   render() {
+    const element = this.createElement();
+    element.innerHTML = this.renderInnerHTML();
+    this.mount(element);
+    return element;
+  }
 
+  renderInnerHTML() {
+    return '';
+  }
+
+  mount(element) {
+    this.element = element;
+    if (this.model) {
+      this.model.on('change', () => this.onModelChange());
+    }
   }
 
   onModelChange() {
-    this.render();
+    this.element.innerHTML = this.renderInnerHTML();
   }
 }

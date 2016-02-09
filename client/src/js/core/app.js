@@ -57,8 +57,7 @@ export default class App {
   setupLocationChooser() {
     const locationContainer = document.querySelector('#city');
     const locationChooser = new LocationChooser({app: this});
-    locationChooser.render();
-    locationContainer.appendChild(locationChooser.element);
+    locationContainer.appendChild(locationChooser.render());
     show(locationContainer);
   }
 

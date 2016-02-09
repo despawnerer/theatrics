@@ -32,19 +32,10 @@ export default class EventListPageView extends View {
     return element;
   }
 
-  render() {
-    this.element.innerHTML = '';
-
-    this.calendar.render();
-    this.feedView.render();
-
-    this.element.appendChild(this.calendar.element);
-    this.element.appendChild(this.feedView.element);
-
-    this.update();
-  }
-
-  onModelChange() {
+  mount(element) {
+    element.appendChild(this.calendar.render());
+    element.appendChild(this.feedView.render());
+    this.model.on('change', () => this.update())
     this.update();
   }
 

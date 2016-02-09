@@ -23,7 +23,8 @@ export default class EventPageView extends View {
     return element;
   }
 
-  render() {
+  mount(element) {
+    this.element = element;
     this.renderLoader();
     this.item.fetch().then(this.renderItem.bind(this));
   }

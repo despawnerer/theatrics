@@ -1,35 +1,34 @@
 import View from '../base/view';
-import PlacesView from '../views/places-view';
+import PlaceListView from '../pages/place-list';
+
+import template from '../../templates/location-chooser.ejs';
 
 
 export default class LocationChooser extends View {
-  constructor({app, model}) {
-    super({app, model});
-
-    this.events.bind('change', 'onSelectChange');
-    this.app.settings.on('change', this.onSettingsChange.bind(this));
-  }
-
   createElement() {
     return document.createElement('select');
   }
 
-  render() {
-    this.app.locations.forEach(location => {
-      const option = document.createElement('option');
-      option.value = location.slug;
-      option.textContent = location.name;
-      this.element.appendChild(option);
+  renderInnerHTML() {
+    const currentLocation = this.app.locations.get(
+      this.app.settings.get('location'));
+    return template({
+      locations: this.app.locations,
+      currentLocation: currentLocation
     });
-
-    this.element.value = this.app.settings.get('location');
   }
 
-  onSelectChange(event) {
+  mount(element) {
+    this.element = element;
+    this.element.addEventListener('change', () => this.onSelectChange());
+    this.app.settings.on('change', () => this.onSettingsChange());
+  }
+
+  onSelectChange() {
     const location = this.element.value;
     if (location !== this.app.settings.get('location')) {
-      const view = this.app.viewSwitcher.currentView instanceof PlacesView ? 'places' : 'events';
-      const path = this.app.resolver.reverse(view, {location})
+      const routeName = this.app.viewSwitcher.state.view instanceof PlaceListView ? 'places' : 'events';
+      const path = this.app.resolver.reverse(routeName, {location})
       this.app.router.navigate(path);
       this.app.settings.set('location', location);
     }

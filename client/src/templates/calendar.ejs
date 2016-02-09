@@ -1,11 +1,11 @@
 <ol class="calendar">
-	<li class="calendar-day any<% if (!current.date) { %> active<% } %>">
-		<a href="<%- app.resolver.reverse('events', {location: current.location}) %>">Самое</a>
-	<% dates.forEach(function(date) { %>
-		<% var dateString = date.format('YYYY-MM-DD') %>
-		<li class="calendar-day<% if (dateString == current.date) { %> active<% } %>" data-date="<%- dateString %>">
-			<a href="<%- app.resolver.reverse('events', {location: current.location, date: dateString}) %>">
-				<%- date.format('D') %><br/><%- date.format('dd').toLowerCase() %>
-			</a>
-	<% }) %>
+  <li class="calendar-day any<% if (!current.date) { %> active<% } %>">
+    <a href="<%- app.resolver.reverse('events', {location: current.location}) %>">Самое</a>
+  <% dates.forEach(function(date) { %>
+    <% var dateString = date.format('YYYY-MM-DD') %>
+    <li class="calendar-day<% if (dateString == current.date) { %> active<% } %>" data-date="<%- dateString %>">
+      <a href="<%- app.resolver.reverse('events', {location: current.location, date: dateString}) %>">
+        <%- date.format('D') %><br/><%- date.format('dd').toLowerCase() %>
+      </a>
+  <% }) %>
 </ol>

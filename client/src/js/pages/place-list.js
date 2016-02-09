@@ -29,14 +29,9 @@ export default class PlaceListPageView extends View {
     return element;
   }
 
-  render() {
-    this.element.innerHTML = '';
-    this.feedView.render();
-    this.element.appendChild(this.feedView.element);
-    this.update();
-  }
-
-  onModelChange() {
+  mount(element) {
+    element.appendChild(this.feedView.render());
+    this.model.on('change', () => this.update())
     this.update();
   }
 

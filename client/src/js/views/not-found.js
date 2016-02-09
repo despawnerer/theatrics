@@ -8,18 +8,21 @@ export default class NotFound extends View {
     return element;
   }
 
-  render() {
-    this.element.innerHTML = `
-    <div class="not-found-message">
-      <h2>
-        404 <span class="tagline">Здесь нет такой страницы</span>
-      </h2>
-      <p>
-        Но вообще есть замечательные <a href="/">спектакли</a>
-      </p>
-    </div>
+  renderInnerHTML() {
+    return `
+      <div class="not-found-message">
+        <h2>
+          404 <span class="tagline">Здесь нет такой страницы</span>
+        </h2>
+        <p>
+          Но вообще есть замечательные <a href="/">спектакли</a>
+        </p>
+      </div>
     `;
+  }
 
+  mount(element) {
+    this.element = element;
     this.app.setTitle("404");
   }
 }

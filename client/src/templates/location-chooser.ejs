@@ -1,0 +1,5 @@
+<% locations.forEach(function(location) { %>
+	<option value="<%- location.slug %>"<% if (location.slug == currentLocation.slug) { %> selected<% } %>>
+		<%- location.name %>
+	</option>
+<% }) %>

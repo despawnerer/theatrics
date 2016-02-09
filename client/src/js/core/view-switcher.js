@@ -12,6 +12,7 @@ export default class ViewSwitcher {
 
     this.state = {
       view: null,
+      element: null,
       title: document.title,
     }
 
@@ -19,8 +20,8 @@ export default class ViewSwitcher {
   }
 
   switchView(ViewClass, args={}) {
-    if (this.state.view) {
-      this.element.removeChild(this.state.view.element);
+    if (this.state.element) {
+      this.element.removeChild(this.state.element);
     }
 
     const cacheKey = [ViewClass, args];
@@ -32,10 +33,9 @@ export default class ViewSwitcher {
       this.state.view.model.replace(args);
     } else {
       this.state = this.buildNewState(ViewClass, args);
-      this.state.view.render();
     }
 
-    this.element.appendChild(this.state.view.element);
+    this.element.appendChild(this.state.element);
     document.title = this.state.title;
     this.cache.put(cacheKey, this.state);
   }
@@ -56,6 +56,7 @@ export default class ViewSwitcher {
     const view = new ViewClass({app: this.app, model: model});
     return {
       view: view,
+      element: view.render(),
       title: null
     };
   }

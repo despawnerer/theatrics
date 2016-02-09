@@ -14,10 +14,10 @@ export default class Calendar extends View {
     return element;
   }
 
-  render() {
+  renderInnerHTML() {
     const today = moment().startOf('day');
     const dates = range(15).map(n => today.clone().add(n, 'days'));
-    this.element.innerHTML = template({
+    return template({
       app: this.app,
       current: this.model.data,
       dates: dates,
@@ -26,7 +26,7 @@ export default class Calendar extends View {
 
   onModelChange() {
     if (this.model.hasChanged('location')) {
-      this.render();
+      this.element.innerHTML = this.renderInnerHTML();
     } else {
       const date = this.model.get('date');
       const selector = date ? `li[data-date="${date}"]` : 'li.any';

@@ -9,27 +9,19 @@ import template from '../../templates/schedule.ejs';
 
 
 export default class ScheduleView extends View {
-  constructor({app, model, location}) {
-    super({app, model});
-
-    this.onLoaded = this.onLoaded.bind(this);
-
-    this.model.on('load', this.onLoaded);
-  }
-
   createElement() {
     const element = document.createElement('div');
     element.setAttribute('class', 'schedule');
     return element;
   }
 
-  render() {
-    if (this.model.items === null) {
-      this.renderLoader();
-      this.model.fetchAll();
-    } else {
-      this.renderItems();
-    }
+  mount(element) {
+    this.element = element;
+
+    this.renderLoader();
+
+    this.model.on('load', () => this.onLoaded());
+    this.model.fetchAll();
   }
 
   renderLoader() {
@@ -54,7 +46,7 @@ export default class ScheduleView extends View {
   }
 
   onLoaded() {
-    this.render();
+    this.renderItems();
   }
 
   eventsToDates(events) {

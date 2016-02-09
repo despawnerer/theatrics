@@ -1,27 +1,16 @@
 const API_PREFIX = '/api';
 
 
-export function capfirst(s) {
-  return s.slice(0, 1).toUpperCase() + s.slice(1);
-}
-
 
 export function buildAPIURL(path) {
   return API_PREFIX + path;
 }
 
 
+/* Browser and window tools */
+
 export function isiOS() {
   return /iPad|iPhone|iPod/.test(navigator.userAgent);
-}
-
-
-export function range(bound) {
-  const range = [];
-  for (let n = 0; n <= bound; n++) {
-    range.push(n);
-  }
-  return range;
 }
 
 
@@ -49,22 +38,7 @@ export function forceScroll(x, y, maxAttempts=100) {
 }
 
 
-export function groupArray(array, name, callback, equal=(a, b) => a == b) {
-  const groups = [];
-  let lastGroup = null;
-  array.forEach(item => {
-    const groupValue = callback(item);
-    if (lastGroup && equal(lastGroup[name], groupValue)) {
-      lastGroup.items.push(item);
-    } else {
-      lastGroup = {items: [item]};
-      lastGroup[name] = groupValue;
-      groups.push(lastGroup);
-    }
-  });
-  return groups;
-}
-
+/* Element manipulations */
 
 export function toggleClass(element, className, condition) {
   /* This shim is used because older Safari and IE don't support
@@ -96,6 +70,39 @@ export function show(element) {
 
 export function hide(element) {
   element.setAttribute('hidden', 'hidden');
+}
+
+
+/* Generic */
+
+export function capfirst(s) {
+  return s.slice(0, 1).toUpperCase() + s.slice(1);
+}
+
+
+export function range(bound) {
+  const range = [];
+  for (let n = 0; n <= bound; n++) {
+    range.push(n);
+  }
+  return range;
+}
+
+
+export function groupArray(array, name, callback, equal=(a, b) => a == b) {
+  const groups = [];
+  let lastGroup = null;
+  array.forEach(item => {
+    const groupValue = callback(item);
+    if (lastGroup && equal(lastGroup[name], groupValue)) {
+      lastGroup.items.push(item);
+    } else {
+      lastGroup = {items: [item]};
+      lastGroup[name] = groupValue;
+      groups.push(lastGroup);
+    }
+  });
+  return groups;
 }
 
 

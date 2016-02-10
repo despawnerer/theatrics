@@ -1,10 +1,9 @@
-import axios from 'axios';
 import moment from 'moment';
 
 import View from '../base/view';
 import Event from '../models/event';
 import Slider from '../components/slider';
-import {capfirst, buildAPIURL, bigLoader} from '../utils';
+import {capfirst, bigLoader} from '../utils';
 
 import template from '../../templates/event.ejs';
 

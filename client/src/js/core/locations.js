@@ -1,7 +1,3 @@
-import axios from 'axios';
-
-import {buildAPIURL} from '../utils';
-
 import locations from '../../data/locations.json';
 
 

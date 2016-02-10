@@ -34,7 +34,7 @@ export default class EventPageView extends View {
       event: this.event,
     });
 
-    this.slider = new Slider(this.element.querySelector('.item-slider'));
+    new Slider(this.element.querySelector('.item-slider'));
 
     this.app.setTitle(`${this.event.getLongTitle()} – ${location.name}`);
     this.app.settings.set('location', location.slug);

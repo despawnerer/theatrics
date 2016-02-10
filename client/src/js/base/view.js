@@ -1,3 +1,6 @@
+import domify from 'domify';
+
+
 export default class View {
   constructor({app, model}) {
     this.app = app;
@@ -5,14 +8,14 @@ export default class View {
   }
 
   render() {
-    const element = this.createElement();
-    element.innerHTML = this.renderInnerHTML();
+    const html = this.getHTML();
+    const element = domify(html);
     this.mount(element);
     return element;
   }
 
-  renderInnerHTML() {
-    return '';
+  getHTML() {
+    return '<div></div>';
   }
 
   mount(element) {
@@ -22,7 +25,5 @@ export default class View {
     }
   }
 
-  onModelChange() {
-    this.element.innerHTML = this.renderInnerHTML();
-  }
+  onModelChange() {}
 }

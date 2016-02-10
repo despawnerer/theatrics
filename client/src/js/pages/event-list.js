@@ -26,15 +26,19 @@ export default class EventListPageView extends View {
     this.feedView = new FeedView({app, itemTemplate, model: this.feed});
   }
 
-  createElement() {
-    const element = document.createElement('div');
-    element.setAttribute('class', 'events-view content-container unconstrained');
-    return element;
+  getHTML() {
+    return `
+      <div class="events-view content-container unconstrained">
+        ${this.calendar.getHTML()}
+        ${this.feedView.getHTML()}
+      </div>
+    `
   }
 
   mount(element) {
-    element.appendChild(this.calendar.render());
-    element.appendChild(this.feedView.render());
+    this.calendar.mount(element.querySelector('.calendar-container'));
+    this.feedView.mount(element.querySelector('.feed-container'));
+
     this.model.on('change', () => this.update())
     this.update();
   }

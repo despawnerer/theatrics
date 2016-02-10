@@ -4,8 +4,7 @@ import moment from 'moment';
 import View from '../base/view';
 import Event from '../models/event';
 import Slider from '../components/slider';
-import {BigLoader} from '../components/loader';
-import {capfirst, buildAPIURL} from '../utils';
+import {capfirst, buildAPIURL, bigLoader} from '../utils';
 
 import template from '../../templates/event.ejs';
 
@@ -17,15 +16,13 @@ export default class EventPageView extends View {
     this.item = Event.from(model);
   }
 
-  createElement() {
-    const element = document.createElement('div');
-    element.setAttribute('class', 'item-view');
-    return element;
+  getHTML() {
+    return `<div class="item-view">${bigLoader()}</div>`;
   }
 
   mount(element) {
     this.element = element;
-    this.renderLoader();
+    this.app.setTitle("Спектакль");
     this.item.fetch().then(this.renderItem.bind(this));
   }
 
@@ -44,12 +41,5 @@ export default class EventPageView extends View {
 
     this.app.setTitle(`${this.item.getLongTitle()} – ${location.name}`);
     this.app.settings.set('location', location.slug);
-  }
-
-  renderLoader() {
-    const loader = new BigLoader({progress: 0.25});
-    this.element.innerHTML = '';
-    this.element.appendChild(loader.element);
-    this.app.setTitle("Спектакль");
   }
 }

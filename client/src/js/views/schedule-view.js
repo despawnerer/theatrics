@@ -2,32 +2,20 @@ import moment from 'moment';
 
 import View from '../base/view';
 import Event from '../models/event';
-import {BigLoader} from '../components/loader';
-import {capfirst, groupArray} from '../utils';
+import {capfirst, groupArray, bigLoader} from '../utils';
 
 import template from '../../templates/schedule.ejs';
 
 
 export default class ScheduleView extends View {
-  createElement() {
-    const element = document.createElement('div');
-    element.setAttribute('class', 'schedule');
-    return element;
+  getHTML() {
+    return `<div class="schedule">${bigLoader()}</div>`;
   }
 
   mount(element) {
     this.element = element;
-
-    this.renderLoader();
-
-    this.model.on('load', () => this.onLoaded());
+    this.model.on('load', () => this.renderItems());
     this.model.fetchAll();
-  }
-
-  renderLoader() {
-    const loader = new BigLoader({progress: 0.25});
-    this.element.innerHTML = '';
-    this.element.appendChild(loader.element);
   }
 
   renderItems() {
@@ -43,10 +31,6 @@ export default class ScheduleView extends View {
       app: this.app,
       dayGroups: dayGroups,
     });
-  }
-
-  onLoaded() {
-    this.renderItems();
   }
 
   eventsToDates(events) {

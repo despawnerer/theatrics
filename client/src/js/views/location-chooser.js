@@ -5,11 +5,7 @@ import template from '../../templates/location-chooser.ejs';
 
 
 export default class LocationChooser extends View {
-  createElement() {
-    return document.createElement('select');
-  }
-
-  renderInnerHTML() {
+  getHTML() {
     const currentLocation = this.app.locations.get(
       this.app.settings.get('location'));
     return template({

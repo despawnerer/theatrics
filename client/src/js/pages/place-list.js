@@ -23,14 +23,16 @@ export default class PlaceListPageView extends View {
     this.feedView = new FeedView({app, itemTemplate, model: this.feed});
   }
 
-  createElement() {
-    const element = document.createElement('div');
-    element.setAttribute('class', 'content-container unconstrained');
-    return element;
+  getHTML() {
+    return `
+      <div class="content-container unconstrained">
+        ${this.feedView.getHTML()}
+      </div>
+    `;
   }
 
   mount(element) {
-    element.appendChild(this.feedView.render());
+    this.feedView.mount(element.querySelector('.feed-container'));
     this.model.on('change', () => this.update())
     this.update();
   }

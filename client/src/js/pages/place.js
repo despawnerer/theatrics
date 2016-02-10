@@ -5,9 +5,8 @@ import Place from '../models/place';
 import Feed from '../models/feed';
 import ScheduleView from '../views/schedule-view';
 import Slider from '../components/slider';
-import {BigLoader} from '../components/loader';
 import Pager from '../components/pager';
-import {capfirst, buildAPIURL, isiOS} from '../utils';
+import {capfirst, buildAPIURL, isiOS, bigLoader} from '../utils';
 
 import template from '../../templates/place.ejs';
 
@@ -19,15 +18,13 @@ export default class PlacePageView extends View {
     this.item = Place.from(model);
   }
 
-  createElement() {
-    const element = document.createElement('div');
-    element.setAttribute('class', 'item-view');
-    return element;
+  getHTML() {
+    return `<div class="item-view">${bigLoader()}</div>`;
   }
 
   mount(element) {
     this.element = element;
-    this.renderLoader();
+    this.app.setTitle("Театр");
     this.item.fetch().then(this.renderItem.bind(this));
   }
 
@@ -48,13 +45,6 @@ export default class PlacePageView extends View {
 
     this.app.setTitle(`${this.item.getTitle()} – ${location.name}`);
     this.app.settings.set('location', location.slug);
-  }
-
-  renderLoader() {
-    const loader = new BigLoader({progress: 0.25});
-    this.element.innerHTML = '';
-    this.element.appendChild(loader.element);
-    this.app.setTitle("Площадка");
   }
 
   createScheduleView(selector) {

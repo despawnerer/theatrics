@@ -1,11 +1,3 @@
-const API_PREFIX = '/api';
-
-
-
-export function buildAPIURL(path) {
-  return API_PREFIX + path;
-}
-
 
 /* Browser and window tools */
 

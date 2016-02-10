@@ -14,7 +14,6 @@
     "update-timezones": "gulp update-timezones"
   },
   "dependencies": {
-    "axios": "^0.8.1",
     "core-js": "^1.2.6",
     "deep-equal": "^1.0.1",
     "domify": "^1.4.0",

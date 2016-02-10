@@ -18,7 +18,7 @@ export default class EventPageView extends View {
     this.element = element;
     this.app.setTitle("Спектакль");
     this.app.api
-      .fetchEvent(this.model.data.get('id'))
+      .fetchEvent(this.model.get('id'))
       .then(data => this.event = new Event(data))
       .then(event => this.renderEvent(event));
   }

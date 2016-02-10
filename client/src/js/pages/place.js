@@ -20,8 +20,8 @@ export default class PlacePageView extends View {
     this.element = element;
     this.app.setTitle("Театр");
     this.app.api
-      .fetchPlace(this.model.data.get('id'))
-      .then(data => this.place = new Event(data))
+      .fetchPlace(this.model.get('id'))
+      .then(data => this.place = new Place(data))
       .then(place => this.renderPlace(place));
   }
 

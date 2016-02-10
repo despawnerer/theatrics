@@ -1,35 +1,37 @@
 <li class="feed-item">
-  <a href="<%- app.resolver.reverse('event', {id: item.id}) %>" class="feed-item-link">
+  <a href="<%- app.resolver.reverse('event', {id: event.data.id}) %>" class="feed-item-link">
     <div class="feed-image-container">
-      <img data-src="<%- item.images[0].thumbnails['640x384'] %>" class="feed-image lazyload"/>
+      <img data-src="<%- event.data.images[0].thumbnails['640x384'] %>" class="feed-image lazyload"/>
     </div>
     <h2 class="item-header">
-      <%- capfirst(item.short_title || item.title) %>
-      <% if (item.categories.indexOf('festival') !== -1) { %>
+      <%- event.getShortTitle() %>
+      <% if (event.isFestival()) { %>
         <span class="festival-badge">Фестиваль</span>
       <% } %>
     </h2>
   </a>
 
-  <% if (item.tagline) { %>
-    <div class="tagline"><%- item.tagline %></div>
+  <% if (event.data.tagline) { %>
+    <div class="tagline"><%- event.data.tagline %></div>
   <% } %>
 
-  <% if (item.place) { %>
+  <% var place = event.getPlace() %>
+
+  <% if (place) { %>
     <div class="place">
-      <% if (item.place.is_stub) { %>
-        <%- capfirst(item.place.title) %>
+      <% if (place.isStub()) { %>
+        <%- place.getTitle() %>
       <% } else { %>
-        <a href="<%- app.resolver.reverse('place', {id: item.place.id}) %>">
-          <span class="link-text"><%- capfirst(item.place.title) %></span>
+        <a href="<%- app.resolver.reverse('place', {id: place.data.id}) %>">
+          <span class="link-text"><%- place.getTitle() %></span>
         </a>
       <% } %>
     </div>
   <% } %>
 
-  <% if (!item.tagline && !item.place && item.description) { %>
+  <% if (!event.data.tagline && !place && event.data.description) { %>
     <div class="tagline">
-    <%= item.description %>
+    <%= event.data.description %>
     </div>
   <% } %>
 </li>

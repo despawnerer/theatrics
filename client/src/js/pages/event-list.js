@@ -70,7 +70,7 @@ class FeedEventView extends View {
     return itemTemplate({
       capfirst,
       app: this.app,
-      item: this.model.data,
+      event: this.model,
     });
   }
 }

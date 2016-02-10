@@ -57,7 +57,7 @@ class FeedPlaceView extends View {
     return itemTemplate({
       capfirst,
       app: this.app,
-      item: this.model.data,
+      place: this.model,
     });
   }
 }

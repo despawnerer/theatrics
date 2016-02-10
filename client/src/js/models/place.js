@@ -3,8 +3,8 @@ import {capfirst} from '../utils';
 
 
 export default class Place extends Model {
-  onFetched(response) {
-    this.replace(response.data);
+  isStub() {
+    return this.data.is_stub;
   }
 
   getTitle() {

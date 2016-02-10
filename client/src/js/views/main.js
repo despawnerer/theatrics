@@ -1,14 +1,13 @@
 import extend from 'xtend';
 
-import Cache from './cache';
+import View from '../base/view';
 import Model from '../base/model';
-import {show, hide} from '../utils';
+import Cache from '../core/cache';
 
 
-export default class ViewSwitcher {
-  constructor(app, element) {
-    this.app = app;
-    this.element = element;
+export default class MainView extends View {
+  constructor({app}) {
+    super({app});
 
     this.state = {
       view: null,

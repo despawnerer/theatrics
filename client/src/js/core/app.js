@@ -4,10 +4,10 @@ import TheatricsAPI from './api';
 import Resolver from './resolver';
 import Locations from './locations';
 import Router from './router';
-import ViewSwitcher from './view-switcher';
 
 import Settings from '../models/settings';
 
+import MainView from '../views/main';
 import LocationChooser from '../views/location-chooser';
 import NotFoundView from '../views/not-found';
 
@@ -46,7 +46,8 @@ export default class App {
     this.router.setNotFoundHandler(this.notFound.bind(this));
 
     const viewContainer = document.querySelector('#view-container');
-    this.viewSwitcher = new ViewSwitcher(this, viewContainer);
+    this.mainView = new MainView({app: this});
+    this.mainView.mount(viewContainer);
   }
 
   run() {
@@ -64,7 +65,7 @@ export default class App {
   }
 
   setTitle(title) {
-    this.viewSwitcher.setTitle(title);
+    this.mainView.setTitle(title);
   }
 
   // route handlers
@@ -81,22 +82,22 @@ export default class App {
   }
 
   visitEventList(args) {
-    this.viewSwitcher.switchView(EventListPageView, args);
+    this.mainView.switchView(EventListPageView, args);
   }
 
   visitPlaceList(args) {
-    this.viewSwitcher.switchView(PlaceListPageView, args);
+    this.mainView.switchView(PlaceListPageView, args);
   }
 
   visitEvent(args) {
-    this.viewSwitcher.switchView(EventPageView, args);
+    this.mainView.switchView(EventPageView, args);
   }
 
   visitPlace(args) {
-    this.viewSwitcher.switchView(PlacePageView, args);
+    this.mainView.switchView(PlacePageView, args);
   }
 
   notFound() {
-    this.viewSwitcher.switchView(NotFoundView);
+    this.mainView.switchView(NotFoundView);
   }
 }

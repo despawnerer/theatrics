@@ -12,12 +12,6 @@ import template from '../../templates/place.ejs';
 
 
 export default class PlacePageView extends View {
-  constructor({app, model}) {
-    super({app, model});
-
-    this.item = Place.from(model);
-  }
-
   getHTML() {
     return `<div class="item-view">${bigLoader()}</div>`;
   }
@@ -25,25 +19,28 @@ export default class PlacePageView extends View {
   mount(element) {
     this.element = element;
     this.app.setTitle("Театр");
-    this.item.fetch().then(this.renderItem.bind(this));
+    this.app.api
+      .fetchPlace(this.model.data.get('id'))
+      .then(data => this.place = new Event(data))
+      .then(place => this.renderPlace(place));
   }
 
-  renderItem() {
-    const location = this.app.locations.get(this.item.data.location);
+  renderPlace() {
+    const location = this.app.locations.get(this.place.data.location);
 
     this.element.innerHTML = template({
       capfirst,
       isiOS,
       app: this.app,
       location: location,
-      place: this.item,
+      place: this.place,
     });
 
     new Slider(this.element.querySelector('.item-slider'));
     new Pager(this.element.querySelector('.pager'));
     this.createScheduleView('.schedule-page > div');
 
-    this.app.setTitle(`${this.item.getTitle()} – ${location.name}`);
+    this.app.setTitle(`${this.place.getTitle()} – ${location.name}`);
     this.app.settings.set('location', location.slug);
   }
 
@@ -54,7 +51,7 @@ export default class PlacePageView extends View {
         categories: 'theater',
         fields: 'id,title,short_title,dates,location,tagline',
         page_size: 100,
-        place_id: this.item.get('id'),
+        place_id: this.place.get('id'),
         actual_since: moment().unix(),
       });
     const view = new ScheduleView({

@@ -10,12 +10,6 @@ import template from '../../templates/event.ejs';
 
 
 export default class EventPageView extends View {
-  constructor({app, model}) {
-    super({app, model});
-
-    this.item = Event.from(model);
-  }
-
   getHTML() {
     return `<div class="item-view">${bigLoader()}</div>`;
   }
@@ -23,23 +17,26 @@ export default class EventPageView extends View {
   mount(element) {
     this.element = element;
     this.app.setTitle("Спектакль");
-    this.item.fetch().then(this.renderItem.bind(this));
+    this.app.api
+      .fetchEvent(this.model.data.get('id'))
+      .then(data => this.event = new Event(data))
+      .then(event => this.renderEvent(event));
   }
 
-  renderItem() {
-    const location = this.app.locations.get(this.item.data.location.slug);
+  renderEvent(event) {
+    const location = this.app.locations.get(this.event.data.location.slug);
 
     this.element.innerHTML = template({
       moment,
       capfirst,
       app: this.app,
       location: location,
-      event: this.item,
+      event: this.event,
     });
 
     this.slider = new Slider(this.element.querySelector('.item-slider'));
 
-    this.app.setTitle(`${this.item.getLongTitle()} – ${location.name}`);
+    this.app.setTitle(`${this.event.getLongTitle()} – ${location.name}`);
     this.app.settings.set('location', location.slug);
   }
 }

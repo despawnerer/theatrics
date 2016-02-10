@@ -1,5 +1,6 @@
 import 'lazysizes';
 
+import TheatricsAPI from './api';
 import Resolver from './resolver';
 import Locations from './locations';
 import Router from './router';
@@ -20,6 +21,7 @@ import {show, hide} from '../utils';
 
 export default class App {
   constructor() {
+    this.api = new TheatricsAPI();
     this.settings = new Settings();
     this.locations = new Locations();
 

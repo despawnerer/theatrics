@@ -1,29 +1,12 @@
-import axios from 'axios';
 import moment from 'moment';
 
 import Model from '../base/model';
-import {buildAPIURL, capfirst} from '../utils';
+import {capfirst} from '../utils';
 
 import Place from './place';
 
 
 export default class Event extends Model {
-  fetch() {
-    return axios
-      .get(
-        buildAPIURL(`/events/${this.get('id')}/`),
-        {
-          params: {
-            expand: 'place,images',
-          }
-        })
-      .then(this.onFetched.bind(this));
-  }
-
-  onFetched(response) {
-    this.replace(response.data);
-  }
-
   isFestival() {
     return this.data.categories.indexOf('festival') !== -1;
   }

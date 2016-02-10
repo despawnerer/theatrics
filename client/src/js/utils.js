@@ -60,6 +60,11 @@ export function loader(progress=0.25) {
 
 /* Element manipulations */
 
+export function clear(element) {
+  element.innerHTML = '';
+}
+
+
 export function toggleClass(element, className, condition) {
   /* This shim is used because older Safari and IE don't support
      the second arg to classList.toggle */

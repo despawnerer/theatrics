@@ -1,3 +1,8 @@
+import moment from 'moment';
+
+import Feed from './feed';
+
+
 export default class TheatricsAPI {
   constructor() {
     this.prefix = '/api';
@@ -10,6 +15,26 @@ export default class TheatricsAPI {
 
   fetchPlace(id) {
     return this.get(`/places/${id}/`, {expand: 'images'});
+  }
+
+  fetchEventsInPlace(id) {
+    return this.getAll(
+      '/events/',
+      {
+        categories: 'theater',
+        fields: 'id,title,short_title,dates,location,tagline',
+        page_size: 100,
+        place_id: id,
+        actual_since: moment().unix(),
+      }
+    );
+  }
+
+  // generic getting
+
+  getAll(path, params) {
+    const feed = new Feed(this, path, params);
+    return feed.fetchAll();
   }
 
   get(path, params) {

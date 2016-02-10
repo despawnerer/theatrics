@@ -1,11 +1,11 @@
 import moment from 'moment';
 
 import View from '../base/view';
-import Feed from '../models/feed';
+import Event from '../models/event';
 import {capfirst} from '../utils';
 
 import Calendar from '../views/calendar';
-import FeedView from '../views/feed-view';
+import FeedView from '../views/feed';
 
 import itemTemplate from '../../templates/feed-event.ejs';
 
@@ -14,16 +14,13 @@ export default class EventListPageView extends View {
   constructor({app, model}) {
     super({app, model});
 
-    this.feed = new Feed(
-      '/events/', {
-        categories: 'theater,-kids',
-        fields: 'place,images,tagline,id,title,short_title,categories,description',
-        expand: 'place,images',
-        page_size: 24,
-      });
-
     this.calendar = new Calendar({app, model});
-    this.feedView = new FeedView({app, itemTemplate, model: this.feed});
+    this.feedView = new FeedView({
+      app,
+      itemView: FeedEventView,
+      itemModel: Event,
+      feed: this.getFeed(),
+    });
   }
 
   getHTML() {
@@ -39,38 +36,22 @@ export default class EventListPageView extends View {
     this.calendar.mount(element.querySelector('.calendar-container'));
     this.feedView.mount(element.querySelector('.feed-container'));
 
-    this.model.on('change', () => this.update())
-    this.update();
+    this.updateAppState();
+
+    this.model.on('change', () => {
+      const feed = this.getFeed();
+      this.feedView.setFeed(feed);
+      this.updateAppState();
+    });
   }
 
-  update() {
-    this.updateFeedQuery();
-    this.updateTitle();
-    this.updateLocationSetting();
-  }
-
-  updateFeedQuery() {
-    const location = this.app.locations.get(this.model.get('location'));
-    const query = this.feed.query;
-
-    query.lock();
-
-    query.set('location', location.slug);
-
+  getFeed() {
+    const location = this.model.get('location');
     const date = this.model.get('date');
-    if (date) {
-      const day = moment.tz(date, location.timezone);
-      query.set('actual_since', day.unix());
-      query.set('actual_until', day.clone().add(1, 'days').unix());
-    } else {
-      query.set('actual_since', moment().unix());
-      query.remove('actual_until');
-    }
-
-    query.apply();
+    return this.app.api.getEventsFeed(location, date);
   }
 
-  updateTitle() {
+  updateAppState() {
     const state = this.model.data;
     const location = this.app.locations.get(state.location);
     const date = state.date ? moment(state.date).format('D MMMM') : null;
@@ -79,9 +60,17 @@ export default class EventListPageView extends View {
     } else {
       this.app.setTitle(`Спектакли – ${location.name}`);
     }
-  }
-
-  updateLocationSetting() {
     this.app.settings.set('location', this.model.get('location'));
+  }
+}
+
+
+class FeedEventView extends View {
+  getHTML() {
+    return itemTemplate({
+      capfirst,
+      app: this.app,
+      item: this.model.data,
+    });
   }
 }

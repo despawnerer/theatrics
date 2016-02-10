@@ -1,8 +1,8 @@
 import View from '../base/view';
-import Feed from '../models/feed';
+import Place from '../models/place';
 import {capfirst} from '../utils';
 
-import FeedView from '../views/feed-view';
+import FeedView from '../views/feed';
 
 import itemTemplate from '../../templates/feed-place.ejs';
 
@@ -11,16 +11,12 @@ export default class PlaceListPageView extends View {
   constructor({app, model}) {
     super({app, model});
 
-    this.feed = new Feed(
-      '/places/', {
-        fields: 'images,title,id,address',
-        categories: 'theatre,-cafe',
-        expand: 'images',
-        order_by: '-favorites_count',
-        page_size: 24,
-      });
-
-    this.feedView = new FeedView({app, itemTemplate, model: this.feed});
+    this.feedView = new FeedView({
+      app,
+      itemView: FeedPlaceView,
+      itemModel: Place,
+      feed: this.getFeed(),
+    });
   }
 
   getHTML() {
@@ -33,22 +29,35 @@ export default class PlaceListPageView extends View {
 
   mount(element) {
     this.feedView.mount(element.querySelector('.feed-container'));
-    this.model.on('change', () => this.update())
-    this.update();
-  }
 
-  update() {
-    this.updateFeedQuery();
     this.updateAppState();
+
+    this.model.on('change', () => {
+      const feed = this.getFeed();
+      this.feedView.setFeed(feed);
+      this.updateAppState();
+    });
   }
 
-  updateFeedQuery() {
-    this.feed.query.set('location', this.model.get('location'));
+  getFeed() {
+    const location = this.model.get('location');
+    return this.app.api.getPlacesFeed(location);
   }
 
   updateAppState() {
     const location = this.app.locations.get(this.model.get('location'));
     this.app.setTitle(`Театры – ${location.name}`);
     this.app.settings.set('location', location.slug);
+  }
+}
+
+
+class FeedPlaceView extends View {
+  getHTML() {
+    return itemTemplate({
+      capfirst,
+      app: this.app,
+      item: this.model.data,
+    });
   }
 }

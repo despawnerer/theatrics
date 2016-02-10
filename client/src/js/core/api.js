@@ -30,6 +30,39 @@ export default class TheatricsAPI {
     );
   }
 
+  getEventsFeed(location, date) {
+    date = date ? moment(date) : null;
+
+    const params = {
+      categories: 'theater,-kids',
+      fields: 'place,images,tagline,id,title,short_title,categories,description',
+      expand: 'place,images',
+      page_size: 24,
+      location: location,
+    };
+
+    if (date) {
+      params.actual_since = date.unix();
+      params.actual_until = date.clone().add(1, 'days').unix();
+    } else {
+      params.actual_since = moment().unix();
+    }
+
+    return new Feed(this, '/events/', params);
+  }
+
+  getPlacesFeed(location) {
+    const params = {
+      fields: 'images,title,id,address',
+      categories: 'theatre,-cafe',
+      expand: 'images',
+      order_by: '-favorites_count',
+      page_size: 24,
+      location: location,
+    };
+    return new Feed(this, '/places/', params);
+  }
+
   // generic getting
 
   getAll(path, params) {

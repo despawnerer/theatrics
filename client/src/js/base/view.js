@@ -18,12 +18,7 @@ export default class View {
     return '<div></div>';
   }
 
-  mount(element) {
+  mount(element, sync=false) {
     this.element = element;
-    if (this.model) {
-      this.model.on('change', () => this.onModelChange());
-    }
   }
-
-  onModelChange() {}
 }

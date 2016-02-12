@@ -1,3 +1,4 @@
+import Page from '../base/page';
 import View from '../base/view';
 import Place from '../models/place';
 import {capfirst} from '../utils';
@@ -7,15 +8,18 @@ import FeedView from '../views/feed';
 import itemTemplate from '../../templates/feed-place.ejs';
 
 
-export default class PlaceListPageView extends View {
-  constructor({app, model}) {
-    super({app, model});
+export default class PlaceListPage extends Page {
+  constructor({app, location, feed}) {
+    super({app});
+
+    this.location = app.locations.get(location);
+    this.feed = feed;
 
     this.feedView = new FeedView({
       app,
+      feed,
       itemView: FeedPlaceView,
       itemModel: Place,
-      feed: this.getFeed(),
     });
   }
 
@@ -27,27 +31,16 @@ export default class PlaceListPageView extends View {
     `;
   }
 
+  getTitle() {
+    return `Театры – ${this.location.name}`
+  }
+
   mount(element) {
     this.feedView.mount(element.querySelector('.feed-container'));
-
-    this.updateAppState();
-
-    this.model.on('change', () => {
-      const feed = this.getFeed();
-      this.feedView.setFeed(feed);
-      this.updateAppState();
-    });
   }
 
-  getFeed() {
-    const location = this.model.get('location');
-    return this.app.api.getPlacesFeed(location);
-  }
-
-  updateAppState() {
-    const location = this.app.locations.get(this.model.get('location'));
-    this.app.setTitle(`Театры – ${location.name}`);
-    this.app.settings.set('location', location.slug);
+  isDynamic() {
+    return true;
   }
 }
 

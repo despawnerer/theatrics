@@ -1,5 +1,4 @@
 import View from '../base/view';
-import PlaceListView from '../pages/place-list';
 
 import template from '../../templates/location-chooser.ejs';
 
@@ -23,7 +22,8 @@ export default class LocationChooser extends View {
   onSelectChange() {
     const location = this.element.value;
     if (location !== this.app.settings.get('location')) {
-      const routeName = this.app.viewSwitcher.state.view instanceof PlaceListView ? 'place-list' : 'event-list';
+      const currentRouteName = this.app.mainView.state.route.name;
+      const routeName = currentRouteName == 'place-list' ? 'place-list' : 'event-list';
       const path = this.app.resolver.reverse(routeName, {location})
       this.app.router.navigate(path);
       this.app.settings.set('location', location);

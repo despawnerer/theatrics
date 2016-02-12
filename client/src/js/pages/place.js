@@ -1,8 +1,7 @@
 import moment from 'moment';
 
-import View from '../base/view';
+import Page from '../base/page';
 import Event from '../models/event';
-import Place from '../models/place';
 import ScheduleView from '../views/schedule';
 import Slider from '../components/slider';
 import Pager from '../components/pager';
@@ -11,38 +10,33 @@ import {capfirst, isiOS, bigLoader, clear} from '../utils';
 import template from '../../templates/place.ejs';
 
 
-export default class PlacePageView extends View {
+export default class PlacePage extends Page {
+  constructor({app, place}) {
+    super({app});
+
+    this.place = place;
+    this.location = app.locations.get(place.data.location);
+  }
+
   getHTML() {
-    return `<div class="item-view">${bigLoader()}</div>`;
-  }
-
-  mount(element) {
-    this.element = element;
-    this.app.setTitle("Театр");
-    this.app.api
-      .fetchPlace(this.model.get('id'))
-      .then(data => this.place = new Place(data))
-      .then(place => this.renderPlace(place));
-  }
-
-  renderPlace() {
-    const location = this.app.locations.get(this.place.data.location);
-
-    this.element.innerHTML = template({
+    return template({
       capfirst,
       isiOS,
       bigLoader,
       app: this.app,
-      location: location,
+      location: this.location,
       place: this.place,
     });
+  }
 
-    new Slider(this.element.querySelector('.item-slider'));
-    new Pager(this.element.querySelector('.pager'));
-    this.loadSchedule(this.element.querySelector('.schedule-page > div'));
+  getTitle() {
+    return `${this.place.getTitle()} – ${this.location.name}`;
+  }
 
-    this.app.setTitle(`${this.place.getTitle()} – ${location.name}`);
-    this.app.settings.set('location', location.slug);
+  mount(element) {
+    new Slider(element.querySelector('.item-slider'));
+    new Pager(element.querySelector('.pager'));
+    this.loadSchedule(element.querySelector('.schedule-page > div'));
   }
 
   loadSchedule(container) {
@@ -62,10 +56,9 @@ export default class PlacePageView extends View {
   }
 
   momentizeDate(date) {
-    const location = this.app.locations.get(date.event.data.location.slug);
     return {
-      start: moment.unix(date.start).tz(location.timezone),
-      end: date.end ? moment.unix(date.end).tz(location.timezone) : null,
+      start: moment.unix(date.start).tz(this.location.timezone),
+      end: date.end ? moment.unix(date.end).tz(this.location.timezone) : null,
       event: date.event,
     }
   }

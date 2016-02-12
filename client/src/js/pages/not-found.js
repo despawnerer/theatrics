@@ -1,7 +1,7 @@
-import View from '../base/view';
+import Page from '../base/page';
 
 
-export default class NotFound extends View {
+export default class NotFoundPage extends Page {
   getHTML() {
     return `
       <div class="not-found-view">
@@ -17,7 +17,7 @@ export default class NotFound extends View {
     `;
   }
 
-  mount() {
-    this.app.setTitle("404");
+  getTitle() {
+    return "404";
   }
 }

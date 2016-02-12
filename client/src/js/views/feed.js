@@ -46,21 +46,13 @@ export default class FeedView extends View {
     this.loadMore();
   }
 
-  setFeed(feed) {
-    this.feed = feed;
-    this.loadNewFeed();
-  }
-
   loadNewFeed() {
-    const feed = this.feed;
     show(this.feedLoader);
-    feed
+    this.feed
       .fetchNext()
       .then(data => {
-        if (!feed.sameAs(this.feed)) return;
-
-        const hasMore = feed.hasMore();
-        const hasAnything = feed.hasAnything();
+        const hasMore = this.feed.hasMore();
+        const hasAnything = this.feed.hasAnything();
 
         clear(this.listContainer);
         this.appendItemsFromData(data);
@@ -74,16 +66,13 @@ export default class FeedView extends View {
   }
 
   loadMore() {
-    const feed = this.feed;
     this.loadMoreContainer.classList.add('loading');
-    feed
+    this.feed
       .fetchNext()
       .then(data => {
-        if (!feed.sameAs(this.feed)) return;
-
         this.appendItemsFromData(data);
 
-        toggle(this.loadMoreContainer, feed.hasMore());
+        toggle(this.loadMoreContainer, this.feed.hasMore());
         this.loadMoreContainer.classList.remove('loading');
       });
   }

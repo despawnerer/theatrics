@@ -228,9 +228,15 @@ p {
 /* View container */
 
 #view-container {
+  position: relative;
+  min-height: 180px;
   flex: 1 0 auto;
   display: flex;
   flex-direction: column;
+}
+
+#view-container > .big-loader-container {
+  z-index: 10;
 }
 
 #view-container > * {

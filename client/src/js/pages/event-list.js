@@ -1,5 +1,6 @@
 import moment from 'moment';
 
+import Page from '../base/page';
 import View from '../base/view';
 import Event from '../models/event';
 import {capfirst} from '../utils';
@@ -10,16 +11,20 @@ import FeedView from '../views/feed';
 import itemTemplate from '../../templates/feed-event.ejs';
 
 
-export default class EventListPageView extends View {
-  constructor({app, model}) {
-    super({app, model});
+export default class EventListPage extends Page {
+  constructor({app, location, date, feed}) {
+    super({app});
 
-    this.calendar = new Calendar({app, model});
+    this.location = app.locations.get(location);
+    this.date = date ? moment(date).tz(this.location.timezone) : null;
+    this.feed = feed;
+
+    this.calendar = new Calendar({app, location, date});
     this.feedView = new FeedView({
       app,
+      feed,
       itemView: FeedEventView,
       itemModel: Event,
-      feed: this.getFeed(),
     });
   }
 
@@ -32,35 +37,21 @@ export default class EventListPageView extends View {
     `
   }
 
-  mount(element) {
-    this.calendar.mount(element.querySelector('.calendar-container'));
-    this.feedView.mount(element.querySelector('.feed-container'));
-
-    this.updateAppState();
-
-    this.model.on('change', () => {
-      const feed = this.getFeed();
-      this.feedView.setFeed(feed);
-      this.updateAppState();
-    });
-  }
-
-  getFeed() {
-    const location = this.model.get('location');
-    const date = this.model.get('date');
-    return this.app.api.getEventsFeed(location, date);
-  }
-
-  updateAppState() {
-    const state = this.model.data;
-    const location = this.app.locations.get(state.location);
-    const date = state.date ? moment(state.date).format('D MMMM') : null;
-    if (date) {
-      this.app.setTitle(`${date} – Спектакли – ${location.name}`);
+  getTitle() {
+    if (this.date) {
+      return `${this.date.format('D MMMM')} – Спектакли – ${this.location.name}`;
     } else {
-      this.app.setTitle(`Спектакли – ${location.name}`);
+      return `Спектакли – ${this.location.name}`;
     }
-    this.app.settings.set('location', this.model.get('location'));
+  }
+
+  mount(element, sync=false) {
+    this.calendar.mount(element.querySelector('.calendar-container'), sync);
+    this.feedView.mount(element.querySelector('.feed-container'));
+  }
+
+  isDynamic() {
+    return true;
   }
 }
 

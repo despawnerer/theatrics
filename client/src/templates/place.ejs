@@ -1,100 +1,102 @@
-<div class="content-container">
-  <h2 class="big-item-title">
-    <%- place.getTitle() %>
-  </h2>
+<div class="item-view">
+  <div class="content-container">
+    <h2 class="big-item-title">
+      <%- place.getTitle() %>
+    </h2>
 
-  <div class="item-information place-information">
-    <%
-      var presentFields = place.getPresentFields('address', 'subway', 'timetable', 'phone');
-      var perColumn = presentFields.length > 3 ? Math.ceil(presentFields.length / 2) : 3;
-      var columns = [
-        presentFields.slice(0, perColumn),
-        presentFields.slice(perColumn)
-      ];
-    %>
+    <div class="item-information place-information">
+      <%
+        var presentFields = place.getPresentFields('address', 'subway', 'timetable', 'phone');
+        var perColumn = presentFields.length > 3 ? Math.ceil(presentFields.length / 2) : 3;
+        var columns = [
+          presentFields.slice(0, perColumn),
+          presentFields.slice(perColumn)
+        ];
+      %>
 
-    <% for (var i = 0, column; column = columns[i++];) { %>
-      <div class="item-information-group">
+      <% for (var i = 0, column; column = columns[i++];) { %>
+        <div class="item-information-group">
 
-      <% for (var j = 0, field; field = column[j++];) { %>
-        <div class="item-information-item">
+        <% for (var j = 0, field; field = column[j++];) { %>
+          <div class="item-information-item">
 
-          <% if (field == 'address') { %>
-            <span class="item-information-icon icon-place"></span>
-            <a href="<% if (isiOS()) { %>//maps.apple.com/?q=<%- place.data.title %>&address=<%- place.data.address %>, <%- location.name %><% } else { %>//maps.google.com/?q=<%- place.data.title %>, <%- place.data.address %>, <%- location.name %><% } %>" class="map-link" target="_blank">
-              <span class="link-text"><%- place.data.address %></span>
-            </a>
-          <% } else if (field == 'subway') { %>
-            <span class="item-information-icon icon-subway"></span>
-            <%- place.data.subway %>
-          <% } else if (field == 'timetable') { %>
-            <span class="item-information-icon icon-clock"></span>
-            <%- place.data.timetable %>
-          <% } else if (field == 'phone') { %>
-            <span class="item-information-icon icon-phone"></span>
-            <%- place.data.phone %>
-          <% } %>
+            <% if (field == 'address') { %>
+              <span class="item-information-icon icon-place"></span>
+              <a href="<% if (isiOS()) { %>//maps.apple.com/?q=<%- place.data.title %>&address=<%- place.data.address %>, <%- location.name %><% } else { %>//maps.google.com/?q=<%- place.data.title %>, <%- place.data.address %>, <%- location.name %><% } %>" class="map-link" target="_blank">
+                <span class="link-text"><%- place.data.address %></span>
+              </a>
+            <% } else if (field == 'subway') { %>
+              <span class="item-information-icon icon-subway"></span>
+              <%- place.data.subway %>
+            <% } else if (field == 'timetable') { %>
+              <span class="item-information-icon icon-clock"></span>
+              <%- place.data.timetable %>
+            <% } else if (field == 'phone') { %>
+              <span class="item-information-icon icon-phone"></span>
+              <%- place.data.phone %>
+            <% } %>
+
+          </div>
+        <% }%>
 
         </div>
-      <% }%>
-
-      </div>
-    <% } %>
+      <% } %>
+    </div>
   </div>
-</div>
 
-<div class="pager" data-nav-items=".tab" data-slider=".pager-pages-slider">
-  <nav class="pager-nav content-container">
-    <ul class="tabs">
-      <li class="tab active" for=".description-page"><a>Описание</a></li>
-      <li class="tab" for=".schedule-page"><a>Афиша</a></li>
-    </ul>
-  </nav>
-  <div class="pager-pages-slider" data-container=".pager-pages-list" data-items=".pager-page">
-    <div class="pager-pages-list">
-      <div class="pager-page description-page">
-        <div class="item-slider" data-next-button=".next-button" data-previous-button=".previous-button" data-container=".item-slide-list" data-items=".item-slide">
-          <a class="slide-button next-button"<% if (place.data.images.length < 2) { %> hidden<% } %>><span class="icon-chevron-thin-right"></span></a>
-          <a class="slide-button previous-button" hidden><span class="icon-chevron-thin-left"></span></a>
+  <div class="pager" data-nav-items=".tab" data-slider=".pager-pages-slider">
+    <nav class="pager-nav content-container">
+      <ul class="tabs">
+        <li class="tab active" for=".description-page"><a>Описание</a></li>
+        <li class="tab" for=".schedule-page"><a>Афиша</a></li>
+      </ul>
+    </nav>
+    <div class="pager-pages-slider" data-container=".pager-pages-list" data-items=".pager-page">
+      <div class="pager-pages-list">
+        <div class="pager-page description-page">
+          <div class="item-slider" data-next-button=".next-button" data-previous-button=".previous-button" data-container=".item-slide-list" data-items=".item-slide">
+            <a class="slide-button next-button"<% if (place.data.images.length < 2) { %> hidden<% } %>><span class="icon-chevron-thin-right"></span></a>
+            <a class="slide-button previous-button" hidden><span class="icon-chevron-thin-left"></span></a>
+            <div class="content-container">
+              <ul class="item-slide-list">
+                <% place.data.images.forEach(function(image) { %>
+                  <li class="item-slide">
+                    <img
+                      data-sizes="
+                        (min-width: 1140px) 750px,
+                        (min-width: 720px) 525px,
+                        300px
+                      "
+                      data-srcset="
+                        <%- image.image %> 1500w,
+                        <%- image.thumbnails["640x384"] %> 640w
+                      "
+                      data-src="<%- image.thumbnails["640x384"] %>"
+                      class="item-slide-image lazyload"/>
+                  </li>
+                <% }) %>
+              </ul>
+            </div>
+          </div>
           <div class="content-container">
-            <ul class="item-slide-list">
-              <% place.data.images.forEach(function(image) { %>
-                <li class="item-slide">
-                  <img
-                    data-sizes="
-                      (min-width: 1140px) 750px,
-                      (min-width: 720px) 525px,
-                      300px
-                    "
-                    data-srcset="
-                      <%- image.image %> 1500w,
-                      <%- image.thumbnails["640x384"] %> 640w
-                    "
-                    data-src="<%- image.thumbnails["640x384"] %>"
-                    class="item-slide-image lazyload"/>
-                </li>
-              <% }) %>
-            </ul>
+            <div class="item-description"><%= place.data.description %></div>
+            <div class="item-text"><%= place.data.body_text %></div>
           </div>
         </div>
-        <div class="content-container">
-          <div class="item-description"><%= place.data.description %></div>
-          <div class="item-text"><%= place.data.body_text %></div>
-        </div>
-      </div>
-      <div class="pager-page schedule-page">
-        <div class="content-container">
-          <div class="schedule">
-            <%= bigLoader() %>
+        <div class="pager-page schedule-page">
+          <div class="content-container">
+            <div class="schedule">
+              <%= bigLoader() %>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="content-container">
-  <div class="source-information">
-    Источник данных: <a href="<%- place.site_url %>" target="_blank">kudago.com</a>.
+  <div class="content-container">
+    <div class="source-information">
+      Источник данных: <a href="<%- place.site_url %>" target="_blank">kudago.com</a>.
+    </div>
   </div>
 </div>

@@ -43,7 +43,7 @@ export default class MainView extends View {
   }
 
   setState(state) {
-    document.title = `${state.title} — Theatrics`;
+    document.title = `${state.title} – Theatrics`;
     forceScroll(state.scrollX, state.scrollY);
     if (!this.state.element) {
       this.container.appendChild(state.element);

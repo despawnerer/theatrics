@@ -56,7 +56,7 @@ export default class TheatricsAPI {
       fields: 'images,title,id,address',
       categories: 'theatre,-cafe',
       expand: 'images',
-      order_by: '-favorites_count',
+      order_by: '-total_visits',
       page_size: 24,
       location: location,
     };

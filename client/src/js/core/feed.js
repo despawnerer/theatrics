@@ -11,10 +11,6 @@ export default class Feed {
     this.items = [];
   }
 
-  sameAs(other) {
-    return this.path == other.path && equal(this.params, other.params);
-  }
-
   fetchAll() {
     return new Promise((resolve, reject) => {
       const next = () => {

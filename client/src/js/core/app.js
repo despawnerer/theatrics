@@ -47,10 +47,8 @@ export default class App {
   }
 
   run() {
-    this.settings.fetch().then(() => {
-      this.setupLocationChooser();
-      this.router.redirect(window.location.pathname);
-    });
+    this.setupLocationChooser();
+    this.router.redirect(window.location.pathname);
   }
 
   setupLocationChooser() {

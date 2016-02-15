@@ -27,7 +27,7 @@ export default class MainView extends View {
     this.loader = domify(bigLoader());
     this.container.appendChild(this.loader);
 
-    const locationContainer = document.querySelector('#city');
+    const locationContainer = element.querySelector('#city');
     locationContainer.appendChild(this.locationChooser.render());
     show(locationContainer);
   }

@@ -25,6 +25,7 @@ export default class MainView extends View {
     this.container = element.querySelector('#view-container');
 
     this.loader = domify(bigLoader());
+    this.loader.id = 'view-loader-container';
     this.container.appendChild(this.loader);
 
     const locationContainer = element.querySelector('#city');

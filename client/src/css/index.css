@@ -235,8 +235,25 @@ p {
   flex-direction: column;
 }
 
-#view-container > .big-loader-container {
+#view-loader-container {
   z-index: 10;
+}
+
+#view-loader-container .loader {
+  position: fixed;
+  top: 50%;
+}
+
+@media (max-width: 1139px) {
+  #view-loader-container .loader {
+    margin-top: -30px;
+  }
+}
+
+@media (min-width: 1140px) {
+  #view-loader-container .loader {
+    margin-top: -40px;
+  }
 }
 
 #view-container > * {

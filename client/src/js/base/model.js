@@ -32,10 +32,6 @@ export default class Model extends EventEmitter {
     return equal(this._data, other._data);
   }
 
-  fetch() {
-    return Promise.resolve(this);
-  }
-
   // locking
 
   lock() {

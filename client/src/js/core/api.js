@@ -6,7 +6,7 @@ import Feed from './feed';
 export default class TheatricsAPI {
   constructor() {
     this.prefix = '/api';
-    this.fetch = window.fetch;
+    this.fetch = window.fetch.bind(window);
   }
 
   fetchEvent(id) {

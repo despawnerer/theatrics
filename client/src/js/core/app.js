@@ -9,10 +9,6 @@ import * as handlers from './handlers';
 import Settings from '../models/settings';
 
 import MainView from '../views/main';
-import LocationChooser from '../views/location-chooser';
-
-
-import {show} from '../utils';
 
 
 export default class App {
@@ -42,18 +38,10 @@ export default class App {
     this.router.setNotFoundHandler(handlers.notFound);
 
     this.mainView = new MainView({app: this});
-    this.mainView.mount(document.documentElement);
   }
 
   run() {
-    this.setupLocationChooser();
+    this.mainView.mount(document.documentElement);
     this.router.redirect(window.location.pathname);
-  }
-
-  setupLocationChooser() {
-    const locationContainer = document.querySelector('#city');
-    const locationChooser = new LocationChooser({app: this});
-    locationContainer.appendChild(locationChooser.render());
-    show(locationContainer);
   }
 }

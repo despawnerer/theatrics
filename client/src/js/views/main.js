@@ -1,6 +1,7 @@
 import domify from 'domify';
 
 import View from '../base/view';
+import LocationChooser from '../views/location-chooser';
 
 import {show, hide, bigLoader} from '../utils';
 
@@ -15,6 +16,8 @@ export default class MainView extends View {
       title: null,
       route: null,
     };
+
+    this.locationChooser = new LocationChooser({app});
   }
 
   mount(element) {
@@ -23,6 +26,10 @@ export default class MainView extends View {
 
     this.loader = domify(bigLoader());
     this.container.appendChild(this.loader);
+
+    const locationContainer = document.querySelector('#city');
+    locationContainer.appendChild(this.locationChooser.render());
+    show(locationContainer);
   }
 
   wait() {

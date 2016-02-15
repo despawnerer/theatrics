@@ -19,8 +19,10 @@ export default class MainView extends View {
 
   mount(element) {
     this.element = element;
+    this.container = element.querySelector('#view-container');
+
     this.loader = domify(bigLoader());
-    element.appendChild(this.loader);
+    this.container.appendChild(this.loader);
   }
 
   wait() {
@@ -32,9 +34,9 @@ export default class MainView extends View {
     document.title = `${state.title} — Theatrics`;
 
     if (!this.state.element) {
-      this.element.appendChild(state.element);
+      this.container.appendChild(state.element);
     } else {
-      this.element.replaceChild(state.element, this.state.element);
+      this.container.replaceChild(state.element, this.state.element);
     }
 
     this.state = state;

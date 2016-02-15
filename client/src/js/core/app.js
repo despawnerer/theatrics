@@ -41,9 +41,8 @@ export default class App {
     this.router.addHandler('place', handlers.place);
     this.router.setNotFoundHandler(handlers.notFound);
 
-    const viewContainer = document.querySelector('#view-container');
     this.mainView = new MainView({app: this});
-    this.mainView.mount(viewContainer);
+    this.mainView.mount(document.documentElement);
   }
 
   run() {

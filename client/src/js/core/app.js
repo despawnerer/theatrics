@@ -41,6 +41,7 @@ export default class App {
   }
 
   run() {
+    history.scrollRestoration = 'manual';
     this.mainView.mount(document.documentElement);
     this.router.redirect(window.location.pathname);
   }

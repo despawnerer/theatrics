@@ -1,5 +1,6 @@
 import Events from 'events-mixin';
 import isString from 'is-string';
+import extend from 'xtend';
 
 import Cache from './cache';
 
@@ -10,8 +11,10 @@ export default class Router {
   constructor(app) {
     this.app = app;
 
-    this.cache = new Cache(5);
     this.handlers = {};
+
+    this.cache = new Cache(5);
+    this.lastStateId = 0;
 
     this.events = new Events(document, this);
     this.events.bind('click a', 'onAnchorClick');
@@ -59,67 +62,64 @@ export default class Router {
       // this is a fake pop state event so don't handle it
       return;
     } else {
-      this.returnTo(window.location.pathname);
+      this.returnTo(event.state);
     }
   }
 
-  /* Three different types of navigation */
+  /* Navigation */
 
   navigate(path) {
-    const route = this.app.resolver.resolve(path);
-    history.pushState(route, null, path);
-    this.handleRoute(route).then(() => forceScroll(0, 0));
+    this.updatedSavedState();
+
+    const state = this.buildNewState(path);
+    history.pushState(state, null, path);
+    this.loadNewState(state);
   }
 
   redirect(path) {
-    const route = this.app.resolver.resolve(path);
-    history.replaceState(route, null, path);
-    this.handleRoute(route);
+    const state = this.buildNewState(path);
+    history.replaceState(state, null, path);
+    this.loadNewState(state);
   }
 
-  returnTo(path) {
-    const route = this.app.resolver.resolve(path);
-    const cachedState = this.cache.get(route);
+  /* Switching states */
+
+  returnTo(savedState) {
+    const cachedState = this.cache.get(savedState.id);
     if (cachedState) {
-      this.app.mainView.setState(cachedState);
+      this.setState(cachedState);
     } else {
-      this.handleRoute(route);
+      this.loadNewState(savedState);
     }
   }
 
-  /* Switching pages */
-
-  handleRoute(route) {
-    const handler = this.getHandler(route.name);
-    const response = handler(this.app, route.args);
+  loadNewState(state) {
+    const handler = this.getHandler(state.route.name);
+    const response = handler(this.app, state.route.args);
     if (response instanceof Promise) {
       this.app.mainView.wait();
-      return response.then(response => this.applyResponse(route, response));
+      response.then(response => this.applyResponse(state, response));
     } else {
-      this.applyResponse(route, response);
-      return new Promise;
+      this.applyResponse(state, response);
     }
   }
 
-  applyResponse(route, response) {
+  applyResponse(state, response) {
     if (isString(response)) {
       this.redirect(response);
     } else {
-      this.switchPage(route, response);
+      this.switchPage(state, response);
     }
   }
 
-  switchPage(route, page) {
-    const currentState = this.app.mainView.state;
-    this.cache.put(currentState.route, currentState);
-
-    const newState = {
-      page,
-      route,
+  switchPage(state, page) {
+    const currentState = this.getState();
+    const newState = extend(state, {
+      page: page,
       title: page.getTitle(),
       element: this.getNewElement(page, currentState),
-    };
-    this.app.mainView.setState(newState);
+    });
+    this.setState(newState);
   }
 
   getNewElement(page, previousState) {
@@ -138,5 +138,44 @@ export default class Router {
       page instanceof previousPage.constructor
       && page.isDynamic()
     );
+  }
+
+  /* States */
+
+  updatedSavedState() {
+    const state = this.getState();
+    const saveableState = this.extractSaveableState(state);
+    history.replaceState(saveableState, document.title, state.path);
+    this.cache.put(state.id, state);
+  }
+
+  buildNewState(path) {
+    return {
+      id: this.lastStateId++,
+      path: path,
+      route: this.app.resolver.resolve(path),
+      title: null,
+      scrollX: 0,
+      scrollY: 0,
+    }
+  }
+
+  extractSaveableState(state) {
+    return {
+      id: state.id,
+      path: state.path,
+      route: state.route,
+      title: state.title,
+      scrollX: state.scrollX,
+      scrollY: state.scrollY,
+    }
+  }
+
+  setState(state) {
+    this.app.mainView.setState(state);
+  }
+
+  getState() {
+    return this.app.mainView.getState();
   }
 }

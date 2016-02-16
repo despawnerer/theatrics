@@ -7,8 +7,7 @@ import {capfirst} from '../utils';
 
 import Calendar from '../views/calendar';
 import FeedView from '../views/feed';
-
-import itemTemplate from '../../templates/feed-event.ejs';
+import FeedEventView from '../views/feed-event';
 
 
 export default class EventListPage extends Page {
@@ -52,16 +51,5 @@ export default class EventListPage extends Page {
 
   isDynamic() {
     return true;
-  }
-}
-
-
-class FeedEventView extends View {
-  getHTML() {
-    return itemTemplate({
-      capfirst,
-      app: this.app,
-      event: this.model,
-    });
   }
 }

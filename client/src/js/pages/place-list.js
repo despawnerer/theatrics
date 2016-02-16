@@ -4,8 +4,7 @@ import Place from '../models/place';
 import {capfirst} from '../utils';
 
 import FeedView from '../views/feed';
-
-import itemTemplate from '../../templates/feed-place.ejs';
+import FeedPlaceView from '../views/feed-place';
 
 
 export default class PlaceListPage extends Page {
@@ -44,13 +43,3 @@ export default class PlaceListPage extends Page {
   }
 }
 
-
-class FeedPlaceView extends View {
-  getHTML() {
-    return itemTemplate({
-      capfirst,
-      app: this.app,
-      place: this.model,
-    });
-  }
-}

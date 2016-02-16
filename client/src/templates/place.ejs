@@ -8,10 +8,14 @@
       <%
         var presentFields = place.getPresentFields('address', 'subway', 'timetable', 'phone');
         var perColumn = presentFields.length > 3 ? Math.ceil(presentFields.length / 2) : 3;
-        var columns = [
-          presentFields.slice(0, perColumn),
-          presentFields.slice(perColumn)
-        ];
+        if (perColumn > presentFields.length) {
+          var columns = [
+            presentFields.slice(0, perColumn),
+            presentFields.slice(perColumn)
+          ];
+        } else {
+          var columns = [presentFields];
+        }
       %>
 
       <% for (var i = 0, column; column = columns[i++];) { %>

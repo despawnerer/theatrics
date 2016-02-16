@@ -1,3 +1,5 @@
+import escape from 'lodash.escape';
+
 
 /* Browser and window tools */
 
@@ -92,6 +94,14 @@ export function hide(element) {
 
 
 /* Generic */
+
+export function restrictBreaks(string, separator=', ') {
+  return string
+    .split(separator)
+    .map(part => `<nobr>${escape(part)}</nobr>`)
+    .join(separator);
+}
+
 
 export function capfirst(s) {
   return s.slice(0, 1).toUpperCase() + s.slice(1);

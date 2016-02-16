@@ -27,13 +27,13 @@
               </a>
             <% } else if (field == 'subway') { %>
               <span class="item-information-icon icon-subway"></span>
-              <%- place.data.subway %>
+              <span><%= restrictBreaks(place.data.subway) %></span>
             <% } else if (field == 'timetable') { %>
               <span class="item-information-icon icon-clock"></span>
               <%- place.data.timetable %>
             <% } else if (field == 'phone') { %>
               <span class="item-information-icon icon-phone"></span>
-              <%- place.data.phone %>
+              <span><%= restrictBreaks(place.data.phone) %></span>
             <% } %>
 
           </div>

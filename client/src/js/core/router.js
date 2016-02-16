@@ -1,5 +1,6 @@
 import Events from 'events-mixin';
 import isString from 'is-string';
+import isPromise from 'is-promise';
 import extend from 'xtend';
 
 import Cache from './cache';
@@ -94,7 +95,7 @@ export default class Router {
   loadNewState(state) {
     const handler = this.getHandler(state.route.name);
     const response = handler(this.app, state.route.args);
-    if (response instanceof Promise) {
+    if (isPromise(response)) {
       this.app.mainView.wait();
       response.then(response => this.applyResponse(state, response));
     } else {

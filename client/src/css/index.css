@@ -831,11 +831,6 @@ p {
   margin-top: 4px;
 }
 
-.item-information-value {
-  display: block;
-  overflow: hidden;
-}
-
 .item-information-icon.icon-calendar {
   font-size: 14px;
 }
@@ -844,14 +839,16 @@ p {
   font-size: 14px;
 }
 
-.place-information .map-link {
+.item-information-value {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item-information-value a {
   display: inline-block;
   padding: 2.5px 5px;
   margin: -2.5px -5px;
-}
-
-.place-information .map-link .link-text {
-  border-bottom-style: dashed;
 }
 
 .item-description {

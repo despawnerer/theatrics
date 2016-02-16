@@ -27,7 +27,7 @@
             <% if (field == 'address') { %>
               <span class="item-information-icon icon-place"></span>
               <span class="item-information-value">
-                <a href="<% if (isiOS()) { %>//maps.apple.com/?q=<%- place.data.title %>&address=<%- place.data.address %>, <%- location.name %><% } else { %>//maps.google.com/?q=<%- place.data.title %>, <%- place.data.address %>, <%- location.name %><% } %>" class="map-link" target="_blank">
+                <a href="<% if (isiOS()) { %>//maps.apple.com/?q=<%- place.data.title %>&address=<%- place.data.address %>, <%- location.name %><% } else { %>//maps.google.com/?q=<%- place.data.title %>, <%- place.data.address %>, <%- location.name %><% } %>" target="_blank">
                   <span class="link-text"><%- place.data.address %></span>
                 </a>
               </span>

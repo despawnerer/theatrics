@@ -1,8 +1,5 @@
-import moment from 'moment';
-
 import Page from '../base/page';
 import Slider from '../components/slider';
-import {capfirst} from '../utils';
 
 import template from '../../templates/event.ejs';
 
@@ -16,10 +13,7 @@ export default class EventPage extends Page {
   }
 
   getHTML() {
-    return template({
-      moment,
-      capfirst,
-      app: this.app,
+    return this.app.renderTemplate(template, {
       location: this.location,
       event: this.event,
     });

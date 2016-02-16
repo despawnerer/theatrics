@@ -5,12 +5,9 @@ import template from '../../templates/location-chooser.ejs';
 
 export default class LocationChooser extends View {
   getHTML() {
-    const currentLocation = this.app.locations.get(
-      this.app.settings.get('location'));
-    return template({
-      locations: this.app.locations,
-      currentLocation: currentLocation
-    });
+    const locations = this.app.locations;
+    const currentLocation = locations.get(this.app.settings.get('location'));
+    return this.app.renderTemplate(template, {locations, currentLocation});
   }
 
   mount(element) {
@@ -24,7 +21,7 @@ export default class LocationChooser extends View {
     if (location !== this.app.settings.get('location')) {
       const currentRouteName = this.app.mainView.state.route.name;
       const routeName = currentRouteName == 'place-list' ? 'place-list' : 'event-list';
-      const path = this.app.resolver.reverse(routeName, {location})
+      const path = this.app.resolver.reverse(routeName, {location});
       this.app.router.navigate(path);
       this.app.settings.set('location', location);
     }

@@ -17,12 +17,8 @@ export default class Calendar extends View {
   getHTML() {
     const today = moment().startOf('day');
     const dates = range(15).map(n => today.clone().add(n, 'days'));
-    return template({
-      app: this.app,
-      current: {location: this.location, date: this.date},
-      dates: dates,
-      buildURL: this.buildURL.bind(this),
-    });
+    const current = {location: this.location, date: this.date}
+    return this.app.renderTemplate(template, {current, dates});
   }
 
   mount(element, sync=false) {
@@ -36,10 +32,13 @@ export default class Calendar extends View {
 
   updateLinks() {
     const days = this.element.querySelectorAll('li');
+    const location = this.location;
     Array.from(days).forEach(element => {
       const link = element.querySelector('a');
       const date = element.getAttribute('data-date');
-      link.setAttribute('href', this.buildURL(this.location, date));
+      const args = date ? {location, date} : {location};
+      const url = this.app.resolver.reverse('event-list', args);
+      link.setAttribute('href', url);
     });
   }
 
@@ -47,10 +46,5 @@ export default class Calendar extends View {
     const selector = this.date ? `li[data-date="${this.date}"]` : 'li.any';
     this.element.querySelector('.active').classList.remove('active');
     this.element.querySelector(selector).classList.add('active');
-  }
-
-  buildURL(location, date) {
-    const args = date ? {location, date} : {location};
-    return this.app.resolver.reverse('event-list', args);
   }
 }

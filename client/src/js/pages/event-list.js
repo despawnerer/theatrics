@@ -3,7 +3,6 @@ import moment from 'moment';
 import Page from '../base/page';
 import View from '../base/view';
 import Event from '../models/event';
-import {capfirst} from '../utils';
 
 import Calendar from '../views/calendar';
 import FeedView from '../views/feed';

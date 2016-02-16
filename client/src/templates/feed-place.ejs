@@ -1,5 +1,5 @@
 <li class="feed-item">
-  <a href="<%- app.resolver.reverse('place', {id: place.data.id}) %>" class="feed-item-link">
+  <a href="<%- url('place', {id: place.data.id}) %>" class="feed-item-link">
     <div class="feed-image-container">
       <img data-src="<%- place.data.images[0].thumbnails['640x384'] %>" class="feed-image lazyload"/>
     </div>

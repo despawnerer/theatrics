@@ -1,5 +1,5 @@
 import View from '../base/view';
-import {capfirst, groupArray} from '../utils';
+import {groupArray} from '../utils';
 
 import template from '../../templates/schedule.ejs';
 
@@ -16,10 +16,6 @@ export default class ScheduleView extends View {
       date => date.start.clone().startOf('day'),
       (day1, day2) => day1.isSame(day2)
     );
-    return template({
-      capfirst,
-      app: this.app,
-      dayGroups: dayGroups,
-    });
+    return this.app.renderTemplate(template, {dayGroups});
   }
 }

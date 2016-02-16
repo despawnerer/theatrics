@@ -1,5 +1,8 @@
 import 'lazysizes';
 
+import moment from 'moment';
+import extend from 'xtend';
+
 import TheatricsAPI from './api';
 import Resolver from './resolver';
 import Locations from './locations';
@@ -9,6 +12,8 @@ import * as handlers from './handlers';
 import Settings from '../models/settings';
 
 import MainView from '../views/main';
+
+import {loader, bigLoader, capfirst, isiOS} from '../utils';
 
 
 export default class App {
@@ -37,6 +42,16 @@ export default class App {
     this.router.addHandler('place', handlers.place);
     this.router.setNotFoundHandler(handlers.notFound);
 
+    this.templateContext = {
+      loader,
+      bigLoader,
+      moment,
+      capfirst,
+      isiOS,
+      url: (...args) => this.resolver.reverse(...args),
+      app: this,
+    }
+
     this.mainView = new MainView({app: this});
   }
 
@@ -44,5 +59,9 @@ export default class App {
     history.scrollRestoration = 'manual';
     this.mainView.mount(document.documentElement);
     this.router.redirect(window.location.pathname);
+  }
+
+  renderTemplate(template, context) {
+    return template(extend(this.templateContext, context));
   }
 }

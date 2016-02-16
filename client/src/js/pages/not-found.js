@@ -5,7 +5,7 @@ import template from '../../templates/not-found.ejs';
 
 export default class NotFoundPage extends Page {
   getHTML() {
-    return template();
+    return this.app.renderTemplate(template);
   }
 
   getTitle() {

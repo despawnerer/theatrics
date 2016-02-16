@@ -5,7 +5,7 @@ import Event from '../models/event';
 import ScheduleView from '../views/schedule';
 import Slider from '../components/slider';
 import Pager from '../components/pager';
-import {capfirst, isiOS, bigLoader, clear} from '../utils';
+import {clear} from '../utils';
 
 import template from '../../templates/place.ejs';
 
@@ -19,11 +19,7 @@ export default class PlacePage extends Page {
   }
 
   getHTML() {
-    return template({
-      capfirst,
-      isiOS,
-      bigLoader,
-      app: this.app,
+    return this.app.renderTemplate(template, {
       location: this.location,
       place: this.place,
     });

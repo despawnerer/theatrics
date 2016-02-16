@@ -4,8 +4,6 @@ import extend from 'xtend';
 
 import Cache from './cache';
 
-import {forceScroll} from '../utils';
-
 
 export default class Router {
   constructor(app) {

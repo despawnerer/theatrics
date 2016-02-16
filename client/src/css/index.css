@@ -942,7 +942,7 @@ p {
   .item-slide-image { min-width: 250px; }
 }
 
-@media (max-width: 450px) {
+@media (max-width: 580px) {
   .item-information {
     flex-direction: column;
   }

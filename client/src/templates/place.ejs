@@ -8,7 +8,7 @@
       <%
         var presentFields = place.getPresentFields('address', 'subway', 'timetable', 'phone');
         var perColumn = presentFields.length > 3 ? Math.ceil(presentFields.length / 2) : 3;
-        if (perColumn > presentFields.length) {
+        if (perColumn < presentFields.length) {
           var columns = [
             presentFields.slice(0, perColumn),
             presentFields.slice(perColumn)

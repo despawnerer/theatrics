@@ -847,8 +847,8 @@ p {
 
 .item-information-value a {
   display: inline-block;
-  padding: 2.5px 5px;
-  margin: -2.5px -5px;
+  padding: 5px 10px;
+  margin: -5px -10px;
 }
 
 .item-description {

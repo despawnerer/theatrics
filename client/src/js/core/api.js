@@ -78,7 +78,7 @@ export default class TheatricsAPI {
   }
 
   buildURL(path) {
-    if (path.slice(0, this.prefix.length) == this.prefix) {
+    if (path.startsWith(this.prefix)) {
       return path;
     } else {
       return this.prefix + path;

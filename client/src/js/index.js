@@ -2,6 +2,8 @@ import 'core-js/es5';
 import 'core-js/es6/promise';
 import 'core-js/es6/symbol';
 import 'core-js/es6/array';
+import 'core-js/modules/es6.string.ends-with';
+import 'core-js/modules/es6.string.starts-with';
 import 'whatwg-fetch';
 
 import 'moment-timezone/moment-timezone';

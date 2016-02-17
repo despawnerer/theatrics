@@ -103,6 +103,14 @@ export function restrictBreaks(string, separator=', ') {
 }
 
 
+export function niceURL(s) {
+  if (s.endsWith('/')) s = s.substr(0, s.length - 1);
+  if (s.startsWith('http://')) s = s.substr(7, s.length - 7);
+  if (s.startsWith('https://')) s = s.substr(8, s.length - 8);
+  return s;
+}
+
+
 export function capfirst(s) {
   return s.slice(0, 1).toUpperCase() + s.slice(1);
 }

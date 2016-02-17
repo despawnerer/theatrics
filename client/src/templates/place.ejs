@@ -6,7 +6,7 @@
 
     <div class="item-information place-information">
       <%
-        var presentFields = place.getPresentFields('address', 'subway', 'timetable', 'phone');
+        var presentFields = place.getPresentFields('address', 'subway', 'foreign_url', 'timetable', 'phone');
         var perColumn = presentFields.length > 3 ? Math.ceil(presentFields.length / 2) : 3;
         if (perColumn < presentFields.length) {
           var columns = [
@@ -40,8 +40,12 @@
             <% } else if (field == 'phone') { %>
               <span class="item-information-icon icon-phone"></span>
               <span class="item-information-value"><%= restrictBreaks(place.data.phone) %></span>
+            <% } else if (field == 'foreign_url') { %>
+              <span class="item-information-icon icon-globe"></span>
+              <span class="item-information-value">
+                <a href="<%- place.data.foreign_url %>" target="_blank"><span class="link-text"><%- niceURL(place.data.foreign_url) %></span></a>
+              </span>
             <% } %>
-
           </div>
         <% }%>
 

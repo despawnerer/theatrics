@@ -13,7 +13,14 @@ import Settings from '../models/settings';
 
 import MainView from '../views/main';
 
-import {loader, bigLoader, capfirst, isiOS, restrictBreaks} from '../utils';
+import {
+  loader,
+  bigLoader,
+  capfirst,
+  isiOS,
+  restrictBreaks,
+  niceURL
+} from '../utils';
 
 
 export default class App {
@@ -49,6 +56,7 @@ export default class App {
       capfirst,
       isiOS,
       restrictBreaks,
+      niceURL,
       url: (...args) => this.resolver.reverse(...args),
       app: this,
     }

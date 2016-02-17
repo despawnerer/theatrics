@@ -1,9 +1,11 @@
 import 'core-js/es5';
-import 'core-js/es6/promise';
-import 'core-js/es6/symbol';
-import 'core-js/es6/array';
-import 'core-js/modules/es6.string.ends-with';
-import 'core-js/modules/es6.string.starts-with';
+import 'core-js/fn/promise';
+import 'core-js/fn/symbol';
+import 'core-js/fn/array/from';
+import 'core-js/fn/array/iterator';
+import 'core-js/fn/array/find';
+import 'core-js/fn/string/ends-with';
+import 'core-js/fn/string/starts-with';
 import 'whatwg-fetch';
 
 import 'moment-timezone/moment-timezone';

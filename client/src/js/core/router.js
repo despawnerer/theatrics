@@ -122,21 +122,13 @@ export default class Router {
   }
 
   getNewElement(page, previousState) {
-    if (this.canPageBeDynamicallySwitched(page, previousState.page)) {
+    if (page.transitionsInto(previousState.page)) {
       const element = previousState.element.cloneNode(true);
       page.mount(element, true);
       return element;
     } else {
       return page.render();
     }
-  }
-
-  canPageBeDynamicallySwitched(page, previousPage) {
-    return (
-      page && previousPage &&
-      page instanceof previousPage.constructor
-      && page.isDynamic()
-    );
   }
 
   /* States */

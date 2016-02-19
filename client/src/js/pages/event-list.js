@@ -48,7 +48,7 @@ export default class EventListPage extends Page {
     this.feedView.mount(element.querySelector('.feed-container'));
   }
 
-  isDynamic() {
-    return true;
+  transitionsInto(other) {
+    return other instanceof EventListPage;
   }
 }

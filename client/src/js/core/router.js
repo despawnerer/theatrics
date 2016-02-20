@@ -1,7 +1,8 @@
 import Events from 'events-mixin';
 import isString from 'is-string';
 import isPromise from 'is-promise';
-import extend from 'xtend';
+
+import {forceScroll} from '../utils';
 
 import Cache from './cache';
 
@@ -71,13 +72,13 @@ export default class Router {
   navigate(path) {
     const state = this.buildStateFromPath(path);
     history.pushState(state, null, path);
-    this.loadNewState(state);
+    return this.loadNewState(state).then(state => forceScroll(0, 0));
   }
 
   redirect(path) {
     const state = this.buildStateFromPath(path);
     history.replaceState(state, null, path);
-    this.loadNewState(state);
+    return this.loadNewState(state);
   }
 
   /* Switching states */
@@ -96,17 +97,17 @@ export default class Router {
     const response = handler(this.app, state.route.args);
     if (isPromise(response)) {
       this.app.mainView.wait();
-      response.then(response => this.applyResponse(state, response));
+      return response.then(response => this.applyResponse(state, response));
     } else {
-      this.applyResponse(state, response);
+      return Promise.resolve(this.applyResponse(state, response));
     }
   }
 
   applyResponse(state, response) {
     if (isString(response)) {
-      this.redirect(response);
+      return this.redirect(response);
     } else {
-      this.switchPage(state, response);
+      return this.switchPage(state, response);
     }
   }
 
@@ -114,6 +115,7 @@ export default class Router {
     state.page = page;
     state.element = this.getNewElement(page);
     this.setState(state);
+    return state;
   }
 
   getNewElement(page) {

@@ -13,6 +13,7 @@ export default class Router {
     this.handlers = {};
 
     this.cache = new Cache(5);
+    this.state = null;
     this.lastStateId = 0;
 
     this.events = new Events(document, this);
@@ -61,29 +62,27 @@ export default class Router {
       // this is a fake pop state event so don't handle it
       return;
     } else {
-      this.returnTo(event.state);
+      this.restoreSavedState(event.state);
     }
   }
 
   /* Navigation */
 
   navigate(path) {
-    this.updatedSavedState();
-
-    const state = this.buildNewState(path);
+    const state = this.buildStateFromPath(path);
     history.pushState(state, null, path);
     this.loadNewState(state);
   }
 
   redirect(path) {
-    const state = this.buildNewState(path);
+    const state = this.buildStateFromPath(path);
     history.replaceState(state, null, path);
     this.loadNewState(state);
   }
 
   /* Switching states */
 
-  returnTo(savedState) {
+  restoreSavedState(savedState) {
     const cachedState = this.cache.get(savedState.id);
     if (cachedState) {
       this.setState(cachedState);
@@ -112,18 +111,15 @@ export default class Router {
   }
 
   switchPage(state, page) {
-    const currentState = this.getState();
-    const newState = extend(state, {
-      page: page,
-      title: page.getTitle(),
-      element: this.getNewElement(page, currentState),
-    });
-    this.setState(newState);
+    state.page = page;
+    state.element = this.getNewElement(page);
+    this.setState(state);
   }
 
-  getNewElement(page, previousState) {
-    if (page.canTransitionFrom(previousState.page)) {
-      const element = previousState.element.cloneNode(true);
+  getNewElement(page) {
+    const previousPage = this.state && this.state.page;
+    if (page.canTransitionFrom(previousPage)) {
+      const element = this.state.element.cloneNode(true);
       page.mount(element, true);
       return element;
     } else {
@@ -133,36 +129,25 @@ export default class Router {
 
   /* States */
 
-  updatedSavedState() {
-    const state = this.getState();
-    const saveableState = this.extractSaveableState(state);
-    history.replaceState(saveableState, document.title, state.path);
-    this.cache.put(state.id, state);
-  }
-
-  buildNewState(path) {
+  buildStateFromPath(path) {
     return {
       id: this.lastStateId++,
-      path: path,
       route: this.app.resolver.resolve(path),
-      title: null,
-    }
-  }
-
-  extractSaveableState(state) {
-    return {
-      id: state.id,
-      path: state.path,
-      route: state.route,
-      title: state.title,
     }
   }
 
   setState(state) {
+    this.state = state;
+    this.cache.put(state.id, state);
+    history.replaceState(
+      this.getSaveableState(), document.title, window.location.pathname);
     this.app.mainView.setState(state);
   }
 
-  getState() {
-    return this.app.mainView.getState();
+  getSaveableState() {
+    return {
+      id: this.state.id,
+      route: this.state.route,
+    }
   }
 }

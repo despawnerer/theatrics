@@ -4,7 +4,7 @@ import extend from 'xtend';
 import View from '../base/view';
 import LocationChooser from '../views/location-chooser';
 
-import {show, hide, bigLoader, forceScroll} from '../utils';
+import {show, hide, bigLoader} from '../utils';
 
 
 export default class MainView extends View {
@@ -13,9 +13,7 @@ export default class MainView extends View {
 
     this.state = {
       id: null,
-      path: null,
       route: null,
-      title: null,
       page: null,
       element: null,
     };
@@ -41,7 +39,7 @@ export default class MainView extends View {
   }
 
   setState(state) {
-    document.title = `${state.title} – Theatrics`;
+    document.title = `${state.page.getTitle()} – Theatrics`;
     if (!this.state.element) {
       this.container.appendChild(state.element);
     } else {
@@ -50,9 +48,5 @@ export default class MainView extends View {
 
     hide(this.loader);
     this.state = state;
-  }
-
-  getState() {
-    return this.state;
   }
 }

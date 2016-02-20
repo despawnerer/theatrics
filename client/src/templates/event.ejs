@@ -43,11 +43,11 @@
           <div class="item-information-item item-place">
             <span class="item-information-icon icon-place"></span>
             <span class="item-information-value">
-              <% if (place.data.is_stub) { %>
-                <%- capfirst(place.data.title) %>
+              <% if (place.isStub()) { %>
+                <%- place.getTitle() %>
               <% } else { %>
                 <a href="<%- url('place', {id: place.data.id}) %>">
-                  <span class="link-text"><%- capfirst(place.data.title) %></span>
+                  <span class="link-text"><%- place.getTitle() %></span>
                 </a>
               <% } %>
             </span>

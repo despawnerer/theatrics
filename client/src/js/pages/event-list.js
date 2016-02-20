@@ -48,7 +48,7 @@ export default class EventListPage extends Page {
     this.feedView.mount(element.querySelector('.feed-container'));
   }
 
-  transitionsInto(other) {
+  canTransitionFrom(other) {
     return other instanceof EventListPage;
   }
 }

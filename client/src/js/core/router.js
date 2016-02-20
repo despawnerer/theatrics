@@ -122,7 +122,7 @@ export default class Router {
   }
 
   getNewElement(page, previousState) {
-    if (page.transitionsInto(previousState.page)) {
+    if (page.canTransitionFrom(previousState.page)) {
       const element = previousState.element.cloneNode(true);
       page.mount(element, true);
       return element;

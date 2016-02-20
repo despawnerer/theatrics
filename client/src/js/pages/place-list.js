@@ -38,7 +38,7 @@ export default class PlaceListPage extends Page {
     this.feedView.mount(element.querySelector('.feed-container'));
   }
 
-  transitionsInto(other) {
+  canTransitionFrom(other) {
     return other instanceof PlaceListPage;
   }
 }

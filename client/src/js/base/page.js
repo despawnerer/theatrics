@@ -6,7 +6,7 @@ export default class Page extends View {
     throw new Error("Pages must implement getTitle()");
   }
 
-  transitionsInto(other) {
+  canTransitionFrom(other) {
     return false;
   }
 }

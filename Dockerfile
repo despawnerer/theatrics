@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y \
     nginx-light \
     git
 
-RUN wget -qO- https://deb.nodesource.com/setup_0.12 | bash -
+RUN wget -qO- https://deb.nodesource.com/setup_5.x | bash -
 
 RUN apt-get install -y \
     nodejs \

@@ -10,7 +10,7 @@ Prerequisites
 -------------
 
 - make
-- node
+- node 5.6
 - python 3.5
 
 

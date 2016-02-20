@@ -16,8 +16,6 @@ export default class MainView extends View {
       path: null,
       route: null,
       title: null,
-      scrollX: 0,
-      scrollY: 0,
       page: null,
       element: null,
     };
@@ -44,7 +42,6 @@ export default class MainView extends View {
 
   setState(state) {
     document.title = `${state.title} – Theatrics`;
-    forceScroll(state.scrollX, state.scrollY);
     if (!this.state.element) {
       this.container.appendChild(state.element);
     } else {
@@ -56,9 +53,6 @@ export default class MainView extends View {
   }
 
   getState() {
-    return extend(this.state, {
-      scrollX: window.scrollX,
-      scrollY: window.scrollY,
-    });
+    return this.state;
   }
 }

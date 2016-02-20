@@ -146,8 +146,6 @@ export default class Router {
       path: path,
       route: this.app.resolver.resolve(path),
       title: null,
-      scrollX: 0,
-      scrollY: 0,
     }
   }
 
@@ -157,8 +155,6 @@ export default class Router {
       path: state.path,
       route: state.route,
       title: state.title,
-      scrollX: state.scrollX,
-      scrollY: state.scrollY,
     }
   }
 

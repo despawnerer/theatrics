@@ -4,8 +4,8 @@
       <tbody class="schedule-day-body">
         <tr class="schedule-row">
           <td rowspan="<%- group.items.length %>" class="schedule-date-cell">
-            <div class="item-day"><%- group.day.format('D MMMM').toLowerCase() %></div>
-            <div class="item-day-of-week"><%- group.day.format('dddd').toLowerCase() %></div>
+            <div class="item-day"><%- group.day.format('D MMMM') %></div>
+            <div class="item-day-of-week"><%- group.day.format('dddd') %></div>
           </td>
           <% group.items.forEach(function(date, index) { %>
             <% var event = date.event %>

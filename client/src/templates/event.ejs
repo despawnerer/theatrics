@@ -136,15 +136,17 @@
   {
     "@context": "http://schema.org",
     "@type": "<% if (event.isFestival()) { %>Festival<% } else { %>TheaterEvent<% } %>",
-    "name": "<%- event.getShortTitle() %>",
-    "startDate": "<%- moment.unix(date.start).tz(location.timezone).format() %>",
     <% if (date.end && date.end !== date.start) { %>"endDate": "<%- moment.unix(date.end).tz(location.timezone).format() %>",<% } %>
+    <% if (place) { %>
     "location": {
       "@type": "Place",
       <% if (!place.isStub()) { %>"url": "<%- url('place', {id: place.data.id}) %>",<% } %>
       "name": "<%- place.getTitle() %>",
       "address": "<%- place.data.address %>"
-    }
+    },
+    <% } %>
+    "name": "<%- event.getShortTitle() %>",
+    "startDate": "<%- moment.unix(date.start).tz(location.timezone).format() %>"
   }
   </script>
   <% }) %>

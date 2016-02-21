@@ -12,7 +12,13 @@ export default class Settings extends Model {
 
   _change() {
     super._change();
-    window.localStorage.setItem('settings', JSON.stringify(this._data));
+    try {
+      window.localStorage.setItem('settings', JSON.stringify(this._data));
+    } catch(e) {
+      // Safari raises QuotaExceededError when trying to save to
+      // localStorage in private mode, so ignore it
+      return;
+    }
   }
 
   static getLocal() {

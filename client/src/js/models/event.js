@@ -38,12 +38,43 @@ export default class Event extends Model {
   }
 
   getDates() {
-    return this.data.dates.map(date => {
-      return {
-        start: date.start,
-        end: date.end,
-        event: this,
-      }
-    });
+    return this.data.dates.map(date => new Date(this, date.start, date.end));
   }
+}
+
+
+export class Date {
+  constructor(event, start, end) {
+    this.event = event;
+    this.start = start;
+    this.end = end || start;
+  }
+
+  intersectsAny(others) {
+    return others.some(other => this.intersects(other));
+  }
+
+  intersects(other) {
+    return this.end >= other.start && this.start < other.end;
+  }
+
+  isFuture() {
+    return this.start > moment().unix();
+  }
+
+  momentize(timezone) {
+    return {
+      event: this.event,
+      start: moment.unix(this.start).tz(timezone),
+      end: moment.unix(this.end).tz(timezone)
+    }
+  }
+}
+
+
+export function eventsToDates(events) {
+  return events
+    .map(event => event.getDates())
+    .reduce((a, b) => a.concat(b), [])
+    .sort((date1, date2) => date1.start - date2.start);
 }

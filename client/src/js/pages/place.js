@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 import Page from '../base/page';
-import Event from '../models/event';
+import Event, {eventsToDates} from '../models/event';
 import ScheduleView from '../views/schedule';
 import Slider from '../components/slider';
 import Pager from '../components/pager';
@@ -38,24 +38,14 @@ export default class PlacePage extends Page {
   loadSchedule(container) {
     this.app.api
       .fetchEventsInPlace(this.place.get('id'))
-      .then(data => {
-        const dates = data
-          .map(itemData => new Event(itemData))
-          .map(event => event.getFutureDates())
-          .reduce((a, b) => a.concat(b), [])
-          .sort((date1, date2) => date1.start - date2.start)
-          .map(date => this.momentizeDate(date));
+      .then(data => data.map(item => new Event(item)))
+      .then(events => {
+        const dates = eventsToDates(events)
+          .filter(date => date.isFuture())
+          .map(date => date.momentize(this.location.timezone));
         const view = new ScheduleView({app: this.app, dates: dates});
         clear(container);
         container.appendChild(view.render());
       });
-  }
-
-  momentizeDate(date) {
-    return {
-      start: moment.unix(date.start).tz(this.location.timezone),
-      end: date.end ? moment.unix(date.end).tz(this.location.timezone) : null,
-      event: date.event,
-    }
   }
 }

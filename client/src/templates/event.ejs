@@ -67,8 +67,8 @@
           <span class="item-information-value">
             <ol class="item-dates">
             <% event.getDisplayDates().forEach(function(date) { %>
-              <% var start = moment.tz(date.start * 1000, location.timezone) %>
-              <% var end = date.end ? moment.tz(date.end * 1000, location.timezone) : null %>
+              <% var start = moment.unix(date.start).tz(location.timezone) %>
+              <% var end = moment.unix(date.end).tz(location.timezone) %>
               <% var isRange = end && !start.isSame(end, 'day') %>
               <li<% if (isRange) { %> class="double-size"<% } %>>
                 <div class="item-date">

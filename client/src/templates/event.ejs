@@ -41,7 +41,7 @@
         <% var place = event.getPlace() %>
         <% if (place) { %>
           <div class="item-information-item item-place">
-            <span class="item-information-icon icon-place"></span>
+            <span class="item-information-icon icon-place" title="Место проведения"></span>
             <span class="item-information-value">
               <% if (place.isStub()) { %>
                 <%- place.getTitle() %>
@@ -56,13 +56,13 @@
 
         <% if (event.data.price) { %>
           <div class="item-information-item">
-            <span class="item-information-icon icon-rouble"></span>
+            <span class="item-information-icon icon-rouble" title="Цена билета"></span>
             <span class="item-information-value"><%- event.data.price %></span>
           </div>
         <% } %>
 
         <div class="item-information-item">
-          <span class="item-information-icon icon-calendar"></span>
+          <span class="item-information-icon icon-calendar" title="Даты"></span>
           <span class="item-information-value">
             <ol class="item-dates">
             <% event.getDisplayDates().forEach(function(date) { %>

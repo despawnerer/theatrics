@@ -1,4 +1,4 @@
-<div class="calendar-container">
+<nav class="calendar-container">
   <ol class="calendar">
     <li class="calendar-day any<% if (!current.date) { %> active<% } %>">
       <a href="<%- url('event-list', {location: current.location}) %>">Самое</a>
@@ -10,4 +10,4 @@
         </a>
     <% }) %>
   </ol>
-</div>
+</nav>

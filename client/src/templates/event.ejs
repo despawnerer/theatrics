@@ -1,4 +1,4 @@
-<div class="item-view">
+<article class="item-view">
   <div class="item-slider" data-next-button=".next-button" data-previous-button=".previous-button" data-container=".item-slide-list" data-items=".item-slide">
     <a class="slide-button next-button"<% if (event.data.images.length < 2) { %> hidden<% } %>><span class="icon-chevron-thin-right"></span></a>
     <a class="slide-button previous-button" hidden><span class="icon-chevron-thin-left"></span></a>
@@ -31,10 +31,10 @@
     </div>
     <% } %>
 
-    <h2 class="big-item-title">
+    <h1 class="big-item-title">
       <%- event.getShortTitle() %>
       <span class="big-item-tagline"><%- event.data.tagline %></span>
-    </h2>
+    </h1>
 
     <div class="item-information">
       <div class="item-information-group">
@@ -129,4 +129,4 @@
 <% } %>
 
   </div>
-</div>
+</article>

@@ -13,6 +13,10 @@ body {
   color: black;
 }
 
+section, article, aside, footer, header, nav {
+  display: block;
+}
+
 a {
   color: black;
   text-decoration: none;
@@ -345,7 +349,7 @@ p {
   margin: 0;
 }
 
-.not-found-message h2 {
+.not-found-message h1 {
   font-size: 36px;
   margin: 0 0 20px 0;
 }

@@ -58,8 +58,7 @@ export default class PlacePage extends Page {
 
     if (dates.length) {
       const view = new ScheduleView({app: this.app, dates: dates});
-      clear(container);
-      container.appendChild(view.render());
+      container.innerHTML = view.getHTML();
     } else {
       container.innerHTML = this.app.renderTemplate(noScheduleTemplate, {
         place: this.place

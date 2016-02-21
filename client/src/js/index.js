@@ -1,9 +1,7 @@
 import 'core-js/es5';
 import 'core-js/fn/promise';
 import 'core-js/fn/symbol';
-import 'core-js/fn/array/from';
-import 'core-js/fn/array/iterator';
-import 'core-js/fn/array/find';
+import 'core-js/fn/array';
 import 'core-js/fn/string/ends-with';
 import 'core-js/fn/string/starts-with';
 import 'whatwg-fetch';

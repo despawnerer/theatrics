@@ -17,6 +17,18 @@ export default class TheatricsAPI {
     return this.get(`/places/${id}/`, {expand: 'images'});
   }
 
+  fetchEventChildren(id) {
+    return this.getAll(
+      '/events/',
+      {
+        categories: 'theater',
+        fields: 'id,title,short_title,dates,location,tagline',
+        page_size: 100,
+        parent_id: id,
+      }
+    );
+  }
+
   fetchEventsInPlace(id) {
     return this.getAll(
       '/events/',

@@ -93,10 +93,40 @@
       </div>
     </div>
 
+<% if (event.isFestival()) { %>
+  </div>
+  <div class="pager" data-nav-items=".tab" data-slider=".pager-pages-slider">
+    <nav class="pager-nav content-container">
+      <ul class="tabs">
+        <li class="tab active" for=".description-page"><a>Описание</a></li>
+        <li class="tab" for=".schedule-page"><a>Программа</a></li>
+      </ul>
+    </nav>
+    <div class="pager-pages-slider" data-container=".pager-pages-list" data-items=".pager-page">
+      <div class="pager-pages-list">
+        <div class="pager-page description-page">
+          <div class="content-container">
+<% } %>
+
     <div class="item-description"><%= event.data.description %></div>
     <div class="item-text"><%= event.data.body_text %></div>
     <div class="source-information">
       Источник данных: <a href="<%- event.data.site_url %>" target="_blank">kudago.com</a>.
     </div>
+
+<% if (event.isFestival()) { %>
+          </div>
+        </div>
+        <div class="pager-page schedule-page">
+          <div class="content-container">
+            <div class="schedule">
+              <%= bigLoader() %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<% } %>
+
   </div>
 </div>

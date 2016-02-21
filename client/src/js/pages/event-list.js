@@ -43,6 +43,10 @@ export default class EventListPage extends Page {
     }
   }
 
+  getLocation() {
+    return this.location.slug;
+  }
+
   mount(element, sync=false) {
     this.calendar.mount(element.querySelector('.calendar-container'), sync);
     this.feedView.mount(element.querySelector('.feed-container'));

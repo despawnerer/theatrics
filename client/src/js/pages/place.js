@@ -29,6 +29,10 @@ export default class PlacePage extends Page {
     return `${this.place.getTitle()} – ${this.location.name}`;
   }
 
+  getLocation() {
+    return this.location.slug;
+  }
+
   mount(element) {
     new Slider(element.querySelector('.item-slider'));
     new Pager(element.querySelector('.pager'));

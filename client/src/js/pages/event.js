@@ -29,6 +29,10 @@ export default class EventPage extends Page {
     return `${this.event.getLongTitle()} – ${this.location.name}`;
   }
 
+  getLocation() {
+    return this.location.slug;
+  }
+
   mount(element) {
     new Slider(element.querySelector('.item-slider'));
 

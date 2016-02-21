@@ -143,6 +143,7 @@ export default class Router {
     this.cache.put(state.id, state);
     history.replaceState(
       this.getSaveableState(), document.title, window.location.pathname);
+    this.app.settings.set('location', state.page.getLocation());
     this.app.mainView.setState(state);
   }
 

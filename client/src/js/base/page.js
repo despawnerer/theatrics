@@ -6,6 +6,10 @@ export default class Page extends View {
     throw new Error("Pages must implement getTitle()");
   }
 
+  getLocation() {
+    return this.app.settings.get('location');
+  }
+
   canTransitionFrom(other) {
     return false;
   }

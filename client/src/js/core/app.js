@@ -69,7 +69,7 @@ export default class App {
     this.router.redirect(window.location.pathname);
   }
 
-  renderTemplate(template, context) {
+  renderTemplate(template, context={}) {
     return template(extend(this.templateContext, context));
   }
 }

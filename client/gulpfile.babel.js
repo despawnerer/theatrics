@@ -43,7 +43,7 @@ gulp.task('build-css', () => {
       }),
     ]))
     .on('error', e => logError('build-css', e.message))
-    .pipe(gulp.dest('build'));
+    .pipe(gulp.dest('build/static'));
 });
 
 
@@ -54,12 +54,12 @@ gulp.task('watch-css', () => {
 
 gulp.task('build-min-css', ['build-css'], () => {
   return gulp
-    .src(['build/*.css', '!build/*.min.css'])
+    .src(['build/static/*.css', '!build/static/*.min.css'])
     .pipe(postcss([
       csswring,
     ]))
     .pipe(rename({suffix: '.min'}))
-    .pipe(gulp.dest('build'));
+    .pipe(gulp.dest('build/static'));
 });
 
 
@@ -85,7 +85,7 @@ function buildJS(options) {
       .on('error', e => logError(options.task, formatBrowserifyError(e)))
       .pipe(source(JS_TARGET_FILENAME))
       .pipe(buffer())
-      .pipe(gulp.dest('build'));
+      .pipe(gulp.dest('build/static'));
   }
 
   if (options.watch) {
@@ -113,10 +113,10 @@ gulp.task('watch-js', () => {
 
 gulp.task('build-min-js', ['build-js'], () => {
   return gulp
-    .src('build/index.js')
+    .src('build/static/index.js')
     .pipe(uglify())
     .pipe(rename({suffix: '.min'}))
-    .pipe(gulp.dest('build'));
+    .pipe(gulp.dest('build/static'));
 });
 
 
@@ -160,7 +160,7 @@ gulp.task('build-min-html', () => {
 gulp.task('build-fonts', () => {
   return gulp
     .src('src/fonts/*')
-    .pipe(gulp.dest('build/fonts'));
+    .pipe(gulp.dest('build/static/fonts'));
 });
 
 gulp.task('watch-fonts', () => {

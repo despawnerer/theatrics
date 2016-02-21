@@ -109,4 +109,40 @@
       Источник данных: <a href="<%- place.site_url %>" target="_blank">kudago.com</a>.
     </div>
   </div>
+
+  <script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Place",
+    <% if (place.data.foreign_url) { %>"sameAs": "<%- place.data.foreign_url %>",<% } %>
+    "name": "<%- place.getTitle() %>",
+    "address": "<%- place.data.address %>"
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "<%- url('location', {location: location.slug}) %>",
+          "name": "<%- location.name %>"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@id": "<%- url('place-list', {location: location.slug}) %>",
+          "name": "Театры"
+        }
+      }
+    ]
+  }
+  </script>
+
 </article>

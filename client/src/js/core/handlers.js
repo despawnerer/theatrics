@@ -9,15 +9,17 @@ import PlacePage from '../pages/place';
 import PlaceListPage from '../pages/place-list';
 import NotFoundPage from '../pages/not-found';
 
+import {Redirect, Render, NotFound} from './response';
+
 
 export function index(app) {
   const location = app.settings.get('location');
-  return app.resolver.reverse('event-list', {location});
+  return Redirect(app.resolver.reverse('event-list', {location}));
 }
 
 
 export function location(app, {location}) {
-  return app.resolver.reverse('event-list', {location});
+  return Redirect(app.resolver.reverse('event-list', {location}));
 }
 
 
@@ -25,33 +27,42 @@ export function eventList(app, {location, date}) {
   location = app.locations.get(location);
   date = date ? moment.tz(date, location.timezone) : null;
   const feed = app.api.getEventsFeed(location, date);
-  return new EventListPage({app, location, date, feed});
+  const page = new EventListPage({app, location, date, feed});
+  return Render({page});
 }
 
 
 export function event(app, {id}) {
   return app.api
     .fetchEvent(id)
-    .then(data => new Event(data))
-    .then(event => new EventPage({app, event}));
+    .then(data => {
+      const event = new Event(data);
+      const page = new EventPage({app, event});
+      return Render({page});
+    });
 }
 
 
 export function placeList(app, {location}) {
   location = app.locations.get(location);
   const feed = app.api.getPlacesFeed(location);
-  return new PlaceListPage({app, location, feed});
+  const page = new PlaceListPage({app, location, feed});
+  return Render({page});
 }
 
 
 export function place(app, {id}) {
   return app.api
     .fetchPlace(id)
-    .then(data => new Place(data))
-    .then(place => new PlacePage({app, place}));
+    .then(data => {
+      const place = new Place(data);
+      const page = new PlacePage({app, place});
+      return Render({page});
+    });
 }
 
 
 export function notFound(app) {
-  return new NotFoundPage({app});
+  const page = new NotFoundPage({app});
+  return NotFound({page});
 }

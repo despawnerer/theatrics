@@ -1,10 +1,11 @@
 import Events from 'events-mixin';
-import isString from 'is-string';
+import extend from 'xtend';
 import isPromise from 'is-promise';
 
 import {forceScroll} from '../utils';
 
 import Cache from './cache';
+import Response from './response';
 
 
 export default class Router {
@@ -14,7 +15,7 @@ export default class Router {
     this.handlers = {};
 
     this.cache = new Cache(5);
-    this.state = null;
+    this.state = {};
     this.lastStateId = 0;
 
     this.events = new Events(document, this);
@@ -81,12 +82,12 @@ export default class Router {
     return this.loadNewState(state);
   }
 
-  /* Switching states */
+  /* States */
 
   restoreSavedState(savedState) {
     const cachedState = this.cache.get(savedState.id);
     if (cachedState) {
-      this.setState(cachedState);
+      this.switchToState(cachedState);
     } else {
       this.loadNewState(savedState);
     }
@@ -95,6 +96,10 @@ export default class Router {
   loadNewState(state) {
     const handler = this.getHandler(state.route.name);
     const response = handler(this.app, state.route.args);
+    // This isn't written in a more generic way because for some reason
+    // doing rendering from within a Promise callback causes flickering
+    // in Safari, and I don't like it. So we're stuck with this mess
+    // until the issue is fixed or I stop caring.
     if (isPromise(response)) {
       this.app.mainView.wait();
       return response.then(response => this.applyResponse(state, response));
@@ -104,23 +109,25 @@ export default class Router {
   }
 
   applyResponse(state, response) {
-    if (isString(response)) {
-      return this.redirect(response);
-    } else {
-      return this.switchPage(state, response);
+    switch (response.type) {
+      case Response.Redirect:
+        return this.redirect(response.value);
+      case Response.Render:
+      case Response.NotFound:
+        return this.renderState(extend(state, response.value));
+      default:
+        throw new Error("Unexpected response from handler");
     }
   }
 
-  switchPage(state, page) {
-    state.page = page;
-    state.element = this.getNewElement(page);
-    this.setState(state);
+  renderState(state) {
+    state.element = this.renderPage(state.page);
+    this.switchToState(state);
     return state;
   }
 
-  getNewElement(page) {
-    const previousPage = this.state && this.state.page;
-    if (page.canTransitionFrom(previousPage)) {
+  renderPage(page) {
+    if (page.canTransitionFrom(this.state.page)) {
       const element = this.state.element.cloneNode(true);
       page.mount(element, true);
       return element;
@@ -129,16 +136,7 @@ export default class Router {
     }
   }
 
-  /* States */
-
-  buildStateFromPath(path) {
-    return {
-      id: this.lastStateId++,
-      route: this.app.resolver.resolve(path),
-    }
-  }
-
-  setState(state) {
+  switchToState(state) {
     this.state = state;
     this.cache.put(state.id, state);
     history.replaceState(
@@ -151,6 +149,13 @@ export default class Router {
     return {
       id: this.state.id,
       route: this.state.route,
+    }
+  }
+
+  buildStateFromPath(path) {
+    return {
+      id: this.lastStateId++,
+      route: this.app.resolver.resolve(path),
     }
   }
 }

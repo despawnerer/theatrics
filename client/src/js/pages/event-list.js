@@ -13,8 +13,8 @@ export default class EventListPage extends Page {
   constructor({app, location, date, feed}) {
     super({app});
 
-    this.location = app.locations.get(location);
-    this.date = date ? moment(date).tz(this.location.timezone) : null;
+    this.location = location;
+    this.date = date;
     this.feed = feed;
 
     this.calendar = new Calendar({app, location, date});

@@ -10,6 +10,7 @@ import template from '../../templates/calendar.ejs';
 export default class Calendar extends View {
   constructor({app, location, date}) {
     super({app});
+
     this.location = location;
     this.date = date;
   }
@@ -17,8 +18,9 @@ export default class Calendar extends View {
   getHTML() {
     const today = moment().startOf('day');
     const dates = range(15).map(n => today.clone().add(n, 'days'));
-    const current = {location: this.location, date: this.date}
-    return this.app.renderTemplate(template, {current, dates});
+    const current = {location: this.location, date: this.date};
+    const dateToString = this.dateToString;
+    return this.app.renderTemplate(template, {current, dates, dateToString});
   }
 
   mount(element, sync=false) {
@@ -32,7 +34,7 @@ export default class Calendar extends View {
 
   updateLinks() {
     const days = this.element.querySelectorAll('li');
-    const location = this.location;
+    const location = this.location.slug;
     Array.from(days).forEach(element => {
       const link = element.querySelector('a');
       const date = element.getAttribute('data-date');
@@ -43,8 +45,13 @@ export default class Calendar extends View {
   }
 
   updateActiveDate() {
-    const selector = this.date ? `li[data-date="${this.date}"]` : 'li.any';
+    const dateString = this.dateToString(this.date);
+    const selector = dateString ? `li[data-date="${dateString}"]` : 'li.any';
     this.element.querySelector('.active').classList.remove('active');
     this.element.querySelector(selector).classList.add('active');
+  }
+
+  dateToString(date) {
+    return date ? date.format('YYYY-MM-DD') : null;
   }
 }

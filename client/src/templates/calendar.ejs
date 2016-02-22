@@ -1,11 +1,11 @@
 <nav class="calendar-container">
   <ol class="calendar">
     <li class="calendar-day any<% if (!current.date) { %> active<% } %>">
-      <a href="<%- url('event-list', {location: current.location}) %>">Самое</a>
+      <a href="<%- url('event-list', {location: current.location.slug}) %>">Самое</a>
     <% dates.forEach(function(date) { %>
-      <% var dateString = date.format('YYYY-MM-DD') %>
-      <li class="calendar-day<% if (dateString == current.date) { %> active<% } %>" data-date="<%- dateString %>">
-        <a href="<%- url('event-list', {location: current.location, date: dateString}) %>">
+      <% var dateString = dateToString(date) %>
+      <li class="calendar-day<% if (date.isSame(current.date)) { %> active<% } %>" data-date="<%- dateString %>">
+        <a href="<%- url('event-list', {location: current.location.slug, date: dateString}) %>">
           <%- date.format('D') %><br/><%- date.format('dd') %>
         </a>
     <% }) %>

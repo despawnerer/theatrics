@@ -11,7 +11,7 @@ export default class PlaceListPage extends Page {
   constructor({app, location, feed}) {
     super({app});
 
-    this.location = app.locations.get(location);
+    this.location = location;
     this.feed = feed;
 
     this.feedView = new FeedView({

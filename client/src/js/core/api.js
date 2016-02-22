@@ -43,14 +43,12 @@ export default class TheatricsAPI {
   }
 
   getEventsFeed(location, date) {
-    date = date ? moment(date) : null;
-
     const params = {
       categories: 'theater,-kids',
       fields: 'place,images,tagline,id,title,short_title,categories,description',
       expand: 'place,images',
       page_size: 24,
-      location: location,
+      location: location.slug,
     };
 
     if (date) {
@@ -70,7 +68,7 @@ export default class TheatricsAPI {
       expand: 'images',
       order_by: '-total_visits',
       page_size: 24,
-      location: location,
+      location: location.slug,
     };
     return new Feed(this, '/places/', params);
   }

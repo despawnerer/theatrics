@@ -397,9 +397,9 @@ p {
 .events-view .feed-container { flex: 1 0 auto; }
 
 
-/* Calendar */
+/* Quick calendar */
 
-.calendar {
+.quick-calendar {
   flex: 0 1 auto;
   list-style-type: none;
   margin: -5px 0;
@@ -412,11 +412,9 @@ p {
   justify-content: center;
 }
 
-.calendar-day {
+.quick-calendar > li {
   padding: 0;
   margin: 0;
-  vertical-align: middle;
-  position: relative;
   line-height: 1.2;
 }
 
@@ -424,8 +422,9 @@ p {
   line-height: 2.4;
 }
 
-.calendar-day a {
+.calendar-day {
   display: block;
+  position: relative;
   padding: 5px 11px;
 }
 
@@ -440,12 +439,12 @@ p {
   background: black;
 }
 
-.calendar-day.active a {
+.calendar-day.active {
   cursor: default;
   font-weight: bolder;
 }
 
-.calendar-day.active a:hover {
+.calendar-day.active:hover {
   color: black;
 }
 
@@ -466,53 +465,53 @@ p {
 }
 
 @media (max-width: 680px) {
-  .calendar {
+  .quick-calendar {
     margin: -5px -10px;
   }
 
-  .calendar-day {
+  .quick-calendar > li {
     flex: auto;
   }
 
-  .calendar-day a {
+  .calendar-day {
     padding: 5px 0;
   }
 }
 
 @media (max-width: 344px) {
-  .calendar-day:nth-child(n+9) { display: none; }
+  .quick-calendar > li:nth-child(n+9) { display: none; }
 }
 
 @media (max-width: 400px) {
-  .calendar-day:nth-child(n+10) { display: none; }
+  .quick-calendar > li:nth-child(n+10) { display: none; }
 }
 
 @media (max-width: 440px) {
-  .calendar-day:nth-child(n+11) { display: none; }
+  .quick-calendar > li:nth-child(n+11) { display: none; }
 }
 
 @media (max-width: 488px) {
-  .calendar-day:nth-child(n+12) { display: none; }
+  .quick-calendar > li:nth-child(n+12) { display: none; }
 }
 
 @media (max-width: 526px) {
-  .calendar-day:nth-child(n+13) { display: none; }
+  .quick-calendar > li:nth-child(n+13) { display: none; }
 }
 
 @media (max-width: 564px) {
-  .calendar-day:nth-child(n+14) { display: none; }
+  .quick-calendar > li:nth-child(n+14) { display: none; }
 }
 
 @media (max-width: 602px) {
-  .calendar-day:nth-child(n+15) { display: none; }
+  .quick-calendar > li:nth-child(n+15) { display: none; }
 }
 
 @media (max-width: 640px) {
-  .calendar-day:nth-child(n+16) { display: none; }
+  .quick-calendar > li:nth-child(n+16) { display: none; }
 }
 
 @media (max-width: 1139px) {
-  .calendar-day:nth-child(n+17) { display: none; }
+  .quick-calendar > li:nth-child(n+17) { display: none; }
 }
 
 

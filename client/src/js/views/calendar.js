@@ -33,22 +33,29 @@ export default class Calendar extends View {
   }
 
   updateLinks() {
-    const days = this.element.querySelectorAll('li');
+    const links = this.element.querySelectorAll('a.calendar-day');
     const location = this.location.slug;
-    Array.from(days).forEach(element => {
-      const link = element.querySelector('a');
+    Array.from(links).forEach(element => {
       const date = element.getAttribute('data-date');
       const args = date ? {location, date} : {location};
       const url = this.app.resolver.reverse('event-list', args);
-      link.setAttribute('href', url);
+      element.setAttribute('href', url);
     });
   }
 
   updateActiveDate() {
+    Array
+      .from(this.element.querySelectorAll('a.calendar-day.active'))
+      .forEach(element => element.classList.remove('active'));
+
     const dateString = this.dateToString(this.date);
-    const selector = dateString ? `li[data-date="${dateString}"]` : 'li.any';
-    this.element.querySelector('.active').classList.remove('active');
-    this.element.querySelector(selector).classList.add('active');
+    const selector =
+      dateString
+      ? `a.calendar-day[data-date="${dateString}"]`
+      : 'a.calendar-day.any';
+    Array
+      .from(this.element.querySelectorAll(selector))
+      .forEach(element => element.classList.add('active'));
   }
 
   dateToString(date) {

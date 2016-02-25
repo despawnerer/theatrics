@@ -1,11 +1,24 @@
 <nav class="calendar-container">
-  <ol class="calendar">
-    <li class="calendar-day any<% if (!current.date) { %> active<% } %>">
-      <a href="<%- url('event-list', {location: current.location.slug}) %>">Самое</a>
-    <% dates.forEach(function(date) { %>
+  <ol class="quick-calendar">
+    <li>
+      <a
+        href="<%- url('event-list', {location: current.location.slug}) %>"
+        class="
+          calendar-day
+          any
+          <% if (!current.date) { %>active<% } %>
+        ">Самое</a>
+
+    <% quickDates.forEach(function(date) { %>
       <% var dateString = dateToString(date) %>
-      <li class="calendar-day<% if (date.isSame(current.date)) { %> active<% } %>" data-date="<%- dateString %>">
-        <a href="<%- url('event-list', {location: current.location.slug, date: dateString}) %>">
+      <li>
+        <a
+          href="<%- url('event-list', {location: current.location.slug, date: dateString}) %>"
+          data-date="<%- dateString %>"
+          class="
+            calendar-day
+            <% if (date.isSame(current.date)) { %> active<% } %>
+          ">
           <%- date.format('D') %><br/><%- date.format('dd') %>
         </a>
     <% }) %>

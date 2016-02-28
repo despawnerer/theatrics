@@ -59,7 +59,7 @@ export function clear(element) {
 }
 
 
-export function toggleClass(element, className, condition) {
+export function toggleClass(element, className, condition=undefined) {
   /* This shim is used because older Safari and IE don't support
      the second arg to classList.toggle */
   if (condition === undefined) {

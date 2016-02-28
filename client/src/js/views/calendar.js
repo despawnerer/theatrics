@@ -1,6 +1,9 @@
 import moment from 'moment';
+import calendar from 'calendar';
 
 import View from '../base/view';
+import Toggle from '../components/toggle';
+import Slider from '../components/slider';
 
 import {toggleClass, range} from '../utils';
 
@@ -16,15 +19,32 @@ export default class Calendar extends View {
   }
 
   getHTML() {
-    const today = moment().startOf('day');
-    const dates = range(15).map(n => today.clone().add(n, 'days'));
+    const today = moment.tz(this.location.timezone).startOf('day');
     const current = {location: this.location, date: this.date};
+    const quickDates = range(15).map(n => today.clone().add(n, 'days'));
+    const firstDayOfWeek = moment.localeData().firstDayOfWeek();
+    const daysOfWeek = this.getDaysOfWeekInOrder(firstDayOfWeek)
     const dateToString = this.dateToString;
-    return this.app.renderTemplate(template, {current, dates, dateToString});
+
+    const cal = new calendar.Calendar(firstDayOfWeek);
+    const months = range(3).map(n => {
+      const date = today.clone().startOf('month').add(n, 'months');
+      return {
+        name: date.format('MMMM'),
+        number: date.month(),
+        weekDates: cal.monthDates(date.year(), date.month(), moment),
+      }
+    });
+
+    return this.app.renderTemplate(template, {
+      today, current, quickDates, daysOfWeek, months, dateToString});
   }
 
   mount(element, sync=false) {
     this.element = element;
+
+    new Toggle(element.querySelector('.custom-date-button'));
+    new Slider(element.querySelector('.calendar'), false);
 
     if (sync) {
       this.updateLinks();
@@ -60,5 +80,13 @@ export default class Calendar extends View {
 
   dateToString(date) {
     return date ? date.format('YYYY-MM-DD') : null;
+  }
+
+  getDaysOfWeekInOrder(firstDayOfWeek) {
+    const names = moment.weekdaysMin();
+    return range(6)
+      .map(n => n + firstDayOfWeek)
+      .map(n => n - 7 * Math.floor(n / 7))
+      .map(n => names[n]);
   }
 }

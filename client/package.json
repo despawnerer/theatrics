@@ -14,6 +14,7 @@
     "update-timezones": "gulp update-timezones"
   },
   "dependencies": {
+    "calendar": "^0.1.0",
     "core-js": "2.1.0",
     "deep-equal": "1.0.1",
     "domify": "1.4.0",

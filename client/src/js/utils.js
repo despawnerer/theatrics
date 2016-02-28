@@ -74,7 +74,11 @@ export function toggleClass(element, className, condition) {
 }
 
 
-export function toggle(element, condition) {
+export function toggle(element, condition=undefined) {
+  if (condition === undefined) {
+    condition = element.hasAttribute('hidden');
+  }
+
   if (condition) {
     show(element);
   } else {

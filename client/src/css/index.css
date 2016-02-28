@@ -576,13 +576,12 @@ p {
   left: 50%;
   box-sizing: border-box;
 
-  border: 6px solid black;
-  border-color: white white transparent transparent;
+  border: 6px solid white;
 
   transform-origin: 0 0;
   transform: rotate(-45deg);
 
-  box-shadow: 1px -1px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 1px -1px 1px rgba(0, 0, 0, 0.05);
 }
 
 .calendar-box[hidden] .calendar {

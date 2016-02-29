@@ -54,7 +54,7 @@ export default class TheatricsAPI {
     };
 
     if (date) {
-      params.actual_since = date.unix();
+      params.actual_since = date.unix() + 1;
       params.actual_until = date.clone().add(1, 'days').unix();
     } else {
       params.actual_since = moment().unix();

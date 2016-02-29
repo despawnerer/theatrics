@@ -74,6 +74,10 @@ export class Date {
     return moment.duration((this.endTs - this.startTs) * 1000);
   }
 
+  isActual() {
+    return this.endTs > moment().unix();
+  }
+
   isFuture() {
     return this.startTs > moment().unix();
   }

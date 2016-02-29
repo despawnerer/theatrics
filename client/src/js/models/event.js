@@ -70,6 +70,13 @@ export class Date {
     return this.endTs >= other.startTs && this.startTs < other.endTs;
   }
 
+  getDateRange() {
+    return {
+      start: this.start.clone().startOf('day'),
+      end: this.end.clone().startOf('day')
+    }
+  }
+
   getDuration() {
     return moment.duration((this.endTs - this.startTs) * 1000);
   }

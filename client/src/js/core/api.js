@@ -22,7 +22,7 @@ export default class TheatricsAPI {
       '/events/',
       {
         categories: 'theater',
-        fields: 'id,title,short_title,dates,location,tagline',
+        fields: 'id,title,short_title,dates,location,tagline,categories',
         expand: 'dates',
         page_size: 100,
         parent_id: id,
@@ -35,7 +35,7 @@ export default class TheatricsAPI {
       '/events/',
       {
         categories: 'theater',
-        fields: 'id,title,short_title,dates,location,tagline',
+        fields: 'id,title,short_title,dates,location,tagline,categories',
         expand: 'dates',
         page_size: 100,
         place_id: id,

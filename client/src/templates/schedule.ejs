@@ -1,17 +1,49 @@
 <div class="schedule">
   <table class="schedule-table" cellspacing="0" cellpadding="0">
-    <% dayGroups.forEach(function(group) { %>
+    <% rangeGroups.forEach(function(group) { %>
+      <% var isLong = !group.range.start.isSame(group.range.end, 'day') %>
       <tbody class="schedule-day-body">
         <tr class="schedule-row">
+
+        <% if (isLong) { %>
+          <td rowspan="<%- group.items.length %>" colspan="2" class="schedule-date-cell">
+            <div class="item-date">
+              <div class="item-day"><%- group.range.start.format('D MMMM') %></div>
+              <div class="item-day-of-week"><%- group.range.start.format('dddd') %></div>
+            </div>
+            &ndash;
+            <div class="item-date">
+              <div class="item-day"><%- group.range.end.format('D MMMM') %></div>
+              <div class="item-day-of-week"><%- group.range.end.format('dddd') %></div>
+            </div>
+          </td>
+          <% group.items.forEach(function(date, index) { %>
+            <% var event = date.event %>
+            <% var isLastThisDay = index === group.items.length - 1 %>
+            <td class="schedule-title-cell">
+              <h2 class="schedule-item-title">
+                <a href="<%- url('event', {id: event.data.id }) %>">
+                  <span class="link-text"><%- event.getShortTitle() %></span>
+                  <% if (event.isFestival()) { %><span class="festival-badge">Фестиваль</span><% } %>
+                </a>
+              </h2>
+              <% if (event.data.tagline) { %>
+                <p class="schedule-item-tagline"><%- event.data.tagline %></p>
+              <% } %>
+            </td>
+          </tr><% if (!isLastThisDay) { %><tr class="schedule-row"><% } %>
+          <% }) %>
+
+        <% } else { %>
           <td rowspan="<%- group.items.length %>" class="schedule-date-cell">
-            <div class="item-day"><%- group.day.format('D MMMM') %></div>
-            <div class="item-day-of-week"><%- group.day.format('dddd') %></div>
+            <div class="item-day"><%- group.range.start.format('D MMMM') %></div>
+            <div class="item-day-of-week"><%- group.range.start.format('dddd') %></div>
           </td>
           <% group.items.forEach(function(date, index) { %>
             <% var event = date.event %>
             <% var isLastThisDay = index === group.items.length - 1 %>
             <td class="schedule-time-cell">
-              <div class="schedule-time"><%- date.start.format('LT') %></div>
+              <% if (!date.isDateBased) { %><div class="schedule-time"><%- date.start.format('LT') %></div><% } %>
             </td>
             <td class="schedule-title-cell">
               <h2 class="schedule-item-title">
@@ -25,6 +57,8 @@
             </td>
           </tr><% if (!isLastThisDay) { %><tr class="schedule-row"><% } %>
           <% }) %>
+        <% } %>
+
         </tr>
       </tbody>
     <% }) %>

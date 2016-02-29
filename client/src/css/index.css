@@ -376,6 +376,7 @@ p {
   vertical-align: middle;
   font-weight: normal;
   line-height: 11px;
+  margin: 5px 0;
 }
 
 @media (max-width: 719px) {
@@ -1189,6 +1190,7 @@ p {
   font-size: 15px;
   padding-right: 20px;
   line-height: 21px;
+  text-align: right;
 }
 
 .schedule-item-title {
@@ -1240,7 +1242,8 @@ p {
   .schedule-date-cell .item-day { display: inline-block; }
   .schedule-date-cell .item-day-of-week { display: inline-block; }
 
-  .schedule-title-cell {
+  .schedule-time-cell { text-align: left; }
+  .schedule-time-cell + .schedule-title-cell {
     margin-top: -21px; /* line height */
     margin-left: 48px;
   }

@@ -11,11 +11,16 @@ export default class ScheduleView extends View {
   }
 
   getHTML() {
-    const dayGroups = groupArray(
-      this.dates, 'day',
-      date => date.start.clone().startOf('day'),
-      (day1, day2) => day1.isSame(day2)
+    const rangeGroups = groupArray(
+      this.dates, 'range',
+      date => date.getDateRange(),
+      (range1, range2) => {
+        return (
+          range1.start.isSame(range2.start) &&
+          range1.end.isSame(range2.end)
+        )
+      }
     );
-    return this.app.renderTemplate(template, {dayGroups});
+    return this.app.renderTemplate(template, {rangeGroups});
   }
 }

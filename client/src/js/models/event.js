@@ -1,16 +1,12 @@
 import moment from 'moment';
 
 import Model from '../base/model';
-import {capfirst} from '../utils';
+import {capfirst, range} from '../utils';
 
 import Place from './place';
 
 
 export default class Event extends Model {
-  isFestival() {
-    return this.data.categories.indexOf('festival') !== -1;
-  }
-
   getShortTitle() {
     return this.data.short_title || this.getLongTitle();
   }
@@ -34,27 +30,42 @@ export default class Event extends Model {
   }
 
   getDates() {
-    return this.data.dates.map(date => new Date(this, date));
+    if (!this.isFestival() && !this.isExhibition()) {
+      return this.data.dates
+        .map(spec => splitDateSpec(spec))
+        .reduce((a, b) => a.concat(b), [])
+        .map(spec => new Date(this, spec));
+    } else {
+      return this.data.dates.map(spec => new Date(this, spec));
+    }
+  }
+
+  isFestival() {
+    return this.data.categories.indexOf('festival') !== -1;
+  }
+
+  isExhibition() {
+    return this.data.categories.indexOf('exhibition') !== -1;
   }
 }
 
 
 export class Date {
-  constructor(event, date) {
+  constructor(event, spec) {
     this.event = event;
 
-    this.isDateBased = date.start_time === null;
-    this.startTs = date.start;
-    this.endTs = date.end;
+    this.isDateBased = spec.start_time === null;
+    this.startTs = spec.start;
+    this.endTs = spec.end;
 
-    const startDateTs = date.start_date;
-    const endDateTs = date.end_date || date.start_date;
+    const startDateTs = spec.start_date;
+    const endDateTs = spec.end_date || spec.start_date;
     if (this.isDateBased) {
       this.start = moment.unix(startDateTs).utc();
       this.end = moment.unix(endDateTs).utc();
     } else {
-      this.start = moment.unix(startDateTs + date.start_time).utc();
-      this.end = moment.unix(endDateTs + (date.end_time || date.start_time)).utc();
+      this.start = moment.unix(startDateTs + spec.start_time).utc();
+      this.end = moment.unix(endDateTs + (spec.end_time || spec.start_time)).utc();
     }
   }
 
@@ -88,4 +99,44 @@ export function eventsToDates(events) {
     .map(event => event.getDates())
     .reduce((a, b) => a.concat(b), [])
     .sort((date1, date2) => date1.startTs - date2.startTs);
+}
+
+
+function splitDateSpec(spec) {
+  if (spec.is_continuous ||
+      (!spec.start_time && !spec.schedules.length) ||
+      !spec.end_date ||
+      spec.start_date == spec.end_date) {
+    return [spec];
+  }
+
+  const start = moment.unix(spec.start_date).utc();
+  const end = moment.unix(spec.end_date).utc();
+  const days = end.diff(start, 'days');
+  const schedules =
+    spec.schedules.length
+    ? spec.schedules
+    : [{
+      days_of_week: [0, 1, 2, 3, 4, 5, 6],
+      start_time: spec.start_time,
+      end_time: spec.end_time,
+    }];
+
+  const specs = [];
+  range(days).forEach(n => {
+    const startDate = start.clone().add(n, 'days');
+    const dayOfWeek = startDate.isoWeekday();
+    const schedule = schedules.find(s => s.days_of_week.indexOf(dayOfWeek) >= 0);
+    if (schedule) {
+      specs.push({
+        start_date: startDate.unix(),
+        start_time: schedule.start_time,
+        end_time: schedule.end_time,
+        start: startDate.unix() + schedule.start_time,
+        end: startDate.unix() + schedule.end_time, // FIXME: handle end_time lower than start_time
+      });
+    };
+  });
+
+  return specs;
 }

@@ -9,12 +9,10 @@
           <td rowspan="<%- group.items.length %>" colspan="2" class="schedule-date-cell">
             <div class="item-date">
               <div class="item-day"><%- group.range.start.format('D MMMM') %></div>
-              <div class="item-day-of-week"><%- group.range.start.format('dddd') %></div>
             </div>
             &ndash;
             <div class="item-date">
               <div class="item-day"><%- group.range.end.format('D MMMM') %></div>
-              <div class="item-day-of-week"><%- group.range.end.format('dddd') %></div>
             </div>
           </td>
           <% group.items.forEach(function(date, index) { %>

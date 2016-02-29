@@ -144,7 +144,7 @@
   {
     "@context": "http://schema.org",
     "@type": "<% if (event.isFestival()) { %>Festival<% } else { %>TheaterEvent<% } %>",
-    <% if (date.end && date.end !== date.start) { %>"endDate": "<%- moment.unix(date.end).tz(location.timezone).format() %>",<% } %>
+    <% if (date.end && date.end !== date.start) { %>"endDate": "<%- moment.unix(date.endTs).tz(location.timezone).format() %>",<% } %>
     <% if (place) { %>
     "location": {
       "@type": "Place",
@@ -154,7 +154,7 @@
     },
     <% } %>
     "name": "<%- event.getShortTitle() %>",
-    "startDate": "<%- moment.unix(date.start).tz(location.timezone).format() %>"
+    "startDate": "<%- moment.unix(date.startTs).tz(location.timezone).format() %>"
   }
   </script>
   <% }) %>

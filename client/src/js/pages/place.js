@@ -52,9 +52,7 @@ export default class PlacePage extends Page {
 
   displaySchedule(events) {
     const container = this.element.querySelector('.schedule-page > div');
-    const dates = eventsToDates(events)
-      .filter(date => date.isFuture())
-      .map(date => date.momentize(this.location.timezone));
+    const dates = eventsToDates(events).filter(date => date.isFuture());
 
     if (dates.length) {
       const view = new ScheduleView({app: this.app, dates: dates});

@@ -38,16 +38,28 @@ export default class Event extends Model {
   }
 
   getDates() {
-    return this.data.dates.map(date => new Date(this, date.start, date.end));
+    return this.data.dates.map(date => new Date(this, date));
   }
 }
 
 
 export class Date {
-  constructor(event, start, end) {
+  constructor(event, date) {
     this.event = event;
-    this.start = start;
-    this.end = end || start;
+
+    this.isDateBased = date.start_time === null;
+    this.startTs = date.start;
+    this.endTs = date.end;
+
+    const startDateTs = date.start_date;
+    const endDateTs = date.end_date || date.start_date;
+    if (this.isDateBased) {
+      this.start = moment.unix(startDateTs).utc();
+      this.end = moment.unix(endDateTs).utc();
+    } else {
+      this.start = moment.unix(startDateTs + date.start_time).utc();
+      this.end = moment.unix(endDateTs + (date.end_time || date.start_time)).utc();
+    }
   }
 
   intersectsAny(others) {
@@ -55,19 +67,15 @@ export class Date {
   }
 
   intersects(other) {
-    return this.end >= other.start && this.start < other.end;
+    return this.endTs >= other.startTs && this.startTs < other.endTs;
+  }
+
+  getDuration() {
+    return moment.duration((this.endTs - this.startTs) * 1000);
   }
 
   isFuture() {
-    return this.start > moment().unix();
-  }
-
-  momentize(timezone) {
-    return {
-      event: this.event,
-      start: moment.unix(this.start).tz(timezone),
-      end: moment.unix(this.end).tz(timezone)
-    }
+    return this.startTs > moment().unix();
   }
 }
 
@@ -76,5 +84,5 @@ export function eventsToDates(events) {
   return events
     .map(event => event.getDates())
     .reduce((a, b) => a.concat(b), [])
-    .sort((date1, date2) => date1.start - date2.start);
+    .sort((date1, date2) => date1.startTs - date2.startTs);
 }

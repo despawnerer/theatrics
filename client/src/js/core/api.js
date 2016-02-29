@@ -10,7 +10,7 @@ export default class TheatricsAPI {
   }
 
   fetchEvent(id) {
-    return this.get(`/events/${id}/`, {expand: 'place,images'});
+    return this.get(`/events/${id}/`, {expand: 'place,images,dates'});
   }
 
   fetchPlace(id) {
@@ -23,6 +23,7 @@ export default class TheatricsAPI {
       {
         categories: 'theater',
         fields: 'id,title,short_title,dates,location,tagline',
+        expand: 'dates',
         page_size: 100,
         parent_id: id,
       }
@@ -35,6 +36,7 @@ export default class TheatricsAPI {
       {
         categories: 'theater',
         fields: 'id,title,short_title,dates,location,tagline',
+        expand: 'dates',
         page_size: 100,
         place_id: id,
         actual_since: moment().unix(),

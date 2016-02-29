@@ -57,7 +57,6 @@ export default class EventPage extends Page {
     const parentDates = this.event.getDates();
     const dates = eventsToDates(events)
       .filter(date => date.intersectsAny(parentDates))
-      .map(date => date.momentize(this.location.timezone));
 
     if (dates.length) {
       const view = new ScheduleView({app: this.app, dates: dates});

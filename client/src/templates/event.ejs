@@ -67,23 +67,31 @@
           <span class="item-information-value">
             <ol class="item-dates">
             <% event.getDisplayDates().forEach(function(date) { %>
-              <% var start = moment.unix(date.start).tz(location.timezone) %>
-              <% var end = moment.unix(date.end).tz(location.timezone) %>
-              <% var isRange = end && !start.isSame(end, 'day') %>
+              <% var isLong = date.getDuration().asDays() > 1 %>
               <li<% if (isRange) { %> class="double-size"<% } %>>
-                <div class="item-date">
-                  <div class="item-day"><%- start.format('D MMMM') %></div>
-                  <div class="item-day-of-week"><%- start.format('dddd') %></div>
-                </div>
-                <% if (!end || start.isSame(end, 'minute')) { %>
-                  <div class="item-time"><%- start.format('LT') %></div>
-                <% } else if (start.isSame(end, 'day')) { %>
-                  <div class="item-time"><%- start.format('LT') %>&ndash;<%- end.format('LT') %></div>
-                <% } else { %>
-                  &ndash;
+                <% if (date.isDateBased || isLong) { %>
                   <div class="item-date">
-                    <div class="item-day"><%- end.format('D MMMM') %></div>
-                    <div class="item-day-of-week"><%- end.format('dddd') %></div>
+                    <div class="item-day"><%- date.start.format('D MMMM') %></div>
+                    <div class="item-day-of-week"><%- date.start.format('dddd') %></div>
+                  </div>
+                  <% if (isLong) {%>
+                    &ndash;
+                    <div class="item-date">
+                      <div class="item-day"><%- date.end.format('D MMMM') %></div>
+                      <div class="item-day-of-week"><%- date.end.format('dddd') %></div>
+                    </div>
+                  <% } %>
+                <% } else { %>
+                  <div class="item-date">
+                    <div class="item-day"><%- date.start.format('D MMMM') %></div>
+                    <div class="item-day-of-week"><%- date.start.format('dddd') %></div>
+                  </div>
+                  <div class="item-time">
+                    <% if (date.start.isSame(date.end, 'minute')) { %>
+                      <%- date.start.format('LT') %>
+                    <% } else { %>
+                      <%- date.start.format('LT') %>&ndash;<%- date.end.format('LT') %>
+                    <% } %>
                   </div>
                 <% } %>
               </li>

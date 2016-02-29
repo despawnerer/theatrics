@@ -28,13 +28,9 @@ export default class Event extends Model {
   }
 
   getDisplayDates() {
-    const futureDates = this.getFutureDates();
-    return futureDates.length ? futureDates : this.getDates();
-  }
-
-  getFutureDates() {
-    const now = moment().unix();
-    return this.getDates().filter(date => date.start > now);
+    const allDates = this.getDates();
+    const actualDates = allDates.filter(date => date.isActual())
+    return actualDates.length ? actualDates : allDates;
   }
 
   getDates() {
@@ -83,10 +79,6 @@ export class Date {
 
   isActual() {
     return this.endTs > moment().unix();
-  }
-
-  isFuture() {
-    return this.startTs > moment().unix();
   }
 }
 

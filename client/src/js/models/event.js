@@ -23,6 +23,24 @@ export default class Event extends Model {
     }
   }
 
+  getDuration() {
+    const durations = this.getDates()
+      .map(date => date.getDuration())
+      .filter(duration => Boolean(duration));
+
+    if (!durations.length) {
+      return undefined;
+    }
+
+    const [first, ...others] = durations;
+    if (others.every(duration => duration.asMinutes() == first.asMinutes())) {
+      console.log(first.asHours())
+      return first;
+    } else {
+      return undefined;
+    }
+  }
+
   getDisplayDates() {
     const allDates = this.getDates();
     const actualDates = allDates.filter(date => date.isActual())

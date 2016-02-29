@@ -2,7 +2,7 @@ import Events from 'events-mixin';
 import extend from 'xtend';
 import isPromise from 'is-promise';
 
-import {forceScroll} from '../utils';
+import {forceScroll, uuid} from '../utils';
 
 import Cache from './cache';
 import Response from './response';
@@ -16,7 +16,6 @@ export default class Router {
 
     this.cache = new Cache(5);
     this.state = {};
-    this.lastStateId = 0;
 
     this.events = new Events(document, this);
     this.events.bind('click a', 'onAnchorClick');
@@ -154,7 +153,7 @@ export default class Router {
 
   buildStateFromPath(path) {
     return {
-      id: this.lastStateId++,
+      id: uuid(),
       route: this.app.resolver.resolve(path),
     }
   }

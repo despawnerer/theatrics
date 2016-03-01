@@ -43,6 +43,40 @@ p {
 }
 
 
+/* Popup */
+
+.popup-box {
+  transition: visibility 0.15s;
+}
+
+.popup-box[hidden] {
+  display: block;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.popup-backdrop {
+  position: fixed;
+  left: 0;
+  top: -200px;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background: transparent;
+}
+
+@media (max-width: 450px) {
+  .popup-backdrop {
+    background: rgba(0, 0, 0, 0.2);
+    transition: opacity 0.15s;
+  }
+
+  .popup-box[hidden] .popup-backdrop {
+    opacity: 0;
+  }
+}
+
+
 /* Loader */
 
 .loader {
@@ -542,31 +576,20 @@ p {
   top: 100%;
   left: 50%;
   z-index: 100;
-  transform: translate(-50%, 0);
-  transition: visibility 0.15s;
-  margin-top: 10px;
-}
-
-.calendar-box[hidden] {
-  display: block;
-  visibility: hidden;
-  pointer-events: none;
 }
 
 .calendar {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-
+  position: relative;
+  left: -50%;
+  margin-top: 10px;
   background: white;
   font-size: 14px;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-  overflow: hidden;
   transition: transform 0.15s, opacity 0.15s;
   transform-origin: center top;
 }
 
-.calendar::after {
+.calendar::before {
   content: "";
   position: absolute;
   width: 0;
@@ -587,6 +610,13 @@ p {
 .calendar-box[hidden] .calendar {
   opacity: 0;
   transform: scale(0.9);
+}
+
+.calendar-inner {
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
 }
 
 .calendar .months-container {
@@ -680,18 +710,20 @@ p {
 
 @media (max-width: 450px) {
   .calendar-box {
-    top: 50%;
-    left: 50%;
     position: fixed;
-    transform: translate(-50%, -50%);
-    margin: 0;
+    top: 0;
+    left: 50%;
+    margin-top: 50%;
   }
 
   .calendar {
+    left: -50%;
+    top: 0;
+    margin: 0;
     transform-origin: center center;
   }
 
-  .calendar::after {
+  .calendar::before {
     display: none;
   }
 }
@@ -701,14 +733,14 @@ p {
     top: 100%;
     left: initial;
     right: 0;
-    transform: none;
   }
 
   .calendar {
+    left: 0;
     transform-origin: right top;
   }
 
-  .calendar::after {
+  .calendar::before {
     margin: 0;
     left: initial;
     right: 12px;

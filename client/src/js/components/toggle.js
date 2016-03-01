@@ -2,43 +2,27 @@ import {show, hide, toggle} from '../utils';
 
 
 export default class Toggle {
-  constructor(element) {
+  constructor(element, context=document) {
     this.element = element;
-    this.contentSelector = element.getAttribute('data-toggle');
+    this.target = context.querySelector(element.getAttribute('data-target'));
+    this.backdrop = context.querySelector(element.getAttribute('data-backdrop'));
     this.attach();
   }
 
   attach() {
     this.element.addEventListener('click', event => this.toggle());
-    document.addEventListener('click', this.onDocumentClick.bind(this));
-  }
-
-  onDocumentClick(event) {
-    const target = event.target;
-    const content = this.getContentElements();
-
-    const isInsideToggle = this.element.contains(target);
-    const isInsideContent = content.some(element => element.contains(target));
-    if (isInsideToggle || isInsideContent) {
-      return;
-    }
-
-    this.hide();
+    this.backdrop.addEventListener('click', event => this.hide())
   }
 
   toggle() {
-    this.getContentElements().forEach(element => toggle(element));
+    toggle(this.target);
   }
 
   show() {
-    this.getContentElements().forEach(show);
+    show(this.target);
   }
 
   hide() {
-    this.getContentElements().forEach(hide);
-  }
-
-  getContentElements() {
-    return Array.from(document.querySelectorAll(this.contentSelector));
+    hide(this.target);
   }
 }

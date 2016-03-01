@@ -43,7 +43,7 @@ export default class Calendar extends View {
   mount(element, sync=false) {
     this.element = element;
 
-    new Toggle(element.querySelector('.custom-date-button'));
+    new Toggle(element.querySelector('.custom-date-button'), element);
     new Slider(element.querySelector('.calendar'), false);
 
     if (sync) {

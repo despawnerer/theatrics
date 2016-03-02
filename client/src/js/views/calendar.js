@@ -5,7 +5,7 @@ import View from '../base/view';
 import Toggle from '../components/toggle';
 import Slider from '../components/slider';
 
-import {toggleClass, hide, range} from '../utils';
+import {toggleClass, hide, range, rotateLeft} from '../utils';
 
 import template from '../../templates/calendar.ejs';
 
@@ -23,7 +23,7 @@ export default class Calendar extends View {
     const current = {location: this.location, date: this.date};
     const quickDates = range(15).map(n => today.clone().add(n, 'days'));
     const firstDayOfWeek = moment.localeData().firstDayOfWeek();
-    const daysOfWeek = this.getDaysOfWeekInOrder(firstDayOfWeek)
+    const daysOfWeek = rotateLeft(moment.weekdaysMin(), firstDayOfWeek);
     const dateToString = this.dateToString;
 
     const cal = new calendar.Calendar(firstDayOfWeek);
@@ -90,13 +90,5 @@ export default class Calendar extends View {
 
   dateToString(date) {
     return date ? date.format('YYYY-MM-DD') : null;
-  }
-
-  getDaysOfWeekInOrder(firstDayOfWeek) {
-    const names = moment.weekdaysMin();
-    return range(6)
-      .map(n => n + firstDayOfWeek)
-      .map(n => n - 7 * Math.floor(n / 7))
-      .map(n => names[n]);
   }
 }

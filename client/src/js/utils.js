@@ -128,6 +128,11 @@ export function range(bound) {
 }
 
 
+export function rotateLeft(array, n) {
+  return array.slice(n).concat(array.slice(0, n));
+}
+
+
 export function groupArray(array, name, callback, equal=(a, b) => a == b) {
   const groups = [];
   let lastGroup = null;

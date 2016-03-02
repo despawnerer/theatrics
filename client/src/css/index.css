@@ -710,6 +710,13 @@ p {
 }
 
 
+@media (max-width: 349px) {
+  .calendar-month-button { padding: 0 10px; }
+  .calendar-month-button.previous-button { padding-left: 15px; }
+  .calendar-month-button.next-button { padding-right: 15px; }
+}
+
+
 @media (max-width: 699px) {
   /* Centered popup on black background on small devices */
 

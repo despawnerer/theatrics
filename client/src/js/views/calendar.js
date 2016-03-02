@@ -59,7 +59,7 @@ export default class Calendar extends View {
 
   hideCalendar() {
     const doHide = () => hide(this.element.querySelector('.calendar-box'));
-    window.setTimeout(doHide, 5);
+    window.requestAnimationFrame(doHide);
   }
 
   updateLinks() {

@@ -65,7 +65,7 @@ p {
   background: transparent;
 }
 
-@media (max-width: 450px) {
+@media (max-width: 699px) {
   .popup-backdrop {
     background: rgba(0, 0, 0, 0.5);
     transition: opacity 0.15s;
@@ -710,7 +710,7 @@ p {
 }
 
 
-@media (max-width: 450px) {
+@media (max-width: 699px) {
   /* Centered popup on black background on small devices */
 
   .calendar-box {
@@ -743,7 +743,8 @@ p {
   }
 }
 
-@media (min-width: 451px) and (max-width: 1139px) {
+
+@media (min-width: 700px) and (max-width: 1139px) {
   /* Right-aligned popup on larger devices */
 
   .calendar-box {

@@ -31,7 +31,9 @@ export default class Slider {
       this.events.bind('touchmove', 'onTouchMove');
     }
 
-    element.querySelector(this.selectors.items).classList.add('active');
+    if (!this.getActiveItem()) {
+      element.querySelector(this.selectors.items).classList.add('active');
+    }
   }
 
   // event handlers

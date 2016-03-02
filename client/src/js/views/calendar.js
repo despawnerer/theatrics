@@ -5,7 +5,7 @@ import View from '../base/view';
 import Toggle from '../components/toggle';
 import Slider from '../components/slider';
 
-import {toggleClass, range} from '../utils';
+import {toggleClass, hide, range} from '../utils';
 
 import template from '../../templates/calendar.ejs';
 
@@ -46,10 +46,20 @@ export default class Calendar extends View {
     new Toggle(element.querySelector('.custom-date-button'), element);
     new Slider(element.querySelector('.calendar'), false);
 
+    element
+      .querySelector('.calendar .months-container')
+      .addEventListener('click', event => this.hideCalendar());
+
     if (sync) {
+      this.hideCalendar();
       this.updateLinks();
       this.updateActiveDate();
     }
+  }
+
+  hideCalendar() {
+    const doHide = () => hide(this.element.querySelector('.calendar-box'));
+    window.setTimeout(doHide, 5);
   }
 
   updateLinks() {

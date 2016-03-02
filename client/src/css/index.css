@@ -58,9 +58,9 @@ p {
 .popup-backdrop {
   position: fixed;
   left: 0;
-  top: -200px;
   right: 0;
-  bottom: 0;
+  top: -200px;  /* compensate for browser address bar on mobile */
+  bottom: -200px;
   z-index: -1;
   background: transparent;
 }
@@ -617,13 +617,14 @@ p {
   display: flex;
   flex-direction: row;
   align-items: stretch;
+  max-width: 100vw;
 }
 
 .calendar .months-container {
-  width: 252px;
+  max-width: 252px;
   display: flex;
   flex-direction: row;
-  position: relative;
+  position: relative;  /* so that slider works */
   transition: transform 0.15s;
   z-index: 1;
   list-style: none;
@@ -649,9 +650,10 @@ p {
 
 .calendar table {
   font-size: 14px;
-  margin: 10px 0 20px 0;
+  padding: 15px 0 20px 0;
   border: 0;
   color: silver;
+  width: 100%;
 }
 
 .calendar-month-button {
@@ -688,14 +690,14 @@ p {
 
 .calendar th {
   font-weight: bold;
-  padding: 10px;
+  padding: 10px 0;
   color: black;
 }
 
 .calendar .calendar-day {
-  padding: 10px;
-  box-sizing: border-box;
-  width: 36px;
+  display: block;
+  padding: 0 0 0 10px;
+  line-height: 36px;
   height: 36px;
 }
 
@@ -711,20 +713,31 @@ p {
 @media (max-width: 450px) {
   .calendar-box {
     position: fixed;
+    left: 0;
     top: 0;
-    left: 50%;
-    margin-top: 50%;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .calendar-box[hidden] {
+    display: flex;
   }
 
   .calendar {
-    left: -50%;
-    top: 0;
+    position: static;
     margin: 0;
     transform-origin: center center;
   }
 
   .calendar::before {
     display: none;
+  }
+
+  .calendar .month-item {
+    width: 100%;
   }
 }
 

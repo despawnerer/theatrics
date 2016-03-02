@@ -42,6 +42,10 @@ p {
   display: none;
 }
 
+.past, .past div, .past span, .past a { color: #777; }
+.past a:hover .link-text { color: #999; }
+.past .link-text { border-color: #ccc; }
+
 
 /* Loader */
 

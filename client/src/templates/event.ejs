@@ -68,7 +68,8 @@
             <ol class="item-dates">
             <% event.getDisplayDates().forEach(function(date) { %>
               <% var isLong = date.getDuration().asDays() > 1 %>
-              <li<% if (isLong) { %> class="double-size"<% } %>>
+              <% var isPast = !date.isActual() %>
+              <li class="<% if (isLong) { %>double-size<% } %><% if (isPast) { %> past<% } %>">
                 <% if (date.isDateBased || isLong) { %>
                   <div class="item-date">
                     <div class="item-day"><%- date.start.format('D MMMM') %></div>

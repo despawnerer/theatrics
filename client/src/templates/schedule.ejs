@@ -1,8 +1,9 @@
 <div class="schedule">
   <table class="schedule-table" cellspacing="0" cellpadding="0">
     <% rangeGroups.forEach(function(group) { %>
+      <% var isPast = group.range.end.isBefore(moment().set({hour: 0, minute: 0, second: 0})) %>
       <% var isLong = !group.range.start.isSame(group.range.end, 'day') %>
-      <tbody class="schedule-day-body">
+      <tbody class="schedule-day-body<% if (isPast) { %> past<% } %>">
         <tr class="schedule-row">
 
         <% if (isLong) { %>

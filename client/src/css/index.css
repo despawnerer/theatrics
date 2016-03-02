@@ -711,6 +711,8 @@ p {
 
 
 @media (max-width: 450px) {
+  /* Centered popup on black background on small devices */
+
   .calendar-box {
     position: fixed;
     left: 0;
@@ -742,6 +744,8 @@ p {
 }
 
 @media (min-width: 451px) and (max-width: 1139px) {
+  /* Right-aligned popup on larger devices */
+
   .calendar-box {
     top: 100%;
     left: initial;

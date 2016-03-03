@@ -59,7 +59,7 @@ export function clear(element) {
 }
 
 
-export function toggleClass(element, className, condition) {
+export function toggleClass(element, className, condition=undefined) {
   /* This shim is used because older Safari and IE don't support
      the second arg to classList.toggle */
   if (condition === undefined) {
@@ -74,7 +74,11 @@ export function toggleClass(element, className, condition) {
 }
 
 
-export function toggle(element, condition) {
+export function toggle(element, condition=undefined) {
+  if (condition === undefined) {
+    condition = element.hasAttribute('hidden');
+  }
+
   if (condition) {
     show(element);
   } else {
@@ -121,6 +125,11 @@ export function range(bound) {
     range.push(n);
   }
   return range;
+}
+
+
+export function rotateLeft(array, n) {
+  return array.slice(n).concat(array.slice(0, n));
 }
 
 

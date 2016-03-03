@@ -1,13 +1,84 @@
 <nav class="calendar-container">
-  <ol class="calendar">
-    <li class="calendar-day any<% if (!current.date) { %> active<% } %>">
-      <a href="<%- url('event-list', {location: current.location.slug}) %>">Самое</a>
-    <% dates.forEach(function(date) { %>
+  <ol class="quick-calendar">
+    <li>
+      <a
+        href="<%- url('event-list', {location: current.location.slug}) %>"
+        class="
+          calendar-day
+          any
+          <% if (!current.date) { %>active<% } %>
+        ">Самое</a>
+
+    <% quickDates.forEach(function(date) { %>
       <% var dateString = dateToString(date) %>
-      <li class="calendar-day<% if (date.isSame(current.date)) { %> active<% } %>" data-date="<%- dateString %>">
-        <a href="<%- url('event-list', {location: current.location.slug, date: dateString}) %>">
+      <li>
+        <a
+          href="<%- url('event-list', {location: current.location.slug, date: dateString}) %>"
+          data-date="<%- dateString %>"
+          class="
+            calendar-day
+            <% if (date.isSame(current.date)) { %> active<% } %>
+          ">
           <%- date.format('D') %><br/><%- date.format('dd') %>
         </a>
     <% }) %>
+
+    <li>
+      <button class="custom-date-button" data-target=".calendar-box" data-backdrop=".calendar-backdrop">⋮</button>
+
+      <div class="popup-box calendar-box" hidden>
+        <div class="popup-backdrop calendar-backdrop"></div>
+        <div class="calendar" data-next-button=".next-button" data-previous-button=".previous-button" data-container=".months-container" data-items=".month-item">
+          <div class="calendar-inner">
+            <button class="calendar-month-button previous-button" hidden>
+              <span class="icon-chevron-thin-left"></span>
+            </button>
+            <ol class="months-container">
+              <% months.forEach(function(month) { %>
+              <li class="month-item">
+                <table cellspacing="0" cellpadding="0">
+                  <thead>
+                    <tr>
+                      <th colspan="7"><%= month.name %></th>
+                    </tr>
+                    <tr>
+                      <% daysOfWeek.forEach(function(dow) { %>
+                        <th><%- dow %></th>
+                      <% }) %>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% month.weekDates.forEach(function(weekDates) { %>
+                    <tr>
+                      <% weekDates.forEach(function(date) { %>
+                      <% var dateString = dateToString(date) %>
+                      <td>
+                        <% if (date.month() == month.number) { %>
+                          <a
+                            href="<%- url('event-list', {location: current.location.slug, date: dateString}) %>"
+                            data-date="<%- dateString %>"
+                            class="
+                              calendar-day
+                              <% if (date.isSame(today, 'day')) { %>today<% } %>
+                              <% if (date.isSame(current.date, 'day')) { %>active<% } %>
+                            "><%- date.date() %></a>
+                        <% } else { %>
+                          <span class="calendar-day"><%- date.date() %></span>
+                        <% } %>
+                      </td>
+                      <% }) %>
+                    </tr>
+                    <% }) %>
+                  </tbody>
+                </table>
+              </li>
+              <% }) %>
+            </ol>
+            <button class="calendar-month-button next-button">
+              <span class="icon-chevron-thin-right"></span>
+            </button>
+          </div>
+        </div>
+      </div>
   </ol>
 </nav>

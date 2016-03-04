@@ -418,7 +418,7 @@ p {
 }
 
 .festival-badge { background: #ff0000; }
-.premiere-badge { background: rgb(100, 100, 100); }
+.premiere-badge { background: rgb(130, 130, 130); }
 
 @media (max-width: 719px) {
   .badges-block { margin-bottom: 10px; }

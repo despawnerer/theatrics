@@ -93,8 +93,9 @@ export default class Router {
   }
 
   loadNewState(state) {
-    const handler = this.getHandler(state.route.name);
-    const response = handler(this.app, state.route.args);
+    const route = state.route || {};
+    const handler = this.getHandler(route.name);
+    const response = handler(this.app, route.args);
     // This isn't written in a more generic way because for some reason
     // doing rendering from within a Promise callback causes flickering
     // in Safari, and I don't like it. So we're stuck with this mess

@@ -22,7 +22,7 @@ export default class TheatricsAPI {
       '/events/',
       {
         categories: 'theater',
-        fields: 'id,title,short_title,dates,location,tagline,categories',
+        fields: 'id,title,short_title,dates,location,tagline,categories,tags',
         expand: 'dates',
         page_size: 100,
         parent_id: id,
@@ -35,7 +35,7 @@ export default class TheatricsAPI {
       '/events/',
       {
         categories: 'theater',
-        fields: 'id,title,short_title,dates,location,tagline,categories',
+        fields: 'id,title,short_title,dates,location,tagline,categories,tags',
         expand: 'dates',
         page_size: 100,
         place_id: id,
@@ -47,7 +47,7 @@ export default class TheatricsAPI {
   getEventsFeed(location, date) {
     const params = {
       categories: 'theater,-kids',
-      fields: 'place,images,tagline,id,title,short_title,categories,description',
+      fields: 'place,images,tagline,id,title,short_title,categories,description,tags',
       expand: 'place,images',
       page_size: 24,
       location: location.slug,

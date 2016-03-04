@@ -40,6 +40,10 @@ export default class Event extends Model {
     }
   }
 
+  isPremiere() {
+    return this.data.tags && this.data.tags.indexOf('премьера') !== -1;
+  }
+
   isFestival() {
     return this.data.categories.indexOf('festival') !== -1;
   }

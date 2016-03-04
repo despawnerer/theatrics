@@ -6,7 +6,9 @@
     <h2 class="item-header">
       <%- event.getShortTitle() %>
       <% if (event.isFestival()) { %>
-        <span class="festival-badge">Фестиваль</span>
+        <span class="badge festival-badge">Фестиваль</span>
+      <% } else if (event.isPremiere()) { %>
+        <span class="badge premiere-badge">Премьера</span>
       <% } %>
     </h2>
   </a>

@@ -23,7 +23,11 @@
               <h2 class="schedule-item-title">
                 <a href="<%- url('event', {id: event.data.id }) %>">
                   <span class="link-text"><%- event.getShortTitle() %></span>
-                  <% if (event.isFestival()) { %><span class="festival-badge">Фестиваль</span><% } %>
+                  <% if (event.isFestival()) { %>
+                    <span class="badge festival-badge">Фестиваль</span>
+                  <% } else if (event.isPremiere()) { %>
+                    <span class="badge premiere-badge">Премьера</span>
+                  <% } %>
                 </a>
               </h2>
               <% if (event.data.tagline) { %>
@@ -48,6 +52,11 @@
               <h2 class="schedule-item-title">
                 <a href="<%- url('event', {id: event.data.id }) %>">
                   <span class="link-text"><%- event.getShortTitle() %></span>
+                  <% if (event.isFestival()) { %>
+                    <span class="badge festival-badge">Фестиваль</span>
+                  <% } else if (event.isPremiere()) { %>
+                    <span class="badge premiere-badge">Премьера</span>
+                  <% } %>
                 </a>
               </h2>
               <% if (event.data.tagline) { %>

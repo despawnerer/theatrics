@@ -399,14 +399,13 @@ p {
 }
 
 
-/* Nice little badge for festivals */
+/* Badges */
 
-.festival-badge-block {
+.badges-block {
   margin-bottom: 12px;
 }
 
-.festival-badge {
-  background: red;
+.badge {
   border-radius: 2px;
   display: inline-block;
   font-size: 11px;
@@ -418,10 +417,12 @@ p {
   margin: 5px 0;
 }
 
+.festival-badge { background: #ff0000; }
+.premiere-badge { background: rgb(100, 100, 100); }
+
 @media (max-width: 719px) {
-  .festival-badge-block {
-    margin-bottom: 10px;
-  }
+  .badges-block { margin-bottom: 10px; }
+  .badges-block .badge { margin: 0; }
 }
 
 

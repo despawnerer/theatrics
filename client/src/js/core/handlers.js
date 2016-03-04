@@ -19,6 +19,7 @@ export function index(app) {
 
 
 export function location(app, {location}) {
+  if (!app.locations.has(location)) return notFound(app);
   return Redirect(app.resolver.reverse('event-list', {location}));
 }
 
@@ -26,6 +27,8 @@ export function location(app, {location}) {
 export function eventList(app, {location, date}) {
   location = app.locations.get(location);
   date = date ? moment.tz(date, location.timezone) : null;
+  if (!location) return notFound(app);
+
   const feed = app.api.getEventsFeed(location, date);
   const page = new EventListPage({app, location, date, feed});
   return Render({page});
@@ -45,6 +48,8 @@ export function event(app, {id}) {
 
 export function placeList(app, {location}) {
   location = app.locations.get(location);
+  if (!location) return notFound(app);
+
   const feed = app.api.getPlacesFeed(location);
   const page = new PlaceListPage({app, location, feed});
   return Render({page});

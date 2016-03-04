@@ -6,6 +6,10 @@ export default class Locations {
     this._locations = locations;
   }
 
+  has(slug) {
+    return Boolean(this.get(slug));
+  }
+
   get(slug) {
     return this._locations.find(x => x.slug == slug);
   }

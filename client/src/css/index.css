@@ -51,7 +51,7 @@ p {
 /* Popup */
 
 .popup-box {
-  transition: visibility 0s;  /* make item visible immediately */
+  transition: visibility 0s;  /* make the popup visible immediately */
 }
 
 .popup-box[hidden] {

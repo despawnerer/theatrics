@@ -51,13 +51,14 @@ p {
 /* Popup */
 
 .popup-box {
-  transition: visibility 0.15s;
+  transition: visibility 0s;  /* make item visible immediately */
 }
 
 .popup-box[hidden] {
   display: block;
   visibility: hidden;
   pointer-events: none;
+  transition: visibility 0.15s;
 }
 
 .popup-backdrop {
@@ -653,6 +654,11 @@ p {
   height: auto;
   opacity: 1;
   visibility: visible;
+}
+
+.calendar-box[hidden] .month-item.active {
+  /* Avoid overriding visibility of the calendar on the month item */
+  visibility: hidden;
 }
 
 .calendar table {

@@ -1183,7 +1183,6 @@ p {
 
 .item-day-of-week {
   font-size: 12px;
-  margin: 0 0 2px 0;
   color: #333;
   line-height: normal;
 }
@@ -1191,7 +1190,7 @@ p {
 .item-time {
   font-size: 14px;
   color: #333;
-  line-height: normal;
+  line-height: 22px;
 }
 
 .source-information {

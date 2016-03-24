@@ -158,17 +158,17 @@ gulp.task('build-min-html', () => {
 });
 
 
-/* Fonts */
+/* Static */
 
-gulp.task('build-fonts', () => {
+gulp.task('copy-static', () => {
   return gulp
-    .src('src/fonts/*')
-    .pipe(gulp.dest('build/static/fonts'));
+    .src(['src/fonts/*', 'src/icons/*'], {base: 'src'})
+    .pipe(gulp.dest('build/static/'));
 });
 
-gulp.task('watch-fonts', () => {
-  gulp.start(['build-fonts']);
-  gulp.watch('src/fonts/*', ['build-fonts']);
+gulp.task('watch-static', () => {
+  gulp.start(['copy-static']);
+  gulp.watch(['src/fonts/*', 'src/icons/*'], ['copy-static']);
 });
 
 
@@ -250,14 +250,14 @@ gulp.task('watch', () => {
   gulp.start('watch-css');
   gulp.start('watch-js');
   gulp.start('watch-html');
-  gulp.start('watch-fonts');
+  gulp.start('watch-static');
 });
 
 gulp.task('build', [
   'build-css',
   'build-js',
   'build-html',
-  'build-fonts',
+  'copy-static',
   'generate-sitemap',
 ]);
 
@@ -265,7 +265,7 @@ gulp.task('build-min', [
   'build-min-css',
   'build-min-js',
   'build-min-html',
-  'build-fonts',
+  'copy-static',
   'generate-sitemap',
 ]);
 

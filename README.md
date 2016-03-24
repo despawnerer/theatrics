@@ -3,7 +3,7 @@ Theatrics
 
 A theater playbill app using KudaGo API. Only in Russian language right now.
 
-Available at http://theatrics.plansfortheday.org/
+Available at http://theatrics.ru/
 
 
 Prerequisites

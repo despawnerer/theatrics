@@ -30,7 +30,7 @@ import allTimezones from 'moment-timezone/data/unpacked/latest.json';
 import pkginfo from './package.json';
 
 
-const ROOT_URL = 'http://theatrics.plansfortheday.org/'
+const ROOT_URL = 'http://theatrics.ru/'
 
 
 /* CSS */

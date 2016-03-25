@@ -7,6 +7,11 @@ export default class Place extends Model {
     return this.data.is_stub;
   }
 
+  isReference() {
+    const keys = Object.keys(this.data);
+    return keys.length == 1 && keys[0] == 'id';
+  }
+
   getTitle() {
     return capfirst(this.data.title);
   }
@@ -16,15 +21,23 @@ export default class Place extends Model {
   }
 
   toJSONLD(app) {
+    const url = app.resolver.reverse('place', {id: this.data.id});
+
+    if (this.isReference()) {
+      return {
+        '@id': url,
+      }
+    }
+
     const result = {
       '@context': 'http://schema.org',
       '@type': 'Place',
+      '@id': url,
       name: this.getTitle(),
       address: this.data.address,
     }
 
     if (!this.isStub()) {
-      const url = app.resolver.reverse('place', {id: this.data.id});
       result.url = makeAbsoluteURL(url);
     }
 

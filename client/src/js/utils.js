@@ -114,6 +114,15 @@ export function niceURL(s) {
 }
 
 
+export function getMapURL(title, address, location, isiOS) {
+  if (isiOS) {
+    return `//maps.apple.com/?q=${title}&address=${address}, ${location}`;
+  } else {
+    return `//maps.google.com/?q=${title}, ${address}, ${location}`;
+  }
+}
+
+
 export function capfirst(s) {
   return s.slice(0, 1).toUpperCase() + s.slice(1);
 }

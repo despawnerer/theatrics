@@ -18,6 +18,7 @@ import {
   bigLoader,
   capfirst,
   isiOS,
+  getMapURL,
   restrictBreaks,
   niceURL
 } from '../utils';
@@ -55,6 +56,7 @@ export default class App {
       moment,
       capfirst,
       isiOS,
+      getMapURL,
       restrictBreaks,
       niceURL,
       url: (...args) => this.resolver.reverse(...args),

@@ -114,6 +114,11 @@ export function niceURL(s) {
 }
 
 
+export function makeAbsoluteURL(url) {
+  return url.startsWith('http://') ? url : 'http://theatrics.ru' + url;
+}
+
+
 /* Strings */
 
 export function capfirst(s) {

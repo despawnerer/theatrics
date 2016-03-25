@@ -110,15 +110,7 @@
     </div>
   </div>
 
-  <script type="application/ld+json">
-  {
-    "@context": "http://schema.org",
-    "@type": "Place",
-    <% if (place.data.foreign_url) { %>"sameAs": "<%- place.data.foreign_url %>",<% } %>
-    "name": "<%- place.getTitle() %>",
-    "address": "<%- place.data.address %>"
-  }
-  </script>
+  <script type="application/ld+json"><%= JSON.stringify(place.toJSONLD(app)) %></script>
 
   <script type="application/ld+json">
   {

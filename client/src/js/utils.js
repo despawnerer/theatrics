@@ -1,4 +1,5 @@
 import escape from 'lodash.escape';
+import punycode from 'punycode';
 
 
 /* Browser and window tools */
@@ -110,7 +111,7 @@ export function niceURL(s) {
   s = trim(s, '/');
   s = unprefix(s, 'http://');
   s = unprefix(s, 'https://');
-  return s;
+  return punycode.toUnicode(s);
 }
 
 

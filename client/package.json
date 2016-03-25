@@ -26,6 +26,7 @@
     "lodash.escape": "4.0.0",
     "moment": "2.12.0",
     "moment-timezone": "0.5.3",
+    "punycode": "^1.4.1",
     "raf": "^3.2.0",
     "whatwg-fetch": "0.11.0",
     "xtend": "4.0.1"

@@ -32,7 +32,7 @@ export function forceScroll(x, y, maxAttempts=100) {
 }
 
 
-/* HTML snippets */
+/* HTML */
 
 export function bigLoader(progress=0.25) {
   return `<div class="big-loader-container">${loader(progress)}</div>`;
@@ -49,6 +49,14 @@ export function loader(progress=0.25) {
       </circle>
     </svg>
   `
+}
+
+
+export function restrictBreaks(string, separator=', ') {
+  return string
+    .split(separator)
+    .map(part => `<nobr>${escape(part)}</nobr>`)
+    .join(separator);
 }
 
 
@@ -96,37 +104,61 @@ export function hide(element) {
 }
 
 
-/* Generic */
-
-export function restrictBreaks(string, separator=', ') {
-  return string
-    .split(separator)
-    .map(part => `<nobr>${escape(part)}</nobr>`)
-    .join(separator);
-}
-
+/* URLs */
 
 export function niceURL(s) {
-  if (s.endsWith('/')) s = s.substr(0, s.length - 1);
-  if (s.startsWith('http://')) s = s.substr(7, s.length - 7);
-  if (s.startsWith('https://')) s = s.substr(8, s.length - 8);
+  s = trim(s, '/');
+  s = unprefix(s, 'http://');
+  s = unprefix(s, 'https://');
   return s;
 }
 
 
-export function getMapURL(title, address, location, isiOS) {
-  if (isiOS) {
-    return `//maps.apple.com/?q=${title}&address=${address}, ${location}`;
-  } else {
-    return `//maps.google.com/?q=${title}, ${address}, ${location}`;
-  }
-}
-
+/* Strings */
 
 export function capfirst(s) {
   return s.slice(0, 1).toUpperCase() + s.slice(1);
 }
 
+
+export function unprefix(s, prefix) {
+  return s.startsWith(prefix) ? s.slice(prefix.length) : s;
+}
+
+
+export function trim(s, char=' ') {
+  s = trimStart(s, char);
+  s = trimEnd(s, char);
+  return s;
+}
+
+
+export function trimStart(s, char=' ') {
+  while (s.startsWith(char)) s = s.slice(1);
+  return s;
+}
+
+export function trimEnd(s, char=' ') {
+  while (s.endsWith(char)) s = s.slice(0, -1);
+  return s;
+}
+
+
+export function regexpEscape(s) {
+  return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+}
+
+
+export function uuid() {
+  // this is not a real UUID, but we don't really need a real one
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    const r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+    return v.toString(16);
+  });
+}
+
+
+/* Arrays */
 
 export function range(bound) {
   const range = [];
@@ -159,8 +191,14 @@ export function groupArray(array, name, callback, equal=(a, b) => a == b) {
 }
 
 
-export function regexpEscape(s) {
-  return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+/* Misc */
+
+export function getMapURL(title, address, location, isiOS) {
+  if (isiOS) {
+    return `//maps.apple.com/?q=${title}&address=${address}, ${location}`;
+  } else {
+    return `//maps.google.com/?q=${title}, ${address}, ${location}`;
+  }
 }
 
 
@@ -170,11 +208,4 @@ export function zipIntoObject(keys, values) {
     obj[keys[x]] = values[x];
   }
   return obj;
-}
-
-export function uuid() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
-    const r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
-    return v.toString(16);
-  });
 }

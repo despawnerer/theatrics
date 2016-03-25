@@ -16,15 +16,22 @@ export default class Place extends Model {
   }
 
   toJSONLD(app) {
-    const url = app.resolver.reverse('place', {id: this.data.id});
     const result = {
       '@context': 'http://schema.org',
       '@type': 'Place',
       name: this.getTitle(),
       address: this.data.address,
-      url: makeAbsoluteURL(url),
     }
-    if (this.data.foreign_url) result.sameAs = this.data.foreign_url;
+
+    if (!this.isStub()) {
+      const url = app.resolver.reverse('place', {id: this.data.id});
+      result.url = makeAbsoluteURL(url);
+    }
+
+    if (this.data.foreign_url) {
+      result.sameAs = this.data.foreign_url;
+    }
+
     return result;
   }
 }

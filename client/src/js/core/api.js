@@ -65,7 +65,7 @@ export default class TheatricsAPI {
 
   getPlacesFeed(location) {
     const params = {
-      fields: 'images,title,id,address',
+      fields: 'images,title,id,address,foreign_url',
       categories: 'theatre,-cafe',
       expand: 'images',
       order_by: '-total_visits',

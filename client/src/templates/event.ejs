@@ -49,7 +49,13 @@
             <span class="item-information-icon icon-place" title="Место проведения"></span>
             <span class="item-information-value">
               <% if (place.isStub()) { %>
-                <%- place.getTitle() %>
+                <% if (place.data.address) { %>
+                  <a href="<%- getMapURL(place.data.title, place.data.address, location.name, isiOS()) %>" target="_blank">
+                    <span class="link-text"><%- place.getTitle() %></span>
+                  </a>
+                <% } else { %>
+                  <%- place.getTitle() %>
+                <% } %>
               <% } else { %>
                 <a href="<%- url('place', {id: place.data.id}) %>">
                   <span class="link-text"><%- place.getTitle() %></span>

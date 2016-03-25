@@ -98,10 +98,10 @@
                     <div class="item-day-of-week"><%- date.start.format('dddd') %></div>
                   </div>
                   <div class="item-time">
-                    <% if (date.start.isSame(date.end, 'minute')) { %>
-                      <%- date.start.format('LT') %>
-                    <% } else { %>
+                    <% if (date.hasKnownEnd()) { %>
                       <%- date.start.format('LT') %>&ndash;<%- date.end.format('LT') %>
+                    <% } else { %>
+                      <%- date.start.format('LT') %>
                     <% } %>
                   </div>
                 <% } %>
@@ -151,23 +151,7 @@
   </div>
 
   <% event.getDates().forEach(function(date) { %>
-  <script type="application/ld+json">
-  {
-    "@context": "http://schema.org",
-    "@type": "<% if (event.isFestival()) { %>Festival<% } else { %>TheaterEvent<% } %>",
-    <% if (date.end && date.end !== date.start) { %>"endDate": "<%- moment.unix(date.endTs).tz(location.timezone).format() %>",<% } %>
-    <% if (place) { %>
-    "location": {
-      "@type": "Place",
-      <% if (!place.isStub()) { %>"url": "<%- url('place', {id: place.data.id}) %>",<% } %>
-      "name": "<%- place.getTitle() %>",
-      "address": "<%- place.data.address %>"
-    },
-    <% } %>
-    "name": "<%- event.getShortTitle() %>",
-    "startDate": "<%- moment.unix(date.startTs).tz(location.timezone).format() %>"
-  }
-  </script>
+  <script type="application/ld+json"><%= JSON.stringify(date.toJSONLD(app)) %></script>
   <% }) %>
 
   <script type="application/ld+json">

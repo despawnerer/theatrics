@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 import Model from '../base/model';
-import {capfirst, range} from '../utils';
+import {capfirst, range, makeAbsoluteURL} from '../utils';
 
 import Place from './place';
 
@@ -51,6 +51,16 @@ export default class Event extends Model {
   isExhibition() {
     return this.data.categories.indexOf('exhibition') !== -1;
   }
+
+  getItemType() {
+    if (this.isFestival()) {
+      return 'Festival';
+    } else if (this.isExhibition()) {
+      return 'ExhibitionEvent';
+    } else {
+      return 'TheaterEvent';
+    }
+  }
 }
 
 
@@ -92,8 +102,37 @@ export class Date {
     return moment.duration((this.endTs - this.startTs) * 1000);
   }
 
+  hasKnownEnd() {
+    return this.endTs != this.startTs;
+  }
+
   isActual() {
     return this.endTs > moment().unix();
+  }
+
+  toJSONLD(app) {
+    const url = app.resolver.reverse('event', {id: this.event.data.id});
+    const result = {
+      '@context': 'http://schema.org',
+      '@type': this.event.getItemType(),
+      name: this.event.getShortTitle(),
+      url: makeAbsoluteURL(url),
+    }
+
+    const place = this.event.getPlace();
+    if (place) {
+      result.location = place.toJSONLD(app);
+    }
+
+    if (this.isDateBased) {
+      result.startDate = this.start.format('YYYY-MM-DD');
+      result.endDate = this.end.format('YYYY-MM-DD');
+    } else {
+      result.startDate = this.start.format('YYYY-MM-DD[T]HH:mm');
+      if (this.hasKnownEnd()) result.endDate = this.end.format('YYYY-MM-DD[T]HH:mm');
+    }
+
+    return result;
   }
 }
 

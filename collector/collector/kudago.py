@@ -17,19 +17,10 @@ class KudaGo:
         self.last_call_dt = datetime.min
 
     async def get(self, path, **params):
-        time_since_last_call = datetime.now() - self.last_call_dt
-        if time_since_last_call < self.minimum_delay:
-            delay = (self.minimum_delay - time_since_last_call).total_seconds()
-            await asyncio.sleep(delay)
-
         url = self.build_url(path, params)
-
         for attempt in range(self.max_attempts):
             try:
-                async with self.client.get(url) as response:
-                    result = await self.handle_response(response)
-                    self.last_call_dt = datetime.now()
-                    return result
+                return await self._call(url)
             except InternalError as error:
                 if attempt + 1 == self.max_attempts:
                     raise
@@ -44,6 +35,18 @@ class KudaGo:
         url = urljoin(self.base_url, path.lstrip('/'))
         qs = urlencode(params)
         return '%s?%s' % (url, qs) if qs else url
+
+    async def _call(self, url):
+        time_since_last_call = datetime.now() - self.last_call_dt
+        if time_since_last_call < self.minimum_delay:
+            delay = (self.minimum_delay - time_since_last_call).total_seconds()
+            await asyncio.sleep(delay)
+
+        async with self.client.get(url) as response:
+            try:
+                return await self.handle_response(response)
+            finally:
+                self.last_call_dt = datetime.now()
 
     async def handle_response(self, response):
         if response.status == 200:

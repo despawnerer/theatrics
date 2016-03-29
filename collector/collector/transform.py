@@ -16,10 +16,10 @@ def transform_event(kudago_event):
     categories = kudago_event['categories']
 
     type_ = find_first(('festival', 'exhibition', 'theater'), categories)
-    if type_ in ('festival', 'exhibition'):
-        dates = kudago_event['dates']
-    else:
-        dates = flatten(map(split_date, kudago_event['dates']))
+    dates = filter(is_date_finite, kudago_event['dates'])
+
+    if type_ not in ('festival', 'exhibition'):
+        dates = flatten(map(split_date, dates))
 
     return {
         'id': kudago_event['id'],
@@ -158,3 +158,7 @@ def split_date(spec):
                 'start_time': schedule['start_time'],
                 'end_time': schedule['end_time'],
             }
+
+
+def is_date_finite(spec):
+    return spec['start_date'] and not spec['is_endless'] and not spec['is_startless']

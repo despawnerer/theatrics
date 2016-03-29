@@ -12,6 +12,7 @@ class KudaGo:
         self.base_url = urljoin(KUDAGO_API_BASE_URL, 'v%s/' % version)
         self.client = client
         self.version = version
+        self.max_attempts = 3
         self.minimum_delay = timedelta(seconds=0.3)
         self.last_call_dt = datetime.min
 
@@ -23,17 +24,15 @@ class KudaGo:
 
         url = self.build_url(path, params)
 
-        attempts = 1
-        last_error = None
-        while attempts < 3:
+        for attempt in range(self.max_attempts):
             try:
                 async with self.client.get(url) as response:
-                    return await self.handle_response(response)
+                    result = await self.handle_response(response)
+                    self.last_call_dt = datetime.now()
+                    return result
             except InternalError as error:
-                attempts += 1
-                last_error = error
-        else:
-            raise last_error
+                if attempt + 1 == self.max_attempts:
+                    raise
 
     def get_all(self, path, **params):
         return ListIterator(self, path, params)

@@ -1,5 +1,6 @@
 import json
-
+import asyncio
+from datetime import datetime, timedelta
 from urllib.parse import urljoin, urlencode
 
 
@@ -11,8 +12,15 @@ class KudaGo:
         self.base_url = urljoin(KUDAGO_API_BASE_URL, 'v%s/' % version)
         self.client = client
         self.version = version
+        self.minimum_delay = timedelta(seconds=0.3)
+        self.last_call_dt = datetime.min
 
     async def get(self, path, **params):
+        time_since_last_call = datetime.now() - self.last_call_dt
+        if time_since_last_call < self.minimum_delay:
+            delay = (self.minimum_delay - time_since_last_call).total_seconds()
+            await asyncio.sleep(delay)
+
         url = self.build_url(path, params)
 
         attempts = 1

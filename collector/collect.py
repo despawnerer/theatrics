@@ -10,16 +10,11 @@ from collector.transform import transform_event, transform_place
 ELASTIC_ENDPOINTS = ['localhost:9200']
 ELASTIC_INDEX = 'theatrics'
 
-DEBUG = True
-
 
 async def go():
     with aiohttp.ClientSession() as http_client:
         kudago = KudaGo(http_client)
         elastic = aioes.Elasticsearch(ELASTIC_ENDPOINTS)
-
-        if DEBUG:
-            await elastic.indices.delete(ELASTIC_INDEX)
 
         event_ids, place_ids = await asyncio.gather(
             collect(elastic, fetch_theater_event_pages(kudago),

@@ -24,6 +24,7 @@ def transform_event(kudago_event):
     return {
         'id': kudago_event['id'],
         'type': type_,
+        'is_premiere': 'премьера' in tags,
 
         'name': kudago_event['short_title'],
         'full_name': kudago_event['title'],
@@ -35,7 +36,6 @@ def transform_event(kudago_event):
         'place': kudago_event['place']['id'],
 
         'age_restriction': kudago_event['age_restriction'],
-        'is_premiere': 'премьера' in tags,
         'price': transform_price(kudago_event['price'], kudago_event['is_free']),
 
         'favorites_count': kudago_event['favorites_count'],

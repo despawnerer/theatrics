@@ -14,6 +14,7 @@ from .utils import (
 def transform_event(kudago_event):
     tags = kudago_event['tags']
     categories = kudago_event['categories']
+    place = kudago_event['place']
 
     type_ = find_first(('festival', 'exhibition', 'theater'), categories)
     dates = filter(is_date_finite, kudago_event['dates'])
@@ -33,7 +34,7 @@ def transform_event(kudago_event):
         'description': strip_links(kudago_event['body_text']),
 
         'location': kudago_event['location']['slug'],
-        'place': kudago_event['place']['id'],
+        'place': place['id'] if place else None,
 
         'age_restriction': kudago_event['age_restriction'],
         'price': transform_price(kudago_event['price'], kudago_event['is_free']),

@@ -27,6 +27,22 @@ def strip_links(text):
     return text  # TODO
 
 
+async def flatten_pages(pages):
+    result = []
+    async for page in pages:
+        result += page
+    return result
+
+
+def print_fetch_progress(iterable, type_hint):
+    return AsyncProgressPrinter(
+        iterable,
+        message="Fetched %%(done)d/%%(total)d %s" % type_hint,
+        total=lambda i: i.item_count,
+        each=len,
+    )
+
+
 class AsyncProgressPrinter:
     def __init__(self, iterable, message="%(done)d/%(total)d",
                  total=len, each=lambda item: 1, print=print):

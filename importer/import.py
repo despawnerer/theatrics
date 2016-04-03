@@ -3,6 +3,7 @@ import aiohttp
 import aioes
 from datetime import datetime
 from funcy import flatten
+from functools import wraps
 
 from importer.kudago import KudaGo
 from importer.transform import (
@@ -16,7 +17,10 @@ from importer.fetch import (
     get_event_pages,
     get_place_pages,
 )
-from importer.utils import AsyncProgressPrinter
+from importer.utils import (
+    print_fetch_progress,
+    flatten_pages,
+)
 
 
 ELASTIC_ENDPOINTS = ['localhost:9200']
@@ -108,15 +112,6 @@ async def import_events(elastic, kudago, event_ids):
     )
 
 
-# generic importing functions
-
-async def flatten_pages(pages):
-    result = []
-    async for page in pages:
-        result += page
-    return result
-
-
 async def import_pages(elastic, pages, transform, doc_type):
     futures = []
     async for page in pages:
@@ -137,17 +132,6 @@ async def import_item(elastic, item, transform, doc_type):
     doc_id = doc.pop('id')
     result = await elastic.index(ELASTIC_INDEX, doc_type, doc, id=doc_id)
     return doc_id
-
-
-# logging utilities
-
-def print_fetch_progress(iterable, type_hint):
-    return AsyncProgressPrinter(
-        iterable,
-        message="Fetched %%(done)d/%%(total)d %s" % type_hint,
-        total=lambda i: i.item_count,
-        each=len,
-    )
 
 
 loop = asyncio.get_event_loop()

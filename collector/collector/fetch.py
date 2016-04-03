@@ -1,4 +1,4 @@
-def fetch_theater_events(kudago, since):
+def get_theater_event_pages(kudago, since):
     return kudago.get_all_pages(
         '/events/',
         page_size=100,
@@ -10,7 +10,7 @@ def fetch_theater_events(kudago, since):
     )
 
 
-def fetch_theater_places(kudago):
+def get_theater_place_pages(kudago):
     return kudago.get_all_pages(
         '/places/',
         page_size=100,
@@ -20,7 +20,7 @@ def fetch_theater_places(kudago):
     )
 
 
-def fetch_event_pages(kudago, ids):
+def get_event_pages(kudago, ids):
     return kudago.get_id_pages(
         '/events/',
         ids=ids,
@@ -34,7 +34,7 @@ def fetch_event_pages(kudago, ids):
     )
 
 
-def fetch_place_pages(kudago, ids):
+def get_place_pages(kudago, ids):
     return kudago.get_id_pages(
         '/places/',
         ids=ids,

@@ -25,3 +25,29 @@ def time_from_seconds(seconds):
 
 def strip_links(text):
     return text  # TODO
+
+
+class AsyncProgressPrinter:
+    def __init__(self, iterable, message="%(done)d/%(total)d",
+                 total=len, each=lambda item: 1, print=print):
+        self.iterable = iterable
+        self.message = message
+        self.total_getter = total
+        self.each_getter = each
+        self.total = None
+        self.done = 0
+        self.print = print
+
+    async def __aiter__(self):
+        return self
+
+    async def __anext__(self):
+        try:
+            value = await self.iterable.__anext__()
+        except StopAsyncIteration:
+            raise
+        else:
+            self.total = self.total_getter(self.iterable)
+            self.done += self.each_getter(value)
+            self.print(self.message % {'total': self.total, 'done': self.done})
+            return value

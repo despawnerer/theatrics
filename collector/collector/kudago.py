@@ -42,11 +42,9 @@ class KudaGo:
             delay = (self.minimum_delay - time_since_last_call).total_seconds()
             await asyncio.sleep(delay)
 
+        self.last_call_dt = datetime.now()
         async with self.client.get(url) as response:
-            try:
-                return await self.handle_response(response)
-            finally:
-                self.last_call_dt = datetime.now()
+            return await self.handle_response(response)
 
     async def handle_response(self, response):
         if response.status == 200:

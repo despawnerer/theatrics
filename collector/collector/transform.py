@@ -86,6 +86,29 @@ def transform_place(kudago_place):
     }
 
 
+def transform_stub_place(kudago_place):
+    return {
+        'id': kudago_place['id'],
+
+        'is_closed': kudago_place['is_closed'],
+        'is_stub': kudago_place['is_stub'],
+
+        'full_name': kudago_place['title'],
+
+        'location': kudago_place['location'],
+        'address': kudago_place['address'],
+        'subway': kudago_place['subway'],
+        'coords': kudago_place['coords'],
+
+        'phone_numbers': kudago_place['phone'].split(','),
+
+        'source': {
+            'name': 'KudaGo.com',
+            'url': kudago_place['site_url'],
+        }
+    }
+
+
 # related objects
 
 def transform_price(price_text, is_free):

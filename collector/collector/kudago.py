@@ -1,5 +1,7 @@
 import json
 import asyncio
+from copy import copy
+from math import ceil
 from datetime import datetime, timedelta
 from urllib.parse import urljoin, urlencode
 
@@ -31,6 +33,12 @@ class KudaGo:
     def get_all_pages(self, path, **params):
         return Paginator(self, path, params)
 
+    def get_ids(self, path, ids, page_size, **params):
+        raise NotImplementedError
+
+    def get_id_pages(self, path, ids, page_size, **params):
+        return IDListPaginator(self, path, ids, page_size, params)
+
     def build_url(self, path, params):
         url = urljoin(self.base_url, path.lstrip('/'))
         qs = urlencode(params)
@@ -56,6 +64,8 @@ class KudaGo:
             raise HTTPError(response)
 
 
+# errors
+
 class HTTPError(Exception):
     def __init__(self, response):
         self.status = response.status
@@ -69,11 +79,13 @@ class InternalError(HTTPError):
     pass
 
 
+# iterators
+
 class Paginator:
     def __init__(self, api, path, params):
         self.api = api
         self.next = api.build_url(path, params)
-        self.count = None
+        self.item_count = None
 
     async def __aiter__(self):
         return self
@@ -82,10 +94,43 @@ class Paginator:
         if self.next:
             data = await self.api.get(self.next)
             self.next = data['next']
-            self.count = data['count']
+            self.item_count = data['count']
             return data['results']
         else:
             raise StopAsyncIteration
+
+
+class IDListPaginator:
+    def __init__(self, api, path, ids, page_size, params):
+        self.api = api
+        self.path = path
+        self.ids = list(ids)
+        self.page_size = page_size
+        self.params = params
+
+        self.item_count = len(ids)
+        self.page_count = ceil(self.item_count / self.page_size)
+        self.page_number = 1
+
+    async def __aiter__(self):
+        return self
+
+    async def __anext__(self):
+        if self.page_number <= self.page_count:
+            params = self.get_params()
+            data = await self.api.get(self.path, **params)
+            self.page_number += 1
+            return data['results']
+        else:
+            raise StopAsyncIteration
+
+    def get_params(self):
+        from_index = (self.page_number - 1) * self.page_size
+        to_index = from_index + self.page_size
+        params = copy(self.params)
+        params['ids'] = ','.join(map(str, self.ids[from_index:to_index]))
+        params['page_size'] = self.page_size
+        return params
 
 
 class ListIterator:
@@ -93,10 +138,10 @@ class ListIterator:
         self.api = api
         self.next = api.build_url(path, params)
         self.buffer = None
-        self.count = None
+        self.item_count = None
 
     def __len__(self):
-        return self.count
+        return self.item_count
 
     async def __aiter__(self):
         return self
@@ -106,7 +151,7 @@ class ListIterator:
             if self.next:
                 data = await self.api.get(self.next)
                 self.next = data['next']
-                self.count = data['count']
+                self.item_count = data['count']
                 self.buffer = data['results']
             else:
                 raise StopAsyncIteration

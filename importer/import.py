@@ -4,19 +4,19 @@ import aioes
 from datetime import datetime
 from funcy import flatten
 
-from collector.kudago import KudaGo
-from collector.transform import (
+from importer.kudago import KudaGo
+from importer.transform import (
     transform_event,
     transform_place,
     transform_stub_place,
 )
-from collector.fetch import (
+from importer.fetch import (
     get_theater_event_pages,
     get_theater_place_pages,
     get_event_pages,
     get_place_pages,
 )
-from collector.utils import AsyncProgressPrinter
+from importer.utils import AsyncProgressPrinter
 
 
 ELASTIC_ENDPOINTS = ['localhost:9200']
@@ -49,11 +49,11 @@ async def go():
                 place_ids.add(place['id'])
 
         await asyncio.gather(
-            index_places(elastic, kudago, place_ids),
-            index_stub_places(elastic, stub_places),
+            import_places(elastic, kudago, place_ids),
+            import_stub_places(elastic, stub_places),
         )
 
-        await index_events(elastic, kudago, event_ids)
+        await import_events(elastic, kudago, event_ids)
 
         print("Done")
 
@@ -78,9 +78,9 @@ async def fetch_theatrical_places(kudago):
     )
 
 
-async def index_places(elastic, kudago, place_ids):
-    print("Fetching and indexing places...")
-    return await index_pages(
+async def import_places(elastic, kudago, place_ids):
+    print("Importing places...")
+    return await import_pages(
         elastic,
         print_fetch_progress(get_place_pages(kudago, place_ids), 'places'),
         transform_place,
@@ -88,9 +88,9 @@ async def index_places(elastic, kudago, place_ids):
     )
 
 
-async def index_stub_places(elastic, stub_places):
-    print("Indexing %d stub places..." % len(stub_places))
-    return await index_list(
+async def import_stub_places(elastic, stub_places):
+    print("Importing %d stub places..." % len(stub_places))
+    return await import_list(
         elastic,
         stub_places,
         transform_stub_place,
@@ -98,9 +98,9 @@ async def index_stub_places(elastic, stub_places):
     )
 
 
-async def index_events(elastic, kudago, event_ids):
-    print("Fetching and indexing events...")
-    return await index_pages(
+async def import_events(elastic, kudago, event_ids):
+    print("Importing events...")
+    return await import_pages(
         elastic,
         print_fetch_progress(get_event_pages(kudago, event_ids), 'events'),
         transform_event,
@@ -108,7 +108,7 @@ async def index_events(elastic, kudago, event_ids):
     )
 
 
-# generic indexing functions
+# generic importing functions
 
 async def flatten_pages(pages):
     result = []
@@ -117,23 +117,23 @@ async def flatten_pages(pages):
     return result
 
 
-async def index_pages(elastic, pages, transform, doc_type):
+async def import_pages(elastic, pages, transform, doc_type):
     futures = []
     async for page in pages:
-        coro = index_list(elastic, page, transform, doc_type)
+        coro = import_list(elastic, page, transform, doc_type)
         futures.append(asyncio.ensure_future(coro))
     return flatten(await asyncio.gather(*futures))
 
 
-async def index_list(elastic, data_list, transform, doc_type):
+async def import_list(elastic, data_list, transform, doc_type):
     return await asyncio.gather(*[
-        index(elastic, data, transform, doc_type)
-        for data in data_list
+        import_item(elastic, item, transform, doc_type)
+        for item in data_list
     ])
 
 
-async def index(elastic, data, transform, doc_type):
-    doc = transform(data)
+async def import_item(elastic, item, transform, doc_type):
+    doc = transform(item)
     doc_id = doc.pop('id')
     result = await elastic.index(ELASTIC_INDEX, doc_type, doc, id=doc_id)
     return doc_id

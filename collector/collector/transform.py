@@ -32,7 +32,7 @@ def transform_event(kudago_event):
         'description': strip_links(kudago_event['body_text']),
 
         'location': kudago_event['location']['slug'],
-        'place': kudago_event['place'],
+        'place': kudago_event['place']['id'],
 
         'age_restriction': kudago_event['age_restriction'],
         'is_premiere': 'премьера' in tags,

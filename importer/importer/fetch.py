@@ -1,3 +1,26 @@
+from .utils import print_fetch_progress, flatten_pages
+
+
+async def fetch_theatrical_events(kudago, since):
+    print("Fetching theatrical events...")
+    return await flatten_pages(
+        print_fetch_progress(
+            get_theater_event_pages(kudago, since),
+            'events'
+        )
+    )
+
+
+async def fetch_theatrical_places(kudago):
+    print("Fetching theatrical places...")
+    return await flatten_pages(
+        print_fetch_progress(
+            get_theater_place_pages(kudago),
+            'places'
+        )
+    )
+
+
 def get_theater_event_pages(kudago, since):
     return kudago.get_all_pages(
         '/events/',

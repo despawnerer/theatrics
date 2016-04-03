@@ -88,6 +88,7 @@ def transform_place(kudago_place):
 # related objects
 
 def transform_price(price_text, is_free):
+    # TODO: extract from/to from the text
     return {
         'text': price_text,
     }

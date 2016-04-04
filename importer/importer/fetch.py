@@ -1,7 +1,7 @@
 from .utils import print_fetch_progress, flatten_pages
 
 
-async def fetch_theatrical_events(kudago, since):
+async def fetch_theatrical_events(kudago, since=None):
     print("Fetching theatrical events...")
     return await flatten_pages(
         print_fetch_progress(
@@ -21,7 +21,7 @@ async def fetch_theatrical_places(kudago):
     )
 
 
-def get_theater_event_pages(kudago, since):
+def get_theater_event_pages(kudago, since=None):
     return kudago.get_all_pages(
         '/events/',
         page_size=100,
@@ -29,7 +29,7 @@ def get_theater_event_pages(kudago, since):
         fields='id,place,parent',
         expand='place',
         categories='theater',
-        actual_since=since.timestamp()
+        actual_since=since.timestamp() if since else 0
     )
 
 

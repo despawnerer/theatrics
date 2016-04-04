@@ -67,7 +67,7 @@ def transform_place(kudago_place):
         'location': kudago_place['location'],
         'address': kudago_place['address'],
         'subway': kudago_place['subway'],
-        'coords': kudago_place['coords'],
+        'coords': transform_coords(kudago_place['coords']),
 
         'age_restriction': kudago_place['age_restriction'],
         'phone_numbers': kudago_place['phone'].split(','),
@@ -115,6 +115,20 @@ def transform_price(price_text, is_free):
     # TODO: extract from/to from the text
     return {
         'text': price_text,
+    }
+
+
+def transform_coords(coords):
+    if coords is None:
+        return None
+
+    lat, lon = coords.get('lat'), coords.get('lon')
+    if not lat or not lon:
+        return None
+
+    return {
+        'lat': float(lat),
+        'lon': float(lon),
     }
 
 

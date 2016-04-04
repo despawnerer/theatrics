@@ -1,9 +1,7 @@
 import asyncio
-from aioes import Elasticsearch
 from datetime import datetime
 from funcy import flatten
 
-from .kudago import KudaGo
 from .transform import (
     transform_event,
     transform_place,
@@ -19,10 +17,10 @@ from .utils import print_fetch_progress
 
 
 class Importer:
-    def __init__(self, index_name, elastic_endpoints, http_client):
+    def __init__(self, kudago, elastic, index_name):
+        self.kudago = kudago
+        self.elastic = elastic
         self.index_name = index_name
-        self.kudago = KudaGo(http_client)
-        self.elastic = Elasticsearch(elastic_endpoints)
 
     async def go(self):
         events, places = await asyncio.gather(

@@ -10,7 +10,7 @@ ELASTIC_INDEX_NAME = 'theatrics'
 
 
 async def update():
-    with aiohttp.ClientSession() as http_client:
+    async with aiohttp.ClientSession() as http_client:
         elastic = Elasticsearch(ELASTIC_ENDPOINTS)
         kudago = KudaGo(http_client)
         importer = Importer(kudago, elastic, ELASTIC_INDEX_NAME)

@@ -1,3 +1,4 @@
+import json
 from datetime import datetime, time
 
 
@@ -25,6 +26,11 @@ def time_from_seconds(seconds):
 
 def strip_links(text):
     return text  # TODO
+
+
+def read_json_file(filename):
+    with open(filename) as f:
+        return json.loads(f.read())
 
 
 async def flatten_pages(pages):

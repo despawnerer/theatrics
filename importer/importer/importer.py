@@ -1,5 +1,4 @@
 import asyncio
-from datetime import datetime
 from funcy import flatten
 
 from .transform import (
@@ -17,14 +16,15 @@ from .utils import print_fetch_progress
 
 
 class Importer:
-    def __init__(self, kudago, elastic, index_name):
+    def __init__(self, kudago, elastic, index_name, since):
         self.kudago = kudago
         self.elastic = elastic
         self.index_name = index_name
+        self.since = since
 
     async def go(self):
         events, places = await asyncio.gather(
-            fetch_theatrical_events(self.kudago, datetime.now()),
+            fetch_theatrical_events(self.kudago, self.since),
             fetch_theatrical_places(self.kudago),
         )
 

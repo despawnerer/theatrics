@@ -1,4 +1,5 @@
 import aiohttp
+from datetime import datetime
 from aioes import Elasticsearch
 
 from .importer import Importer
@@ -13,5 +14,6 @@ async def update():
     async with aiohttp.ClientSession() as http_client:
         elastic = Elasticsearch(ELASTIC_ENDPOINTS)
         kudago = KudaGo(http_client)
-        importer = Importer(kudago, elastic, ELASTIC_INDEX_NAME)
+        today = datetime.now().replace(hour=0, minute=0, microsecond=0)
+        importer = Importer(kudago, elastic, ELASTIC_INDEX_NAME, since=today)
         return await importer.go()

@@ -3,7 +3,7 @@ import os.path
 from datetime import datetime
 from aioes import Elasticsearch
 
-from .importer import Importer
+from .importer import import_data
 from .kudago import KudaGo
 from .utils import read_json_file
 
@@ -29,8 +29,7 @@ async def update(since):
     async with aiohttp.ClientSession() as http_client:
         elastic = Elasticsearch(ELASTIC_ENDPOINTS)
         kudago = KudaGo(http_client)
-        importer = Importer(kudago, elastic, ELASTIC_ALIAS, since=since)
-        return await importer.go()
+        await import_data(kudago, elastic, ELASTIC_ALIAS, since=since)
 
 
 def generate_index_name():

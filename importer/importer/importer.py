@@ -15,6 +15,11 @@ from .fetch import (
 from .utils import print_fetch_progress
 
 
+async def import_data(kudago, elastic, index_name, since=None):
+    importer = Importer(kudago, elastic, index_name, since)
+    return await importer.go()
+
+
 class Importer:
     def __init__(self, kudago, elastic, index_name, since):
         self.kudago = kudago

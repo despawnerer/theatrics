@@ -2,7 +2,10 @@ import asyncio
 import click
 from datetime import datetime
 
-from importer import update as do_update, create as do_create
+from importer import (
+    update as do_update,
+    initialize as do_initialize,
+)
 
 
 @click.group()
@@ -25,11 +28,12 @@ def update(all):
 
 
 @import_.command()
-def create():
+def initialize():
     """
     Setup empty index with alias.
+    Leaves previous indices intact, but removes alises to them.
     """
-    _run_in_async_loop(do_create())
+    _run_in_async_loop(do_initialize())
 
 
 def _run_in_async_loop(coro):

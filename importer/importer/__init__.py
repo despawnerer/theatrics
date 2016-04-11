@@ -12,7 +12,7 @@ ELASTIC_ENDPOINTS = ['localhost:9200']
 ELASTIC_ALIAS = 'theatrics'
 
 
-async def create():
+async def initialize():
     elastic = Elasticsearch(ELASTIC_ENDPOINTS)
     module_path = os.path.dirname(__file__)
     config_filename = os.path.join(module_path, 'configuration', 'index.json')

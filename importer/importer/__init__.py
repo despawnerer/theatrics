@@ -25,12 +25,11 @@ async def create():
     await elastic.indices.put_alias(alias_name, index_name)
 
 
-async def update():
+async def update(since):
     async with aiohttp.ClientSession() as http_client:
         elastic = Elasticsearch(ELASTIC_ENDPOINTS)
         kudago = KudaGo(http_client)
-        today = datetime.now().replace(hour=0, minute=0, microsecond=0)
-        importer = Importer(kudago, elastic, ELASTIC_ALIAS, since=today)
+        importer = Importer(kudago, elastic, ELASTIC_ALIAS, since=since)
         return await importer.go()
 
 

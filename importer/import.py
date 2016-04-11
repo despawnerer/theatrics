@@ -1,5 +1,7 @@
 import asyncio
 import click
+from datetime import datetime
+
 from importer import update as do_update, create as do_create
 
 
@@ -9,11 +11,17 @@ def import_():
 
 
 @import_.command()
-def update():
+@click.option('--all', is_flag=True, help="Load all events, including past ones")
+def update(all):
     """
     Import events and places from KudaGo.
     """
-    _run_in_async_loop(do_update())
+    if all:
+        since = None
+    else:
+        since = datetime.now().replace(hour=0, minute=0, microsecond=0)
+
+    _run_in_async_loop(do_update(since))
 
 
 @import_.command()

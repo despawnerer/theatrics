@@ -1,3 +1,4 @@
+from operator import itemgetter
 from funcy import flatten, some
 from datetime import datetime, time, timedelta
 
@@ -20,7 +21,7 @@ def transform_event(kudago_event, parent_id, children_count):
     dates = filter(is_date_finite, kudago_event['dates'])
     if type_ not in ('festival', 'exhibition'):
         dates = flatten(map(split_date, dates))
-    dates = list(dates)
+    dates = list(sorted(map(transform_date, dates), key=itemgetter('start')))
 
     return {
         'id': kudago_event['id'],
@@ -47,7 +48,7 @@ def transform_event(kudago_event, parent_id, children_count):
         'comments_count': kudago_event['comments_count'],
 
         'images': kudago_event['images'],
-        'dates': list(map(transform_date, dates)),
+        'dates': dates,
 
         'source': {
             'name': 'KudaGo.com',

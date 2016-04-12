@@ -56,8 +56,13 @@ def transform_event(kudago_event, parent_id, children_count):
 
 
 def transform_place(kudago_place, events_count):
+    categories = kudago_place['categories']
+
+    type_ = 'theater' if 'theatre' in categories else 'other'
+
     return {
         'id': kudago_place['id'],
+        'type': type_,
         'is_stub': kudago_place['is_stub'],
 
         'name': kudago_place['short_title'],

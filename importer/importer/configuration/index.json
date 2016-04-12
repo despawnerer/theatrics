@@ -94,6 +94,7 @@
         },
         "place": {
             "properties": {
+                "type": {"type": "string", "index": "not_analyzed"},
                 "is_stub": {"type": "boolean"},
 
                 "name": {

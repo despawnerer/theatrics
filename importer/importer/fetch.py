@@ -53,7 +53,7 @@ def get_event_pages(kudago, ids):
                'images,categories,tags,dates,location,site_url,price,rank,'
                'user_rating,total_visits,is_editors_choice,favorites_count,'
                'comments_count,is_free,age_restriction',
-        expand='dates,images,place',
+        expand='dates,images',
     )
 
 

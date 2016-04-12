@@ -18,9 +18,9 @@ def transform_event(kudago_event):
 
     type_ = find_first(('festival', 'exhibition', 'theater'), categories)
     dates = filter(is_date_finite, kudago_event['dates'])
-
     if type_ not in ('festival', 'exhibition'):
         dates = flatten(map(split_date, dates))
+    dates = list(dates)
 
     return {
         'id': kudago_event['id'],
@@ -39,6 +39,7 @@ def transform_event(kudago_event):
         'age_restriction': kudago_event['age_restriction'],
         'price': transform_price(kudago_event['price'], kudago_event['is_free']),
 
+        'dates_count': len(dates),
         'favorites_count': kudago_event['favorites_count'],
         'comments_count': kudago_event['comments_count'],
 

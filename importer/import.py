@@ -3,14 +3,25 @@ import click
 from datetime import datetime
 
 from importer import (
-    update as do_update,
     initialize as do_initialize,
+    update as do_update,
+    migrate as do_migrate,
+    reimport as do_reimport,
 )
 
 
 @click.group()
 def import_():
     pass
+
+
+@import_.command()
+def initialize():
+    """
+    Setup empty index with alias.
+    Leaves previous indices intact, but removes alises to them.
+    """
+    run_sync(do_initialize())
 
 
 @import_.command()
@@ -24,19 +35,26 @@ def update(all):
     else:
         since = datetime.now().replace(hour=0, minute=0, microsecond=0)
 
-    _run_in_async_loop(do_update(since))
+    run_sync(do_update(since))
 
 
 @import_.command()
-def initialize():
+def migrate():
     """
-    Setup empty index with alias.
-    Leaves previous indices intact, but removes alises to them.
+    Create a new index, copy old data into it, switch.
     """
-    _run_in_async_loop(do_initialize())
+    run_sync(do_migrate())
 
 
-def _run_in_async_loop(coro):
+@import_.command()
+def reimport():
+    """
+    Import all data from KudaGo into a new index and switch.
+    """
+    run_sync(do_reimport())
+
+
+def run_sync(coro):
     loop = asyncio.get_event_loop()
     loop.run_until_complete(coro)
 

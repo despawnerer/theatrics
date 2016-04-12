@@ -1,3 +1,4 @@
+import asyncio
 import aiohttp
 import os.path
 from datetime import datetime
@@ -27,7 +28,56 @@ async def update(since):
         await import_data(kudago, elastic, ELASTIC_ALIAS, since=since)
 
 
+async def migrate():
+    async with aiohttp.ClientSession() as http_client:
+        elastic = Elasticsearch(ELASTIC_ENDPOINTS)
+        kudago = KudaGo(http_client)
+        index_name = await create_new_index(elastic)
+        async for hit in IndexScanner(elastic, ELASTIC_ALIAS):
+            doc = hit['_source']
+            id_ = hit['_id']
+            type_ = hit['_type']
+            asyncio.ensure_future(
+                elastic.index(index_name, type_, doc, id=id_)
+            )
+        await switch_alias_to_index(elastic, ELASTIC_ALIAS, index_name)
+
+
+async def reimport():
+    async with aiohttp.ClientSession() as http_client:
+        elastic = Elasticsearch(ELASTIC_ENDPOINTS)
+        kudago = KudaGo(http_client)
+        index_name = await create_new_index(elastic)
+        await import_data(kudago, elastic, index_name)
+        await switch_alias_to_index(elastic, ELASTIC_ALIAS, index_name)
+
+
 # index management
+
+class IndexScanner:
+    def __init__(self, elastic, index_name):
+        self.elastic = elastic
+        self.index_name = index_name
+        self.buffer = None
+        self.scroll_id = None
+
+    async def __aiter__(self):
+        return self
+
+    async def __anext__(self):
+        if self.scroll_id is None:
+            scroll_data = await self.elastic.search(self.index_name, scroll='1m')
+            self.scroll_id = scroll_data['_scroll_id']
+
+        if not self.buffer:
+            response = await self.elastic.scroll(self.scroll_id, scroll='1m')
+            self.buffer = response['hits']['hits']
+
+        if self.buffer:
+            return self.buffer.pop(0)
+        else:
+            raise StopAsyncIteration
+
 
 async def create_new_index(elastic):
     module_path = os.path.dirname(__file__)

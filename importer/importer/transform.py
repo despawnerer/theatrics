@@ -25,6 +25,7 @@ def transform_event(kudago_event, parent_id, children_count):
     return {
         'id': kudago_event['id'],
         'type': type_,
+        'is_for_kids': 'kids' in categories,
         'is_premiere': 'премьера' in tags,
 
         'name': kudago_event['short_title'],
@@ -63,6 +64,7 @@ def transform_place(kudago_place, events_count):
     return {
         'id': kudago_place['id'],
         'type': type_,
+        'is_for_kids': 'kids' in categories,
         'is_stub': kudago_place['is_stub'],
 
         'name': kudago_place['short_title'],

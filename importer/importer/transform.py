@@ -47,6 +47,9 @@ def transform_event(kudago_event, parent_id, children_count):
         'favorites_count': kudago_event['favorites_count'],
         'comments_count': kudago_event['comments_count'],
 
+        'start': dates[0]['start'] if dates else None,
+        'end': dates[-1]['end'] if dates else None,
+
         'images': kudago_event['images'],
         'dates': dates,
 

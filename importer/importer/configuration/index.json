@@ -59,6 +59,9 @@
                 "favorites_count": {"type": "integer"},
                 "comments_count": {"type": "integer"},
 
+                "start": {"format": "strict_date_optional_time||epoch_millis", "type": "date"},
+                "end": {"format": "strict_date_optional_time||epoch_millis", "type": "date"},
+
                 "images": {
                     "type": "nested",
                     "properties": {

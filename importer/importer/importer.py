@@ -95,13 +95,12 @@ class Importer:
         return flatten(await asyncio.gather(*futures))
 
     async def import_list(self, data_list, transform, doc_type):
-        return await asyncio.gather(*[
-            self.import_item(item, transform, doc_type)
-            for item in data_list
-        ])
-
-    async def import_item(self, item, transform, doc_type):
-        doc = transform(item)
-        doc_id = doc.pop('id')
-        result = await self.elastic.index(self.index_name, doc_type, doc, id=doc_id)
-        return doc_id
+        actions = []
+        doc_id_list = []
+        for doc in map(transform, data_list):
+            doc_id = doc.pop('id')
+            actions.append({'index': {'_id': doc_id}})
+            actions.append(doc)
+            doc_id_list.append(doc_id)
+        await self.elastic.bulk(actions, self.index_name, doc_type)
+        return doc_id_list

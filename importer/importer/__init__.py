@@ -39,13 +39,8 @@ async def create_new_index(elastic):
 
 
 async def switch_alias_to_index(elastic, alias_name, index_name):
-    existing_aliases = await elastic.indices.get_aliases(name=alias_name)
-    actions = [{
-        'add': {
-            'index': index_name,
-            'alias': alias_name
-        }
-    }]
+    actions = []
+    existing_aliases = await elastic.indices.get_alias(name=alias_name)
     for existing_index_name in existing_aliases:
         actions.append({
             'remove': {
@@ -53,8 +48,14 @@ async def switch_alias_to_index(elastic, alias_name, index_name):
                 'alias': alias_name,
             }
         })
+    actions.append({
+        'add': {
+            'index': index_name,
+            'alias': alias_name
+        }
+    })
 
-    await elastic.indices.update_aliases(actions)
+    await elastic.indices.update_aliases({'actions': actions})
 
 
 def generate_index_name():

@@ -94,7 +94,6 @@
         },
         "place": {
             "properties": {
-                "is_closed": {"type": "boolean"},
                 "is_stub": {"type": "boolean"},
 
                 "name": {

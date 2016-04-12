@@ -58,8 +58,6 @@ def transform_event(kudago_event, parent_id, children_count):
 def transform_place(kudago_place, events_count):
     return {
         'id': kudago_place['id'],
-
-        'is_closed': kudago_place['is_closed'],
         'is_stub': kudago_place['is_stub'],
 
         'name': kudago_place['short_title'],
@@ -93,8 +91,6 @@ def transform_place(kudago_place, events_count):
 def transform_stub_place(kudago_place):
     return {
         'id': kudago_place['id'],
-
-        'is_closed': kudago_place['is_closed'],
         'is_stub': kudago_place['is_stub'],
 
         'full_name': kudago_place['title'],

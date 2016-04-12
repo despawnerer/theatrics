@@ -39,7 +39,7 @@ def get_theater_place_pages(kudago):
         page_size=100,
         order_by='id',
         fields='id',
-        categories='theatre,-cafe,-kids',
+        categories='theatre',
     )
 
 

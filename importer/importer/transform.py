@@ -11,7 +11,7 @@ from .utils import (
 
 # main objects
 
-def transform_event(kudago_event):
+def transform_event(kudago_event, parent_id, children_count):
     tags = kudago_event['tags']
     categories = kudago_event['categories']
     place = kudago_event['place']
@@ -35,11 +35,13 @@ def transform_event(kudago_event):
 
         'location': kudago_event['location']['slug'],
         'place': place['id'] if place else None,
+        'parent': parent_id,
 
         'age_restriction': kudago_event['age_restriction'],
         'price': transform_price(kudago_event['price'], kudago_event['is_free']),
 
         'dates_count': len(dates),
+        'children_count': children_count,
         'favorites_count': kudago_event['favorites_count'],
         'comments_count': kudago_event['comments_count'],
 
@@ -53,7 +55,7 @@ def transform_event(kudago_event):
     }
 
 
-def transform_place(kudago_place):
+def transform_place(kudago_place, events_count):
     return {
         'id': kudago_place['id'],
 
@@ -75,6 +77,7 @@ def transform_place(kudago_place):
         'working_hours': kudago_place['timetable'],
         'url': kudago_place['foreign_url'],
 
+        'events_count': events_count,
         'favorites_count': kudago_place['favorites_count'],
         'comments_count': kudago_place['comments_count'],
 

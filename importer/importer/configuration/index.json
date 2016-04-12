@@ -44,6 +44,7 @@
 
                 "location": {"type": "string", "index": "not_analyzed"},
                 "place": {"type": "integer", "index": "not_analyzed"},
+                "parent": {"type": "integer", "index": "not_analyzed"},
 
                 "age_restriction": {"type": "string", "index": "not_analyzed"},
                 "price": {
@@ -52,6 +53,7 @@
                     }
                 },
 
+                "children_count": {"type": "integer"},
                 "dates_count": {"type": "integer"},
                 "favorites_count": {"type": "integer"},
                 "comments_count": {"type": "integer"},
@@ -123,6 +125,7 @@
                 "working_hours": {"type": "string", "index": "no"},
                 "url": {"type": "string", "index": "no"},
 
+                "events_count": {"type": "integer"},
                 "comments_count": {"type": "integer"},
                 "favorites_count": {"type": "integer"},
 

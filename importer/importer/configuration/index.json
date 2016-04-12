@@ -1,12 +1,43 @@
 {
+    "settings": {
+        "analysis": {
+            "analyzer": {
+                "edge_ngram_analyzer": {
+                    "type": "custom",
+                    "tokenizer": "edge_ngram_tokenizer",
+                    "filter": ["lowercase"]
+                }
+            },
+            "tokenizer": {
+                "edge_ngram_tokenizer": {
+                    "type": "edgeNGram",
+                    "min_gram": "2",
+                    "max_gram": "10",
+                    "token_chars": ["letter", "digit"]
+                }
+            }
+        }
+    },
     "mappings": {
         "event": {
             "properties": {
                 "type": {"type": "string", "index": "not_analyzed"},
                 "is_premiere": {"type": "boolean"},
 
-                "name": {"type": "string", "analyzer": "russian"},
-                "full_name": {"type": "string", "analyzer": "russian"},
+                "name": {
+                    "type": "multi_field",
+                    "fields": {
+                        "ngram": {"type": "string", "analyzer": "edge_ngram_analyzer"},
+                        "text": {"type": "string", "analyzer": "russian"}
+                    }
+                },
+                "full_name": {
+                    "type": "multi_field",
+                    "fields": {
+                        "ngram": {"type": "string", "analyzer": "edge_ngram_analyzer"},
+                        "text": {"type": "string", "analyzer": "russian"}
+                    }
+                },
                 "tagline": {"type": "string", "analyzer": "russian"},
                 "lead": {"type": "string", "analyzer": "russian"},
                 "description": {"type": "string", "analyzer": "russian"},
@@ -21,6 +52,7 @@
                     }
                 },
 
+                "dates_count": {"type": "integer"},
                 "favorites_count": {"type": "integer"},
                 "comments_count": {"type": "integer"},
 
@@ -63,8 +95,20 @@
                 "is_closed": {"type": "boolean"},
                 "is_stub": {"type": "boolean"},
 
-                "name": {"type": "string", "analyzer": "russian"},
-                "full_name": {"type": "string", "analyzer": "russian"},
+                "name": {
+                    "type": "multi_field",
+                    "fields": {
+                        "ngram": {"type": "string", "analyzer": "edge_ngram_analyzer"},
+                        "text": {"type": "string", "analyzer": "russian"}
+                    }
+                },
+                "full_name": {
+                    "type": "multi_field",
+                    "fields": {
+                        "ngram": {"type": "string", "analyzer": "edge_ngram_analyzer"},
+                        "text": {"type": "string", "analyzer": "russian"}
+                    }
+                },
                 "tagline": {"type": "string", "analyzer": "russian"},
                 "lead": {"type": "string", "analyzer": "russian"},
                 "description": {"type": "string", "analyzer": "russian"},

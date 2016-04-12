@@ -33,13 +33,6 @@ def read_json_file(filename):
         return json.loads(f.read())
 
 
-async def flatten_pages(pages):
-    result = []
-    async for page in pages:
-        result += page
-    return result
-
-
 def print_fetch_progress(iterable, type_hint):
     return AsyncProgressPrinter(
         iterable,

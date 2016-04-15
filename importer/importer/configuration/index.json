@@ -21,7 +21,7 @@
     "mappings": {
         "event": {
             "properties": {
-                "type": {"type": "string", "index": "not_analyzed"},
+                "kind": {"type": "string", "index": "not_analyzed"},
                 "is_for_kids": {"type": "boolean"},
                 "is_premiere": {"type": "boolean"},
 
@@ -98,7 +98,7 @@
         },
         "place": {
             "properties": {
-                "type": {"type": "string", "index": "not_analyzed"},
+                "kind": {"type": "string", "index": "not_analyzed"},
                 "is_for_kids": {"type": "boolean"},
                 "is_stub": {"type": "boolean"},
 

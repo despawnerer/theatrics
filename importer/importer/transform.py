@@ -17,15 +17,15 @@ def transform_event(kudago_event, parent_id, children_count):
     categories = kudago_event['categories']
     place = kudago_event['place']
 
-    type_ = find_first(('festival', 'exhibition', 'theater'), categories)
+    kind = find_first(('festival', 'exhibition', 'theater'), categories)
     dates = filter(is_date_finite, kudago_event['dates'])
-    if type_ not in ('festival', 'exhibition'):
+    if kind not in ('festival', 'exhibition'):
         dates = flatten(map(split_date, dates))
     dates = list(sorted(map(transform_date, dates), key=itemgetter('start')))
 
     return {
         'id': kudago_event['id'],
-        'type': type_,
+        'kind': kind,
         'is_for_kids': 'kids' in categories,
         'is_premiere': 'премьера' in tags,
 
@@ -63,11 +63,15 @@ def transform_event(kudago_event, parent_id, children_count):
 def transform_place(kudago_place, events_count):
     categories = kudago_place['categories']
 
-    type_ = 'theater' if 'theatre' in categories else 'other'
+    kind = find_first(('park', 'cafe', 'museums', 'theatre'), categories)
+    if kind == 'theatre':
+        kind = 'theater'
+    elif kind == 'museums':
+        kind = 'museum'
 
     return {
         'id': kudago_place['id'],
-        'type': type_,
+        'kind': kind,
         'is_for_kids': 'kids' in categories,
         'is_stub': kudago_place['is_stub'],
 

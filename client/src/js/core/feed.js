@@ -27,7 +27,7 @@ export default class Feed {
   fetchNext() {
     return this._fetchNextData()
       .then(data => {
-        const items = data.results;
+        const items = data.items;
         this.nextURL = data.next;
         this.items = this.items.concat(items);
         return items;

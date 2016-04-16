@@ -16,7 +16,7 @@ export default class EventPage extends Page {
     super({app});
 
     this.event = event;
-    this.location = app.locations.get(event.data.location.slug);
+    this.location = app.locations.get(event.data.location);
   }
 
   getHTML() {
@@ -27,7 +27,7 @@ export default class EventPage extends Page {
   }
 
   getTitle() {
-    return `${this.event.getLongTitle()} – ${this.location.name}`;
+    return `${this.event.getFullName()} – ${this.location.name}`;
   }
 
   getLocation() {

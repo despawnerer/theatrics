@@ -5,27 +5,26 @@ import Feed from './feed';
 
 export default class TheatricsAPI {
   constructor() {
-    this.prefix = '/api';
+    this.prefix = '/api/v1';
     this.fetch = window.fetch.bind(window);
   }
 
   fetchEvent(id) {
-    return this.get(`/events/${id}/`, {expand: 'place,images,dates'});
+    return this.get(`/events/${id}/`, {expand: 'place'});
   }
 
   fetchPlace(id) {
-    return this.get(`/places/${id}/`, {expand: 'images'});
+    return this.get(`/places/${id}/`);
   }
 
   fetchEventChildren(id) {
     return this.getAll(
       '/events/',
       {
-        categories: 'theater',
-        fields: 'id,title,short_title,dates,location,tagline,categories,tags,place',
-        expand: 'dates',
+        fields: 'name,full_name,dates,location,tagline,place,is_premiere,kind',
         page_size: 100,
-        parent_id: id,
+        parent: id,
+        include_past: true,
       }
     );
   }
@@ -34,41 +33,29 @@ export default class TheatricsAPI {
     return this.getAll(
       '/events/',
       {
-        categories: 'theater',
-        fields: 'id,title,short_title,dates,location,tagline,categories,tags,place',
-        expand: 'dates',
+        fields: 'name,full_name,dates,location,tagline,place,is_premiere,kind',
         page_size: 100,
-        place_id: id,
-        actual_since: moment().unix(),
+        place: id,
       }
     );
   }
 
   getEventsFeed(location, date) {
     const params = {
-      categories: 'theater,-kids',
-      fields: 'place,images,tagline,id,title,short_title,categories,description,tags',
-      expand: 'place,images',
+      fields: 'name,full_name,place,images,tagline,lead,is_premiere,kind',
+      expand: 'place',
       page_size: 24,
       location: location.slug,
     };
 
-    if (date) {
-      params.actual_since = date.unix() + 1;
-      params.actual_until = date.clone().add(1, 'days').unix();
-    } else {
-      params.actual_since = moment().unix();
-    }
+    if (date) params.date = date.format('YYYY-MM-DD');
 
     return new Feed(this, '/events/', params);
   }
 
   getPlacesFeed(location) {
     const params = {
-      fields: 'images,title,id,address,foreign_url',
-      categories: 'theatre,-cafe',
-      expand: 'images',
-      order_by: '-total_visits',
+      fields: 'full_name,name,images,address,url',
       page_size: 24,
       location: location.slug,
     };

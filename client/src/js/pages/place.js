@@ -27,7 +27,7 @@ export default class PlacePage extends Page {
   }
 
   getTitle() {
-    return `${this.place.getTitle()} – ${this.location.name}`;
+    return `${this.place.getName()} – ${this.location.name}`;
   }
 
   getLocation() {

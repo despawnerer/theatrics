@@ -39,7 +39,7 @@ export default class EventPage extends Page {
 
     new Slider(element.querySelector('.item-slider'));
 
-    if (this.event.isFestival()) {
+    if (this.event.isFestival() && this.event.hasChildren()) {
       new Pager(element.querySelector('.pager'));
       this.loadSchedule();
     }

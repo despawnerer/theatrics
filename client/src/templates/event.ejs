@@ -113,7 +113,7 @@
       </div>
     </div>
 
-<% if (event.isFestival()) { %>
+<% if (event.isFestival() && event.hasChildren()) { %>
   </div>
   <div class="pager" data-nav-items=".tab" data-slider=".pager-pages-slider">
     <nav class="pager-nav content-container">
@@ -134,7 +134,7 @@
       Источник данных: <a href="<%- event.data.site_url %>" target="_blank">kudago.com</a>.
     </div>
 
-<% if (event.isFestival()) { %>
+<% if (event.isFestival() && event.hasChildren()) { %>
           </div>
         </div>
         <div class="pager-page schedule-page">

@@ -33,6 +33,10 @@ export default class Event extends Model {
     return this.data.dates.map(spec => new Date(this, spec));
   }
 
+  hasChildren() {
+    return this.data.children_count > 0;
+  }
+
   isPremiere() {
     return this.data.is_premiere;
   }

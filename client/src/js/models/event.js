@@ -64,9 +64,14 @@ export default class Event extends Model {
 export class Date {
   constructor(event, spec) {
     this.event = event;
+
     this.start = moment(spec.start);
     this.end = moment(spec.end);
+
     this.isDateBased = spec.start.length == 10;  // 10 characters is ISO date
+
+    this.startBound = this.start;
+    this.endBound = this.isDateBased ? this.end.clone().add(1, 'day') : this.end;
   }
 
   intersectsAny(others) {
@@ -75,8 +80,8 @@ export class Date {
 
   intersects(other) {
     return (
-      this.end.isSameOrAfter(other.start) &&
-      this.start.isBefore(other.end)
+      this.endBound.isAfter(other.startBound) &&
+      this.startBound.isBefore(other.endBound)
     );
   }
 

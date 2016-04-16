@@ -8,6 +8,19 @@ from .score import get_default_score_functions
 __all__ = ['event', 'event_list']
 
 
+EXPANDABLE_RELATIONS = {
+    'place': ('place', (
+        'location', 'name', 'full_name', 'tagline', 'kind', 'is_for_kids',
+        'is_stub', 'url', 'address', 'subway', 'coords', 'working_hours',
+        'phone_numbers', 'age_restriction',
+    )),
+    'parent': ('event', (
+        'location', 'name', 'full_name', 'tagline', 'kind', 'is_for_kids',
+        'is_premiere', 'tagline', 'age_restriction',
+    )),
+}
+
+
 class EventListParams(ListParams):
     date = fields.Date()
     parent = fields.Integer()
@@ -15,12 +28,12 @@ class EventListParams(ListParams):
     location = fields.String()
 
 
-@item_handler('event')
+@item_handler('event', relations=EXPANDABLE_RELATIONS)
 async def event(request):
     return request.match_info['id']
 
 
-@list_handler(EventListParams, 'event')
+@list_handler('event', EventListParams, relations=EXPANDABLE_RELATIONS)
 async def event_list(request, location=None, place=None, parent=None, date=None):
     filters = []
 

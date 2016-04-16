@@ -13,7 +13,7 @@ class SearchParams(ListParams):
     location = fields.String()
 
 
-@list_handler(SearchParams)
+@list_handler(None, SearchParams)
 async def search(request, q, location=None):
     filters = []
 

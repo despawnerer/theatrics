@@ -17,9 +17,11 @@ async def place(request):
     return request.match_info['id']
 
 
-@list_handler(PlaceListParams, 'place')
+@list_handler('place', PlaceListParams)
 async def place_list(request, location=None):
-    filters = []
+    filters = [
+        {'term': {'is_stub': False}}
+    ]
 
     if location:
         filters.append({'term': {'location': location}})

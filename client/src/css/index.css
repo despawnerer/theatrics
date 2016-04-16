@@ -1126,20 +1126,20 @@ p {
   margin: -5px -10px;
 }
 
-.item-description {
+.item-lead {
   font-size: 20px;
 }
 
-.item-text {
+.item-description {
   font-size: 17px;
   font-family: Liberation Serif, Times New Roman, serif;
 }
 
-.item-text img {
+.item-description img {
   max-width: 100%;
 }
 
-.item-text :last-child {
+.item-description :last-child {
   margin-bottom: 0;
 }
 

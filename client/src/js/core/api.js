@@ -55,7 +55,7 @@ export default class TheatricsAPI {
 
   getPlacesFeed(location) {
     const params = {
-      fields: 'full_name,name,images,address,url',
+      fields: 'full_name,name,images,address,url,location',
       page_size: 24,
       location: location.slug,
     };

@@ -137,7 +137,7 @@ def get_next_page_uri(request, page, page_size, count):
 
 
 async def expand_related_items(item_list, field, doc_type, subfields):
-    id_list = list(compact(pluck(field, item_list)))
+    id_list = list(compact(item.get(field) for item in item_list))
     if not id_list:
         return item_list
 
@@ -165,13 +165,6 @@ def simplify_item(hit):
     if 'highlights' in hit:
         simple['highlights'] = hit['highlights']
     return simple
-
-
-def pluck(item, dict_list):
-    result = []
-    for d in dict_list:
-        result.append(d.get(item))
-    return result
 
 
 def compact(iterable):

@@ -98,17 +98,8 @@ def list_handler(type_=None, relations={}):
 
             count = hits['total']
             items = list(map(simplify_item, hits['hits']))
-            previous = (
-                build_uri(request.path, request.query_string, page=page - 1)
-                if page > 2 else
-                build_uri(request.path, request.query_string, page=None)
-                if page == 2 else
-                None
-            )
-            next_ = (
-                build_uri(request.path, request.query_string, page=page + 1)
-                if page < ceil(count / page_size) else None
-            )
+            previous = get_previous_page_uri(request, page, page_size, count)
+            next_ = get_next_page_uri(request, page, page_size, count)
 
             for related_field in expand:
                 doc_type, subfields = relations[related_field]
@@ -127,6 +118,22 @@ def list_handler(type_=None, relations={}):
             )
         return wrapper
     return decorator
+
+
+def get_previous_page_uri(request, page, page_size):
+    if page > 2:
+        return build_uri(request.path, request.query_string, page=page - 1)
+    elif page == 2:
+        return build_uri(request.path, request.query_string, page=None)
+    else:
+        return None
+
+
+def get_next_page_uri(request, page, page_size, count):
+    if page < ceil(count / page_size):
+        return build_uri(request.path, request.query_string, page=page + 1)
+    else:
+        return None
 
 
 async def expand_related_items(item_list, field, doc_type, subfields):

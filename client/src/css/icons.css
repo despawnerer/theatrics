@@ -28,11 +28,17 @@
 .icon-heart:before {
     content: "\f004";
 }
+.icon-star:before {
+    content: "\f005";
+}
 .icon-clock:before {
     content: "\f017";
 }
 .icon-place:before {
     content: "\f041";
+}
+.icon-external-link:before {
+    content: "\f08e";
 }
 .icon-phone:before {
     content: "\f095";

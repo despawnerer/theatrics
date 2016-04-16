@@ -1,4 +1,5 @@
 <% var place = event.getPlace() %>
+<% var parent = event.getParent() %>
 
 <article class="item-view">
   <div class="item-slider" data-next-button=".next-button" data-previous-button=".previous-button" data-container=".item-slide-list" data-items=".item-slide">
@@ -69,6 +70,17 @@
           <div class="item-information-item">
             <span class="item-information-icon icon-rouble" title="Цена билета"></span>
             <span class="item-information-value"><%- event.data.price.text %></span>
+          </div>
+        <% } %>
+
+        <% if (parent) { %>
+          <div class="item-information-item">
+            <span class="item-information-icon icon-star" title="Проходит в рамках"></span>
+            <span class="item-information-value">
+              <a href="<%- url('event', {id: parent.data.id}) %>">
+                <span class="link-text"><%- parent.getFullName() %></span>
+              </a>
+            </span>
           </div>
         <% } %>
 

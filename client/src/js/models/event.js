@@ -15,6 +15,14 @@ export default class Event extends Model {
     return capfirst(this.data.full_name);
   }
 
+  getParent() {
+    if (this.data.parent) {
+      return new Event(this.data.parent);
+    } else {
+      return undefined;
+    }
+  }
+
   getPlace() {
     if (this.data.place) {
       return new Place(this.data.place);

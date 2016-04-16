@@ -51,7 +51,7 @@
             <span class="item-information-value">
               <% if (place.isStub()) { %>
                 <% if (place.data.address) { %>
-                  <a href="<%- getMapURL(place.data.title, place.data.address, location.name, isiOS()) %>" target="_blank">
+                  <a href="<%- getMapURL(place.data.full_name, place.data.address, location.name, isiOS()) %>" target="_blank">
                     <span class="link-text"><%- place.getName() %></span>
                   </a>
                 <% } else { %>

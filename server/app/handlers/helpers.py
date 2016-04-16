@@ -63,7 +63,7 @@ def item_handler(type_, relations={}):
 
             for related_field in expand:
                 doc_type, subfields = relations[related_field]
-                if fields and related_field in fields:
+                if not fields or related_field in fields:
                     item = (await expand_related_items(
                         [item], related_field, doc_type, subfields))[0]
 
@@ -112,7 +112,7 @@ def list_handler(type_=None, relations={}):
 
             for related_field in expand:
                 doc_type, subfields = relations[related_field]
-                if fields and related_field in fields:
+                if not fields or related_field in fields:
                     items = await expand_related_items(
                         items, related_field, doc_type, subfields)
 

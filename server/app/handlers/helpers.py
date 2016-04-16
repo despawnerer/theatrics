@@ -98,7 +98,7 @@ def list_handler(type_=None, relations={}):
 
             count = hits['total']
             items = list(map(simplify_item, hits['hits']))
-            previous = get_previous_page_uri(request, page, page_size, count)
+            previous = get_previous_page_uri(request, page, page_size)
             next_ = get_next_page_uri(request, page, page_size, count)
 
             for related_field in expand:

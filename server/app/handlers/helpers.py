@@ -12,16 +12,31 @@ from ..connections import elastic
 from ..consts import ELASTICSEARCH_INDEX
 
 
+class CommaSeparatedList(fields.List):
+    def _serialize(self, value, attr, obj):
+        result = super()._serialize(value, attr, obj)
+        return ','.join(result) if result is not None else None
+
+    def _deserialize(self, value, attr, data):
+        if not isinstance(value, str):
+            self.fail('invalid')
+
+        value = value.split(',')
+        if any(item == '' for item in value):
+            self.fail('invalid')
+        return super()._deserialize(value, attr, data)
+
+
 class ListParams(Schema):
     page_size = fields.Integer(validate=Range(1, 50))
     page = fields.Integer(validate=Range(1))
-    expand = fields.String()
-    fields = fields.String()
+    expand = CommaSeparatedList(fields.String())
+    fields = CommaSeparatedList(fields.String())
 
 
 class ItemParams(Schema):
-    expand = fields.String()
-    fields = fields.String()
+    expand = CommaSeparatedList(fields.String())
+    fields = CommaSeparatedList(fields.String())
 
 
 def with_params(schema_cls):
@@ -45,14 +60,13 @@ def item_handler(type_, relations={}):
     def decorator(f):
         @wraps(f)
         @with_params(ItemParams)
-        async def wrapper(request, fields=None, expand=None):
-            expand = expand.split(',') if expand else []
+        async def wrapper(request, fields=(), expand=()):
+            id_ = await f(request)
 
             kwargs = {}
             if fields:
-                kwargs['_source'] = fields
+                kwargs['_source'] = ','.join(fields)
 
-            id_ = await f(request)
             try:
                 response = await elastic.get(
                     ELASTICSEARCH_INDEX, id_, type_, **kwargs)
@@ -79,10 +93,7 @@ def list_handler(type_=None, relations={}):
     def decorator(f):
         @wraps(f)
         @with_params(ListParams)
-        async def wrapper(request, page=1, page_size=20, fields=None, expand=None):
-            fields = fields.split(',') if fields else []
-            expand = expand.split(',') if expand else []
-
+        async def wrapper(request, page=1, page_size=20, fields=(), expand=()):
             query = await f(request)
 
             body = {

@@ -15,7 +15,7 @@ from .fields import CommaSeparatedList
 
 
 class ListParams(Schema):
-    page_size = fields.Integer(validate=Range(1, 50))
+    page_size = fields.Integer(validate=Range(1, 100))
     page = fields.Integer(validate=Range(1))
     expand = CommaSeparatedList(fields.String())
     fields = CommaSeparatedList(fields.String())

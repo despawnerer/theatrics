@@ -24,23 +24,28 @@ class ItemParams(Schema):
     fields = fields.String()
 
 
-def item_handler(type_, params_schema_cls=ItemParams, relations={}):
+def with_params(schema_cls):
     def decorator(f):
         @wraps(f)
         async def wrapper(request):
-            schema = params_schema_cls()
+            schema = schema_cls(request)
             result = schema.load(request.GET)
             if result.errors:
                 return web.HTTPBadRequest(
                     text=json.dumps({'errors': result.errors}, ensure_ascii=False),
                     content_type='application/json',
                 )
+            else:
+                return await f(request, **result.data)
+        return wrapper
+    return decorator
 
-            params = result.data
 
-            fields = params.pop('fields', None)
-
-            expand = params.pop('expand', None)
+def item_handler(type_, relations={}):
+    def decorator(f):
+        @wraps(f)
+        @with_params(ItemParams)
+        async def wrapper(request, fields=None, expand=None):
             expand = expand.split(',') if expand else []
 
             kwargs = {}
@@ -70,35 +75,19 @@ def item_handler(type_, params_schema_cls=ItemParams, relations={}):
     return decorator
 
 
-def list_handler(type_=None, params_schema_cls=ListParams, relations={}):
+def list_handler(type_=None, relations={}):
     def decorator(f):
         @wraps(f)
-        async def wrapper(request):
-            schema = params_schema_cls()
-            result = schema.load(request.GET)
-            if result.errors:
-                return web.HTTPBadRequest(
-                    text=json.dumps({'errors': result.errors}, ensure_ascii=False),
-                    content_type='application/json',
-                )
-
-            params = result.data
-
-            page = params.pop('page', 1)
-            size = params.pop('page_size', 20)
-            from_ = (page - 1) * size
-
-            fields = params.pop('fields', None)
+        @with_params(ListParams)
+        async def wrapper(request, page=1, page_size=20, fields=None, expand=None):
             fields = fields.split(',') if fields else []
-
-            expand = params.pop('expand', None)
             expand = expand.split(',') if expand else []
 
-            query = await f(request, **params)
+            query = await f(request)
 
             body = {
-                'size': size,
-                'from': from_,
+                'size': page_size,
+                'from': (page - 1) * page_size,
                 'query': query,
             }
             if fields:
@@ -118,7 +107,7 @@ def list_handler(type_=None, params_schema_cls=ListParams, relations={}):
             )
             next_ = (
                 build_uri(request.path, request.query_string, page=page + 1)
-                if page < ceil(count / size) else None
+                if page < ceil(count / page_size) else None
             )
 
             for related_field in expand:

@@ -1,6 +1,6 @@
-from marshmallow import fields
+from marshmallow import Schema, fields
 
-from ..helpers import list_handler, ListParams
+from ..helpers import list_handler, with_params
 
 from .score import get_default_score_functions
 
@@ -8,12 +8,13 @@ from .score import get_default_score_functions
 __all__ = ['search']
 
 
-class SearchParams(ListParams):
+class SearchParams(Schema):
     q = fields.String(required=True)
     location = fields.String()
 
 
-@list_handler(None, SearchParams)
+@list_handler()
+@with_params(SearchParams)
 async def search(request, q, location=None):
     filters = []
 

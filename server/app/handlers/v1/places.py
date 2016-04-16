@@ -1,6 +1,6 @@
-from marshmallow import fields
+from marshmallow import Schema, fields
 
-from ..helpers import item_handler, list_handler, ListParams
+from ..helpers import item_handler, list_handler, with_params
 
 from .score import get_default_score_functions
 
@@ -8,7 +8,7 @@ from .score import get_default_score_functions
 __all__ = ['place', 'place_list']
 
 
-class PlaceListParams(ListParams):
+class PlaceListParams(Schema):
     location = fields.String()
 
 
@@ -17,7 +17,8 @@ async def place(request):
     return request.match_info['id']
 
 
-@list_handler('place', PlaceListParams)
+@list_handler('place')
+@with_params(PlaceListParams)
 async def place_list(request, location=None):
     filters = [
         {'term': {'is_stub': False}}

@@ -1,6 +1,6 @@
-from marshmallow import fields
+from marshmallow import Schema, fields
 
-from ..helpers import item_handler, list_handler, ListParams
+from ..helpers import item_handler, list_handler, with_params
 
 from .score import get_default_score_functions
 
@@ -21,7 +21,7 @@ EXPANDABLE_RELATIONS = {
 }
 
 
-class EventListParams(ListParams):
+class EventListParams(Schema):
     date = fields.Date()
     parent = fields.Integer()
     place = fields.Integer()
@@ -33,7 +33,8 @@ async def event(request):
     return request.match_info['id']
 
 
-@list_handler('event', EventListParams, relations=EXPANDABLE_RELATIONS)
+@list_handler('event', relations=EXPANDABLE_RELATIONS)
+@with_params(EventListParams)
 async def event_list(request, location=None, place=None, parent=None, date=None):
     filters = []
 

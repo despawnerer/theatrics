@@ -130,8 +130,9 @@
 
     <div class="item-lead"><%= event.data.lead %></div>
     <div class="item-description"><%= event.data.description %></div>
+
     <div class="source-information">
-      Источник данных: <a href="<%- event.data.site_url %>" target="_blank">kudago.com</a>.
+      Источник данных: <a href="<%- event.data.source.url %>" target="_blank"><%- event.data.source.name %></a>.
     </div>
 
 <% if (event.isFestival() && event.hasChildren()) { %>

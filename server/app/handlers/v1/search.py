@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from marshmallow import Schema, fields
 
 from ..helpers import list_handler, with_params
@@ -12,15 +14,27 @@ __all__ = ['search']
 class SearchParams(Schema):
     q = fields.String(required=True)
     location = fields.String()
+    include_past = fields.Boolean()
 
 
 @list_handler(relations=EXPANDABLE_RELATIONS)
 @with_params(SearchParams)
-async def search(request, q, location=None):
+async def search(request, q, location=None, include_past=False):
     filters = []
 
     if location:
         filters.append({'term': {'location': location}})
+
+    if not include_past:
+        now = datetime.now().isoformat()
+        filters.append({
+            'bool': {
+                'should': [
+                    {'range': {'end': {'gte': now}}},
+                    {'missing': {'field': 'end'}}
+                ]
+            }
+        })
 
     return {
         'function_score': {

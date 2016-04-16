@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from marshmallow import Schema, fields
 
 from ..helpers import item_handler, list_handler, with_params
@@ -26,6 +28,7 @@ class EventListParams(Schema):
     parent = fields.Integer()
     place = fields.Integer()
     location = fields.String()
+    include_past = fields.Boolean()
 
 
 @item_handler('event', relations=EXPANDABLE_RELATIONS)
@@ -35,7 +38,8 @@ async def event(request):
 
 @list_handler('event', relations=EXPANDABLE_RELATIONS)
 @with_params(EventListParams)
-async def event_list(request, location=None, place=None, parent=None, date=None):
+async def event_list(request, location=None, place=None, parent=None,
+                     date=None, include_past=False):
     filters = []
 
     if location:
@@ -60,6 +64,9 @@ async def event_list(request, location=None, place=None, parent=None, date=None)
                 }
             }
         }})
+    elif not include_past:
+        now = datetime.now().isoformat()
+        filters.append({'range': {'end': {'gte': now}}})
 
     return {
         'function_score': {

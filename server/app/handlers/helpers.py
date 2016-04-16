@@ -47,7 +47,9 @@ def with_params(schema_cls):
             result = schema.load(request.GET)
             if result.errors:
                 return web.HTTPBadRequest(
-                    text=json.dumps({'errors': result.errors}, ensure_ascii=False),
+                    text=json.dumps({
+                        'errors': result.errors
+                    }, ensure_ascii=False),
                     content_type='application/json',
                 )
             else:

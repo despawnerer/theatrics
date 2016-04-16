@@ -73,6 +73,7 @@ async def event_list(request, location=None, place=None, parent=None,
             'query': {'bool': {
                 'filter': filters,
                 'should': [
+                    {'term': {'kind': 'theater'}},
                     {'term': {'is_for_kids': False}},
                 ]
             }},

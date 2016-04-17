@@ -1,5 +1,9 @@
 import json
+import re
 from datetime import datetime, time
+
+
+link_expression = re.compile(r'<a .*?href=".*?".*?>(.+?)<\/a>', re.DOTALL)
 
 
 def find_first(needles, haystack):
@@ -25,7 +29,7 @@ def time_from_seconds(seconds):
 
 
 def strip_links(text):
-    return text  # TODO
+    return link_expression.sub('\\1', text)
 
 
 def read_json_file(filename):

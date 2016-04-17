@@ -77,9 +77,10 @@ export default class Event extends Model {
 export class Date {
   constructor(event, spec) {
     this.event = event;
+    this.timezone = event.getLocation().timezone;
 
-    this.start = moment(spec.start);
-    this.end = moment(spec.end);
+    this.start = moment.tz(spec.start, this.timezone);
+    this.end = moment.tz(spec.end, this.timezone);
 
     this.isDateBased = spec.start.length == 10;  // 10 characters is ISO date
 
@@ -136,8 +137,8 @@ export class Date {
       result.startDate = this.start.format('YYYY-MM-DD');
       result.endDate = this.end.format('YYYY-MM-DD');
     } else {
-      result.startDate = this.start.format('YYYY-MM-DD[T]HH:mm');
-      if (this.hasKnownEnd()) result.endDate = this.end.format('YYYY-MM-DD[T]HH:mm');
+      result.startDate = this.start.format();
+      if (this.hasKnownEnd()) result.endDate = this.end.format();
     }
 
     return result;

@@ -7,48 +7,46 @@ from aioes import Elasticsearch
 from .importer import import_data
 from .kudago import KudaGo
 from .utils import read_json_file
-
-
-ELASTIC_ENDPOINTS = ['localhost:9200']
-ELASTIC_ALIAS = 'theatrics'
+from .consts import ELASTICSEARCH_ALIAS
+from .settings import ELASTICSEARCH_ENDPOINTS
 
 
 # commands
 
 async def initialize():
-    elastic = Elasticsearch(ELASTIC_ENDPOINTS)
+    elastic = Elasticsearch(ELASTICSEARCH_ENDPOINTS)
     index_name = await create_new_index(elastic)
-    await switch_alias_to_index(elastic, ELASTIC_ALIAS, index_name)
+    await switch_alias_to_index(elastic, ELASTICSEARCH_ALIAS, index_name)
 
 
 async def update(since):
     async with aiohttp.ClientSession() as http_client:
-        elastic = Elasticsearch(ELASTIC_ENDPOINTS)
+        elastic = Elasticsearch(ELASTICSEARCH_ENDPOINTS)
         kudago = KudaGo(http_client)
-        await import_data(kudago, elastic, ELASTIC_ALIAS, since=since)
+        await import_data(kudago, elastic, ELASTICSEARCH_ALIAS, since=since)
 
 
 async def migrate():
     async with aiohttp.ClientSession() as http_client:
-        elastic = Elasticsearch(ELASTIC_ENDPOINTS)
+        elastic = Elasticsearch(ELASTICSEARCH_ENDPOINTS)
         index_name = await create_new_index(elastic)
-        async for hit in IndexScanner(elastic, ELASTIC_ALIAS):
+        async for hit in IndexScanner(elastic, ELASTICSEARCH_ALIAS):
             doc = hit['_source']
             id_ = hit['_id']
             type_ = hit['_type']
             asyncio.ensure_future(
                 elastic.index(index_name, type_, doc, id=id_)
             )
-        await switch_alias_to_index(elastic, ELASTIC_ALIAS, index_name)
+        await switch_alias_to_index(elastic, ELASTICSEARCH_ALIAS, index_name)
 
 
 async def reimport():
     async with aiohttp.ClientSession() as http_client:
-        elastic = Elasticsearch(ELASTIC_ENDPOINTS)
+        elastic = Elasticsearch(ELASTICSEARCH_ENDPOINTS)
         kudago = KudaGo(http_client)
         index_name = await create_new_index(elastic)
         await import_data(kudago, elastic, index_name)
-        await switch_alias_to_index(elastic, ELASTIC_ALIAS, index_name)
+        await switch_alias_to_index(elastic, ELASTICSEARCH_ALIAS, index_name)
 
 
 # index management
@@ -108,4 +106,4 @@ async def switch_alias_to_index(elastic, alias_name, index_name):
 
 
 def generate_index_name():
-    return '{}-{}'.format(ELASTIC_ALIAS, int(datetime.now().timestamp()))
+    return '{}-{}'.format(ELASTICSEARCH_ALIAS, int(datetime.now().timestamp()))

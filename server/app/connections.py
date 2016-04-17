@@ -1,6 +1,6 @@
 from aioes import Elasticsearch
 
-from .settings import ELASTICSEARCH_URL
+from .settings import ELASTICSEARCH_ENDPOINTS
 
 
-elastic = Elasticsearch([ELASTICSEARCH_URL])
+elastic = Elasticsearch(ELASTICSEARCH_ENDPOINTS)

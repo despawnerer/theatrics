@@ -23,6 +23,9 @@ COPY Makefile Makefile
 COPY server/requirements.pip server/requirements.pip
 RUN make install-server-deps
 
+COPY importer/requirements.pip importer/requirements.pip
+RUN make install-importer-deps
+
 COPY client/package.json client/package.json
 RUN make install-client-deps
 
@@ -30,6 +33,7 @@ COPY client client/
 RUN make build-min clean-deps && rm -rf client/src
 
 COPY server server/
+COPY importer importer/
 
 # run
 

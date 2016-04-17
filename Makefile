@@ -16,10 +16,14 @@ clean-deps:
 
 install-deps:
 	cd server && pip install -r requirements.pip
+	cd importer && pip install -r requirements.pip
 	cd client && npm install
 
 install-server-deps:
 	cd server && pip install -r requirements.pip
+
+install-importer-deps:
+	cd importer && pip install -r requirements.pip
 
 install-client-deps:
 	cd client && npm install

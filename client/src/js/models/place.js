@@ -1,3 +1,4 @@
+import locations from '../core/locations';
 import Model from '../base/model';
 import {capfirst, makeAbsoluteURL} from '../utils';
 

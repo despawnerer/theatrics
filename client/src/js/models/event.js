@@ -122,7 +122,7 @@ export class Date {
     const result = {
       '@context': 'http://schema.org',
       '@type': this.event.getItemType(),
-      '@id': `${url}#${this.startTs}`,
+      '@id': `${url}#${this.start.unix()}`,
       name: this.event.getName(),
       url: makeAbsoluteURL(url),
     }

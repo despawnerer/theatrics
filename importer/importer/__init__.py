@@ -31,7 +31,6 @@ async def update(since):
 async def migrate():
     async with aiohttp.ClientSession() as http_client:
         elastic = Elasticsearch(ELASTIC_ENDPOINTS)
-        kudago = KudaGo(http_client)
         index_name = await create_new_index(elastic)
         async for hit in IndexScanner(elastic, ELASTIC_ALIAS):
             doc = hit['_source']

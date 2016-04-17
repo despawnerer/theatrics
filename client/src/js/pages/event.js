@@ -16,7 +16,7 @@ export default class EventPage extends Page {
     super({app});
 
     this.event = event;
-    this.location = app.locations.get(event.data.location);
+    this.location = event.getLocation();
   }
 
   getHTML() {

@@ -8,7 +8,7 @@
     </h2>
   </a>
   <div class="tagline">
-    <a href="<%- getMapURL(place.getName(), place.data.address, location.name, isiOS()) %>" target="_blank">
+    <a href="<%- getMapURL(place.getName(), place.data.address, place.getLocation().name, isiOS()) %>" target="_blank">
       <span class="link-text"><%- place.data.address %></span>
     </a>
   </div>

@@ -1,5 +1,7 @@
 import moment from 'moment';
 
+import locations from '../core/locations';
+
 import Event from '../models/event';
 import Place from '../models/place';
 
@@ -19,13 +21,13 @@ export function index(app) {
 
 
 export function location(app, {location}) {
-  if (!app.locations.has(location)) return notFound(app);
+  if (!locations.has(location)) return notFound(app);
   return Redirect(app.resolver.reverse('event-list', {location}));
 }
 
 
 export function eventList(app, {location, date}) {
-  location = app.locations.get(location);
+  location = locations.get(location);
   date = date ? moment.tz(date, location.timezone) : null;
   if (!location) return notFound(app);
 
@@ -47,7 +49,7 @@ export function event(app, {id}) {
 
 
 export function placeList(app, {location}) {
-  location = app.locations.get(location);
+  location = locations.get(location);
   if (!location) return notFound(app);
 
   const feed = app.api.getPlacesFeed(location);

@@ -16,7 +16,7 @@ export default class PlacePage extends Page {
     super({app});
 
     this.place = place;
-    this.location = app.locations.get(place.data.location);
+    this.location = place.getLocation();
   }
 
   getHTML() {

@@ -1,3 +1,5 @@
+import locations from '../core/locations';
+
 import View from '../base/view';
 
 import template from '../../templates/location-chooser.ejs';
@@ -5,7 +7,6 @@ import template from '../../templates/location-chooser.ejs';
 
 export default class LocationChooser extends View {
   getHTML() {
-    const locations = this.app.locations;
     const currentLocation = locations.get(this.app.settings.get('location'));
     return this.app.renderTemplate(template, {locations, currentLocation});
   }

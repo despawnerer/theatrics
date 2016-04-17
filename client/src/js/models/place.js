@@ -19,6 +19,10 @@ export default class Place extends Model {
     return fields.filter(f => Boolean(this.data[f]))
   }
 
+  getLocation() {
+    return locations.get(this.data.location);
+  }
+
   toJSONLD(app) {
     const url = app.resolver.reverse('place', {id: this.data.id});
 

@@ -1,5 +1,6 @@
 import moment from 'moment';
 
+import locations from '../core/locations';
 import Model from '../base/model';
 import {capfirst, range, makeAbsoluteURL} from '../utils';
 
@@ -29,6 +30,10 @@ export default class Event extends Model {
     } else {
       return undefined;
     }
+  }
+
+  getLocation() {
+    return locations.get(this.data.location);
   }
 
   getDisplayDates() {

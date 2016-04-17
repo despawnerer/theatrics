@@ -27,17 +27,16 @@ async def update(since):
 
 
 async def migrate():
-    async with aiohttp.ClientSession() as http_client:
-        elastic = Elasticsearch(ELASTICSEARCH_ENDPOINTS)
-        index_name = await create_new_index(elastic)
-        async for hit in IndexScanner(elastic, ELASTICSEARCH_ALIAS):
-            doc = hit['_source']
-            id_ = hit['_id']
-            type_ = hit['_type']
-            asyncio.ensure_future(
-                elastic.index(index_name, type_, doc, id=id_)
-            )
-        await switch_alias_to_index(elastic, ELASTICSEARCH_ALIAS, index_name)
+    elastic = Elasticsearch(ELASTICSEARCH_ENDPOINTS)
+    index_name = await create_new_index(elastic)
+    async for hit in IndexScanner(elastic, ELASTICSEARCH_ALIAS):
+        doc = hit['_source']
+        id_ = hit['_id']
+        type_ = hit['_type']
+        asyncio.ensure_future(
+            elastic.index(index_name, type_, doc, id=id_)
+        )
+    await switch_alias_to_index(elastic, ELASTICSEARCH_ALIAS, index_name)
 
 
 async def reimport():

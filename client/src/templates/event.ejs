@@ -144,7 +144,10 @@
     <div class="item-description"><%= event.data.description %></div>
 
     <div class="source-information">
-      Источник данных: <a href="<%- event.data.source.url %>" target="_blank"><%- event.data.source.name %></a>.
+      Источник данных:
+      <a href="<%- event.data.source.url %>" target="_blank">
+        <span class="link-text"><%- event.data.source.name %></span>
+        <span class="icon-external-link"></span></a>.
     </div>
 
 <% if (event.isFestival() && event.hasChildren()) { %>

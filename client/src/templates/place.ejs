@@ -29,6 +29,7 @@
               <span class="item-information-value">
                 <a href="<%- getMapURL(place.data.full_name, place.data.address, location.name, isiOS()) %>" target="_blank">
                   <span class="link-text"><%- place.data.address %></span>
+                  <span class="icon-external-link"></span>
                 </a>
               </span>
             <% } else if (field == 'subway') { %>
@@ -43,7 +44,10 @@
             <% } else if (field == 'url') { %>
               <span class="item-information-icon icon-globe" title="Адрес сайта"></span>
               <span class="item-information-value">
-                <a href="<%- place.data.url %>" target="_blank"><span class="link-text"><%- niceURL(place.data.url) %></span></a>
+                <a href="<%- place.data.url %>" target="_blank">
+                  <span class="link-text"><%- niceURL(place.data.url) %></span>
+                  <span class="icon-external-link"></span>
+                </a>
               </span>
             <% } %>
           </div>
@@ -106,7 +110,10 @@
 
   <div class="content-container">
     <div class="source-information">
-      Источник данных: <a href="<%- place.data.source.url %>" target="_blank"><%- place.data.source.name %></a>.
+      Источник данных:
+      <a href="<%- place.data.source.url %>" target="_blank">
+        <span class="link-text"><%- place.data.source.name %></span>
+        <span class="icon-external-link"></span></a>.
     </div>
   </div>
 

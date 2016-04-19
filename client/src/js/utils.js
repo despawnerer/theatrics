@@ -1,4 +1,3 @@
-import moment from 'moment';
 import escape from 'lodash.escape';
 import punycode from 'punycode';
 
@@ -204,12 +203,29 @@ export function displayDuration(duration) {
   const days = Math.floor(duration.asDays());
   const hours = duration.hours();
   const minutes = duration.minutes();
-  const subDurations = [];
-  if (days) subDurations.push(moment.duration(days, 'days'));
-  if (hours) subDurations.push(moment.duration(hours, 'hours'));
-  if (minutes) subDurations.push(moment.duration(minutes, 'minutes'));
-  return subDurations.map(x => x.humanize()).join(' ');
+  const parts = [];
+  if (days) parts.push(pluralize.days(days));
+  if (hours) parts.push(pluralize.hours(hours));
+  if (minutes) parts.push(pluralize.minutes(minutes));
+  return parts.join(' ');
 }
+
+
+export function pluralize(forms, n) {
+  // this is a pluralization function for Russian language
+  const form = (
+    (n % 10 === 1 && n % 100 !== 11)
+    ? forms[0]
+    : (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20))
+    ? forms[1]
+    : forms[2]
+  );
+  return `${n} ${form}`;
+}
+
+pluralize.days = n => pluralize(['день', 'дня', 'дней'], n);
+pluralize.hours = n => pluralize(['час', 'часа', 'часов'], n);
+pluralize.minutes = n => pluralize(['минута', 'минуты', 'минут'], n);
 
 
 /* Misc */

@@ -20,7 +20,8 @@ import {
   isiOS,
   getMapURL,
   restrictBreaks,
-  niceURL
+  niceURL,
+  displayDuration
 } from '../utils';
 
 
@@ -59,6 +60,7 @@ export default class App {
       getMapURL,
       restrictBreaks,
       niceURL,
+      displayDuration,
       url: (...args) => this.resolver.reverse(...args),
       app: this,
     }

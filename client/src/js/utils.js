@@ -1,3 +1,4 @@
+import moment from 'moment';
 import escape from 'lodash.escape';
 import punycode from 'punycode';
 
@@ -194,6 +195,20 @@ export function groupArray(array, name, callback, equal=(a, b) => a == b) {
     }
   });
   return groups;
+}
+
+
+/* Formatting */
+
+export function displayDuration(duration) {
+  const days = Math.floor(duration.asDays());
+  const hours = duration.hours();
+  const minutes = duration.minutes();
+  const subDurations = [];
+  if (days) subDurations.push(moment.duration(days, 'days'));
+  if (hours) subDurations.push(moment.duration(hours, 'hours'));
+  if (minutes) subDurations.push(moment.duration(minutes, 'minutes'));
+  return subDurations.map(x => x.humanize()).join(' ');
 }
 
 

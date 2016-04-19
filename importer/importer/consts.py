@@ -1,1 +1,0 @@
-ELASTICSEARCH_ALIAS = 'theatrics'

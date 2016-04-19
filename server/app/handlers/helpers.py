@@ -9,7 +9,7 @@ from marshmallow import Schema, fields
 from marshmallow.validate import Range
 
 from ..connections import elastic
-from ..consts import ELASTICSEARCH_INDEX
+from ..settings import ELASTICSEARCH_INDEX
 
 from .fields import CommaSeparatedList
 

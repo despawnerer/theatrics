@@ -7,5 +7,10 @@ def unprefix(s, prefix):
 
 DEBUG = bool(os.environ.get('THEATRICS_DEBUG'))
 
-ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL', 'http://localhost:9200')
-ELASTICSEARCH_ENDPOINTS = [unprefix(ELASTICSEARCH_URL, 'http://')]
+ELASTICSEARCH_ENDPOINTS = [
+    unprefix(
+        os.environ.get('ELASTICSEARCH_URL', 'localhost:9200'),
+        'http://'
+    )
+]
+ELASTICSEARCH_INDEX = os.environ.get('ELASTICSEARCH_INDEX', 'theatrics')

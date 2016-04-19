@@ -7,8 +7,7 @@ from aioes import Elasticsearch
 from .importer import import_data
 from .kudago import KudaGo
 from .utils import read_json_file
-from .consts import ELASTICSEARCH_ALIAS
-from .settings import ELASTICSEARCH_ENDPOINTS
+from .settings import ELASTICSEARCH_ENDPOINTS, ELASTICSEARCH_ALIAS
 
 
 # commands

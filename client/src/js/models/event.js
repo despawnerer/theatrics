@@ -34,7 +34,6 @@ export default class Event extends Model {
 
     const [first, ...others] = durations;
     if (others.every(duration => duration.asMinutes() == first.asMinutes())) {
-      console.log(first.asHours())
       return first;
     } else {
       return undefined;

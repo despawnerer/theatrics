@@ -26,7 +26,7 @@ export default class Event extends Model {
   getDuration() {
     const durations = this.getDates()
       .map(date => date.getDuration())
-      .filter(duration => Boolean(duration));
+      .filter(duration => duration && duration.asMinutes() > 0);
 
     if (!durations.length) {
       return undefined;

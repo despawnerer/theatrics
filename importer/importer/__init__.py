@@ -1,5 +1,6 @@
 import asyncio
 import aiohttp
+import aioes
 import os.path
 from datetime import datetime
 from aioes import Elasticsearch
@@ -12,9 +13,17 @@ from .settings import ELASTICSEARCH_ENDPOINTS, ELASTICSEARCH_ALIAS
 
 # commands
 
-async def initialize():
+async def migrate():
     elastic = Elasticsearch(ELASTICSEARCH_ENDPOINTS)
     index_name = await create_new_index(elastic)
+    if await elastic.indices.exists(ELASTICSEARCH_ALIAS):
+        async for hit in IndexScanner(elastic, ELASTICSEARCH_ALIAS):
+            doc = hit['_source']
+            id_ = hit['_id']
+            type_ = hit['_type']
+            asyncio.ensure_future(
+                elastic.index(index_name, type_, doc, id=id_)
+            )
     await switch_alias_to_index(elastic, ELASTICSEARCH_ALIAS, index_name)
 
 
@@ -23,19 +32,6 @@ async def update(since):
         elastic = Elasticsearch(ELASTICSEARCH_ENDPOINTS)
         kudago = KudaGo(http_client)
         await import_data(kudago, elastic, ELASTICSEARCH_ALIAS, since=since)
-
-
-async def migrate():
-    elastic = Elasticsearch(ELASTICSEARCH_ENDPOINTS)
-    index_name = await create_new_index(elastic)
-    async for hit in IndexScanner(elastic, ELASTICSEARCH_ALIAS):
-        doc = hit['_source']
-        id_ = hit['_id']
-        type_ = hit['_type']
-        asyncio.ensure_future(
-            elastic.index(index_name, type_, doc, id=id_)
-        )
-    await switch_alias_to_index(elastic, ELASTICSEARCH_ALIAS, index_name)
 
 
 async def reimport():
@@ -84,8 +80,12 @@ async def create_new_index(elastic):
 
 
 async def switch_alias_to_index(elastic, alias_name, index_name):
+    try:
+        existing_aliases = await elastic.indices.get_alias(name=alias_name)
+    except aioes.NotFoundError:
+        existing_aliases = []
+
     actions = []
-    existing_aliases = await elastic.indices.get_alias(name=alias_name)
     for existing_index_name in existing_aliases:
         actions.append({
             'remove': {

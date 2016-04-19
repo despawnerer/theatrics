@@ -3,7 +3,6 @@ import click
 from datetime import datetime
 
 from importer import (
-    initialize as do_initialize,
     update as do_update,
     migrate as do_migrate,
     reimport as do_reimport,
@@ -16,12 +15,11 @@ def import_():
 
 
 @import_.command()
-def initialize():
+def migrate():
     """
-    Setup empty index with alias.
-    Leaves previous indices intact, but removes alises to them.
+    Create a new index, copy old data into it if any, switch.
     """
-    run_sync(do_initialize())
+    run_sync(do_migrate())
 
 
 @import_.command()
@@ -36,14 +34,6 @@ def update(all):
         since = datetime.now().replace(hour=0, minute=0, microsecond=0)
 
     run_sync(do_update(since))
-
-
-@import_.command()
-def migrate():
-    """
-    Create a new index, copy old data into it, switch.
-    """
-    run_sync(do_migrate())
 
 
 @import_.command()

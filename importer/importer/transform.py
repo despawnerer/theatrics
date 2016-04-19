@@ -54,7 +54,7 @@ def transform_event(kudago_event, parent_id, children_count):
         'dates': dates,
 
         'source': {
-            'name': 'KudaGo.com',
+            'name': 'kudago.com',
             'url': kudago_event['site_url'],
         }
     }
@@ -97,7 +97,7 @@ def transform_place(kudago_place, events_count):
         'images': kudago_place['images'],
 
         'source': {
-            'name': 'KudaGo.com',
+            'name': 'kudago.com',
             'url': kudago_place['site_url'],
         }
     }
@@ -118,7 +118,7 @@ def transform_stub_place(kudago_place):
         'phone_numbers': kudago_place['phone'].split(','),
 
         'source': {
-            'name': 'KudaGo.com',
+            'name': 'kudago.com',
             'url': kudago_place['site_url'],
         }
     }

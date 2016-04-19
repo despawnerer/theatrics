@@ -50,9 +50,12 @@
             <span class="item-information-icon icon-place" title="Место проведения"></span>
             <span class="item-information-value">
               <% if (place.isStub()) { %>
+                <%- place.getName() %>
                 <% if (place.data.address) { %>
-                  <a href="<%- getMapURL(place.data.full_name, place.data.address, location.name, isiOS()) %>" target="_blank">
-                    <span class="link-text"><%- place.getName() %></span>
+                  <br/>
+                  <a href="<%- getMapURL(place.data.full_name, place.data.address, location.name, isiOS()) %>" target="_blank" class="item-place-address-link">
+                    <span class="link-text"><%- place.data.address %></span>
+                    <span class="icon-external-link"></span>
                   </a>
                 <% } else { %>
                   <%- place.getName() %>

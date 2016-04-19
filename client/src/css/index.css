@@ -1162,6 +1162,11 @@ p {
   padding-bottom: 1px;
 }
 
+.item-place-address-link {
+  font-weight: normal;
+  font-size: 13px;
+}
+
 .item-dates {
   list-style: none;
   padding: 0;

@@ -24,14 +24,7 @@ export default class Event extends Model {
   }
 
   getDuration() {
-    const durations = this.getDates()
-      .map(date => date.getDuration())
-      .filter(duration => duration && duration.asMinutes() > 0);
-
-    if (!durations.length) {
-      return undefined;
-    }
-
+    const durations = this.getDates().map(date => date.getDuration());
     const [first, ...others] = durations;
     if (others.every(duration => duration.asMinutes() == first.asMinutes())) {
       return first;

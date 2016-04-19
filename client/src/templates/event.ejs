@@ -73,7 +73,7 @@
         <% } %>
 
         <% var duration = event.getDuration() %>
-        <% if (duration) { %>
+        <% if (duration && duration.asMinutes() > 0) { %>
           <div class="item-information-item">
             <span class="item-information-icon icon-clock" title="Продолжительность"></span>
             <span class="item-information-value"><%- displayDuration(duration) %></span>

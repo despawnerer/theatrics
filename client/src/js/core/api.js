@@ -73,7 +73,16 @@ export default class TheatricsAPI {
     const url = this.buildURL(path);
     const queryString = this.serializeParams(params);
     const fullURL = queryString ? `${url}?${queryString}` : url;
-    return this.fetch(fullURL).then(response => response.json());
+    return this.fetch(fullURL)
+      .then(response => {
+        if (!response.ok) {
+          const error = new Error(response.statusText);
+          error.response = response;
+          throw error;
+        } else {
+          return response.json();
+        }
+      });
   }
 
   buildURL(path) {

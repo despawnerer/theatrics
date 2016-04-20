@@ -44,7 +44,8 @@ export function event(app, {id}) {
       const event = new Event(data);
       const page = new EventPage({app, event});
       return Render({page});
-    });
+    })
+    .catch(error => error.response.status == 404 ? notFound(app) : undefined);
 }
 
 
@@ -65,7 +66,8 @@ export function place(app, {id}) {
       const place = new Place(data);
       const page = new PlacePage({app, place});
       return Render({page});
-    });
+    })
+    .catch(error => error.response.status == 404 ? notFound(app) : undefined);
 }
 
 

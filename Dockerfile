@@ -29,7 +29,7 @@ COPY client/package.json client/package.json
 RUN make install-client-deps
 
 COPY client client/
-RUN make build-min clean-deps && rm -rf client/src
+RUN make build-min clean-node-modules && rm -rf client/src
 
 COPY server server/
 COPY importer importer/

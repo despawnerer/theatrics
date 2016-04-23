@@ -17,13 +17,15 @@ async def migrate():
     elastic = Elasticsearch(ELASTICSEARCH_ENDPOINTS)
     index_name = await create_new_index(elastic)
     if await elastic.indices.exists(ELASTICSEARCH_ALIAS):
+        futures = []
         async for hit in IndexScanner(elastic, ELASTICSEARCH_ALIAS):
             doc = hit['_source']
             id_ = hit['_id']
             type_ = hit['_type']
-            asyncio.ensure_future(
+            futures.append(asyncio.ensure_future(
                 elastic.index(index_name, type_, doc, id=id_)
-            )
+            ))
+        await asyncio.wait(futures)
     await switch_alias_to_index(elastic, ELASTICSEARCH_ALIAS, index_name)
 
 

@@ -1,5 +1,7 @@
 import asyncio
 import click
+import schedule
+import time
 from datetime import datetime
 
 from importer import (
@@ -28,11 +30,7 @@ def update(all):
     """
     Import events and places from KudaGo.
     """
-    if all:
-        since = None
-    else:
-        since = datetime.now().replace(hour=0, minute=0, microsecond=0)
-
+    since = None if all else get_today()
     run_sync(do_update(since))
 
 
@@ -42,6 +40,25 @@ def reimport():
     Import all data from KudaGo into a new index and switch.
     """
     run_sync(do_reimport())
+
+
+@import_.command()
+def autoupdate():
+    """
+    Start automatic update on schedule.
+
+    Quick (actual-only) updates are run every hour.
+    Full updates are run every Monday.
+    """
+    schedule.every().monday.do(lambda: run_sync(do_update(None)))
+    schedule.every().hour.do(lambda: run_sync(do_update(get_today())))
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+
+
+def get_today():
+    return datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
 
 
 def run_sync(coro):

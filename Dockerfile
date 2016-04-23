@@ -5,8 +5,7 @@ FROM python:3.5-slim
 RUN apt-get update && apt-get install -y \
     make \
     wget \
-    nginx-light \
-    git
+    nginx-light
 
 RUN wget -qO- https://deb.nodesource.com/setup_5.x | bash -
 

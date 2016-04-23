@@ -1,4 +1,5 @@
 <% var place = event.getPlace() %>
+<% var parent = event.getParent() %>
 
 <article class="item-view">
   <div class="item-slider" data-next-button=".next-button" data-previous-button=".previous-button" data-container=".item-slide-list" data-items=".item-slide">
@@ -38,7 +39,7 @@
     <% } %>
 
     <h1 class="big-item-title">
-      <%- event.getShortTitle() %>
+      <%- event.getName() %>
       <span class="big-item-tagline"><%- event.data.tagline %></span>
     </h1>
 
@@ -49,26 +50,40 @@
             <span class="item-information-icon icon-place" title="Место проведения"></span>
             <span class="item-information-value">
               <% if (place.isStub()) { %>
+                <%- place.getName() %>
                 <% if (place.data.address) { %>
-                  <a href="<%- getMapURL(place.data.title, place.data.address, location.name, isiOS()) %>" target="_blank">
-                    <span class="link-text"><%- place.getTitle() %></span>
+                  <br/>
+                  <a href="<%- getMapURL(place.data.full_name, place.data.address, location.name, isiOS()) %>" target="_blank" class="item-place-address-link">
+                    <span class="link-text"><%- place.data.address %></span>
+                    <span class="icon-external-link"></span>
                   </a>
                 <% } else { %>
-                  <%- place.getTitle() %>
+                  <%- place.getName() %>
                 <% } %>
               <% } else { %>
                 <a href="<%- url('place', {id: place.data.id}) %>">
-                  <span class="link-text"><%- place.getTitle() %></span>
+                  <span class="link-text"><%- place.getName() %></span>
                 </a>
               <% } %>
             </span>
           </div>
         <% } %>
 
-        <% if (event.data.price) { %>
+        <% if (parent) { %>
+          <div class="item-information-item">
+            <span class="item-information-icon icon-star" title="Проходит в рамках"></span>
+            <span class="item-information-value">
+              <a href="<%- url('event', {id: parent.data.id}) %>">
+                <span class="link-text"><%- parent.getFullName() %></span>
+              </a>
+            </span>
+          </div>
+        <% } %>
+
+        <% if (event.data.price.text) { %>
           <div class="item-information-item">
             <span class="item-information-icon icon-rouble" title="Цена билета"></span>
-            <span class="item-information-value"><%- event.data.price %></span>
+            <span class="item-information-value"><%- event.data.price.text %></span>
           </div>
         <% } %>
 
@@ -121,7 +136,7 @@
       </div>
     </div>
 
-<% if (event.isFestival()) { %>
+<% if (event.isFestival() && event.hasChildren()) { %>
   </div>
   <div class="pager" data-nav-items=".tab" data-slider=".pager-pages-slider">
     <nav class="pager-nav content-container">
@@ -136,13 +151,17 @@
           <div class="content-container">
 <% } %>
 
+    <div class="item-lead"><%= event.data.lead %></div>
     <div class="item-description"><%= event.data.description %></div>
-    <div class="item-text"><%= event.data.body_text %></div>
+
     <div class="source-information">
-      Источник данных: <a href="<%- event.data.site_url %>" target="_blank">kudago.com</a>.
+      Источник данных:
+      <a href="<%- event.data.source.url %>" target="_blank">
+        <span class="link-text"><%- event.data.source.name %></span>
+        <span class="icon-external-link"></span></a>.
     </div>
 
-<% if (event.isFestival()) { %>
+<% if (event.isFestival() && event.hasChildren()) { %>
           </div>
         </div>
         <div class="pager-page schedule-page">

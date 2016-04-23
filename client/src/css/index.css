@@ -35,6 +35,14 @@ a:hover .link-text {
   border-bottom: 1px solid #ddd;
 }
 
+a .icon-external-link {
+  font-size: 0.8em;
+  color: #555;
+  display: inline-block;
+  margin-bottom: 1px;
+  vertical-align: text-bottom;
+}
+
 p {
   margin: 0 0 20px 0;
 }
@@ -341,10 +349,8 @@ p {
 
 #footer p:last-child { margin-bottom: 0; }
 
-#footer a {
-  color: #444;
-  text-decoration: underline;
-}
+#footer a { color: #444; }
+#footer a .link-text { border: 0; text-decoration: underline; }
 
 .footer-icon {
   margin-right: 5px;
@@ -1126,20 +1132,20 @@ p {
   margin: -5px -10px;
 }
 
-.item-description {
+.item-lead {
   font-size: 20px;
 }
 
-.item-text {
+.item-description {
   font-size: 17px;
   font-family: Liberation Serif, Times New Roman, serif;
 }
 
-.item-text img {
+.item-description img {
   max-width: 100%;
 }
 
-.item-text :last-child {
+.item-description :last-child {
   margin-bottom: 0;
 }
 
@@ -1154,6 +1160,11 @@ p {
 
 .item-place .link-text {
   padding-bottom: 1px;
+}
+
+.item-place-address-link {
+  font-weight: normal;
+  font-size: 13px;
 }
 
 .item-dates {
@@ -1199,10 +1210,8 @@ p {
   color: #444;
 }
 
-.source-information a {
-  color: #444;
-  text-decoration: underline;
-}
+.source-information a { color: #444; }
+.source-information a .link-text { border: none; text-decoration: underline; }
 
 @media (max-width: 359px) {
   .item-slider { margin-bottom: 20px; }

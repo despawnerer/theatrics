@@ -1,9 +1,9 @@
-import locations from '../../data/locations.json';
+import locationsData from '../../data/locations.json';
 
 
-export default class Locations {
-  constructor() {
-    this._locations = locations;
+export class Locations {
+  constructor(locationsData) {
+    this._locations = locationsData;
   }
 
   has(slug) {
@@ -18,3 +18,7 @@ export default class Locations {
     this._locations.forEach(func);
   }
 }
+
+const locations = new Locations(locationsData);
+
+export default locations;

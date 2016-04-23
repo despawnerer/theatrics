@@ -1,25 +1,34 @@
 host = localhost:9001
 
-.PHONY: clean install-deps install-server-deps install-client-deps update-locations update-timezones build build-min watch run run-dev
+.PHONY: clean clean-build clean-node-modules clean-pycache install-deps install-server-deps install-client-deps install-importer-deps update-locations update-timezones build build-min watch migrate run run-dev
+
+quickstart-dev: | clean install-deps build migrate
 
 # clean up
 
-clean:
+clean: | clean-build clean-node-modules clean-pycache
+
+clean-build:
 	rm -rf client/build
-	rm -rf client/node_modules
-	rm -rf server/app/__pycache__
 
-clean-deps:
+clean-node-modules:
 	rm -rf client/node_modules
 
-# dependencies installation
+clean-pycache:
+	find . -name "__pycache__" -type d -exec rm -rf {} +
+
+# dependencies
 
 install-deps:
 	cd server && pip install -r requirements.pip
+	cd importer && pip install -r requirements.pip
 	cd client && npm install
 
 install-server-deps:
 	cd server && pip install -r requirements.pip
+
+install-importer-deps:
+	cd importer && pip install -r requirements.pip
 
 install-client-deps:
 	cd client && npm install
@@ -42,6 +51,11 @@ build-min:
 
 watch:
 	cd client && npm run watch
+
+# upgrading
+
+migrate:
+	cd importer && python import.py migrate
 
 # running
 

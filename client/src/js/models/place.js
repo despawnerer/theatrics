@@ -1,3 +1,4 @@
+import locations from '../core/locations';
 import Model from '../base/model';
 import {capfirst, makeAbsoluteURL} from '../utils';
 
@@ -8,16 +9,19 @@ export default class Place extends Model {
   }
 
   isReference() {
-    const keys = Object.keys(this.data);
-    return keys.length == 1 && keys[0] == 'id';
+    return typeof this.data == 'number';
   }
 
-  getTitle() {
-    return capfirst(this.data.title);
+  getName() {
+    return capfirst(this.data.full_name);
   }
 
   getPresentFields(...fields) {
     return fields.filter(f => Boolean(this.data[f]))
+  }
+
+  getLocation() {
+    return locations.get(this.data.location);
   }
 
   toJSONLD(app) {
@@ -33,7 +37,7 @@ export default class Place extends Model {
       '@context': 'http://schema.org',
       '@type': 'Place',
       '@id': url,
-      name: this.getTitle(),
+      name: this.getName(),
       address: this.data.address,
     }
 
@@ -41,8 +45,8 @@ export default class Place extends Model {
       result.url = makeAbsoluteURL(url);
     }
 
-    if (this.data.foreign_url) {
-      result.sameAs = this.data.foreign_url;
+    if (this.data.url) {
+      result.sameAs = this.data.url;
     }
 
     return result;

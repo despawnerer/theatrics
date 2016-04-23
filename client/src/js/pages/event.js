@@ -16,7 +16,7 @@ export default class EventPage extends Page {
     super({app});
 
     this.event = event;
-    this.location = app.locations.get(event.data.location.slug);
+    this.location = event.getLocation();
   }
 
   getHTML() {
@@ -27,7 +27,7 @@ export default class EventPage extends Page {
   }
 
   getTitle() {
-    return `${this.event.getLongTitle()} – ${this.location.name}`;
+    return `${this.event.getFullName()} – ${this.location.name}`;
   }
 
   getLocation() {
@@ -39,7 +39,7 @@ export default class EventPage extends Page {
 
     new Slider(element.querySelector('.item-slider'));
 
-    if (this.event.isFestival()) {
+    if (this.event.isFestival() && this.event.hasChildren()) {
       new Pager(element.querySelector('.pager'));
       this.loadSchedule();
     }

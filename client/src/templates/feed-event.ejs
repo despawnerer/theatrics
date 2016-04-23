@@ -4,7 +4,7 @@
       <img data-src="<%- event.data.images[0].thumbnails['640x384'] %>" class="feed-image lazyload"/>
     </div>
     <h2 class="item-header">
-      <%- event.getShortTitle() %>
+      <%- event.getName() %>
       <% if (event.isFestival()) { %>
         <span class="badge festival-badge">Фестиваль</span>
       <% } else if (event.isPremiere()) { %>
@@ -15,6 +15,8 @@
 
   <% if (event.data.tagline) { %>
     <div class="tagline"><%- event.data.tagline %></div>
+  <% } else if (event.isFestival() && event.data.lead) { %>
+    <div class="tagline"><%= event.data.lead %></div>
   <% } %>
 
   <% var place = event.getPlace() %>
@@ -22,18 +24,12 @@
   <% if (place) { %>
     <div class="place">
       <% if (place.isStub()) { %>
-        <%- place.getTitle() %>
+        <%- place.getName() %>
       <% } else { %>
         <a href="<%- url('place', {id: place.data.id}) %>">
-          <span class="link-text"><%- place.getTitle() %></span>
+          <span class="link-text"><%- place.getName() %></span>
         </a>
       <% } %>
-    </div>
-  <% } %>
-
-  <% if (!event.data.tagline && !place && event.data.description) { %>
-    <div class="tagline">
-    <%= event.data.description %>
     </div>
   <% } %>
 </li>

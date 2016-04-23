@@ -5,7 +5,6 @@ import extend from 'xtend';
 
 import TheatricsAPI from './api';
 import Resolver from './resolver';
-import Locations from './locations';
 import Router from './router';
 import * as handlers from './handlers';
 
@@ -29,7 +28,6 @@ export default class App {
   constructor() {
     this.api = new TheatricsAPI();
     this.settings = new Settings();
-    this.locations = new Locations();
 
     this.resolver = new Resolver();
     this.resolver.addRoute('index', '/');

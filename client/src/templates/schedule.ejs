@@ -1,7 +1,7 @@
 <div class="schedule">
   <table class="schedule-table" cellspacing="0" cellpadding="0">
     <% rangeGroups.forEach(function(group) { %>
-      <% var isPast = group.range.end.isBefore(moment().set({hour: 0, minute: 0, second: 0})) %>
+      <% var isPast = group.range.end.isBefore(moment(), 'day') %>
       <% var isLong = !group.range.start.isSame(group.range.end, 'day') %>
       <tbody class="schedule-day-body<% if (isPast) { %> past<% } %>">
         <tr class="schedule-row">
@@ -22,7 +22,7 @@
             <td class="schedule-title-cell">
               <h2 class="schedule-item-title">
                 <a href="<%- url('event', {id: event.data.id }) %>">
-                  <span class="link-text"><%- event.getShortTitle() %></span>
+                  <span class="link-text"><%- event.getName() %></span>
                   <% if (event.isFestival()) { %>
                     <span class="badge festival-badge">Фестиваль</span>
                   <% } else if (event.isPremiere()) { %>
@@ -52,7 +52,7 @@
             <td class="schedule-title-cell">
               <h2 class="schedule-item-title">
                 <a href="<%- url('event', {id: event.data.id }) %>">
-                  <span class="link-text"><%- event.getShortTitle() %></span>
+                  <span class="link-text"><%- event.getName() %></span>
                   <% if (event.isFestival()) { %>
                     <span class="badge festival-badge">Фестиваль</span>
                   <% } else if (event.isPremiere()) { %>

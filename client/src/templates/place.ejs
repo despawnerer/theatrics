@@ -1,12 +1,12 @@
 <article class="item-view">
   <div class="content-container">
     <h1 class="big-item-title">
-      <%- place.getTitle() %>
+      <%- place.getName() %>
     </h1>
 
     <div class="item-information place-information">
       <%
-        var presentFields = place.getPresentFields('address', 'subway', 'foreign_url', 'timetable', 'phone');
+        var presentFields = place.getPresentFields('address', 'subway', 'url', 'working_hours', 'phone_numbers');
         var perColumn = presentFields.length > 3 ? Math.ceil(presentFields.length / 2) : 3;
         if (perColumn < presentFields.length) {
           var columns = [
@@ -27,23 +27,27 @@
             <% if (field == 'address') { %>
               <span class="item-information-icon icon-place" title="Адрес"></span>
               <span class="item-information-value">
-                <a href="<%- getMapURL(place.data.title, place.data.address, location.name, isiOS()) %>" target="_blank">
+                <a href="<%- getMapURL(place.data.full_name, place.data.address, location.name, isiOS()) %>" target="_blank">
                   <span class="link-text"><%- place.data.address %></span>
+                  <span class="icon-external-link"></span>
                 </a>
               </span>
             <% } else if (field == 'subway') { %>
               <span class="item-information-icon icon-subway" title="Ближайшее метро"></span>
               <span class="item-information-value"><%= restrictBreaks(place.data.subway) %></span>
-            <% } else if (field == 'timetable') { %>
+            <% } else if (field == 'working_hours') { %>
               <span class="item-information-icon icon-clock" title="Часы работы"></span>
-              <span class="item-information-value"><%- place.data.timetable %></span>
-            <% } else if (field == 'phone') { %>
+              <span class="item-information-value"><%- place.data.working_hours %></span>
+            <% } else if (field == 'phone_numbers') { %>
               <span class="item-information-icon icon-phone" title="Номер телефона"></span>
-              <span class="item-information-value"><%= restrictBreaks(place.data.phone) %></span>
-            <% } else if (field == 'foreign_url') { %>
+              <span class="item-information-value"><%= restrictBreaks(place.data.phone_numbers.join(', ')) %></span>
+            <% } else if (field == 'url') { %>
               <span class="item-information-icon icon-globe" title="Адрес сайта"></span>
               <span class="item-information-value">
-                <a href="<%- place.data.foreign_url %>" target="_blank"><span class="link-text"><%- niceURL(place.data.foreign_url) %></span></a>
+                <a href="<%- place.data.url %>" target="_blank">
+                  <span class="link-text"><%- niceURL(place.data.url) %></span>
+                  <span class="icon-external-link"></span>
+                </a>
               </span>
             <% } %>
           </div>
@@ -89,8 +93,8 @@
             </div>
           </div>
           <div class="content-container">
+            <div class="item-lead"><%= place.data.lead %></div>
             <div class="item-description"><%= place.data.description %></div>
-            <div class="item-text"><%= place.data.body_text %></div>
           </div>
         </div>
         <div class="pager-page schedule-page">
@@ -106,7 +110,10 @@
 
   <div class="content-container">
     <div class="source-information">
-      Источник данных: <a href="<%- place.data.site_url %>" target="_blank">kudago.com</a>.
+      Источник данных:
+      <a href="<%- place.data.source.url %>" target="_blank">
+        <span class="link-text"><%- place.data.source.name %></span>
+        <span class="icon-external-link"></span></a>.
     </div>
   </div>
 

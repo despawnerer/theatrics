@@ -10,8 +10,9 @@ Prerequisites
 -------------
 
 - make
-- node 5.6
+- node 5.x
 - python 3.5
+- elasticsearch 2.3
 
 
 Development
@@ -21,23 +22,7 @@ Development
 
 Make sure you're within configured and activated virtualenv with python 3.5.
 
-	$ make clean install-deps build
-
-
-### Cleaning up
-
-Remove installed node modules and built files, as well as python's compiled files:
-
-	$ make clean
-
-Remove only node modules:
-
-	$ make clean-node-modules
-
-
-### Automatically rebuilding client
-
-	$ make watch
+	$ make quickstart-dev
 
 
 ### Running
@@ -51,6 +36,31 @@ The server runs on `localhost:9001` by default. If you want a different port, yo
 	$ make run-dev host="localhost:9005"
 
 
+### Cleaning up
+
+Remove installed node modules, built files, and python bytecode cache:
+
+	$ make clean
+
+Remove only node modules:
+
+	$ make clean-node-modules
+
+Remove only python bytecode cache:
+
+	$ make clean-pycache
+
+
+### Automatically rebuilding client
+
+	$ make watch
+
+
+### Migrating elasticsearch mapping changes
+
+	$ make migrate
+
+
 ### Updating timezones list
 
 	$ make update-timezones
@@ -59,32 +69,6 @@ The server runs on `localhost:9001` by default. If you want a different port, yo
 ### Updating locations list
 
 	$ make update-locations
-
-
-Deploying
----------
-
-### Docker
-
-Use supplied `Dockerfile` to build and run a Docker image.
-
-
-### Prerequisites
-
-- nginx
-- honcho (via pip)
-
-
-### Building
-
-	$ make build-min
-
-
-### Running
-
-The nginx configuration in `deploy/nginx.conf` assumes that the code is built and resides in `/www/theatrics/`
-
-	$ make run
 
 
 Credits

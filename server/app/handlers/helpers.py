@@ -152,6 +152,7 @@ async def expand_related_items(item_list, field, doc_type, subfields):
     related_items = {
         item['id']: item for item in
         map(simplify_item, response['docs'])
+        if item is not None
     }
     for item in item_list:
         if field in item:
@@ -161,6 +162,9 @@ async def expand_related_items(item_list, field, doc_type, subfields):
 
 
 def simplify_item(hit):
+    if 'found' in hit and not hit['found']:
+        return None
+
     simple = hit['_source']
     simple['id'] = int(hit['_id'])  # our ids are integers
     simple['type'] = hit['_type']

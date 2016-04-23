@@ -31,6 +31,7 @@ async def migrate():
     print("Switching to new index...")
     await switch_alias_to_index(elastic, ELASTICSEARCH_ALIAS, index_name)
     print("Done.")
+    elastic.close()
 
 
 async def update(since):
@@ -38,6 +39,7 @@ async def update(since):
         elastic = Elasticsearch(ELASTICSEARCH_ENDPOINTS)
         kudago = KudaGo(http_client)
         await import_data(kudago, elastic, ELASTICSEARCH_ALIAS, since=since)
+    elastic.close()
 
 
 async def reimport():
@@ -47,6 +49,7 @@ async def reimport():
         index_name = await create_new_index(elastic)
         await import_data(kudago, elastic, index_name)
         await switch_alias_to_index(elastic, ELASTICSEARCH_ALIAS, index_name)
+    elastic.close()
 
 
 # index management

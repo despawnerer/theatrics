@@ -19,7 +19,7 @@ def import_():
 @import_.command()
 def migrate():
     """
-    Create a new index, copy old data into it if any, switch.
+    Create a new index, copy old data, switch.
     """
     run_sync(do_migrate())
 
@@ -37,7 +37,7 @@ def update(all):
 @import_.command()
 def reimport():
     """
-    Import all data from KudaGo into a new index and switch.
+    Import all data into a new index and switch.
     """
     run_sync(do_reimport())
 

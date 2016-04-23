@@ -68,6 +68,8 @@
     <div class="pager-pages-slider" data-container=".pager-pages-list" data-items=".pager-page">
       <div class="pager-pages-list">
         <div class="pager-page description-page">
+
+          <% if (place.data.images.length) { %>
           <div class="item-slider" data-next-button=".next-button" data-previous-button=".previous-button" data-container=".item-slide-list" data-items=".item-slide">
             <a class="slide-button next-button"<% if (place.data.images.length < 2) { %> hidden<% } %>><span class="icon-chevron-thin-right"></span></a>
             <a class="slide-button previous-button" hidden><span class="icon-chevron-thin-left"></span></a>
@@ -92,6 +94,7 @@
               </ul>
             </div>
           </div>
+          <% } %>
           <div class="content-container">
             <div class="item-lead"><%= place.data.lead %></div>
             <div class="item-description"><%= place.data.description %></div>

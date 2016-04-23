@@ -37,7 +37,11 @@ export default class PlacePage extends Page {
   mount(element) {
     this.element = element;
 
-    new Slider(element.querySelector('.item-slider'));
+    const sliderElement = element.querySelector('.item-slider');
+    if (sliderElement) {
+      new Slider(element.querySelector('.item-slider'));
+    }
+
     new Pager(element.querySelector('.pager'));
 
     this.loadSchedule();

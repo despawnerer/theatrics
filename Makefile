@@ -12,7 +12,7 @@ clean:
 clean-node-modules:
 	rm -rf client/node_modules
 
-# dependencies installation
+# dependencies
 
 install-deps:
 	cd server && pip install -r requirements.pip

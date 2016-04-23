@@ -15,8 +15,10 @@ from .settings import ELASTICSEARCH_ENDPOINTS, ELASTICSEARCH_ALIAS
 
 async def migrate():
     elastic = Elasticsearch(ELASTICSEARCH_ENDPOINTS)
+    print("Creating new index...")
     index_name = await create_new_index(elastic)
     if await elastic.indices.exists(ELASTICSEARCH_ALIAS):
+        print("Reindexing data from previous index...")
         futures = []
         async for hit in IndexScanner(elastic, ELASTICSEARCH_ALIAS):
             doc = hit['_source']
@@ -26,7 +28,9 @@ async def migrate():
                 elastic.index(index_name, type_, doc, id=id_)
             ))
         await asyncio.wait(futures)
+    print("Switching to new index...")
     await switch_alias_to_index(elastic, ELASTICSEARCH_ALIAS, index_name)
+    print("Done.")
 
 
 async def update(since):

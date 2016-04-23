@@ -54,8 +54,7 @@
                 <% if (place.data.address) { %>
                   <br/>
                   <a href="<%- getMapURL(place.data.full_name, place.data.address, location.name, isiOS()) %>" target="_blank" class="item-place-address-link">
-                    <span class="link-text"><%- place.data.address %></span>
-                    <span class="icon-external-link"></span>
+                    <span class="link-text"><%- place.data.address %></span>&nbsp;<span class="icon-external-link"></span>
                   </a>
                 <% } else { %>
                   <%- place.getName() %>

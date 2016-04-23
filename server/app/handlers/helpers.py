@@ -96,6 +96,7 @@ def list_handler(type_=None, relations={}):
             response = await elastic.search(ELASTICSEARCH_INDEX, type_, body)
             hits = response['hits']
 
+            took = response['took']
             count = hits['total']
             items = list(map(simplify_item, hits['hits']))
             previous = get_previous_page_uri(request, page, page_size)
@@ -111,6 +112,7 @@ def list_handler(type_=None, relations={}):
                 text=json.dumps({
                     'count': count,
                     'items': items,
+                    'took': took,
                     'previous': previous,
                     'next': next_,
                 }, ensure_ascii=False),

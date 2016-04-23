@@ -14,9 +14,12 @@ from .settings import ELASTICSEARCH_ENDPOINTS, ELASTICSEARCH_ALIAS
 # commands
 
 async def migrate():
+    print("Starting migration...")
     elastic = Elasticsearch(ELASTICSEARCH_ENDPOINTS)
+
     print("Creating new index...")
     index_name = await create_new_index(elastic)
+
     if await elastic.indices.exists(ELASTICSEARCH_ALIAS):
         print("Reindexing data from previous index...")
         futures = []
@@ -28,27 +31,45 @@ async def migrate():
                 elastic.index(index_name, type_, doc, id=id_)
             ))
         await asyncio.wait(futures)
+
     print("Switching to new index...")
     await switch_alias_to_index(elastic, ELASTICSEARCH_ALIAS, index_name)
+
     print("Done.")
     elastic.close()
 
 
 async def update(since):
+    print(
+        "Updating events since {}...".format(since)
+        if since else "Updating all events..."
+    )
+
     async with aiohttp.ClientSession() as http_client:
         elastic = Elasticsearch(ELASTICSEARCH_ENDPOINTS)
         kudago = KudaGo(http_client)
         await import_data(kudago, elastic, ELASTICSEARCH_ALIAS, since=since)
+
+    print("Done.")
     elastic.close()
 
 
 async def reimport():
+    print("Starting reimport")
+    elastic = Elasticsearch(ELASTICSEARCH_ENDPOINTS)
+
+    print("Creating new index...")
+    index_name = await create_new_index(elastic)
+
+    print("Importing data...")
     async with aiohttp.ClientSession() as http_client:
-        elastic = Elasticsearch(ELASTICSEARCH_ENDPOINTS)
         kudago = KudaGo(http_client)
-        index_name = await create_new_index(elastic)
         await import_data(kudago, elastic, index_name)
-        await switch_alias_to_index(elastic, ELASTICSEARCH_ALIAS, index_name)
+
+    print("Switching to new index")
+    await switch_alias_to_index(elastic, ELASTICSEARCH_ALIAS, index_name)
+
+    print("Done.")
     elastic.close()
 
 

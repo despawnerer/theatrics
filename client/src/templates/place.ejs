@@ -96,8 +96,12 @@
           </div>
           <% } %>
           <div class="content-container">
-            <div class="item-lead"><%= place.data.lead %></div>
-            <div class="item-description"><%= place.data.description %></div>
+            <% if (!place.data.lead && !place.data.description) { %>
+              <p>Почему-то у нас нет описания этого места 😞</p>
+            <% } else { %>
+              <div class="item-lead"><%= place.data.lead %></div>
+              <div class="item-description"><%= place.data.description %></div>
+            <% } %>
           </div>
         </div>
         <div class="pager-page schedule-page">

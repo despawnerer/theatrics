@@ -32,7 +32,7 @@ Remove installed node modules and built files, as well as python's compiled file
 
 Remove only node modules:
 
-	$ make clean-deps
+	$ make clean-node-modules
 
 
 ### Automatically rebuilding client

@@ -9,7 +9,7 @@ clean:
 	rm -rf client/node_modules
 	rm -rf server/app/__pycache__
 
-clean-deps:
+clean-node-modules:
 	rm -rf client/node_modules
 
 # dependencies installation

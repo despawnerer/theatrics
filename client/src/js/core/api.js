@@ -21,7 +21,7 @@ export default class TheatricsAPI {
     return this.getAll(
       '/events/',
       {
-        fields: 'name,full_name,dates,location,tagline,place,is_premiere,kind',
+        fields: 'name,full_name,dates,location,tagline,place,is_premiere,kind,price',
         page_size: 100,
         parent: id,
         include_past: true,
@@ -33,7 +33,7 @@ export default class TheatricsAPI {
     return this.getAll(
       '/events/',
       {
-        fields: 'name,full_name,dates,location,tagline,place,is_premiere,kind',
+        fields: 'name,full_name,dates,location,tagline,place,is_premiere,kind,price',
         page_size: 100,
         place: id,
       }
@@ -42,7 +42,7 @@ export default class TheatricsAPI {
 
   getEventsFeed(location, date) {
     const params = {
-      fields: 'name,full_name,place,images,tagline,lead,is_premiere,kind,end,start,location',
+      fields: 'name,full_name,place,images,tagline,lead,is_premiere,kind,end,start,location,price',
       expand: 'place',
       page_size: 24,
       location: location.slug,

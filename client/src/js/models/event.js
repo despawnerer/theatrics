@@ -72,6 +72,11 @@ export default class Event extends Model {
     return this.data.kind == 'exhibition';
   }
 
+  isActual() {
+    const timezone = this.getLocation().timezone;
+    return moment.tz(this.data.end, timezone).isAfter(moment());
+  }
+
   getItemType() {
     if (this.isFestival()) {
       return 'Festival';

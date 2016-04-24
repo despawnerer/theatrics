@@ -1,4 +1,4 @@
-<li class="feed-item">
+<li class="feed-item<% if (!event.isActual()) { %> past<% } %>">
   <a href="<%- url('event', {id: event.data.id}) %>" class="feed-item-link">
     <div class="feed-image-container">
       <img data-src="<%- event.data.images[0].thumbnails['640x384'] %>" class="feed-image lazyload"/>

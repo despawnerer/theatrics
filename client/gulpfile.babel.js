@@ -175,6 +175,7 @@ gulp.task('watch-static', () => {
 /* Data */
 
 const DISABLED_LOCATIONS = ['ufa', 'vbg', 'smr', 'krd'];
+
 const LOCATION_TIMEZONE_OVERRIDES = {
   spb: 'Europe/Moscow',
   msk: 'Europe/Moscow',
@@ -183,7 +184,17 @@ const LOCATION_TIMEZONE_OVERRIDES = {
   kzn: 'Europe/Moscow',
   sochi: 'Europe/Moscow',
   krd: 'Europe/Moscow',
-}
+};
+
+const DEFAULT_LOCATION_CURRENCY = 'RUB';
+const LOCATION_CURRENCY_OVERRIDES = {
+  kev: 'UAH',
+  mns: 'BYR',
+  'new-york': 'USD',
+  atlanta: 'USD',
+  london: 'GBP',
+};
+
 
 gulp.task('update-timezones', () => {
   const locations = readJSON('src/data/locations.json');
@@ -220,6 +231,11 @@ gulp.task('update-locations', () => {
         .map(location => {
           if (location.slug in LOCATION_TIMEZONE_OVERRIDES) {
             location.timezone = LOCATION_TIMEZONE_OVERRIDES[location.slug];
+          }
+          if (location.slug in LOCATION_CURRENCY_OVERRIDES) {
+            location.currency = LOCATION_CURRENCY_OVERRIDES[location.slug];
+          } else {
+            location.currency = DEFAULT_LOCATION_CURRENCY;
           }
           return location;
         });

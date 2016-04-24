@@ -52,6 +52,7 @@ p {
 }
 
 .past, .past div, .past span, .past a { color: #777; }
+.past img { filter: grayscale() opacity(0.9); }
 .past a:hover .link-text { color: #999; }
 .past .link-text { border-color: #ccc; }
 .past .badge { filter: grayscale(); color: white; }

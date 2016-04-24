@@ -153,6 +153,16 @@ export class Date {
       result.duration = duration.toString();
     }
 
+    const price = this.event.data.price;
+    if (price.lower != null && price.upper != null) {
+      result.offers = {
+        '@type': 'AggregateOffer',
+        lowPrice: price.lower,
+        highPrice: price.upper,
+        priceCurrency: this.event.getLocation().currency,
+      }
+    }
+
     if (this.isDateBased) {
       result.startDate = this.start.format('YYYY-MM-DD');
       result.endDate = this.end.format('YYYY-MM-DD');

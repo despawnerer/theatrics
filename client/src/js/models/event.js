@@ -148,6 +148,11 @@ export class Date {
       result.location = place.toJSONLD(app);
     }
 
+    const duration = this.getDuration();
+    if (duration.asMinutes() > 0) {
+      result.duration = duration.toString();
+    }
+
     if (this.isDateBased) {
       result.startDate = this.start.format('YYYY-MM-DD');
       result.endDate = this.end.format('YYYY-MM-DD');

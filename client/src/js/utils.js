@@ -199,7 +199,7 @@ export function groupArray(array, name, callback, equal=(a, b) => a == b) {
 
 /* Formatting */
 
-export function displayDuration(duration) {
+export function formatDuration(duration) {
   const days = Math.floor(duration.asDays());
   const hours = duration.hours();
   const minutes = duration.minutes();

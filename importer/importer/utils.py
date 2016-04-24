@@ -4,6 +4,7 @@ from datetime import datetime, time
 
 
 link_expression = re.compile(r'<a .*?href=".*?".*?>(.+?)<\/a>', re.DOTALL)
+number_expression = re.compile(r'\b(?:\d+ ?)+\b')
 
 
 def find_first(needles, haystack):
@@ -30,6 +31,14 @@ def time_from_seconds(seconds):
 
 def strip_links(text):
     return link_expression.sub('\\1', text)
+
+
+def find_numbers(text):
+    return [
+        int(''.join(filter(str.isdigit, s)))
+        for s in number_expression.findall(text)
+        if s.strip()
+    ]
 
 
 def read_json_file(filename):

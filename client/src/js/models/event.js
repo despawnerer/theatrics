@@ -36,8 +36,8 @@ export default class Event extends Model {
     return locations.get(this.data.location);
   }
 
-  getDuration() {
-    const durations = this.getDates().map(date => date.getDuration());
+  getDisplayDuration() {
+    const durations = this.getDisplayDates().map(date => date.getDuration());
     const [first, ...others] = durations;
     if (others.every(duration => duration.asMinutes() == first.asMinutes())) {
       return first;

@@ -154,7 +154,7 @@ export class Date {
     }
 
     const price = this.event.data.price;
-    if (price.lower != null && price.upper != null) {
+    if (price && price.lower != null && price.upper != null) {
       result.offers = {
         '@type': 'AggregateOffer',
         lowPrice: price.lower,

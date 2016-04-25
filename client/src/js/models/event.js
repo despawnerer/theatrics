@@ -74,7 +74,10 @@ export default class Event extends Model {
 
   isActual() {
     const timezone = this.getLocation().timezone;
-    return moment.tz(this.data.end, timezone).isAfter(moment());
+    const isDateBased = this.data.end.length == 10;
+    const end = moment.tz(this.data.end, timezone);
+    const endBound = isDateBased ? end.clone().add(1, 'day') : end;
+    return endBound.isAfter(moment());
   }
 
   getItemType() {

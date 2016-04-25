@@ -199,6 +199,36 @@ export function groupArray(array, name, callback, equal=(a, b) => a == b) {
 
 /* Formatting */
 
+export function formatCurrencyRange(lower, upper, currency) {
+  if (lower == upper) {
+    return formatCurrency(lower, currency);
+  } else if (lower == 0) {
+    return `до ${formatCurrency(upper)}`;
+  } else {
+    return `${formatNumber(lower)}–${formatCurrency(upper, currency)}`;
+  }
+}
+
+
+export function formatNumber(n, useGrouping=false) {
+  return n.toLocaleString('ru', {
+    useGrouping,
+    style: 'decimal',
+    minimumFractionDigits: 0,
+  });
+}
+
+
+export function formatCurrency(amount, currency, useGrouping=false) {
+  return amount.toLocaleString('ru', {
+    currency,
+    useGrouping,
+    style: 'currency',
+    minimumFractionDigits: 0,
+  });
+}
+
+
 export function formatDuration(duration) {
   const days = Math.floor(duration.asDays());
   const hours = duration.hours();

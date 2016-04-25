@@ -79,10 +79,17 @@
           </div>
         <% } %>
 
-        <% if (event.data.price.text) { %>
+        <% var price = event.data.price %>
+        <% if (price.text) { %>
           <div class="item-information-item">
             <span class="item-information-icon icon-rouble" title="Цена билета"></span>
-            <span class="item-information-value"><%- event.data.price.text %></span>
+            <span class="item-information-value">
+            <% if (price.lower == 0 && price.upper == 0) { %>
+              бесплатно
+            <% } else { %>
+              <%- formatCurrencyRange(price.lower, price.upper, location.currency) %>
+            <% } %>
+            </span>
           </div>
         <% } %>
 

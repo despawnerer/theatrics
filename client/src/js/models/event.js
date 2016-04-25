@@ -130,7 +130,7 @@ export class Date {
   }
 
   isActual() {
-    return this.end.isAfter(moment());
+    return this.endBound.isAfter(moment());
   }
 
   toJSONLD(app) {

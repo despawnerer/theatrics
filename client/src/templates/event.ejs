@@ -1,6 +1,3 @@
-<% var place = event.getPlace() %>
-<% var parent = event.getParent() %>
-
 <article class="item-view">
   <div class="item-slider" data-next-button=".next-button" data-previous-button=".previous-button" data-container=".item-slide-list" data-items=".item-slide">
     <a class="slide-button next-button"<% if (event.data.images.length < 2) { %> hidden<% } %>><span class="icon-chevron-thin-right"></span></a>
@@ -45,6 +42,7 @@
 
     <div class="item-information">
       <div class="item-information-group">
+        <% var place = event.getPlace() %>
         <% if (place) { %>
           <div class="item-information-item item-place">
             <span class="item-information-icon icon-place" title="Место проведения"></span>
@@ -68,6 +66,7 @@
           </div>
         <% } %>
 
+        <% var parent = event.getParent() %>
         <% if (parent) { %>
           <div class="item-information-item">
             <span class="item-information-icon icon-star" title="Проходит в рамках"></span>
@@ -95,11 +94,13 @@
           </div>
         <% } %>
 
+        <% var dates = event.getDisplayDates() %>
+        <% if (dates.length) { %>
         <div class="item-information-item">
           <span class="item-information-icon icon-calendar" title="Даты"></span>
           <span class="item-information-value">
             <ol class="item-dates">
-            <% event.getDisplayDates().forEach(function(date) { %>
+            <% dates.forEach(function(date) { %>
               <% var isLong = date.getDuration().asDays() > 1 %>
               <% var isPast = !date.isActual() %>
               <li class="<% if (isLong) { %>double-size<% } %><% if (isPast) { %> past<% } %>">
@@ -133,6 +134,7 @@
             </ol>
           </span>
         </div>
+        <% } %>
       </div>
     </div>
 

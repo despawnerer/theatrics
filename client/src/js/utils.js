@@ -249,6 +249,13 @@ export function formatNumber(n, useGrouping=false) {
 }
 
 
+export function formatPhoneNumber(number, region) {
+  return number
+    .replace(/\+7 (\d\d\d) (\d\d\d-\d\d-\d\d)/, '+7 ($1) $2')
+    .replace(/-/g, '‒');
+}
+
+
 export function formatDuration(duration) {
   const days = Math.floor(duration.asDays());
   const hours = duration.hours();

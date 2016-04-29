@@ -21,6 +21,7 @@ import {
   niceURL,
   formatPriceRange,
   formatDuration,
+  formatPhoneNumber,
   preventBreakingRanges,
   unbreakable,
 } from '../utils';
@@ -61,6 +62,7 @@ export default class App {
       niceURL,
       formatPriceRange,
       formatDuration,
+      formatPhoneNumber,
       preventBreakingRanges,
       unbreakable,
       url: (...args) => this.resolver.reverse(...args),

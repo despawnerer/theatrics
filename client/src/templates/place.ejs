@@ -44,7 +44,7 @@
             <% } else if (field == 'phone_numbers') { %>
               <div class="item-information-item" title="Номер телефона">
                 <span class="item-information-icon icon-phone"></span>
-                <span class="item-information-value"><%= place.data.phone_numbers.map(unbreakable).join(', ') %></span>
+                <span class="item-information-value"><%= place.data.phone_numbers.map(formatPhoneNumber).map(unbreakable).join(', ') %></span>
               </div>
             <% } else if (field == 'url') { %>
               <div class="item-information-item" title="Адрес сайта">

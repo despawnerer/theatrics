@@ -20,6 +20,7 @@ import {
   getMapURL,
   restrictBreaks,
   niceURL,
+  formatPriceRange,
   formatDuration
 } from '../utils';
 
@@ -58,6 +59,7 @@ export default class App {
       getMapURL,
       restrictBreaks,
       niceURL,
+      formatPriceRange,
       formatDuration,
       url: (...args) => this.resolver.reverse(...args),
       app: this,

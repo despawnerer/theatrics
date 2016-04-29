@@ -199,11 +199,17 @@ export function groupArray(array, name, callback, equal=(a, b) => a == b) {
 
 /* Formatting */
 
-export function formatCurrencyRange(lower, upper, currency) {
-  if (lower == upper) {
+export function formatPriceRange(lower, upper, currency) {
+  if (lower == null && upper == null) {
+    return '—';
+  } else if (lower == 0 && upper == 0){
+    return 'бесплатно';
+  } else if (lower == upper) {
     return formatCurrency(lower, currency);
-  } else if (lower == 0) {
-    return `до ${formatCurrency(upper)}`;
+  } else if (upper && !lower) {
+    return `до ${formatCurrency(upper, currency)}`;
+  } else if (!upper && lower) {
+    return `от ${formatCurrency(lower, currency)}`;
   } else {
     return `${formatNumber(lower)}–${formatCurrency(upper, currency)}`;
   }

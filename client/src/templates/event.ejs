@@ -84,10 +84,8 @@
           <div class="item-information-item">
             <span class="item-information-icon icon-rouble" title="Цена билета"></span>
             <span class="item-information-value">
-            <% if (price.lower == 0 && price.upper == 0) { %>
-              бесплатно
-            <% } else if (price.lower != null && price.upper != null) { %>
-              <%- formatCurrencyRange(price.lower, price.upper, location.currency) %>
+            <% if (price.lower != null || price.upper != null) { %>
+              <%- formatPriceRange(price.lower, price.upper, location.currency) %>
             <% } else { %>
               <%- price.text %>
             <% } %>

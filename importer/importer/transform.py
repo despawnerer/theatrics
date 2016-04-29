@@ -3,13 +3,13 @@ from funcy import flatten, some
 from datetime import datetime, time, timedelta
 
 from .utils import (
+    maybe_parse_date,
+    maybe_parse_time,
     find_first,
-    date_from_timestamp,
     strip_links,
     find_numbers,
     is_from_string,
     is_up_to_string,
-    time_from_seconds,
 )
 
 
@@ -175,10 +175,10 @@ def transform_coords(coords):
 
 
 def transform_date(spec):
-    start_date = date_from_timestamp(spec['start_date'])
-    start_time = time_from_seconds(spec['start_time']) or time(0, 0)
-    end_date = date_from_timestamp(spec['end_date']) or start_date
-    end_time = time_from_seconds(spec['end_time']) or start_time
+    start_date = maybe_parse_date(spec['start_date'])
+    start_time = maybe_parse_time(spec['start_time']) or time(0, 0)
+    end_date = maybe_parse_date(spec['end_date']) or start_date
+    end_time = maybe_parse_time(spec['end_time']) or start_time
 
     is_continuous = spec['is_continuous']
     is_date_based = spec['start_time'] is None
@@ -214,8 +214,8 @@ def split_date(spec):
         yield spec
         return
 
-    start_date = date_from_timestamp(spec['start_date'])
-    end_date = date_from_timestamp(spec['end_date']) or start_date
+    start_date = maybe_parse_date(spec['start_date'])
+    end_date = maybe_parse_date(spec['end_date']) or start_date
 
     days = int((end_date - start_date).total_seconds() / (60 * 60 * 24))
     schedules = spec['schedules'] or [{
@@ -231,11 +231,11 @@ def split_date(spec):
             schedules
         )
         if schedule:
-            date_ts = datetime.combine(this_date, time(0, 0)).timestamp()
+            date_string = datetime.combine(this_date, time(0, 0)).isoformat()
             yield {
                 'is_continuous': False,
-                'start_date': date_ts,
-                'end_date': date_ts,
+                'start_date': date_string,
+                'end_date': date_string,
                 'start_time': schedule['start_time'],
                 'end_time': schedule['end_time'],
             }

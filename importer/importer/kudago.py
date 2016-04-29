@@ -9,7 +9,7 @@ KUDAGO_API_BASE_URL = 'http://kudago.com/public-api/'
 
 
 class KudaGo:
-    def __init__(self, client, version='1.1'):
+    def __init__(self, client, version='1.2'):
         self.base_url = urljoin(KUDAGO_API_BASE_URL, 'v%s/' % version)
         self.client = client
         self.version = version

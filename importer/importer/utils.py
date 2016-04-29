@@ -1,6 +1,7 @@
 import json
 import re
-from datetime import datetime, time
+from isodate import parse_date, parse_time
+from functools import wraps
 
 
 link_expression = re.compile(r'<a .*?href=".*?".*?>(.+?)<\/a>', re.DOTALL)
@@ -9,26 +10,21 @@ from_expression = re.compile(r'^от\s(?:\d+ ?)+[^\d]*$')
 up_to_expression = re.compile(r'до\s(?:\d+ ?)+[^\d]*$')
 
 
+def maybe(f):
+    @wraps(f)
+    def wrapper(arg, *rest, **kwargs):
+        return None if arg is None else f(arg, *rest, **kwargs)
+    return wrapper
+
+
+maybe_parse_date = maybe(parse_date)
+maybe_parse_time = maybe(parse_time)
+
+
 def find_first(needles, haystack):
     for needle in needles:
         if needle in haystack:
             return needle
-
-
-def date_from_timestamp(timestamp):
-    if timestamp:
-        return datetime.utcfromtimestamp(timestamp).date()
-    else:
-        return None
-
-
-def time_from_seconds(seconds):
-    if seconds:
-        minutes, second = divmod(seconds, 60)
-        hour, minute = divmod(minutes, 60)
-        return time(hour, minute, second)
-    else:
-        return None
 
 
 def strip_links(text):

@@ -1,5 +1,3 @@
-import Model from '../base/model';
-
 import {formatPriceRange} from '../utils';
 
 

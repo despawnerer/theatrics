@@ -17,19 +17,11 @@ export default class Event extends Model {
   }
 
   getParent() {
-    if (this.data.parent) {
-      return new Event(this.data.parent);
-    } else {
-      return undefined;
-    }
+    if (this.data.parent) return new Event(this.data.parent);
   }
 
   getPlace() {
-    if (this.data.place) {
-      return new Place(this.data.place);
-    } else {
-      return undefined;
-    }
+    if (this.data.place) return new Place(this.data.place);
   }
 
   getLocation() {

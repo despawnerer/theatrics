@@ -86,8 +86,10 @@
             <span class="item-information-value">
             <% if (price.lower == 0 && price.upper == 0) { %>
               бесплатно
-            <% } else { %>
+            <% } else if (price.lower != null && price.upper != null) { %>
               <%- formatCurrencyRange(price.lower, price.upper, location.currency) %>
+            <% } else { %>
+              <%- price.text %>
             <% } %>
             </span>
           </div>

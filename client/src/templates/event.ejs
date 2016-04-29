@@ -44,8 +44,8 @@
       <div class="item-information-group">
         <% var place = event.getPlace() %>
         <% if (place) { %>
-          <div class="item-information-item item-place">
-            <span class="item-information-icon icon-place" title="Место проведения"></span>
+          <div class="item-information-item item-place" title="Место проведения">
+            <span class="item-information-icon icon-place"></span>
             <span class="item-information-value">
               <% if (place.isStub()) { %>
                 <%- place.getName() %>
@@ -68,8 +68,8 @@
 
         <% var parent = event.getParent() %>
         <% if (parent) { %>
-          <div class="item-information-item">
-            <span class="item-information-icon icon-star" title="Проходит в рамках"></span>
+          <div class="item-information-item" title="Проходит в рамках">
+            <span class="item-information-icon icon-star"></span>
             <span class="item-information-value">
               <a href="<%- url('event', {id: parent.data.id}) %>">
                 <span class="link-text"><%- parent.getFullName() %></span>
@@ -80,24 +80,24 @@
 
         <% var price = event.getPrice() %>
         <% if (price) { %>
-          <div class="item-information-item">
-            <span class="item-information-icon icon-ticket" title="Цена билета"></span>
+          <div class="item-information-item" title="Цена билета">
+            <span class="item-information-icon icon-ticket"></span>
             <span class="item-information-value"><%- price %></span>
           </div>
         <% } %>
 
         <% var duration = event.getDisplayDuration() %>
         <% if (duration && duration.asMinutes() > 0) { %>
-          <div class="item-information-item">
-            <span class="item-information-icon icon-clock" title="Продолжительность"></span>
+          <div class="item-information-item" title="Продолжительность">
+            <span class="item-information-icon icon-clock"></span>
             <span class="item-information-value"><%- formatDuration(duration) %></span>
           </div>
         <% } %>
 
         <% var dates = event.getDisplayDates() %>
         <% if (dates.length) { %>
-        <div class="item-information-item">
-          <span class="item-information-icon icon-calendar" title="Даты"></span>
+        <div class="item-information-item" title="Даты">
+          <span class="item-information-icon icon-calendar"></span>
           <span class="item-information-value">
             <ol class="item-dates">
             <% dates.forEach(function(date) { %>

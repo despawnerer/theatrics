@@ -22,33 +22,40 @@
         <div class="item-information-group">
 
         <% for (var j = 0, field; field = column[j++];) { %>
-          <div class="item-information-item">
-
             <% if (field == 'address') { %>
-              <span class="item-information-icon icon-place" title="Адрес"></span>
-              <span class="item-information-value">
-                <a href="<%- getMapURL(place.data.full_name, place.data.address, location.name, isiOS()) %>" target="_blank">
-                  <span class="link-text"><%- place.data.address %></span>&nbsp;<span class="icon-external-link"></span>
-                </a>
-              </span>
+              <div class="item-information-item" title="Адрес">
+                <span class="item-information-icon icon-place"></span>
+                <span class="item-information-value">
+                  <a href="<%- getMapURL(place.data.full_name, place.data.address, location.name, isiOS()) %>" target="_blank">
+                    <span class="link-text"><%- place.data.address %></span>&nbsp;<span class="icon-external-link"></span>
+                  </a>
+                </span>
+              </div>
             <% } else if (field == 'subway') { %>
-              <span class="item-information-icon icon-subway" title="Ближайшее метро"></span>
-              <span class="item-information-value"><%= restrictBreaks(place.data.subway) %></span>
+              <div class="item-information-item" title="Ближайшее метро">
+                <span class="item-information-icon icon-subway"></span>
+                <span class="item-information-value"><%= restrictBreaks(place.data.subway) %></span>
+              </div>
             <% } else if (field == 'working_hours') { %>
-              <span class="item-information-icon icon-clock" title="Часы работы"></span>
-              <span class="item-information-value"><%- place.data.working_hours %></span>
+              <div class="item-information-item" title="Часы работы">
+                <span class="item-information-icon icon-clock"></span>
+                <span class="item-information-value"><%- place.data.working_hours %></span>
+              </div>
             <% } else if (field == 'phone_numbers') { %>
-              <span class="item-information-icon icon-phone" title="Номер телефона"></span>
-              <span class="item-information-value"><%= restrictBreaks(place.data.phone_numbers.join(', ')) %></span>
+              <div class="item-information-item" title="Номер телефона">
+                <span class="item-information-icon icon-phone"></span>
+                <span class="item-information-value"><%= restrictBreaks(place.data.phone_numbers.join(', ')) %></span>
+              </div>
             <% } else if (field == 'url') { %>
-              <span class="item-information-icon icon-globe" title="Адрес сайта"></span>
-              <span class="item-information-value">
-                <a href="<%- place.data.url %>" target="_blank">
-                  <span class="link-text"><%- niceURL(place.data.url) %></span>&nbsp;<span class="icon-external-link"></span>
-                </a>
-              </span>
+              <div class="item-information-item" title="Адрес сайта">
+                <span class="item-information-icon icon-globe"></span>
+                <span class="item-information-value">
+                  <a href="<%- place.data.url %>" target="_blank">
+                    <span class="link-text"><%- niceURL(place.data.url) %></span>&nbsp;<span class="icon-external-link"></span>
+                  </a>
+                </span>
+              </div>
             <% } %>
-          </div>
         <% }%>
 
         </div>

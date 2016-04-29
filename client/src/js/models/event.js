@@ -78,7 +78,7 @@ export default class Event extends Model {
     return endBound.isAfter(moment());
   }
 
-  getItemType() {
+  getSchemaOrgType() {
     if (this.isFestival()) {
       return 'Festival';
     } else if (this.isExhibition()) {

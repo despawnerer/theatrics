@@ -50,7 +50,7 @@ export default class Date {
     const url = app.resolver.reverse('event', {id: this.event.data.id});
     const result = {
       '@context': 'http://schema.org',
-      '@type': this.event.getItemType(),
+      '@type': this.event.getSchemaOrgType(),
       '@id': `${url}#${this.start.unix()}`,
       name: this.event.getName(),
       url: makeAbsoluteURL(url),

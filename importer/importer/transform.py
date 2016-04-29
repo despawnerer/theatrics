@@ -87,7 +87,7 @@ def transform_place(kudago_place, events_count):
         'coords': transform_coords(kudago_place['coords']),
 
         'age_restriction': kudago_place['age_restriction'],
-        'phone_numbers': kudago_place['phone'].split(','),
+        'phone_numbers': transform_phone(kudago_place['phone']),
         'working_hours': kudago_place['timetable'],
         'url': kudago_place['foreign_url'],
 
@@ -116,7 +116,7 @@ def transform_stub_place(kudago_place):
         'subway': kudago_place['subway'],
         'coords': kudago_place['coords'],
 
-        'phone_numbers': kudago_place['phone'].split(','),
+        'phone_numbers': transform_phone(kudago_place['phone']),
 
         'source': {
             'name': 'kudago.com',
@@ -134,6 +134,10 @@ def transform_price(price_text, is_free):
         'lower': 0 if is_free else min(numbers) if numbers else None,
         'upper': 0 if is_free else max(numbers) if numbers else None,
     }
+
+
+def transform_phone(phone_text):
+    return list(filter(bool, map(str.strip, phone_text.split(','))))
 
 
 def transform_coords(coords):

@@ -17,7 +17,14 @@ export default class Place extends Model {
   }
 
   getPresentFields(...fields) {
-    return fields.filter(f => Boolean(this.data[f]))
+    return fields.filter(f => this.hasValue(f));
+  }
+
+  hasValue(field) {
+    const value = this.data[field];
+    const isDefined = value != null;
+    const hasLength = isDefined && value.hasOwnProperty('length');
+    return hasLength ? value.length > 0 : isDefined;
   }
 
   getLocation() {

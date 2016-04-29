@@ -1,6 +1,3 @@
-import equal from 'deep-equal';
-
-
 export default class Feed {
   constructor(api, path, params) {
     this.api = api;

@@ -153,8 +153,20 @@
           <div class="content-container">
 <% } %>
 
-    <div class="item-lead"><%= event.data.lead %></div>
-    <div class="item-description"><%= event.data.description %></div>
+    <% if (!event.data.lead && !event.data.description) { %>
+      <p>Почему-то у нас нет описания этого события 😞</p>
+      <% if (place.data.url) { %>
+        <p>
+          Возможно, оно есть где-то на сайте площадки:
+          <a href="<%- place.data.url %>" target="_blank">
+            <span class="link-text"><%- niceURL(place.data.url) %></span>&nbsp;<span class="icon-external-link"></span>
+          </a>
+        </p>
+      <% } %>
+    <% } else { %>
+      <div class="item-lead"><%= event.data.lead %></div>
+      <div class="item-description"><%= event.data.description %></div>
+    <% } %>
 
     <div class="source-information">
       Источник данных:

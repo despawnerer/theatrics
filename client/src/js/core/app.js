@@ -18,10 +18,11 @@ import {
   capfirst,
   isiOS,
   getMapURL,
-  restrictBreaks,
   niceURL,
   formatPriceRange,
-  formatDuration
+  formatDuration,
+  preventBreakingRanges,
+  unbreakable,
 } from '../utils';
 
 
@@ -57,10 +58,11 @@ export default class App {
       capfirst,
       isiOS,
       getMapURL,
-      restrictBreaks,
       niceURL,
       formatPriceRange,
       formatDuration,
+      preventBreakingRanges,
+      unbreakable,
       url: (...args) => this.resolver.reverse(...args),
       app: this,
     }

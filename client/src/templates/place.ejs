@@ -34,17 +34,17 @@
             <% } else if (field == 'subway') { %>
               <div class="item-information-item" title="Ближайшее метро">
                 <span class="item-information-icon icon-subway"></span>
-                <span class="item-information-value"><%= restrictBreaks(place.data.subway) %></span>
+                <span class="item-information-value"><%= place.data.subway.split(', ').map(unbreakable).join(', ') %></span>
               </div>
             <% } else if (field == 'working_hours') { %>
               <div class="item-information-item" title="Часы работы">
                 <span class="item-information-icon icon-clock"></span>
-                <span class="item-information-value"><%- place.data.working_hours %></span>
+                <span class="item-information-value"><%= preventBreakingRanges(place.data.working_hours) %></span>
               </div>
             <% } else if (field == 'phone_numbers') { %>
               <div class="item-information-item" title="Номер телефона">
                 <span class="item-information-icon icon-phone"></span>
-                <span class="item-information-value"><%= restrictBreaks(place.data.phone_numbers.join(', ')) %></span>
+                <span class="item-information-value"><%= place.data.phone_numbers.map(unbreakable).join(', ') %></span>
               </div>
             <% } else if (field == 'url') { %>
               <div class="item-information-item" title="Адрес сайта">

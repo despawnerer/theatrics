@@ -1,4 +1,3 @@
-import json
 import asyncio
 from copy import copy
 from math import ceil
@@ -23,7 +22,7 @@ class KudaGo:
         for attempt in range(self.max_attempts):
             try:
                 return await self._call(url)
-            except InternalError as error:
+            except InternalError:
                 if attempt + 1 == self.max_attempts:
                     raise
 

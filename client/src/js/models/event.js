@@ -5,6 +5,7 @@ import Model from '../base/model';
 import {capfirst, range, makeAbsoluteURL} from '../utils';
 
 import Place from './place';
+import Price from './price';
 
 
 export default class Event extends Model {
@@ -22,6 +23,10 @@ export default class Event extends Model {
 
   getPlace() {
     if (this.data.place) return new Place(this.data.place);
+  }
+
+  getPrice() {
+    if (this.data.price.text) return new Price(this, this.data.price);
   }
 
   getLocation() {
@@ -143,20 +148,14 @@ export class Date {
       result.location = place.toJSONLD(app);
     }
 
+    const price = this.event.getPrice();
+    if (price && price.hasRange()) {
+      result.offers = price.toJSONLD(app);
+    }
+
     const duration = this.getDuration();
     if (duration.asMinutes() > 0) {
       result.duration = duration.toString();
-    }
-
-    const price = this.event.data.price;
-    if (price && (price.lower != null || price.upper != null)) {
-      const offer = {
-        '@type': 'AggregateOffer',
-        priceCurrency: this.event.getLocation().currency,
-      }
-      if (price.lower != null) offer.lowPrice = price.lower;
-      if (price.upper != null) offer.highPrice = price.upper;
-      result.offers = offer;
     }
 
     if (this.isDateBased) {

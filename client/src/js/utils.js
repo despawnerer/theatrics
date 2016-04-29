@@ -211,8 +211,30 @@ export function formatPriceRange(lower, upper, currency) {
   } else if (!upper && lower) {
     return `от ${formatCurrency(lower, currency)}`;
   } else {
-    return `${formatNumber(lower)}–${formatCurrency(upper, currency)}`;
+    return formatCurrency(
+      `${formatNumber(lower)}–${formatNumber(upper)}`,
+      currency
+    );
   }
+}
+
+
+export function formatCurrency(value, currency, useGrouping=false) {
+  const format = getCurrencyFormat(currency);
+  if (typeof value == 'number') value = formatNumber(value, useGrouping);
+  return format.replace('{value}', value);
+}
+
+
+export function getCurrencyFormat(currency) {
+  const sentinel = 1234;
+  const localized = sentinel.toLocaleString('ru', {
+    currency,
+    useGrouping: false,
+    style: 'currency',
+    minimumFractionDigits: 0,
+  });
+  return localized.replace(String(sentinel), '{value}');
 }
 
 
@@ -220,16 +242,6 @@ export function formatNumber(n, useGrouping=false) {
   return n.toLocaleString('ru', {
     useGrouping,
     style: 'decimal',
-    minimumFractionDigits: 0,
-  });
-}
-
-
-export function formatCurrency(amount, currency, useGrouping=false) {
-  return amount.toLocaleString('ru', {
-    currency,
-    useGrouping,
-    style: 'currency',
     minimumFractionDigits: 0,
   });
 }

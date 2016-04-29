@@ -7,6 +7,8 @@ from .utils import (
     date_from_timestamp,
     strip_links,
     find_numbers,
+    is_from_string,
+    is_up_to_string,
     time_from_seconds,
 )
 
@@ -128,11 +130,29 @@ def transform_stub_place(kudago_place):
 # related objects
 
 def transform_price(price_text, is_free):
-    numbers = find_numbers(price_text)
+    if is_free:
+        lower = 0
+        upper = 0
+    else:
+        numbers = find_numbers(price_text)
+        if numbers:
+            if is_from_string(price_text):
+                lower = numbers[0]
+                upper = None
+            elif is_up_to_string(price_text):
+                lower = None
+                upper = numbers[0]
+            else:
+                lower = min(numbers)
+                upper = max(numbers)
+        else:
+            lower = None
+            upper = None
+
     return {
         'text': price_text,
-        'lower': 0 if is_free else min(numbers) if numbers else None,
-        'upper': 0 if is_free else max(numbers) if numbers else None,
+        'lower': lower,
+        'upper': upper,
     }
 
 

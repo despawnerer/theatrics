@@ -5,6 +5,8 @@ from datetime import datetime, time
 
 link_expression = re.compile(r'<a .*?href=".*?".*?>(.+?)<\/a>', re.DOTALL)
 number_expression = re.compile(r'\b(?:\d+ ?)+\b')
+from_expression = re.compile(r'^от\s(?:\d+ ?)+[^\d]*$')
+up_to_expression = re.compile(r'до\s(?:\d+ ?)+[^\d]*$')
 
 
 def find_first(needles, haystack):
@@ -39,6 +41,14 @@ def find_numbers(text):
         for s in number_expression.findall(text)
         if s.strip()
     ]
+
+
+def is_from_string(text):
+    return bool(from_expression.match(text))
+
+
+def is_up_to_string(text):
+    return bool(up_to_expression.match(text))
 
 
 def read_json_file(filename):

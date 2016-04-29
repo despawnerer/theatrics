@@ -157,13 +157,14 @@ export class Date {
     }
 
     const price = this.event.data.price;
-    if (price && price.lower != null && price.upper != null) {
-      result.offers = {
+    if (price && (price.lower != null || price.upper != null)) {
+      const offer = {
         '@type': 'AggregateOffer',
-        lowPrice: price.lower,
-        highPrice: price.upper,
         priceCurrency: this.event.getLocation().currency,
       }
+      if (price.lower != null) offer.lowPrice = price.lower;
+      if (price.upper != null) offer.highPrice = price.upper;
+      result.offers = offer;
     }
 
     if (this.isDateBased) {

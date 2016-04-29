@@ -53,11 +53,13 @@ export function loader(progress=0.25) {
 }
 
 
-export function restrictBreaks(string, separator=', ') {
-  return string
-    .split(separator)
-    .map(part => `<nobr>${escape(part)}</nobr>`)
-    .join(separator);
+export function preventBreakingRanges(string) {
+  return string.replace(/(\d[:.\d]*\s?[\-–]\s?[:.\d]*\d)/g, unbreakable('$1'));
+}
+
+
+export function unbreakable(string) {
+  return `<span class="unbreakable">${escape(string)}</span>`;
 }
 
 
@@ -244,6 +246,13 @@ export function formatNumber(n, useGrouping=false) {
     style: 'decimal',
     minimumFractionDigits: 0,
   });
+}
+
+
+export function formatPhoneNumber(number, region) {
+  return number
+    .replace(/\+7 (\d\d\d) (\d\d\d-\d\d-\d\d)/, '+7 ($1) $2')
+    .replace(/-/g, '‒');
 }
 
 

@@ -57,6 +57,8 @@ p {
 .past .link-text { border-color: #ccc; }
 .past .badge { filter: grayscale(); color: white; }
 
+.unbreakable { white-space: nowrap; }
+
 
 /* Popup */
 

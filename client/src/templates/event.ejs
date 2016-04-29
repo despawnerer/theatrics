@@ -82,7 +82,7 @@
         <% var price = event.data.price %>
         <% if (price.text) { %>
           <div class="item-information-item">
-            <span class="item-information-icon icon-rouble" title="Цена билета"></span>
+            <span class="item-information-icon icon-ticket" title="Цена билета"></span>
             <span class="item-information-value">
             <% if (price.lower != null || price.upper != null) { %>
               <%- formatPriceRange(price.lower, price.upper, location.currency) %>

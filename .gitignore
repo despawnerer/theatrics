@@ -1,5 +1,5 @@
-client/node_modules
-client/build
+web/node_modules
+web/build
 npm-debug.log
 .tern-project
 *.pyc

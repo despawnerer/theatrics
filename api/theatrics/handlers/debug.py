@@ -1,14 +1,14 @@
 import os
 from aiohttp import web
 
-from ..consts import CLIENT_DIR
+from ..consts import WEB_BUILD_DIR
 
 
 __all__ = ['client']
 
 
 async def client(request):
-    filepath = os.path.join(CLIENT_DIR, 'index.html')
+    filepath = os.path.join(WEB_BUILD_DIR, 'index.html')
     stat = os.stat(filepath)
     chunk_size = 256 * 1024
 

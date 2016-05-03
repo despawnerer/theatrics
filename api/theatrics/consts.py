@@ -1,10 +1,10 @@
 import os
 from datetime import timedelta
 
-THIS_DIR = os.path.dirname(os.path.realpath(__file__))
+PACKAGE_DIR = os.path.dirname(os.path.realpath(__file__))
 
-SERVER_DIR = os.path.dirname(THIS_DIR)
-CLIENT_DIR = os.path.join(os.path.dirname(SERVER_DIR), 'client/build')
+API_DIR = os.path.dirname(PACKAGE_DIR)
+WEB_BUILD_DIR = os.path.join(os.path.dirname(API_DIR), 'web', 'build')
 
 KUDAGO_API_BASE_URL = 'http://kudago.com/public-api/v1'
 

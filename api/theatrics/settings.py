@@ -9,7 +9,7 @@ DEBUG = bool(os.environ.get('THEATRICS_DEBUG'))
 
 ELASTICSEARCH_ENDPOINTS = [
     unprefix(
-        os.environ.get('ELASTICSEARCH_URL', 'localhost:9200'),
+        os.environ.get('ELASTICSEARCH_URL', 'elasticsearch:9200'),
         'http://'
     )
 ]

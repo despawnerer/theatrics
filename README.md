@@ -23,10 +23,15 @@ Theatrics consists of three parts:
 - `api` — API backend and development server
 - `importer` — elasticsearch management and data importing app
 
-Elasticsearch 2.3 is a requirement.
+Elasticsearch 2.3 is used a database.
 
 
-To build and run in development mode, simply do:
+### Initial setup
+
+    docker-compose run importer make migrate
+
+
+### Running
 
 	docker-compose up
 

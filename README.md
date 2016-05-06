@@ -19,9 +19,9 @@ Development
 
 Theatrics consists of three parts:
 
-- `web` — web client
-- `api` — API backend and development server
-- `importer` — elasticsearch management and data importing app
+- `web` — web client, which is the the front-end app
+- `api` — API through which access to data happens
+- `importer` — index management and data importing
 
 Elasticsearch 2.3 is used a database.
 

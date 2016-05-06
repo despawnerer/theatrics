@@ -14,24 +14,28 @@ RUN apt-get install -y \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
+RUN pip install --upgrade pip
+
 # build the app
 
 WORKDIR /www/theatrics/
-COPY Makefile Makefile
 
-COPY server/requirements.pip server/requirements.pip
-RUN make install-server-deps
+COPY api/Makefile api/Makefile
+COPY api/requirements.pip api/requirements.pip
+RUN cd api && make install-deps
 
+COPY importer/Makefile importer/Makefile
 COPY importer/requirements.pip importer/requirements.pip
-RUN make install-importer-deps
+RUN cd importer && make install-deps
 
-COPY client/package.json client/package.json
-RUN make install-client-deps
+COPY web/Makefile web/Makefile
+COPY web/package.json web/package.json
+RUN cd web && make install-deps
 
-COPY client client/
-RUN make build-min clean-node-modules && rm -rf client/src
+COPY web web/
+RUN cd web && make build-min && make clean && rm -rf web/src
 
-COPY server server/
+COPY api api/
 COPY importer importer/
 
 # run
@@ -41,4 +45,4 @@ COPY deploy deploy/
 
 EXPOSE 80
 
-CMD ["make", "run"]
+CMD ["honcho", "start", "-f", "deploy/Procfile"]

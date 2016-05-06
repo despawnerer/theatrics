@@ -1,3 +1,0 @@
-api: gunicorn theatrics:app -k aiohttp.worker.GunicornWebWorker -b 127.0.0.1:9001 -w 10 --pythonpath $PWD/api
-web: nginx -c $PWD/deploy/nginx.conf
-import: nice python importer/import.py autoupdate

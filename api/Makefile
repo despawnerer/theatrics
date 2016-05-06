@@ -8,5 +8,8 @@ install-deps:
 clean:
 	find . -name "__pycache__" -type d -exec rm -rf {} +
 
+run:
+	gunicorn theatrics:app -k aiohttp.worker.GunicornWebWorker -b 0.0.0.0:8000
+
 run-dev:
 	gunicorn theatrics:app -k aiohttp.worker.GunicornWebWorker -b $(host) -e THEATRICS_DEBUG=true --reload

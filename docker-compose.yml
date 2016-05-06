@@ -4,6 +4,7 @@ services:
     image: elasticsearch:2.3
   api:
     build: ./api
+    command: make run-dev
     volumes:
       - ./api:/app
     depends_on:

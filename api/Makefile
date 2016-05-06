@@ -1,5 +1,3 @@
-host = localhost:9001
-
 .PHONY: install-deps clean run-dev
 
 install-deps:
@@ -12,4 +10,4 @@ run:
 	gunicorn theatrics:app -k aiohttp.worker.GunicornWebWorker -b 0.0.0.0:8000
 
 run-dev:
-	gunicorn theatrics:app -k aiohttp.worker.GunicornWebWorker -b $(host) -e THEATRICS_DEBUG=true --reload
+	gunicorn theatrics:app -k aiohttp.worker.GunicornWebWorker -b 0.0.0.0:8000 --reload

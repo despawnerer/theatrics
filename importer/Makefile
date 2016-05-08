@@ -3,6 +3,9 @@
 install-deps:
 	pip install -r requirements.pip
 
+install-test-deps:
+	pip install -r test-requirements.pip
+
 clean:
 	find . -name "__pycache__" -type d -exec rm -rf {} +
 
@@ -17,3 +20,6 @@ update-all:
 
 reimport:
 	python import.py reimport
+
+test:
+	nosetests

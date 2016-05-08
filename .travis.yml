@@ -28,3 +28,6 @@ before_install:
 
 script:
   - docker-compose build
+  - docker-compose up -d
+  - docker-compose run importer make install-test-deps test
+  - docker-compose down

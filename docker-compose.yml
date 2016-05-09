@@ -11,6 +11,7 @@ services:
       - elasticsearch
   importer:
     build: ./importer
+    command: "true"  # don't actually run it by default
     volumes:
       - ./importer:/app
     depends_on:

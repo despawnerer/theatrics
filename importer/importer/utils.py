@@ -1,6 +1,7 @@
 import json
 import re
 import asyncio
+from datetime import datetime
 from time import time
 from isodate import parse_date, parse_time
 from functools import wraps
@@ -61,6 +62,10 @@ def is_up_to_string(text):
 def read_json_file(filename):
     with open(filename) as f:
         return json.loads(f.read())
+
+
+def get_today():
+    return datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
 
 
 def print_fetch_progress(iterable, type_hint):

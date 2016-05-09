@@ -1,7 +1,8 @@
 import asyncio
 from unittest import TestCase
 
-from importer import IndexScanner, connect_to_elasticsearch
+from importer.connections import connect_to_elasticsearch
+from importer.indices import IndexScanner
 from importer.utils import run_sync
 
 

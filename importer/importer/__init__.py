@@ -85,9 +85,10 @@ async def connect_to_elasticsearch():
 
 
 class IndexScanner:
-    def __init__(self, elastic, index_name):
+    def __init__(self, elastic, index_name, scroll_time='1m'):
         self.elastic = elastic
         self.index_name = index_name
+        self.scroll_time = scroll_time
         self.buffer = None
         self.scroll_id = None
 
@@ -96,11 +97,18 @@ class IndexScanner:
 
     async def __anext__(self):
         if self.scroll_id is None:
-            scroll_data = await self.elastic.search(self.index_name, scroll='1m')
-            self.scroll_id = scroll_data['_scroll_id']
-
-        if not self.buffer:
-            response = await self.elastic.scroll(self.scroll_id, scroll='1m')
+            response = await self.elastic.search(
+                self.index_name,
+                scroll=self.scroll_time,
+            )
+            self.scroll_id = response['_scroll_id']
+            self.buffer = response['hits']['hits']
+        elif not self.buffer:
+            response = await self.elastic.scroll(
+                self.scroll_id,
+                scroll=self.scroll_time,
+            )
+            self.scroll_id = response['_scroll_id']
             self.buffer = response['hits']['hits']
 
         if self.buffer:

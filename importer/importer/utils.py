@@ -12,6 +12,15 @@ from_expression = re.compile(r'^от\s(?:\d+ ?)+[^\d]*$')
 up_to_expression = re.compile(r'до\s(?:\d+ ?)+[^\d]*$')
 
 
+def run_sync(coro):
+    @wraps(coro)
+    def wrapper(*args, **kwargs):
+        future = coro(*args, **kwargs)
+        loop = asyncio.get_event_loop()
+        return loop.run_until_complete(future)
+    return wrapper
+
+
 def maybe(f):
     @wraps(f)
     def wrapper(arg, *rest, **kwargs):

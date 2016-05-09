@@ -42,7 +42,7 @@ Build and setup test containers (if they aren't already) and run tests:
 
     make test
 
-Cleanup and remove test containers:
+Clean up and remove test containers:
 
     make clean-test
 

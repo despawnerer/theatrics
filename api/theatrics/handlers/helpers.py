@@ -33,7 +33,7 @@ def with_params(schema_cls):
             schema = schema_cls(request)
             result = schema.load(request.GET)
             if result.errors:
-                return web.HTTPBadRequest(
+                raise web.HTTPBadRequest(
                     text=json.dumps({
                         'errors': result.errors
                     }, ensure_ascii=False),
@@ -60,7 +60,7 @@ def item_handler(type_, relations={}):
                 response = await elastic.get(
                     ELASTICSEARCH_INDEX, id_, type_, **kwargs)
             except aioes.NotFoundError:
-                return web.HTTPNotFound()
+                raise web.HTTPNotFound()
 
             item = simplify_item(response)
 

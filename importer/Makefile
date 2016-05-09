@@ -22,4 +22,4 @@ reimport:
 	python import.py reimport
 
 test:
-	nosetests
+	nosetests --nocapture

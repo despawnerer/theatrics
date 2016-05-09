@@ -9,5 +9,4 @@ async def connect_to_elasticsearch():
 
     await wait_for_all_services(ELASTICSEARCH_ENDPOINTS, timeout=10)
     elastic = aioes.Elasticsearch(ELASTICSEARCH_ENDPOINTS)
-    await elastic.cluster.health(wait_for_status='yellow', timeout='5s')
     return elastic

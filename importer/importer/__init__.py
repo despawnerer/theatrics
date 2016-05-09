@@ -114,6 +114,7 @@ class IndexScanner:
         if self.buffer:
             return self.buffer.pop(0)
         else:
+            await self.elastic.clear_scroll(self.scroll_id)
             raise StopAsyncIteration
 
 

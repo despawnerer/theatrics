@@ -1,5 +1,7 @@
 import json
 import re
+import asyncio
+from time import time
 from isodate import parse_date, parse_time
 from functools import wraps
 
@@ -59,6 +61,29 @@ def print_fetch_progress(iterable, type_hint):
         total=lambda i: i.item_count,
         each=len,
     )
+
+
+async def wait_for_all_services(endpoint_list, timeout):
+    await asyncio.wait([
+        wait_for_service(endpoint, timeout)
+        for endpoint in endpoint_list
+    ])
+
+
+async def wait_for_service(endpoint, timeout):
+    host, port = endpoint.split(':')
+    wait_until = time() + timeout
+
+    while True:
+        try:
+            reader, writer = await asyncio.open_connection(host, port)
+        except:
+            if time() < wait_until:
+                await asyncio.sleep(1)
+            else:
+                raise
+        else:
+            return
 
 
 class AsyncProgressPrinter:

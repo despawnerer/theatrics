@@ -3,11 +3,10 @@ import aiohttp
 import aioes
 import os.path
 from datetime import datetime
-from aioes import Elasticsearch
 
 from .importer import import_data
 from .kudago import KudaGo
-from .utils import read_json_file
+from .utils import read_json_file, wait_for_all_services
 from .settings import ELASTICSEARCH_ENDPOINTS, ELASTICSEARCH_ALIAS
 
 
@@ -15,7 +14,7 @@ from .settings import ELASTICSEARCH_ENDPOINTS, ELASTICSEARCH_ALIAS
 
 async def migrate():
     print("Starting migration...")
-    elastic = Elasticsearch(ELASTICSEARCH_ENDPOINTS)
+    elastic = await connect_to_elasticsearch()
 
     print("Creating new index...")
     index_name = await create_new_index(elastic)
@@ -47,7 +46,7 @@ async def update(since):
     )
 
     async with aiohttp.ClientSession() as http_client:
-        elastic = Elasticsearch(ELASTICSEARCH_ENDPOINTS)
+        elastic = await connect_to_elasticsearch()
         kudago = KudaGo(http_client)
         await import_data(kudago, elastic, ELASTICSEARCH_ALIAS, since=since)
 
@@ -57,7 +56,7 @@ async def update(since):
 
 async def reimport():
     print("Starting reimport")
-    elastic = Elasticsearch(ELASTICSEARCH_ENDPOINTS)
+    elastic = await connect_to_elasticsearch()
 
     print("Creating new index...")
     index_name = await create_new_index(elastic)
@@ -75,6 +74,15 @@ async def reimport():
 
 
 # index management
+
+async def connect_to_elasticsearch():
+    print("Connecting to Elasticsearch...")
+
+    await wait_for_all_services(ELASTICSEARCH_ENDPOINTS, timeout=10)
+    elastic = aioes.Elasticsearch(ELASTICSEARCH_ENDPOINTS)
+    await elastic.cluster.health(wait_for_status='yellow', timeout='5s')
+    return elastic
+
 
 class IndexScanner:
     def __init__(self, elastic, index_name):

@@ -43,4 +43,6 @@ after_success: |
       docker tag theatrics_$COMPONENT $REPO:travis-$TRAVIS_BUILD_NUMBER
       docker push $REPO
     done
+  else
+    echo "Not master branch, not pushing to Docker"
   fi

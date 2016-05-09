@@ -2,7 +2,7 @@ import asyncio
 import aiohttp
 
 from .connections import connect_to_elasticsearch
-from .indices import create_new_index, switch_alias_to_index, IndexScanner
+from .indices import create_new_index, switch_alias_to_index, IndexPaginator
 from .importer import import_data
 from .kudago import KudaGo
 from .settings import ELASTICSEARCH_ALIAS
@@ -18,12 +18,16 @@ async def migrate():
     if await elastic.indices.exists(ELASTICSEARCH_ALIAS):
         print("Reindexing data from previous index...")
         futures = []
-        async for hit in IndexScanner(elastic, ELASTICSEARCH_ALIAS):
-            doc = hit['_source']
-            id_ = hit['_id']
-            type_ = hit['_type']
+        async for page in IndexPaginator(elastic, ELASTICSEARCH_ALIAS):
+            actions = []
+            for hit in page:
+                doc = hit['_source']
+                id_ = hit['_id']
+                type_ = hit['_type']
+                actions.append({'index': {'_id': id_, '_type': type_}})
+                actions.append(doc)
             futures.append(asyncio.ensure_future(
-                elastic.index(index_name, type_, doc, id=id_)
+                elastic.bulk(actions, index_name)
             ))
         if futures:
             await asyncio.wait(futures)

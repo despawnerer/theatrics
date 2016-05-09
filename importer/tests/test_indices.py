@@ -2,11 +2,11 @@ import asyncio
 from unittest import TestCase
 
 from importer.connections import connect_to_elasticsearch
-from importer.indices import IndexScanner
+from importer.indices import IndexPaginator
 from importer.utils import run_sync
 
 
-class IndexScannerTestCase(TestCase):
+class IndexPaginatorTestCase(TestCase):
     index_name = 'test'
 
     @run_sync
@@ -35,7 +35,9 @@ class IndexScannerTestCase(TestCase):
         await self.elastic.indices.refresh(self.index_name)
 
         result_items = []
-        async for item in IndexScanner(self.elastic, self.index_name):
-            result_items.append(item['_source'])
+        async for page in IndexPaginator(self.elastic, self.index_name, size=2):
+            for hit in page:
+                result_items.append(hit['_source'])
 
         self.assertEqual(len(result_items), 3)
+        self.assertTrue(all(item in result_items for item in test_items))

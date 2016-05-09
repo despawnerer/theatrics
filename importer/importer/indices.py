@@ -43,12 +43,13 @@ def generate_index_name():
     return '{}-{}'.format(ELASTICSEARCH_ALIAS, int(datetime.now().timestamp()))
 
 
-class IndexScanner:
-    def __init__(self, elastic, index_name, scroll_time='1m'):
+class IndexPaginator:
+    def __init__(self, elastic, index_name, scroll_time='1m', size=100):
         self.elastic = elastic
         self.index_name = index_name
         self.scroll_time = scroll_time
-        self.buffer = None
+        self.size = size
+        self.last_page = None
         self.scroll_id = None
 
     async def __aiter__(self):
@@ -59,19 +60,19 @@ class IndexScanner:
             response = await self.elastic.search(
                 self.index_name,
                 scroll=self.scroll_time,
+                size=self.size,
             )
-            self.scroll_id = response['_scroll_id']
-            self.buffer = response['hits']['hits']
-        elif not self.buffer:
+        elif len(self.last_page) == self.size:
             response = await self.elastic.scroll(
                 self.scroll_id,
                 scroll=self.scroll_time,
             )
-            self.scroll_id = response['_scroll_id']
-            self.buffer = response['hits']['hits']
-
-        if self.buffer:
-            return self.buffer.pop(0)
         else:
-            await self.elastic.clear_scroll(self.scroll_id)
+            raise StopAsyncIteration
+
+        self.scroll_id = response['_scroll_id']
+        self.last_page = response['hits']['hits']
+        if self.last_page:
+            return self.last_page
+        else:
             raise StopAsyncIteration

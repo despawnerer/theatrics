@@ -30,7 +30,8 @@ async def migrate():
             futures.append(asyncio.ensure_future(
                 elastic.index(index_name, type_, doc, id=id_)
             ))
-        await asyncio.wait(futures)
+        if futures:
+            await asyncio.wait(futures)
 
     print("Switching to new index...")
     await switch_alias_to_index(elastic, ELASTICSEARCH_ALIAS, index_name)

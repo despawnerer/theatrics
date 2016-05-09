@@ -11,7 +11,7 @@ services:
       - elasticsearch
   importer:
     build: ./importer
-    command: "true"  # don't actually run it by default
+    command: tail -f /dev/null  # if it takes forever, I will wait for you...
     volumes:
       - ./importer:/app
     depends_on:

@@ -36,6 +36,18 @@ Elasticsearch 2.3 is used a database.
 	docker-compose up
 
 
+### Running tests
+
+Build and setup test containers (if they aren't already) and run tests:
+
+    make test
+
+Cleanup and remove test containers:
+
+    make clean-test
+
+
+
 Credits
 -------
 

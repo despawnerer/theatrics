@@ -32,4 +32,3 @@ script:
   - docker-compose run importer make migrate
   - docker-compose run importer make install-test-deps test
   - docker-compose exec api make install-test-deps test
-  - docker-compose down

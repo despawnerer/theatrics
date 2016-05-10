@@ -1,6 +1,8 @@
 Theatrics
 =========
 
+[![Build Status](https://travis-ci.org/despawnerer/theatrics.svg?branch=master)](https://travis-ci.org/despawnerer/theatrics)
+
 A theater playbill app using KudaGo API. Only in Russian language right now.
 
 Available at http://theatrics.ru/

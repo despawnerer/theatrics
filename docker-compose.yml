@@ -1,0 +1,26 @@
+version: '2'
+services:
+  elasticsearch:
+    image: elasticsearch:2.3
+  api:
+    build: ./api
+    command: make run-dev
+    volumes:
+      - ./api:/app
+    depends_on:
+      - elasticsearch
+  importer:
+    build: ./importer
+    command: tail -f /dev/null  # if it takes forever, I will wait for you...
+    volumes:
+      - ./importer:/app
+    depends_on:
+      - elasticsearch
+  web:
+    build: ./web
+    volumes:
+      - ./web:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - api

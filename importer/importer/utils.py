@@ -1,5 +1,8 @@
 import json
 import re
+import asyncio
+from datetime import datetime
+from time import time
 from isodate import parse_date, parse_time
 from functools import wraps
 
@@ -8,6 +11,15 @@ link_expression = re.compile(r'<a .*?href=".*?".*?>(.+?)<\/a>', re.DOTALL)
 number_expression = re.compile(r'\b(?:\d+ ?)+\b')
 from_expression = re.compile(r'^от\s(?:\d+ ?)+[^\d]*$')
 up_to_expression = re.compile(r'до\s(?:\d+ ?)+[^\d]*$')
+
+
+def run_sync(coro):
+    @wraps(coro)
+    def wrapper(*args, **kwargs):
+        future = coro(*args, **kwargs)
+        loop = asyncio.get_event_loop()
+        return loop.run_until_complete(future)
+    return wrapper
 
 
 def maybe(f):
@@ -52,6 +64,10 @@ def read_json_file(filename):
         return json.loads(f.read())
 
 
+def get_today():
+    return datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+
+
 def print_fetch_progress(iterable, type_hint):
     return AsyncProgressPrinter(
         iterable,
@@ -59,6 +75,29 @@ def print_fetch_progress(iterable, type_hint):
         total=lambda i: i.item_count,
         each=len,
     )
+
+
+async def wait_for_all_services(endpoint_list, timeout):
+    await asyncio.wait([
+        wait_for_service(endpoint, timeout)
+        for endpoint in endpoint_list
+    ])
+
+
+async def wait_for_service(endpoint, timeout):
+    host, port = endpoint.split(':')
+    wait_until = time() + timeout
+
+    while True:
+        try:
+            reader, writer = await asyncio.open_connection(host, port)
+        except:
+            if time() < wait_until:
+                await asyncio.sleep(1)
+            else:
+                raise
+        else:
+            return
 
 
 class AsyncProgressPrinter:

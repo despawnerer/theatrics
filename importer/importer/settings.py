@@ -7,7 +7,7 @@ def unprefix(s, prefix):
 
 ELASTICSEARCH_ENDPOINTS = [
     unprefix(
-        os.environ.get('ELASTICSEARCH_URL', 'localhost:9200'),
+        os.environ.get('ELASTICSEARCH_URL', 'elasticsearch:9200'),
         'http://'
     )
 ]

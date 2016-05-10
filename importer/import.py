@@ -1,9 +1,8 @@
-import asyncio
 import click
 import schedule
-import time
-from datetime import datetime
+import asyncio
 
+from importer.utils import run_sync, get_today
 from importer import (
     update as do_update,
     migrate as do_migrate,
@@ -17,53 +16,50 @@ def import_():
 
 
 @import_.command()
-def migrate():
+@run_sync
+async def migrate():
     """
     Create a new index, copy old data, switch.
     """
-    run_sync(do_migrate())
+    await do_migrate()
 
 
 @import_.command()
 @click.option('--all', is_flag=True, help="Load all events, including past ones")
-def update(all):
+@run_sync
+async def update(all):
     """
     Import events and places from KudaGo.
     """
     since = None if all else get_today()
-    run_sync(do_update(since))
+    await do_update(since)
 
 
 @import_.command()
-def reimport():
+@run_sync
+async def reimport():
     """
     Import all data into a new index and switch.
     """
-    run_sync(do_reimport())
+    await do_reimport()
 
 
 @import_.command()
-def autoupdate():
+@run_sync
+async def autoupdate():
     """
     Start automatic update on schedule.
 
     Quick (actual-only) updates are run every hour.
     Full updates are run every Monday.
     """
-    schedule.every().monday.do(lambda: run_sync(do_update(None)))
-    schedule.every().hour.do(lambda: run_sync(do_update(get_today())))
+    schedule.every().monday.do(
+        lambda: asyncio.ensure_future(do_update(None)))
+    schedule.every().hour.do(
+        lambda: asyncio.ensure_future(do_update(get_today())))
     while True:
         schedule.run_pending()
-        time.sleep(1)
-
-
-def get_today():
-    return datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
-
-
-def run_sync(coro):
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(coro)
+        await asyncio.sleep(1)
 
 
 if __name__ == '__main__':

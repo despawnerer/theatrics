@@ -36,7 +36,7 @@ Elasticsearch 2.3 is used a database.
 	docker-compose up
 
 
-### Running tests
+### Testing
 
 Build and setup test containers (if they aren't already) and run tests:
 

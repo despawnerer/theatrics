@@ -25,7 +25,7 @@ Theatrics consists of three parts:
 - `api` — API through which access to data happens
 - `importer` — index management and data importing
 
-Elasticsearch 2.3 is used a database.
+Elasticsearch 2.3 is used as a database.
 
 
 ### Initial setup

@@ -209,7 +209,6 @@ p {
 #header {
   color: #aaa;
   white-space: nowrap;
-  text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -223,7 +222,7 @@ p {
   text-transform: uppercase;
   vertical-align: middle;
   letter-spacing: 7px;
-  margin: 0;
+  margin: 0 -7px 0 0; /* counteract letter-spacing */
   padding: 0;
   font-family: Liberation Serif, Times New Roman, serif;
 }
@@ -237,7 +236,7 @@ p {
 }
 
 #city {
-  margin-left: 20px;
+  margin-left: 27px;
 }
 
 #city select {
@@ -249,6 +248,63 @@ p {
   height: 20px;
   line-height: 20px;
 }
+
+#search {
+  margin-left: 27px;
+}
+
+#search form {
+  margin: 1px 0 0 0;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+  position: relative;
+}
+
+#search input {
+  margin: 0;
+  padding: 7px 0 5px 30px;
+  height: 31px;
+  line-height: 20px;
+  vertical-align: middle;
+  font-size: 14px;
+  font-family: inherit;
+  border: 0;
+  color: black;
+  width: 200px;
+  background: transparent;
+  border-bottom: 1px solid silver;
+}
+
+#search input::placeholder {
+  color: #444;
+}
+
+#search input:focus {
+  outline: none;
+  border-bottom-color: black;
+}
+
+#search input:focus::placeholder {
+  color: transparent;
+}
+
+#search input:focus + .icon-search {
+  color: black;
+}
+
+#search .icon-search {
+  color: #444;
+  font-size: 16px;
+  position: absolute;
+  left: 6px;
+  height: 30px;
+  line-height: 30px;
+  pointer-events: none;
+}
+
+#search form.active input { border-bottom-color: black; border-bottom-width: 2px; padding-top: 6px; }
+#search form.active .icon-search { color: black; }
 
 @media (max-width: 359px) {
   #header {

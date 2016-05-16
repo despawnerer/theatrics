@@ -2,6 +2,7 @@ import domify from 'domify';
 
 import View from '../base/view';
 import LocationChooser from '../views/location-chooser';
+import Search from '../views/search';
 
 import {toggle, show, bigLoader} from '../utils';
 
@@ -14,17 +15,22 @@ export default class MainView extends View {
 
     this.locationChooser = new LocationChooser({
       app, route: state.route, location: state.location});
+    this.search = new Search({app});
   }
 
   mount(element) {
     const container = element.querySelector('#view-container');
     const city = element.querySelector('#city');
+    const search = element.querySelector('#search');
     const loader = element.querySelector('#view-loader-container');
 
     this.locationChooser.renderInto(city);
+    this.search.renderInto(search);
     document.title = this.getTitle();
+
     toggle(loader, this.state.isWaiting);
     show(city);
+    show(search);
 
     const previousElement = this.findViewElement(container);
     const newElement = this.state.element;

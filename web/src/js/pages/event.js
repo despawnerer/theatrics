@@ -47,7 +47,7 @@ export default class EventPage extends Page {
 
   loadSchedule() {
     this.app.api
-      .fetchEventChildren(this.event.get('id'))
+      .fetchEventChildren(this.event.data.id)
       .then(data => data.map(item => new Event(item)))
       .then(events => this.displaySchedule(events));
   }

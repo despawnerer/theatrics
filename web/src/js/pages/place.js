@@ -49,7 +49,7 @@ export default class PlacePage extends Page {
 
   loadSchedule(container) {
     this.app.api
-      .fetchEventsInPlace(this.place.get('id'))
+      .fetchEventsInPlace(this.place.data.id)
       .then(data => data.map(item => new Event(item)))
       .then(events => this.displaySchedule(events));
   }

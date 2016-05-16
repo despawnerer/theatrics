@@ -2,7 +2,7 @@ import Events from 'events-mixin';
 import extend from 'xtend';
 import isPromise from 'is-promise';
 
-import {forceScroll, uuid} from '../utils';
+import {forceScroll, uuid, project} from '../utils';
 
 import Cache from './cache';
 import Response from './response';
@@ -70,13 +70,15 @@ export default class Router {
   /* Navigation */
 
   navigate(path) {
-    const state = this.buildStateFromPath(path);
+    const route = this.app.resolver.resolve(path);
+    const state = new State({route});
     history.pushState(state, null, path);
     return this.loadNewState(state).then(state => forceScroll(0, 0));
   }
 
   redirect(path) {
-    const state = this.buildStateFromPath(path);
+    const route = this.app.resolver.resolve(path);
+    const state = new State({route});
     history.replaceState(state, null, path);
     return this.loadNewState(state);
   }
@@ -114,7 +116,7 @@ export default class Router {
         return this.redirect(response.value);
       case Response.Render:
       case Response.NotFound:
-        return this.renderState(extend(state, response.value));
+        return this.renderState(state.update(response.value));
       default:
         throw new Error("Unexpected response from handler");
     }
@@ -140,22 +142,26 @@ export default class Router {
     this.state = state;
     this.cache.put(state.id, state);
     history.replaceState(
-      this.getSaveableState(), document.title, window.location.pathname);
-    this.app.settings.set('location', state.page.getLocation());
+      state.getSaveable(), document.title, window.location.pathname);
     this.app.mainView.setState(state);
   }
+}
 
-  getSaveableState() {
-    return {
-      id: this.state.id,
-      route: this.state.route,
-    }
+
+class State {
+  constructor(whatever) {
+    this.id = uuid();
+    this.update(whatever);
   }
 
-  buildStateFromPath(path) {
-    return {
-      id: uuid(),
-      route: this.app.resolver.resolve(path),
+  update(whatever) {
+    for (let key in whatever) {
+      this[key] = whatever[key];
     }
+    return this;
+  }
+
+  getSaveable() {
+    return project(this, ['id', 'route']);
   }
 }

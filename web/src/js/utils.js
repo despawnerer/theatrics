@@ -303,3 +303,12 @@ export function zipIntoObject(keys, values) {
   }
   return obj;
 }
+
+
+export function project(object, keys) {
+  const result = {};
+  keys
+    .filter(key => key in object)
+    .forEach(key => result[key] = object[key]);
+  return result;
+}

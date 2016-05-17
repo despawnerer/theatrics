@@ -14,6 +14,13 @@ export default class View {
     return element;
   }
 
+  renderInto(target) {
+    target.innerHTML = this.getHTML();
+    const element = target.children[0];
+    this.mount(element);
+    return element;
+  }
+
   getHTML() {
     return '<div></div>';
   }

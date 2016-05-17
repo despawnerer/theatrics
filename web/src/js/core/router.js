@@ -148,13 +148,13 @@ export default class Router {
 
 
 class State {
-  constructor(whatever) {
+  constructor(data) {
     this.id = uuid();
-    this.update(whatever);
+    this.update(data);
   }
 
-  update(whatever) {
-    return Object.assign(this, whatever);
+  update(data) {
+    return Object.assign(this, data);
   }
 
   getSaveable() {

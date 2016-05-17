@@ -1,11 +1,8 @@
-import {EventEmitter} from 'events';
-
 import equal from 'deep-equal';
 
 
-export default class Cache extends EventEmitter {
+export default class Cache {
   constructor(size) {
-    super();
     this.size = size;
     this.cache = [];
   }
@@ -20,8 +17,9 @@ export default class Cache extends EventEmitter {
 
     if (this.cache.length > this.size) {
       const removeCount = this.cache.length - this.size;
-      const removed = this.cache.splice(0, removeCount);
-      removed.forEach(item => this.emit('remove', item.key, item.value));
+      return this.cache.splice(0, removeCount);
+    } else {
+      return [];
     }
   }
 

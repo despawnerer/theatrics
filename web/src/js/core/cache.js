@@ -1,6 +1,3 @@
-import equal from 'deep-equal';
-
-
 export default class Cache {
   constructor(size) {
     this.size = size;
@@ -8,7 +5,7 @@ export default class Cache {
   }
 
   put(key, value) {
-    const existing = this.cache.findIndex(item => equal(item.key, key));
+    const existing = this.cache.findIndex(item => item.key == key);
     if (existing >= 0) {
       this.cache.splice(existing, 1);
     }
@@ -24,7 +21,7 @@ export default class Cache {
   }
 
   get(key) {
-    const item = this.cache.find(item => equal(item.key, key));
+    const item = this.cache.find(item => item.key == key);
     return item ? item.value : null;
   }
 }

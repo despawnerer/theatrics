@@ -154,10 +154,7 @@ class State {
   }
 
   update(whatever) {
-    for (let key in whatever) {
-      this[key] = whatever[key];
-    }
-    return this;
+    return Object.assign(this, whatever);
   }
 
   getSaveable() {

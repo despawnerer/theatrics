@@ -199,6 +199,31 @@ export function groupArray(array, name, callback, equal=(a, b) => a == b) {
 }
 
 
+/* Objects */
+
+export function zipIntoObject(keys, values) {
+  const obj = {}
+  for (let x = 0; x < values.length; x++) {
+    obj[keys[x]] = values[x];
+  }
+  return obj;
+}
+
+
+export function project(object, keys) {
+  const result = {};
+  keys
+    .filter(key => key in object)
+    .forEach(key => result[key] = object[key]);
+  return result;
+}
+
+
+export function merge(...objects) {
+  return Object.assign({}, ...objects);
+}
+
+
 /* Formatting */
 
 export function formatPriceRange(lower, upper, currency) {
@@ -293,27 +318,4 @@ export function getMapURL(title, address, location, isiOS) {
   } else {
     return `//maps.google.com/?q=${title}, ${address}, ${location}`;
   }
-}
-
-
-export function zipIntoObject(keys, values) {
-  const obj = {}
-  for (let x = 0; x < values.length; x++) {
-    obj[keys[x]] = values[x];
-  }
-  return obj;
-}
-
-
-export function project(object, keys) {
-  const result = {};
-  keys
-    .filter(key => key in object)
-    .forEach(key => result[key] = object[key]);
-  return result;
-}
-
-
-export function merge(...objects) {
-  return Object.assign({}, ...objects);
 }

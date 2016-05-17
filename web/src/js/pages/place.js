@@ -30,10 +30,6 @@ export default class PlacePage extends Page {
     return `${this.place.getName()} – ${this.location.name}`;
   }
 
-  getLocation() {
-    return this.location.slug;
-  }
-
   mount(element) {
     this.element = element;
 

@@ -30,10 +30,6 @@ export default class EventPage extends Page {
     return `${this.event.getFullName()} – ${this.location.name}`;
   }
 
-  getLocation() {
-    return this.location.slug;
-  }
-
   mount(element) {
     this.element = element;
 

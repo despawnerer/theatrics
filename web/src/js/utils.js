@@ -312,3 +312,8 @@ export function project(object, keys) {
     .forEach(key => result[key] = object[key]);
   return result;
 }
+
+
+export function merge(...objects) {
+  return Object.assign({}, ...objects);
+}

@@ -1,7 +1,6 @@
 import 'lazysizes';
 
 import moment from 'moment';
-import extend from 'xtend';
 
 import TheatricsAPI from './api';
 import Resolver from './resolver';
@@ -24,6 +23,7 @@ import {
   formatPhoneNumber,
   preventBreakingRanges,
   unbreakable,
+  merge,
 } from '../utils';
 
 
@@ -78,6 +78,6 @@ export default class App {
   }
 
   renderTemplate(template, context={}) {
-    return template(extend(this.templateContext, context));
+    return template(merge(this.templateContext, context));
   }
 }

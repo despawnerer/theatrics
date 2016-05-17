@@ -33,7 +33,7 @@ export function eventList(app, {location, date}) {
 
   const feed = app.api.getEventsFeed(location, date);
   const page = new EventListPage({app, location, date, feed});
-  return Render({page});
+  return Render({page, location});
 }
 
 
@@ -43,7 +43,8 @@ export function event(app, {id}) {
     .then(data => {
       const event = new Event(data);
       const page = new EventPage({app, event});
-      return Render({page});
+      const location = event.getLocation();
+      return Render({page, location});
     })
     .catch(error => error.response.status == 404 ? notFound(app) : undefined);
 }
@@ -55,7 +56,7 @@ export function placeList(app, {location}) {
 
   const feed = app.api.getPlacesFeed(location);
   const page = new PlaceListPage({app, location, feed});
-  return Render({page});
+  return Render({page, location});
 }
 
 
@@ -65,7 +66,8 @@ export function place(app, {id}) {
     .then(data => {
       const place = new Place(data);
       const page = new PlacePage({app, place});
-      return Render({page});
+      const location = place.getLocation();
+      return Render({page, location});
     })
     .catch(error => error.response.status == 404 ? notFound(app) : undefined);
 }

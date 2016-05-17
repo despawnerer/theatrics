@@ -1,5 +1,4 @@
 import Events from 'events-mixin';
-import extend from 'xtend';
 import isPromise from 'is-promise';
 
 import {forceScroll, uuid, project} from '../utils';

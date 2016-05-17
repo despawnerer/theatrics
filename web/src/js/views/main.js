@@ -1,5 +1,4 @@
 import domify from 'domify';
-import extend from 'xtend';
 
 import View from '../base/view';
 import LocationChooser from '../views/location-chooser';

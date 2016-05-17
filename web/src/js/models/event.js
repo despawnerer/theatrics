@@ -1,7 +1,6 @@
 import moment from 'moment';
 
 import locations from '../core/locations';
-import Model from '../base/model';
 import {capfirst, range, makeAbsoluteURL} from '../utils';
 
 import Place from './place';
@@ -9,7 +8,11 @@ import Date from './date';
 import Price from './price';
 
 
-export default class Event extends Model {
+export default class Event {
+  constructor(data) {
+    this.data = data;
+  }
+
   getName() {
     return this.data.name || this.getFullName();
   }

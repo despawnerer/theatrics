@@ -1,9 +1,12 @@
 import locations from '../core/locations';
-import Model from '../base/model';
 import {capfirst, makeAbsoluteURL} from '../utils';
 
 
-export default class Place extends Model {
+export default class Place {
+  constructor(data) {
+    this.data = data;
+  }
+
   isStub() {
     return this.data.is_stub;
   }

@@ -1,12 +1,12 @@
-export function Redirect(value) {
+export function redirect(value) {
   return new Response(Response.Redirect, value);
 }
 
-export function Render(value) {
+export function render(value) {
   return new Response(Response.Render, value);
 }
 
-export function NotFound(value) {
+export function notFound(value) {
   return new Response(Response.NotFound, value);
 }
 

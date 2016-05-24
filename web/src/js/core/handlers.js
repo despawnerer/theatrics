@@ -18,19 +18,19 @@ import {
 } from './response';
 
 
-export function index(app) {
-  const location = app.settings.get('location');
+export function index(app, state) {
+  const location = state.location.slug;
   return redirect(app.resolver.reverse('event-list', {location}));
 }
 
 
-export function location(app, {location}) {
+export function location(app, state, {location}) {
   if (!locations.has(location)) return notFound(app);
   return redirect(app.resolver.reverse('event-list', {location}));
 }
 
 
-export function eventList(app, {location, date}) {
+export function eventList(app, state, {location, date}) {
   location = locations.get(location);
   date = date ? moment.tz(date, location.timezone) : null;
   if (!location) return notFound(app);
@@ -41,7 +41,7 @@ export function eventList(app, {location, date}) {
 }
 
 
-export function event(app, {id}) {
+export function event(app, state, {id}) {
   return app.api
     .fetchEvent(id)
     .then(data => {
@@ -54,7 +54,7 @@ export function event(app, {id}) {
 }
 
 
-export function placeList(app, {location}) {
+export function placeList(app, state, {location}) {
   location = locations.get(location);
   if (!location) return notFound(app);
 
@@ -64,7 +64,7 @@ export function placeList(app, {location}) {
 }
 
 
-export function place(app, {id}) {
+export function place(app, state, {id}) {
   return app.api
     .fetchPlace(id)
     .then(data => {

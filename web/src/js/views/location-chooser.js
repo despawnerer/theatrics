@@ -1,6 +1,7 @@
 import locations from '../core/locations';
 
 import View from '../base/view';
+import {trigger} from '../utils';
 
 import template from '../../templates/location-chooser.ejs';
 
@@ -15,7 +16,11 @@ export default class LocationChooser extends View {
 
   getHTML() {
     const currentLocation = this.location;
-    const targetRouteName = this.route.name == 'place-list' ? 'place-list' : 'event-list';
+    const targetRouteName = (
+      (this.route && this.route.name == 'place-list')
+      ? 'place-list'
+      : 'event-list'
+    );
     return this.app.renderTemplate(template, {
       locations, targetRouteName, currentLocation});
   }
@@ -26,7 +31,7 @@ export default class LocationChooser extends View {
 
   onSelectChange(event) {
     const element = event.target;
-    const path = element.value;
-    this.app.router.navigate(path);
+    const url = element.value;
+    trigger(window, 'navigate', url);
   }
 }

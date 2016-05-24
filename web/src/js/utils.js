@@ -33,6 +33,17 @@ export function forceScroll(x, y, maxAttempts=100) {
 }
 
 
+export function getURL(location) {
+  return location.pathname + location.search;
+}
+
+
+export function trigger(target, name, detail) {
+  const event = detail ? new CustomEvent(name, {detail}) : new Event(name);
+  target.dispatchEvent(event);
+}
+
+
 /* HTML */
 
 export function bigLoader(progress=0.25) {

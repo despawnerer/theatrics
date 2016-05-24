@@ -43,7 +43,7 @@ export default class App {
     this.resolver.addRoute('event', '/event/{id:\\d+}/');
     this.resolver.addRoute('place', '/place/{id:\\d+}/');
 
-    this.router = new Router(this);
+    this.router = new Router();
     this.router.addHandler('index', handlers.index);
     this.router.addHandler('location', handlers.location);
     this.router.addHandler('event-list', handlers.eventList);
@@ -68,13 +68,6 @@ export default class App {
       url: (...args) => this.resolver.reverse(...args),
       app: this,
     }
-
-    this.mainView = new MainView({app: this});
-  }
-
-  run() {
-    this.mainView.mount(document.documentElement);
-    this.router.redirect(window.location.pathname);
   }
 
   renderTemplate(template, context={}) {

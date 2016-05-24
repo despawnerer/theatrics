@@ -3,53 +3,49 @@ import domify from 'domify';
 import View from '../base/view';
 import LocationChooser from '../views/location-chooser';
 
-import {show, hide, bigLoader} from '../utils';
+import {toggle, show, bigLoader} from '../utils';
 
 
 export default class MainView extends View {
-  constructor({app}) {
+  constructor({app, state}) {
     super({app});
 
-    this.state = {
-      id: null,
-      route: null,
-      page: null,
-      element: null,
-    };
+    this.state = state;
+
+    this.locationChooser = new LocationChooser({
+      app, route: state.route, location: state.location});
   }
 
   mount(element) {
-    this.element = element;
-    this.container = element.querySelector('#view-container');
-    this.locationContainer = element.querySelector('#city');
+    const container = element.querySelector('#view-container');
+    const city = element.querySelector('#city');
+    const loader = element.querySelector('#view-loader-container');
 
-    this.loader = domify(bigLoader());
-    this.loader.id = 'view-loader-container';
-    this.container.appendChild(this.loader);
-  }
+    this.locationChooser.renderInto(city);
+    document.title = this.getTitle();
+    toggle(loader, this.state.isWaiting);
+    show(city);
 
-  wait() {
-    show(this.loader);
-  }
-
-  setState(state) {
-    document.title = `${state.page.getTitle()} – Theatrics`;
-
-    if (!this.state.element) {
-      this.container.appendChild(state.element);
-    } else {
-      this.container.replaceChild(state.element, this.state.element);
+    const previousElement = this.findViewElement(container);
+    const newElement = this.state.element;
+    if (previousElement != newElement) {
+      if (previousElement) {
+        container.replaceChild(newElement, previousElement);
+      } else {
+        container.appendChild(newElement);
+      }
     }
+  }
 
-    const locationChooser = new LocationChooser({
-      app: this.app,
-      route: state.route,
-      location: state.location,
-    });
-    locationChooser.renderInto(this.locationContainer);
-    show(this.locationContainer);
+  getTitle() {
+    if (this.state.page) {
+      return `${this.state.page.getTitle()} – Theatrics`;
+    } else {
+      return 'Theatrics';
+    }
+  }
 
-    hide(this.loader);
-    this.state = state;
+  findViewElement(container) {
+    return Array.from(container.children).find(node => node.id != 'view-loader-container');
   }
 }

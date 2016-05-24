@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import locations from '../core/locations';
+import locations from './locations';
 
 import Event from '../models/event';
 import Place from '../models/place';

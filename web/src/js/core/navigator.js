@@ -63,8 +63,9 @@ class StateController {
   constructor(app) {
     this.app = app;
     this.cache = new Cache(5);
+    this.settings = new Settings();
     this.state = new State({
-      location: locations.get('spb')
+      location: locations.get(this.settings.location),
     });
   }
 
@@ -132,6 +133,10 @@ class StateController {
     }
 
     this.state = state;
+
+    this.settings.location = state.location.slug;
+    this.settings.save();
+
     return state;
   }
 
@@ -158,5 +163,41 @@ class State {
     data = merge(this, data);
     delete data.id;
     return new State(data);
+  }
+}
+
+
+class Settings {
+  constructor() {
+    Object.assign(this, this.getDefaults(), this.getSaved());
+  }
+
+  save() {
+    const data = {location: this.location};
+    try {
+      window.localStorage.setItem('settings', JSON.stringify(data));
+    } catch(e) {
+      // Safari raises QuotaExceededError when trying to save to
+      // localStorage in private mode, so ignore it
+      return;
+    }
+  }
+
+  getDefaults() {
+    return {
+      location: 'spb',
+    }
+  }
+
+  getSaved() {
+    const string = window.localStorage.getItem('settings');
+    if (string) {
+      try {
+        return JSON.parse(string);
+      } catch (err) {
+        return {};
+      }
+    }
+    return {};
   }
 }

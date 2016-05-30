@@ -9,30 +9,6 @@ export function isiOS() {
 }
 
 
-export function forceScroll(x, y, maxAttempts=100) {
-  /*
-  Sometimes, after navigating somewhere with .pushState, Chrome
-  decides to restore scroll position from the previous state after loading.
-  No idea what for. No idea why. It just does.
-  This function works around that behavior.
-  */
-
-  window.scrollTo(x, y);
-  let attemptsMade = 0;
-  const interval = window.setInterval(() => {
-    if (window.scrollX == x && window.scrollY == y) {
-      attemptsMade += 1;
-      if (attemptsMade >= maxAttempts) {
-        window.clearInterval(interval);
-      }
-    } else {
-      window.scrollTo(x, y);
-      window.clearInterval(interval);
-    }
-  }, 1);
-}
-
-
 export function getURL(location) {
   return location.pathname + location.search;
 }

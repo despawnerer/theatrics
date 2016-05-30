@@ -35,6 +35,10 @@ export default class MainView extends View {
         container.appendChild(newElement);
       }
     }
+
+    // this, for reasons unknown to me, makes Chrome and FF correctly
+    // remember scroll positions when switching views
+    window.scrollTo(window.scrollX, window.scrollY);
   }
 
   getTitle() {

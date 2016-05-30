@@ -2,7 +2,7 @@ import Events from 'events-mixin';
 import isPromise from 'is-promise';
 
 import MainView from '../views/main';
-import {forceScroll, uuid, getURL, merge} from '../utils';
+import {uuid, getURL, merge} from '../utils';
 
 import Cache from './cache';
 import Response from './response';
@@ -54,7 +54,7 @@ export default class Navigator {
   }
 
   navigate(url) {
-    this.stateController.push(url).then(state => forceScroll(0, 0));
+    this.stateController.push(url).then(state => window.scrollTo(0, 0));
   }
 }
 

@@ -2,6 +2,7 @@ web/node_modules
 web/build
 npm-debug.log
 .tern-project
+.tern-port
 *.pyc
 __pycache__
 test.run

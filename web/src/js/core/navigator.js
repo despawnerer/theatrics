@@ -73,10 +73,6 @@ class StateController {
     return this.load(url, true);
   }
 
-  redirect(url) {
-    return this.load(url);
-  }
-
   restore(stateId, url) {
     const cachedState = this.cache.get(stateId);
     if (cachedState) {
@@ -99,7 +95,7 @@ class StateController {
   applyResponse(response) {
     switch (response.type) {
       case Response.Redirect:
-        return this.redirect(response.value);
+        return this.load(response.value);
       case Response.Render:
       case Response.NotFound:
         return this.render(response.value);

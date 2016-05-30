@@ -87,7 +87,7 @@ class StateController {
   }
 
   load(url, push=false) {
-    const route = this.app.resolver.resolve(url);
+    const route = this.app.resolver.resolve(url) || {};
     const handler = this.app.router.getHandler(route.name);
     const response = handler(this.app, this.state, route.args);
     const isWaiting = isPromise(response);

@@ -16,17 +16,23 @@ export default class LocationChooser extends View {
 
   getHTML() {
     const currentLocation = this.location;
-    const targetRouteName = (
-      (this.route && this.route.name == 'place-list')
-      ? 'place-list'
-      : 'event-list'
-    );
+    const targetRoute = this.getTargetRoute();
     return this.app.renderTemplate(template, {
-      locations, targetRouteName, currentLocation});
+      locations, targetRoute, currentLocation});
   }
 
   mount(element) {
     element.addEventListener('change', event => this.onSelectChange(event));
+  }
+
+  getTargetRoute() {
+    if (this.route.name == 'place-list') {
+      return {name: 'place-list', args: this.route.args};
+    } else if (this.route.name == 'event-list') {
+      return {name: 'event-list', args: this.route.args};
+    } else {
+      return {name: 'event-list', args: {}};
+    }
   }
 
   onSelectChange(event) {

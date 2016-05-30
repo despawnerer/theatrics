@@ -1,6 +1,6 @@
 <select>
   <% locations.forEach(function(location) { %>
-    <option value="<%- url(targetRouteName, {location: location.slug}) %>"<% if (location.slug == currentLocation.slug) { %> selected<% } %>>
+    <option value="<%- url(targetRoute.name, merge(targetRoute.args, {location: location.slug})) %>"<% if (location.slug == currentLocation.slug) { %> selected<% } %>>
       <%- location.name %>
     </option>
   <% }) %>

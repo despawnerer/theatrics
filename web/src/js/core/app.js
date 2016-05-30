@@ -62,6 +62,7 @@ export default class App {
       formatPhoneNumber,
       preventBreakingRanges,
       unbreakable,
+      merge,
       url: (...args) => this.resolver.reverse(...args),
       app: this,
     }

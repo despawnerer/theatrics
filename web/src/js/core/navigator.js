@@ -21,7 +21,7 @@ export default class Navigator {
   }
 
   start() {
-    this.navigate(getURL(window.location));
+    this.stateController.load(getURL(window.location));
   }
 
   onAnchorClick(event) {

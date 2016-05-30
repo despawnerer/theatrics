@@ -7,8 +7,6 @@ import Resolver from './resolver';
 import Router from './router';
 import * as handlers from './handlers';
 
-import Settings from '../models/settings';
-
 import MainView from '../views/main';
 
 import {
@@ -30,7 +28,6 @@ import {
 export default class App {
   constructor() {
     this.api = new TheatricsAPI();
-    this.settings = new Settings();
 
     this.resolver = new Resolver();
     this.resolver.addRoute('index', '/');

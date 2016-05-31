@@ -1,4 +1,5 @@
 import moment from 'moment';
+import qs from 'querystringify';
 
 import Feed from './feed';
 
@@ -42,37 +43,37 @@ export default class TheatricsAPI {
   }
 
   getEventsFeed(location, date) {
-    const params = {
+    const query = {
       fields: 'name,full_name,place,images,tagline,lead,is_premiere,kind,end,start,location,price',
       expand: 'place',
       page_size: 24,
       location: location.slug,
     };
 
-    if (date) params.date = date.format('YYYY-MM-DD');
+    if (date) query.date = date.format('YYYY-MM-DD');
 
-    return new Feed(this, '/events/', params);
+    return new Feed(this, '/events/', query);
   }
 
   getPlacesFeed(location) {
-    const params = {
+    const query = {
       fields: 'full_name,name,images,address,url,location',
       page_size: 24,
       location: location.slug,
     };
-    return new Feed(this, '/places/', params);
+    return new Feed(this, '/places/', query);
   }
 
   // generic getting
 
-  getAll(path, params) {
-    const feed = new Feed(this, path, params);
+  getAll(path, query) {
+    const feed = new Feed(this, path, query);
     return feed.fetchAll();
   }
 
-  get(path, params) {
+  get(path, query) {
     const url = this.buildURL(path);
-    const queryString = this.serializeParams(params);
+    const queryString = qs.stringify(query);
     const fullURL = queryString ? `${url}?${queryString}` : url;
     return this.fetch(fullURL)
       .then(response => {
@@ -93,17 +94,6 @@ export default class TheatricsAPI {
       return this.prefix + path;
     } else {
       return this.prefix + this.version_prefix + path;
-    }
-  }
-
-  serializeParams(params) {
-    if (params) {
-      return Object
-        .keys(params)
-        .map(key => `${key}=${encodeURIComponent(params[key])}`)
-        .join('&');
-    } else {
-      return null;
     }
   }
 }

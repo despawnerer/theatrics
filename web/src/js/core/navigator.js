@@ -1,5 +1,7 @@
 import Events from 'events-mixin';
 import isPromise from 'is-promise';
+import URL from 'url-parse';
+import qs from 'querystringify';
 
 import MainView from '../views/main';
 import {uuid, getURL, merge} from '../utils';
@@ -83,11 +85,13 @@ class StateController {
   }
 
   load(url, push=false) {
-    const route = this.app.resolver.resolve(url) || {};
+    url = new URL(url);
+    const query = qs.parse(url.query);
+    const route = this.app.resolver.resolve(url.pathname) || {};
     const handler = this.app.router.getHandler(route.name);
     const response = handler(this.app, this.state, route.args);
     const isWaiting = isPromise(response);
-    this.update({isWaiting, route, url}, {push});
+    this.update({isWaiting, route, url, query}, {push});
     return Promise.resolve(response)
       .then(response => this.applyResponse(response));
   }

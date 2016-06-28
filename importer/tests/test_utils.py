@@ -1,7 +1,4 @@
-import sys
 from unittest import TestCase
-from io import StringIO
-from contextlib import contextmanager
 
 from importer.utils import (
     safe_crash,
@@ -10,15 +7,7 @@ from importer.utils import (
     strip_links,
 )
 
-
-@contextmanager
-def capture_output():
-    real_stdout, real_stderr = sys.stdout, sys.stderr
-    try:
-        sys.stdout, sys.stderr = StringIO(), StringIO()
-        yield sys.stdout, sys.stderr
-    finally:
-        sys.stdout, sys.stderr = real_stdout, real_stderr
+from .utils import capture_output
 
 
 class SafeCrashTestCase(TestCase):

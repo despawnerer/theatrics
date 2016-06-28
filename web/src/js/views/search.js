@@ -6,8 +6,13 @@ import template from '../../templates/search.ejs';
 
 
 export default class Search extends View {
+  constructor({app, query}) {
+    super({app});
+    this.query = query;
+  }
+
   getHTML() {
-    return this.app.renderTemplate(template, {});
+    return this.app.renderTemplate(template, {query: this.query});
   }
 
   mount(element) {

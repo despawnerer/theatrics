@@ -122,7 +122,7 @@ def transform_stub_place(kudago_place):
         'location': kudago_place['location'],
         'address': kudago_place['address'],
         'subway': kudago_place['subway'],
-        'coords': kudago_place['coords'],
+        'coords': transform_coords(kudago_place['coords']),
 
         'phone_numbers': transform_phone(kudago_place['phone']),
 

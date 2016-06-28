@@ -20,7 +20,16 @@ class SearchParams(Schema):
 @list_handler(relations=EXPANDABLE_RELATIONS)
 @with_params(SearchParams)
 async def search(request, q, location=None, include_past=False):
-    filters = []
+    filters = [
+        {
+            'bool': {
+                'should': [
+                    {'term': {'is_stub': False}},
+                    {'missing': {'field': 'is_stub'}},
+                ]
+            }
+        }
+    ]
 
     if location:
         filters.append({'term': {'location': location}})

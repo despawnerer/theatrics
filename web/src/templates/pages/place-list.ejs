@@ -1,0 +1,18 @@
+<div class="content-container unconstrained">
+  <div class="feed-container"
+       data-items-container=".feed"
+       data-load-more-container=".load-more-container"
+       data-load-more-button=".load-more-button"
+       data-loader=".big-loader-container"
+       data-no-items-message=".nothing-at-all">
+    <ol class="feed" hidden></ol>
+    <div class="load-more-container" hidden>
+      <button class="load-more-button" hidden>Загрузить ещё</button>
+      <%= loader() %>
+    </div>
+    <div class="nothing-at-all" hidden>Ничего нет</div>
+    <div class="big-loader-container">
+      <%= loader() %>
+    </div>
+  </div>
+</div>

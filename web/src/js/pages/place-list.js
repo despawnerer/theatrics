@@ -1,10 +1,13 @@
 import Page from '../base/page';
 import View from '../base/view';
 import Place from '../models/place';
+import Feed from '../components/feed';
 import {capfirst} from '../utils';
 
-import FeedView from '../views/feed';
 import FeedPlaceView from '../views/feed-place';
+
+import template from '../../templates/pages/place-list.ejs';
+
 
 
 export default class PlaceListPage extends Page {
@@ -13,21 +16,10 @@ export default class PlaceListPage extends Page {
 
     this.location = location;
     this.feed = feed;
-
-    this.feedView = new FeedView({
-      app,
-      feed,
-      itemView: FeedPlaceView,
-      itemModel: Place,
-    });
   }
 
   getHTML() {
-    return `
-      <div class="content-container unconstrained">
-        ${this.feedView.getHTML()}
-      </div>
-    `;
+    return this.app.renderTemplate(template, {});
   }
 
   getTitle() {
@@ -35,7 +27,18 @@ export default class PlaceListPage extends Page {
   }
 
   mount(element) {
-    this.feedView.mount(element.querySelector('.feed-container'));
+    const feed = new Feed(
+      element.querySelector('.feed-container'),
+      this.feed,
+      data => this.buildItemElement(data)
+    );
+    feed.loadNewFeed();
+  }
+
+  buildItemElement(data) {
+    const event = new Place(data);
+    const view = new FeedPlaceView({app: this.app, model: event});
+    return view.render();
   }
 
   canTransitionFrom(other) {

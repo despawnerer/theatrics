@@ -3,10 +3,12 @@ import moment from 'moment';
 import Page from '../base/page';
 import View from '../base/view';
 import Event from '../models/event';
+import Feed from '../components/feed';
 
 import Calendar from '../views/calendar';
-import FeedView from '../views/feed';
 import FeedEventView from '../views/feed-event';
+
+import template from '../../templates/pages/event-list.ejs';
 
 
 export default class EventListPage extends Page {
@@ -18,21 +20,12 @@ export default class EventListPage extends Page {
     this.feed = feed;
 
     this.calendar = new Calendar({app, location, date});
-    this.feedView = new FeedView({
-      app,
-      feed,
-      itemView: FeedEventView,
-      itemModel: Event,
-    });
   }
 
   getHTML() {
-    return `
-      <div class="events-view content-container unconstrained">
-        ${this.calendar.getHTML()}
-        ${this.feedView.getHTML()}
-      </div>
-    `
+    return this.app.renderTemplate(template, {
+      calendar: this.calendar,
+    });
   }
 
   getTitle() {
@@ -45,7 +38,19 @@ export default class EventListPage extends Page {
 
   mount(element, sync=false) {
     this.calendar.mount(element.querySelector('.calendar-container'), sync);
-    this.feedView.mount(element.querySelector('.feed-container'));
+
+    const feed = new Feed(
+      element.querySelector('.feed-container'),
+      this.feed,
+      data => this.buildItemElement(data)
+    );
+    feed.loadNewFeed();
+  }
+
+  buildItemElement(data) {
+    const event = new Event(data);
+    const view = new FeedEventView({app: this.app, model: event});
+    return view.render();
   }
 
   canTransitionFrom(other) {

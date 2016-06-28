@@ -17,9 +17,9 @@ from .fetch import (
 from .utils import print_fetch_progress
 
 
-async def import_data(kudago, elastic, index_name, since=None):
+def import_data(kudago, elastic, index_name, since=None):
     importer = Importer(kudago, elastic, index_name, since)
-    return await importer.go()
+    return importer.go()
 
 
 class Importer:
@@ -38,26 +38,21 @@ class Importer:
         self.event_children_counts_by_parent_id = defaultdict(int)
         self.event_parents_by_child_id = {}
 
-    async def go(self):
-        await asyncio.wait([
-            self.fetch_events(),
-            self.fetch_places(),
-        ])
+    def go(self):
+        self.fetch_places()
+        self.fetch_events()
 
-        await asyncio.wait([
-            self.import_places(),
-            self.import_stub_places(),
-        ])
-
-        await self.import_events()
+        self.import_places()
+        self.import_stub_places()
+        self.import_events()
 
     # fetching
 
-    async def fetch_events(self):
+    def fetch_events(self):
         print("Fetching theatrical events...")
+
         pages_iter = get_theatrical_event_pages(self.kudago, self.since)
-        subtasks = []
-        async for page in print_fetch_progress(pages_iter, 'events'):
+        for page in print_fetch_progress(pages_iter, 'events'):
             for event in page:
                 id_ = event['id']
                 categories = event['categories'] or []
@@ -75,24 +70,21 @@ class Importer:
                         self.place_ids.add(place_id)
 
                 if 'festival' in categories:
-                    subtasks.append(
-                        asyncio.ensure_future(
-                            self.fetch_event_children(id_)
-                        )
-                    )
-        await asyncio.wait(subtasks)
+                    self.fetch_event_children(id_)
 
-    async def fetch_places(self):
+    def fetch_places(self):
         print("Fetching theatrical places...")
+
         pages_iter = get_theatrical_place_pages(self.kudago)
-        async for page in print_fetch_progress(pages_iter, 'places'):
+        for page in print_fetch_progress(pages_iter, 'places'):
             for place in page:
                 self.place_ids.add(place['id'])
 
-    async def fetch_event_children(self, parent_id):
+    def fetch_event_children(self, parent_id):
         print("Fetching children of event #%d" % parent_id)
+
         pages_iter = get_child_event_pages(self.kudago, parent_id)
-        async for page in pages_iter:
+        for page in pages_iter:
             for event in page:
                 id_ = event['id']
                 self.event_parents_by_child_id[id_] = parent_id
@@ -100,9 +92,9 @@ class Importer:
 
     # importing
 
-    async def import_places(self):
+    def import_places(self):
         print("Importing places...")
-        return await self.import_pages(
+        self.import_pages(
             print_fetch_progress(
                 get_place_pages(self.kudago, self.place_ids),
                 'places',
@@ -111,17 +103,17 @@ class Importer:
             'place',
         )
 
-    async def import_stub_places(self):
+    def import_stub_places(self):
         print("Importing %d stub places..." % len(self.stub_places))
-        await self.import_list(
+        self.import_list(
             self.stub_places,
             self.transform_stub_place,
             'place',
         )
 
-    async def import_events(self):
+    def import_events(self):
         print("Importing events...")
-        await self.import_pages(
+        self.import_pages(
             print_fetch_progress(
                 get_event_pages(self.kudago, self.event_ids),
                 'events',
@@ -130,14 +122,11 @@ class Importer:
             'event',
         )
 
-    async def import_pages(self, pages, transform, doc_type):
-        futures = []
-        async for page in pages:
-            coro = self.import_list(page, transform, doc_type)
-            futures.append(asyncio.ensure_future(coro))
-        return flatten(await asyncio.gather(*futures))
+    def import_pages(self, pages, transform, doc_type):
+        for page in pages:
+            self.import_list(page, transform, doc_type)
 
-    async def import_list(self, data_list, transform, doc_type):
+    def import_list(self, data_list, transform, doc_type):
         actions = []
         doc_id_list = []
         for doc in map(transform, data_list):
@@ -145,7 +134,7 @@ class Importer:
             actions.append({'index': {'_id': doc_id}})
             actions.append(doc)
             doc_id_list.append(doc_id)
-        await self.elastic.bulk(actions, self.index_name, doc_type)
+        self.elastic.bulk(actions, self.index_name, doc_type)
         return doc_id_list
 
     # transforming helpers

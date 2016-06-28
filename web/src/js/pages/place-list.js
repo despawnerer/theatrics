@@ -1,13 +1,10 @@
 import Page from '../base/page';
-import View from '../base/view';
 import Place from '../models/place';
-import Feed from '../components/feed';
-import {capfirst} from '../utils';
+import Feeder from '../components/feeder';
 
 import FeedPlaceView from '../views/feed-place';
 
 import template from '../../templates/pages/place-list.ejs';
-
 
 
 export default class PlaceListPage extends Page {
@@ -19,7 +16,7 @@ export default class PlaceListPage extends Page {
   }
 
   getHTML() {
-    return this.app.renderTemplate(template, {});
+    return this.app.renderTemplate(template);
   }
 
   getTitle() {
@@ -27,12 +24,12 @@ export default class PlaceListPage extends Page {
   }
 
   mount(element) {
-    const feed = new Feed(
+    const feeder = new Feeder(
       element.querySelector('.feed-container'),
       this.feed,
       data => this.buildItemElement(data)
     );
-    feed.loadNewFeed();
+    feeder.loadNewFeed();
   }
 
   buildItemElement(data) {

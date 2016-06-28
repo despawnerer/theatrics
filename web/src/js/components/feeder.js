@@ -3,7 +3,7 @@ import Events from 'events-mixin';
 import {clear, toggle, show, hide} from '../utils';
 
 
-export default class Feed {
+export default class Feeder {
   constructor(element, feed, buildItemElement) {
     this.element = element;
     this.feed = feed;

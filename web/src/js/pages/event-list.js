@@ -1,9 +1,6 @@
-import moment from 'moment';
-
 import Page from '../base/page';
-import View from '../base/view';
 import Event from '../models/event';
-import Feed from '../components/feed';
+import Feeder from '../components/feeder';
 
 import Calendar from '../views/calendar';
 import FeedEventView from '../views/feed-event';
@@ -39,12 +36,12 @@ export default class EventListPage extends Page {
   mount(element, sync=false) {
     this.calendar.mount(element.querySelector('.calendar-container'), sync);
 
-    const feed = new Feed(
+    const feeder = new Feeder(
       element.querySelector('.feed-container'),
       this.feed,
       data => this.buildItemElement(data)
     );
-    feed.loadNewFeed();
+    feeder.loadNewFeed();
   }
 
   buildItemElement(data) {

@@ -20,13 +20,13 @@ import {
 
 export function index(app, state) {
   const location = state.location.slug;
-  return redirect(app.resolver.reverse('event-list', {location}));
+  return redirect(app.url('event-list', {location}));
 }
 
 
 export function location(app, state, {location}) {
   if (!locations.has(location)) return notFound(app);
-  return redirect(app.resolver.reverse('event-list', {location}));
+  return redirect(app.url('event-list', {location}));
 }
 
 

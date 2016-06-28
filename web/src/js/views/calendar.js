@@ -68,7 +68,7 @@ export default class Calendar extends View {
     Array.from(links).forEach(element => {
       const date = element.getAttribute('data-date');
       const args = date ? {location, date} : {location};
-      const url = this.app.resolver.reverse('event-list', args);
+      const url = this.app.url('event-list', args);
       element.setAttribute('href', url);
     });
   }

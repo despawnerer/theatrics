@@ -35,7 +35,7 @@ export default class Place {
   }
 
   toJSONLD(app) {
-    const url = app.resolver.reverse('place', {id: this.data.id});
+    const url = app.url('place', {id: this.data.id});
 
     if (this.isReference()) {
       return {

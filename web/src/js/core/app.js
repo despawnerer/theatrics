@@ -63,9 +63,13 @@ export default class App {
       preventBreakingRanges,
       unbreakable,
       merge,
-      url: (...args) => this.resolver.reverse(...args),
+      url: this.url.bind(this),
       app: this,
     }
+  }
+
+  url(name, args) {
+    return this.resolver.reverse(name, args);
   }
 
   renderTemplate(template, context={}) {

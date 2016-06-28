@@ -47,7 +47,7 @@ export default class Date {
   }
 
   toJSONLD(app) {
-    const url = app.resolver.reverse('event', {id: this.event.data.id});
+    const url = app.url('event', {id: this.event.data.id});
     const result = {
       '@context': 'http://schema.org',
       '@type': this.event.getSchemaOrgType(),

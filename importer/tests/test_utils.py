@@ -3,6 +3,7 @@ from unittest import TestCase
 from importer.utils import (
     maybe,
     find_first,
+    strip_links,
 )
 
 
@@ -43,3 +44,9 @@ class FindFirstTestCase(TestCase):
                 ['four']
             )
         )
+
+
+class StripLinksTestCase(TestCase):
+    def test_strips_links(self):
+        text = 'My text is <a href="aomethin">awesome</a>.'
+        self.assertEqual(strip_links(text), 'My text is awesome.')

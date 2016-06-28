@@ -1,5 +1,5 @@
-def get_child_event_pages(kudago, parent_id):
-    return kudago.get_all_pages(
+def iter_event_children_stubs(kudago, parent_id):
+    return kudago.iter_all(
         '/events/',
         page_size=100,
         order_by='id',
@@ -9,8 +9,8 @@ def get_child_event_pages(kudago, parent_id):
     )
 
 
-def get_theatrical_event_pages(kudago, since=None):
-    return kudago.get_all_pages(
+def iter_theatrical_event_stubs(kudago, since=None):
+    return kudago.iter_all(
         '/events/',
         page_size=100,
         order_by='id',
@@ -21,8 +21,8 @@ def get_theatrical_event_pages(kudago, since=None):
     )
 
 
-def get_theatrical_place_pages(kudago):
-    return kudago.get_all_pages(
+def iter_theatrical_place_stubs(kudago):
+    return kudago.iter_all(
         '/places/',
         page_size=100,
         order_by='id',
@@ -31,8 +31,8 @@ def get_theatrical_place_pages(kudago):
     )
 
 
-def get_event_pages(kudago, ids):
-    return kudago.get_id_pages(
+def iter_full_events_by_ids(kudago, ids):
+    return kudago.iter_by_ids(
         '/events/',
         ids=ids,
         page_size=100,
@@ -45,8 +45,8 @@ def get_event_pages(kudago, ids):
     )
 
 
-def get_place_pages(kudago, ids):
-    return kudago.get_id_pages(
+def iter_full_places_by_ids(kudago, ids):
+    return kudago.iter_by_ids(
         '/places/',
         ids=ids,
         page_size=100,

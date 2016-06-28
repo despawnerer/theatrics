@@ -27,7 +27,9 @@ def transform_event(kudago_event, parent_id, children_count):
     dates = list(sorted(map(transform_date, dates), key=itemgetter('start')))
 
     return {
-        'id': kudago_event['id'],
+        '_id': kudago_event['id'],
+        '_type': 'event',
+
         'kind': kind,
         'is_for_kids': 'kids' in categories,
         'is_premiere': 'премьера' in tags,
@@ -73,7 +75,9 @@ def transform_place(kudago_place, events_count):
         kind = 'museum'
 
     return {
-        'id': kudago_place['id'],
+        '_id': kudago_place['id'],
+        '_type': 'place',
+
         'kind': kind,
         'is_for_kids': 'kids' in categories,
         'is_stub': kudago_place['is_stub'],
@@ -108,7 +112,9 @@ def transform_place(kudago_place, events_count):
 
 def transform_stub_place(kudago_place):
     return {
-        'id': kudago_place['id'],
+        '_id': kudago_place['id'],
+        '_type': 'place',
+
         'is_stub': kudago_place['is_stub'],
 
         'full_name': kudago_place['title'],

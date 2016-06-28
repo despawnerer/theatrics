@@ -59,13 +59,13 @@ def get_today():
     return datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
 
 
-def print_fetch_progress(iterable, type_hint):
-    return ProgressPrinter(
-        iterable,
-        message="Fetched %%(done)d %s" % type_hint,
-        total=lambda x: None,
-        each=len,
-    )
+def print_progress(iterable, message, every=100):
+    for count, item in enumerate(iterable, 1):
+        yield item
+        if count % every == 0:
+            print(message % count)
+    if count % every != 0:
+        print(message % count)
 
 
 def wait_for_all_services(endpoint_list, timeout):
@@ -88,29 +88,3 @@ def wait_for_service(endpoint, timeout):
         else:
             connection.close()
             return
-
-
-class ProgressPrinter:
-    def __init__(self, iterable, message="%(done)d/%(total)d",
-                 total=len, each=lambda item: 1, print=print):
-        self.iterable = iterable
-        self.message = message
-        self.total_getter = total
-        self.each_getter = each
-        self.total = None
-        self.done = 0
-        self.print = print
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        try:
-            value = next(self.iterable)
-        except StopIteration:
-            raise
-        else:
-            self.total = self.total_getter(self.iterable)
-            self.done += self.each_getter(value)
-            self.print(self.message % {'total': self.total, 'done': self.done})
-            return value

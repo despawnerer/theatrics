@@ -26,27 +26,17 @@ class KudaGo:
                 if attempt + 1 == self.max_attempts:
                     raise
 
-    def get_all(self, path, **params):
-        for page in self.get_all_pages(path, **params):
-            for item in page:
-                yield item
-
-    def get_all_pages(self, path, **params):
+    def iter_all(self, path, **params):
         next_url = self.build_url(path, params)
         while next_url:
             data = self.get(next_url)
             next_url = data['next']
-            yield data['results']
+            yield from data['results']
 
-    def get_ids(self, path, ids, page_size, **params):
-        for page in self.get_id_pages(path, ids, page_size, **params):
-            for item in page:
-                yield item
-
-    def get_id_pages(self, path, ids, page_size, **params):
+    def iter_by_ids(self, path, ids, page_size, **params):
         for ids_chunk in chunks(page_size, ids):
             data = self.get(path, ids=','.join(map(str, ids_chunk)), **params)
-            yield data['results']
+            yield from data['results']
 
     def build_url(self, path, params):
         url = urljoin(self.base_url, path.lstrip('/'))

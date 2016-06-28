@@ -194,30 +194,5 @@
   <% event.getDates().forEach(function(date) { %>
   <script type="application/ld+json"><%= JSON.stringify(date.toJSONLD(app)) %></script>
   <% }) %>
-
-  <script type="application/ld+json">
-  {
-    "@context": "http://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "item": {
-          "@id": "<%- url('location', {location: location.slug}) %>",
-          "name": "<%- location.name %>"
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "item": {
-          "@id": "<%- url('event-list', {location: location.slug}) %>",
-          "name": "Спектакли"
-        }
-      }
-    ]
-  }
-  </script>
-
+  <script type="application/ld+json"><%= JSON.stringify(breadcrumbs.toJSONLD()) %></script>
 </article>

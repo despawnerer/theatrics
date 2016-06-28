@@ -2,6 +2,7 @@ import moment from 'moment';
 
 import Page from '../base/page';
 import Event, {eventsToDates} from '../models/event';
+import Breadcrumbs from '../models/breadcrumbs';
 import ScheduleView from '../views/schedule';
 import Slider from '../components/slider';
 import Pager from '../components/pager';
@@ -17,12 +18,24 @@ export default class EventPage extends Page {
 
     this.event = event;
     this.location = event.getLocation();
+
+    this.breadcrumbs = new Breadcrumbs([
+      {
+        url: app.url('location', {location: this.location.slug}),
+        title: this.location.name,
+      },
+      {
+        url: app.url('event-list', {location: this.location.slug}),
+        title: "Спектакли",
+      }
+    ]);
   }
 
   getHTML() {
     return this.app.renderTemplate(template, {
       location: this.location,
       event: this.event,
+      breadcrumbs: this.breadcrumbs,
     });
   }
 

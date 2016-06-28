@@ -130,30 +130,5 @@
   </div>
 
   <script type="application/ld+json"><%= JSON.stringify(place.toJSONLD(app)) %></script>
-
-  <script type="application/ld+json">
-  {
-    "@context": "http://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "item": {
-          "@id": "<%- url('location', {location: location.slug}) %>",
-          "name": "<%- location.name %>"
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "item": {
-          "@id": "<%- url('place-list', {location: location.slug}) %>",
-          "name": "Театры"
-        }
-      }
-    ]
-  }
-  </script>
-
+  <script type="application/ld+json"><%= JSON.stringify(breadcrumbs.toJSONLD()) %></script>
 </article>

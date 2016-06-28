@@ -74,6 +74,7 @@ export default class Event {
   }
 
   isActual() {
+    if (this.data.end == null) return false;
     const timezone = this.getLocation().timezone;
     const isDateBased = this.data.end.length == 10;
     const end = moment.tz(this.data.end, timezone);

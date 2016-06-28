@@ -1,4 +1,4 @@
-import aioes
+import elasticsearch
 import os.path
 from datetime import datetime
 
@@ -22,7 +22,7 @@ def switch_alias_to_index(elastic, alias_name, index_name):
 
     try:
         existing_aliases = elastic.indices.get_alias(name=alias_name)
-    except aioes.NotFoundError:
+    except elasticsearch.NotFoundError:
         existing_aliases = []
 
     actions = []

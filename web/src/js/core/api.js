@@ -64,6 +64,17 @@ export default class TheatricsAPI {
     return new Feed(this, '/places/', query);
   }
 
+  getSearchFeed(q, location) {
+    const query = {
+      fields: 'full_name,name,images,address,working_hours,location,start,end,tagline,place,is_premiere,kind,lead,dates',
+      expand: 'place',
+      page_size: 24,
+      q: q,
+      location: location.slug,
+    }
+    return new Feed(this, '/search/', query);
+  }
+
   // generic getting
 
   getAll(path, query) {

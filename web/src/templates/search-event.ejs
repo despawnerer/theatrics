@@ -1,0 +1,35 @@
+<li class="search-result<% if (!event.isActual()) { %> past<% } %>">
+  <a href="<%- url('event', {id: event.data.id}) %>" class="search-result-link">
+    <div class="search-image-container">
+      <img data-src="<%- event.data.images[0].thumbnails['144x96'] %>" class="search-image lazyload"/>
+    </div>
+
+    <h2>
+      <%- event.getName() %>
+      <% if (event.isFestival()) { %>
+        <span class="badge festival-badge">Фестиваль</span>
+      <% } else if (event.isPremiere()) { %>
+        <span class="badge premiere-badge">Премьера</span>
+      <% } %>
+    </h2>
+  </a>
+
+  <% var place = event.getPlace() %>
+  <% if (place) { %>
+    <p class="place">
+      <% if (place.isStub()) { %>
+        <%- place.getName() %>
+      <% } else { %>
+        <a href="<%- url('place', {id: place.data.id}) %>">
+          <span class="link-text"><%- place.getName() %></span>
+        </a>
+      <% } %>
+    </p>
+  <% } %>
+
+  <% if (event.data.tagline) { %>
+    <p><%- event.data.tagline %></p>
+  <% } else if (event.isFestival() && event.data.lead) { %>
+    <p><%= event.data.lead %></p>
+  <% } %>
+</li>

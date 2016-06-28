@@ -1,0 +1,19 @@
+<li class="search-result">
+  <a href="<%- url('place', {id: place.data.id}) %>" class="search-result-link">
+    <div class="search-image-container">
+      <% if (place.data.images.length) { %>
+      <img data-src="<%- place.data.images[0].thumbnails['144x96'] %>" class="search-image lazyload"/>
+      <% } %>
+    </div>
+
+    <h2>
+      <%- place.getName() %>
+    </h2>
+  </a>
+
+  <% if (place.data.address) { %>
+    <p class="meta">
+      <%- place.data.address %>
+    </p>
+  <% } %>
+</li>

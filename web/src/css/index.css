@@ -1590,3 +1590,52 @@ p {
 @media (min-width: 360px) and (max-width: 450px) {
   .schedule-day-body { padding: 20px 0; }
 }
+
+
+/* Search */
+
+.search-results {
+  margin: 0;
+  padding: 0;
+}
+
+.search-result {
+  list-style: none;
+  margin: 0 0 30px 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.search-result:last-child { margin-bottom: 0; }
+
+.search-image-container {
+  float: left;
+}
+
+.search-image {
+  width: 144px;
+  height: 96px;
+  object-fit: cover;
+  vertical-align: top;
+  margin-right: 20px;
+}
+
+.search-result h2 {
+  font-size: 21px;
+  margin: 0 0 12px 0;
+  line-height: 1.25em;
+}
+
+.search-result p {
+  margin: 0 0 11px 0;
+}
+
+.search-result p:last-child { margin-bottom: 0; }
+
+.search-result .meta {
+  color: gray;
+  text-transform: uppercase;
+  letter-spacing: 0.05ex;
+  font-size: 11px;
+  line-height: 18px;
+}

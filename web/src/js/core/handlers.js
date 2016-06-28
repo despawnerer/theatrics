@@ -9,6 +9,7 @@ import EventPage from '../pages/event';
 import EventListPage from '../pages/event-list';
 import PlacePage from '../pages/place';
 import PlaceListPage from '../pages/place-list';
+import SearchPage from '../pages/search';
 import NotFoundPage from '../pages/not-found';
 
 import {
@@ -81,6 +82,16 @@ export function place(request, {id}) {
       return render({page, location});
     })
     .catch(error => error.response.status == 404 ? notFound(app) : undefined);
+}
+
+
+export function search(request) {
+  const app = request.app;
+  const query = request.query.q;
+  const location = request.state.location;
+  const feed = app.api.getSearchFeed(query, location);
+  const page = new SearchPage({app, query, feed});
+  return render({page});
 }
 
 

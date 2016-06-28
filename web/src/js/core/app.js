@@ -31,6 +31,7 @@ export default class App {
 
     this.resolver = new Resolver();
     this.resolver.addRoute('index', '/');
+    this.resolver.addRoute('search', '/search/');
     this.resolver.addRoute('location', '/{location:[a-z\-]+}/');
     this.resolver.addRoute('event-list', '/{location:[a-z\-]+}/events/');
     this.resolver.addRoute(
@@ -42,6 +43,7 @@ export default class App {
 
     this.router = new Router();
     this.router.addHandler('index', handlers.index);
+    this.router.addHandler('search', handlers.search);
     this.router.addHandler('location', handlers.location);
     this.router.addHandler('event-list', handlers.eventList);
     this.router.addHandler('place-list', handlers.placeList);

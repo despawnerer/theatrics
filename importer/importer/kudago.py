@@ -35,7 +35,12 @@ class KudaGo:
 
     def iter_by_ids(self, path, ids, page_size, **params):
         for ids_chunk in chunks(page_size, ids):
-            data = self.get(path, ids=','.join(map(str, ids_chunk)), **params)
+            data = self.get(
+                path,
+                ids=','.join(map(str, ids_chunk)),
+                page_size=page_size,
+                **params,
+            )
             yield from data['results']
 
     def build_url(self, path, params):

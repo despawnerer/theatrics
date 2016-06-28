@@ -93,22 +93,22 @@ class Importer:
 
         places = iter_full_places_by_ids(self.kudago, self.place_ids)
         docs = map(self.transform_place, places)
-        self.import_all(print_progress(docs, "Imported %d places"))
+        self.index_all(print_progress(docs, "Imported %d places"))
 
     def import_stub_places(self):
         print("Importing %d stub places..." % len(self.stub_places))
 
-        self.import_all(map(transform_stub_place, self.stub_places))
+        self.index_all(map(transform_stub_place, self.stub_places))
 
     def import_events(self):
         print("Importing events...")
 
         events = iter_full_events_by_ids(self.kudago, self.event_ids)
         docs = map(self.transform_event, events)
-        self.import_all(print_progress(docs, "Imported %d events"))
+        self.index_all(print_progress(docs, "Imported %d events"))
 
-    def import_all(self, iterable):
-        actions = map(self.make_index_action, iterable)
+    def index_all(self, docs):
+        actions = map(self.make_index_action, docs)
         for is_successful, response in streaming_bulk(self.elastic, actions):
             if not is_successful:
                 print("Error indexing an item: %s" % str(response))

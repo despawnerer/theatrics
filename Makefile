@@ -10,7 +10,7 @@ test: test.run
 	$(test_project) exec api make test
 
 test.run:
-	$(test_project) up -d > test.run
+	$(test_project) up -d --build > test.run
 	$(test_project) exec importer make migrate
 	$(test_project) exec importer make install-test-deps
 	$(test_project) exec api make install-test-deps

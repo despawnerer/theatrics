@@ -109,9 +109,15 @@ class Importer:
 
     def index_all(self, docs):
         actions = map(self.make_index_action, docs)
-        for is_successful, response in streaming_bulk(self.elastic, actions):
+        bulk_results = streaming_bulk(
+            self.elastic,
+            actions,
+            raise_on_error=False,
+            raise_on_exception=False,
+        )
+        for is_successful, response in bulk_results:
             if not is_successful:
-                print("Error indexing an item: %s" % str(response))
+                print("Error indexing a document: %s" % str(response))
 
     def make_index_action(self, doc):
         type_ = doc.pop('_type')

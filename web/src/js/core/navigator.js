@@ -1,7 +1,7 @@
 import Events from 'events-mixin';
 import isPromise from 'is-promise';
 import URL from 'url-parse';
-import qs from 'querystringify';
+import qs from 'query-string';
 
 import MainView from '../views/main';
 import {uuid, getURL, merge} from '../utils';

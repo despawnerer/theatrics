@@ -14,6 +14,9 @@ up_to_expression = re.compile(r'до\s(?:\d+ ?)+[^\d]*$')
 
 
 def maybe(f):
+    """
+    Pass-through if first argument to the function is None.
+    """
     @wraps(f)
     def wrapper(arg, *rest, **kwargs):
         return None if arg is None else f(arg, *rest, **kwargs)

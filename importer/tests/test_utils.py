@@ -1,10 +1,44 @@
+import sys
 from unittest import TestCase
+from io import StringIO
+from contextlib import contextmanager
 
 from importer.utils import (
+    safe_crash,
     maybe,
     find_first,
     strip_links,
 )
+
+
+@contextmanager
+def capture_output():
+    real_stdout, real_stderr = sys.stdout, sys.stderr
+    try:
+        sys.stdout, sys.stderr = StringIO(), StringIO()
+        yield sys.stdout, sys.stderr
+    finally:
+        sys.stdout, sys.stderr = real_stdout, real_stderr
+
+
+class SafeCrashTestCase(TestCase):
+    def test_doesnt_actually_crash_on_exception(self):
+        with capture_output():
+            try:
+                self.crashing_function()
+            except:
+                self.fail()
+
+    def test_prints_traceback(self):
+        with capture_output() as (stdout, stderr):
+            self.crashing_function()
+            output = stderr.getvalue().strip()
+        self.assertTrue(output.startswith('Traceback'))
+        self.assertTrue(output.endswith('ValueError'))
+
+    @safe_crash
+    def crashing_function(self):
+        raise ValueError
 
 
 class MaybeTestCase(TestCase):

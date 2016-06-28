@@ -2,7 +2,7 @@ import click
 import schedule
 from time import sleep
 
-from importer.utils import get_today
+from importer.utils import get_today, safe_crash
 from importer import (
     update as do_update,
     migrate as do_migrate,
@@ -49,8 +49,9 @@ def autoupdate():
     Quick (actual-only) updates are run every hour.
     Full updates are run every Monday.
     """
-    schedule.every().monday.do(lambda: do_update(None))
-    schedule.every().hour.do(lambda: do_update(get_today()))
+    safe_update = safe_crash(do_update)
+    schedule.every().monday.do(lambda: safe_update(None))
+    schedule.every().hour.do(lambda: safe_update(get_today()))
     while True:
         schedule.run_pending()
         sleep(1)

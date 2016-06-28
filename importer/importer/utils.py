@@ -1,6 +1,7 @@
 import json
 import re
 import socket
+import traceback
 from datetime import datetime
 from time import time, sleep
 from isodate import parse_date, parse_time
@@ -11,6 +12,22 @@ link_expression = re.compile(r'<a .*?href=".*?".*?>(.+?)<\/a>', re.DOTALL)
 number_expression = re.compile(r'\b(?:\d+ ?)+\b')
 from_expression = re.compile(r'^от\s(?:\d+ ?)+[^\d]*$')
 up_to_expression = re.compile(r'до\s(?:\d+ ?)+[^\d]*$')
+
+
+def safe_crash(f):
+    """
+    In case the function raises an exception, print the traceback and then
+    go on like nothing happened.
+
+    This is needed to make scheduled tasks safe to run.
+    """
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        try:
+            return f(*args, **kwargs)
+        except:
+            traceback.print_exc()
+    return wrapper
 
 
 def maybe(f):

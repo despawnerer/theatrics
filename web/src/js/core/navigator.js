@@ -88,8 +88,9 @@ class StateController {
     url = new URL(url);
     const query = qs.parse(url.query);
     const route = this.app.resolver.resolve(url.pathname) || {};
+    const request = {url, query, route, app: this.app, state: this.state};
     const handler = this.app.router.getHandler(route.name);
-    const response = handler(this.app, this.state, route.args);
+    const response = handler(request, route.args);
     const isWaiting = isPromise(response);
     this.update({isWaiting, route, url, query}, {push});
     return Promise.resolve(response)

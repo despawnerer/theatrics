@@ -18,30 +18,35 @@ import {
 } from './response';
 
 
-export function index(app, state) {
-  const location = state.location.slug;
+export function index(request) {
+  const app = request.app;
+  const location = request.state.location.slug;
   return redirect(app.url('event-list', {location}));
 }
 
 
-export function location(app, state, {location}) {
-  if (!locations.has(location)) return notFound(app);
+export function location(request, {location}) {
+  if (!locations.has(location)) return notFound(request);
+
+  const app = request.app;
   return redirect(app.url('event-list', {location}));
 }
 
 
-export function eventList(app, state, {location, date}) {
+export function eventList(request, {location, date}) {
   location = locations.get(location);
   date = date ? moment.tz(date, location.timezone) : null;
-  if (!location) return notFound(app);
+  if (!location) return notFound(request);
 
+  const app = request.app;
   const feed = app.api.getEventsFeed(location, date);
   const page = new EventListPage({app, location, date, feed});
   return render({page, location});
 }
 
 
-export function event(app, state, {id}) {
+export function event(request, {id}) {
+  const app = request.app;
   return app.api
     .fetchEvent(id)
     .then(data => {
@@ -54,17 +59,19 @@ export function event(app, state, {id}) {
 }
 
 
-export function placeList(app, state, {location}) {
+export function placeList(request, {location}) {
   location = locations.get(location);
-  if (!location) return notFound(app);
+  if (!location) return notFound(request);
 
+  const app = request.app;
   const feed = app.api.getPlacesFeed(location);
   const page = new PlaceListPage({app, location, feed});
   return render({page, location});
 }
 
 
-export function place(app, state, {id}) {
+export function place(request, {id}) {
+  const app = request.app;
   return app.api
     .fetchPlace(id)
     .then(data => {
@@ -77,7 +84,8 @@ export function place(app, state, {id}) {
 }
 
 
-export function notFound(app) {
+export function notFound(request) {
+  const app = request.app;
   const page = new NotFoundPage({app});
   return notFoundResponse({page});
 }

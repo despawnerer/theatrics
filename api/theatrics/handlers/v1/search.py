@@ -2,9 +2,10 @@ from datetime import datetime
 
 from marshmallow import Schema, fields
 
+from ...scoring import get_default_score_functions
+
 from ..helpers import list_handler, with_params
 
-from .score import get_default_score_functions
 from .events import EXPANDABLE_RELATIONS
 
 

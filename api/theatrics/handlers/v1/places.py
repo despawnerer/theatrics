@@ -1,8 +1,8 @@
 from marshmallow import Schema, fields
 
-from ..helpers import item_handler, list_handler, with_params
+from ...scoring import get_default_score_functions
 
-from .score import get_default_score_functions
+from ..helpers import item_handler, list_handler, with_params
 
 
 __all__ = ['place', 'place_list']

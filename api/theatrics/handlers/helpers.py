@@ -12,6 +12,7 @@ from ..settings import ELASTICSEARCH_INDEX
 from ..utils.fields import CommaSeparatedList
 from ..utils.collections import compact
 from ..utils.uri import build_uri
+from ..utils.handlers import with_params
 
 
 class ListParams(Schema):
@@ -24,25 +25,6 @@ class ListParams(Schema):
 class ItemParams(Schema):
     expand = CommaSeparatedList(fields.String())
     fields = CommaSeparatedList(fields.String())
-
-
-def with_params(schema_cls):
-    def decorator(f):
-        @wraps(f)
-        async def wrapper(request):
-            schema = schema_cls(request)
-            result = schema.load(request.GET)
-            if result.errors:
-                raise web.HTTPBadRequest(
-                    text=json.dumps({
-                        'errors': result.errors
-                    }, ensure_ascii=False),
-                    content_type='application/json',
-                )
-            else:
-                return await f(request, **result.data)
-        return wrapper
-    return decorator
 
 
 def item_handler(type_, relations={}):

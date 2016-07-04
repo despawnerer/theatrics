@@ -3,8 +3,9 @@ from datetime import datetime
 from marshmallow import Schema, fields
 
 from ...scoring import get_default_score_functions
+from ...utils.handlers import with_params
 
-from ..helpers import item_handler, list_handler, with_params
+from ..helpers import item_handler, list_handler
 
 
 __all__ = ['event', 'event_list']

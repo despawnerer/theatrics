@@ -12,7 +12,7 @@ from theatrics.settings import ELASTICSEARCH_INDEX
 from theatrics.utils.fields import CommaSeparatedList
 from theatrics.utils.collections import compact
 from theatrics.utils.uri import build_uri
-from theatrics.utils.handlers import with_params
+from theatrics.utils.handlers import with_params, json_response
 
 
 class ListParams(Schema):
@@ -30,6 +30,7 @@ class ItemParams(Schema):
 def item_handler(type_, relations={}):
     def decorator(f):
         @wraps(f)
+        @json_response
         @with_params(ItemParams)
         async def wrapper(request, fields=(), expand=()):
             id_ = await f(request)
@@ -52,10 +53,7 @@ def item_handler(type_, relations={}):
                     item = (await expand_related_items(
                         [item], related_field, doc_type, subfields))[0]
 
-            return web.Response(
-                text=json.dumps(item, ensure_ascii=False),
-                content_type='application/json',
-            )
+            return item
         return wrapper
     return decorator
 
@@ -63,6 +61,7 @@ def item_handler(type_, relations={}):
 def list_handler(type_=None, relations={}):
     def decorator(f):
         @wraps(f)
+        @json_response
         @with_params(ListParams)
         async def wrapper(request, page=1, page_size=20, fields=(), expand=()):
             query = await f(request)
@@ -90,16 +89,13 @@ def list_handler(type_=None, relations={}):
                     items = await expand_related_items(
                         items, related_field, doc_type, subfields)
 
-            return web.Response(
-                text=json.dumps({
-                    'count': count,
-                    'items': items,
-                    'took': took,
-                    'previous': previous,
-                    'next': next_,
-                }, ensure_ascii=False),
-                content_type='application/json',
-            )
+            return {
+                'count': count,
+                'items': items,
+                'took': took,
+                'previous': previous,
+                'next': next_,
+            }
         return wrapper
     return decorator
 

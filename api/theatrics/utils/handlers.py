@@ -24,3 +24,14 @@ def with_params(schema_cls):
                 return await f(request, **result.data)
         return wrapper
     return decorator
+
+
+def json_response(f):
+    @wraps(f)
+    async def wrapper(request):
+        response = await f(request)
+        return web.Response(
+            text=json.dumps(response, ensure_ascii=False),
+            content_type='application/json',
+        )
+    return wrapper

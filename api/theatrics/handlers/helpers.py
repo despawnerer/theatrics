@@ -7,12 +7,12 @@ from aiohttp import web
 from marshmallow import Schema, fields
 from marshmallow.validate import Range
 
-from ..connections import elastic
-from ..settings import ELASTICSEARCH_INDEX
-from ..utils.fields import CommaSeparatedList
-from ..utils.collections import compact
-from ..utils.uri import build_uri
-from ..utils.handlers import with_params
+from theatrics.connections import elastic
+from theatrics.settings import ELASTICSEARCH_INDEX
+from theatrics.utils.fields import CommaSeparatedList
+from theatrics.utils.collections import compact
+from theatrics.utils.uri import build_uri
+from theatrics.utils.handlers import with_params
 
 
 class ListParams(Schema):

@@ -1,5 +1,4 @@
 import json
-from urllib.parse import parse_qs, urlencode
 from math import ceil
 from functools import wraps
 
@@ -10,8 +9,9 @@ from marshmallow.validate import Range
 
 from ..connections import elastic
 from ..settings import ELASTICSEARCH_INDEX
-
-from .fields import CommaSeparatedList
+from ..utils.fields import CommaSeparatedList
+from ..utils.collections import compact
+from ..utils.uri import build_uri
 
 
 class ListParams(Schema):
@@ -171,18 +171,3 @@ def simplify_item(hit):
     if 'highlights' in hit:
         simple['highlights'] = hit['highlights']
     return simple
-
-
-def compact(iterable):
-    return filter(None, iterable)
-
-
-def build_uri(path, query_string, **params):
-    query = parse_qs(query_string)
-    for k, v in params.items():
-        if v is None and k in query:
-            del query[k]
-        elif v is not None:
-            query[k] = v
-    new_qs = urlencode(query, True)
-    return '{}?{}'.format(path, new_qs) if new_qs else path

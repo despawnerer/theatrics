@@ -14,7 +14,7 @@ COPY package.json package.json
 RUN make install-deps
 
 COPY . ./
-RUN make build-min && make clean && rm -rf src
+RUN make build-min && make clean-node-modules && rm -rf src
 
 EXPOSE 8000
 

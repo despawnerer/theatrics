@@ -186,15 +186,6 @@ const LOCATION_TIMEZONE_OVERRIDES = {
   krd: 'Europe/Moscow',
 };
 
-const DEFAULT_LOCATION_CURRENCY = 'RUB';
-const LOCATION_CURRENCY_OVERRIDES = {
-  kev: 'UAH',
-  mns: 'BYR',
-  'new-york': 'USD',
-  atlanta: 'USD',
-  london: 'GBP',
-};
-
 
 gulp.task('update-timezones', () => {
   const locations = readJSON('src/data/locations.json');
@@ -216,7 +207,7 @@ gulp.task('update-locations', () => {
   const url = 'http://kudago.com/public-api/v1/locations/';
   const qs = {
     lang: 'ru',
-    fields: 'name,slug,timezone,coords,language',
+    fields: 'name,slug,timezone,coords,language,currency',
     order_by: 'name'
   };
   return request.get(url, {qs})
@@ -231,11 +222,6 @@ gulp.task('update-locations', () => {
         .map(location => {
           if (location.slug in LOCATION_TIMEZONE_OVERRIDES) {
             location.timezone = LOCATION_TIMEZONE_OVERRIDES[location.slug];
-          }
-          if (location.slug in LOCATION_CURRENCY_OVERRIDES) {
-            location.currency = LOCATION_CURRENCY_OVERRIDES[location.slug];
-          } else {
-            location.currency = DEFAULT_LOCATION_CURRENCY;
           }
           return location;
         });

@@ -303,7 +303,7 @@ p {
   pointer-events: none;
 }
 
-#search form.active input { border-bottom-color: black; border-bottom-width: 2px; padding-top: 6px; }
+#search form.active input { border-bottom-color: black; border-bottom-width: 2px; padding-top: 8px; }
 #search form.active .icon-search { color: black; }
 
 @media (max-width: 359px) {

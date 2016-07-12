@@ -232,20 +232,6 @@ gulp.task('update-locations', () => {
 });
 
 
-/* Sitemaps */
-
-gulp.task('generate-sitemap', () => {
-  const locations = readJSON('src/data/locations.json');
-  const urls = [];
-  locations.forEach(location => {
-    urls.push(`${ROOT_URL}${location.slug}/events/\n`);
-    urls.push(`${ROOT_URL}${location.slug}/places/\n`);
-  });
-  return stringSrc('sitemap.txt', urls.join(''))
-    .pipe(gulp.dest('build'));
-});
-
-
 /* Big tasks */
 
 gulp.task('watch', () => {
@@ -260,7 +246,6 @@ gulp.task('build', [
   'build-js',
   'build-html',
   'copy-static',
-  'generate-sitemap',
 ]);
 
 gulp.task('build-min', [
@@ -268,7 +253,6 @@ gulp.task('build-min', [
   'build-min-js',
   'build-min-html',
   'copy-static',
-  'generate-sitemap',
 ]);
 
 

@@ -21,7 +21,7 @@ Development
 
 Theatrics consists of four parts:
 
-- `web` — web client, which is the the front-end app
+- `web` — frontend and web client
 - `api` — API through which access to data happens
 - `importer` — index management and data importing
 - `sitemap` — dynamic sitemap generation

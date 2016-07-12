@@ -7,7 +7,7 @@ clean:
 	find . -name "__pycache__" -type d -exec rm -rf {} +
 
 run:
-	python -m bottle --server gunicorn --bind 0.0.0.0:8000 sitemap
+	python -m bottle --bind 0.0.0.0:8000 sitemap
 
 run-dev:
 	python -m bottle --debug --reload --bind 0.0.0.0:8000 sitemap

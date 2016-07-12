@@ -35,7 +35,7 @@ script:
 after_success: |
   if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then
     docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-    for COMPONENT in api importer web
+    for COMPONENT in api importer web sitemap
     do
       export REPO=despawnerer/theatrics-$COMPONENT
       docker tag theatrics_$COMPONENT $REPO:latest

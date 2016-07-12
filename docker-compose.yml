@@ -1,7 +1,21 @@
 version: '2'
 services:
-  elasticsearch:
-    image: elasticsearch:2.3
+  web:
+    build: ./web
+    volumes:
+      - ./web:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - api
+      - sitemap
+  sitemap:
+    build: ./sitemap
+    command: make run-dev
+    volumes:
+      - ./sitemap:/app
+    depends_on:
+      - elasticsearch
   api:
     build: ./api
     command: make run-dev
@@ -16,11 +30,5 @@ services:
       - ./importer:/app
     depends_on:
       - elasticsearch
-  web:
-    build: ./web
-    volumes:
-      - ./web:/app
-    ports:
-      - "8000:8000"
-    depends_on:
-      - api
+  elasticsearch:
+    image: elasticsearch:2.3

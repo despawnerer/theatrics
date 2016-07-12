@@ -19,11 +19,12 @@ Prerequisites
 Development
 -----------
 
-Theatrics consists of three parts:
+Theatrics consists of four parts:
 
 - `web` — web client, which is the the front-end app
 - `api` — API through which access to data happens
 - `importer` — index management and data importing
+- `sitemap` — dynamic sitemap generation
 
 Elasticsearch 2.3 is used as a database.
 

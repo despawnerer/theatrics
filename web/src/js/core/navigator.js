@@ -19,6 +19,7 @@ export default class Navigator {
     this.events = new Events(document, this);
     this.events.bind('click a', 'onAnchorClick');
     window.addEventListener('navigate', event => this.onWindowNavigate(event));
+    window.addEventListener('redirect', event => this.onWindowRedirect(event));
     window.addEventListener('popstate', event => this.onWindowPopState(event));
   }
 
@@ -44,6 +45,10 @@ export default class Navigator {
 
   onWindowNavigate(event) {
     this.navigate(event.detail);
+  }
+
+  onWindowRedirect(event) {
+    this.stateController.load(event.detail);
   }
 
   onWindowPopState(event) {

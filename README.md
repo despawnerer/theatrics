@@ -36,7 +36,7 @@ Elasticsearch 2.3 is used as a database.
 
 ### Running
 
-	docker-compose up
+    docker-compose up
 
 
 ### Testing

@@ -1,6 +1,6 @@
 import View from '../base/view';
 
-import {toggleClass} from '../utils';
+import {addClass, trigger} from '../utils';
 
 import template from '../../templates/search.ejs';
 
@@ -16,13 +16,16 @@ export default class Search extends View {
   }
 
   mount(element) {
-    const input = element.querySelector('input');
+    this.input = element.querySelector('input');
+    element.addEventListener('submit', event => this.onSubmit(event));
+  }
 
-    const toggle = () => toggleClass(element, 'active', Boolean(input.value));
+  onSubmit(event) {
+    event.preventDefault();
 
-    if (input.value) toggle();
-    input.addEventListener('change', toggle);
-    input.addEventListener('input', toggle);
-    input.addEventListener('keyup', toggle);
+    const query = this.input.value;
+    const path = this.app.url('search', {});
+    const url = `${path}?q=${encodeURIComponent(query)}`;
+    trigger(window, 'navigate', url);
   }
 }

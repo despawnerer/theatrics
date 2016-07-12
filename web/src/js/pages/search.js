@@ -50,4 +50,8 @@ export default class SearchPage extends Page {
       throw new Error(`Unknown item type: ${data.type}`);
     }
   }
+
+  canTransitionFrom(other) {
+    return other instanceof SearchPage;
+  }
 }

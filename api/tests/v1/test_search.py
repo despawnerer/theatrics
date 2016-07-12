@@ -12,7 +12,7 @@ class SearchTestCase(APITestCase):
         }
         await refresh_index()
 
-        response = self.get('/api/v1/search/', params={'q': 'Тестовое'})
+        response = self.get('/v1/search/', params={'q': 'Тестовое'})
         self.assertEqual(response.status_code, 200)
 
         data = response.json()
@@ -20,5 +20,5 @@ class SearchTestCase(APITestCase):
         self.assertEqual(items, matching_items)
 
     def test_returns_bad_request_without_query(self):
-        response = self.get('/api/v1/search/')
+        response = self.get('/v1/search/')
         self.assertEqual(response.status_code, 400)

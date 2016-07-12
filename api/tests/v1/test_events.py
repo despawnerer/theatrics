@@ -4,7 +4,7 @@ from ..factories import Event
 
 class EventListTestCase(APITestCase):
     def test_ok_by_default(self):
-        response = self.get('/api/v1/events/')
+        response = self.get('/v1/events/')
         self.assertEqual(response.status_code, 200)
 
 
@@ -14,7 +14,7 @@ class EventTestCase(APITestCase):
         data = {'name': "Some event"}
         id_ = await Event.create(**data)
 
-        response = self.get('/api/v1/events/%d/' % id_)
+        response = self.get('/v1/events/%d/' % id_)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json(), {
             'id': id_,
@@ -23,5 +23,5 @@ class EventTestCase(APITestCase):
         })
 
     def test_404_on_nonexisting(self):
-        response = self.get('/api/v1/events/999/')
+        response = self.get('/v1/events/999/')
         self.assertEqual(response.status_code, 404)

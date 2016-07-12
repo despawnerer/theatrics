@@ -16,7 +16,10 @@ export default class MainView extends View {
     this.locationChooser = new LocationChooser({
       app, route: state.route, location: state.location});
     this.search = new Search({
-      app, query: state.route.name == 'search' ? state.query.q : ''});
+      app,
+      route: state.route,
+      query: state.route.name == 'search' ? state.query.q : ''
+    });
   }
 
   mount(element) {

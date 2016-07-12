@@ -14,7 +14,11 @@ export default class MainView extends View {
     this.state = state;
 
     this.locationChooser = new LocationChooser({
-      app, route: state.route, location: state.location});
+      app,
+      route: state.route,
+      location: state.location
+    });
+
     this.search = new Search({
       app,
       route: state.route,

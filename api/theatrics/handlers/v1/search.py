@@ -4,6 +4,7 @@ from marshmallow import Schema, fields
 
 from theatrics.scoring import get_default_score_functions
 from theatrics.utils.handlers import with_sync_params, json_response
+from theatrics.utils.collections import get_first
 
 from ..helpers import get_list
 
@@ -21,11 +22,16 @@ class SearchParams(Schema):
 
 @json_response
 async def search(request):
-    return await get_list(
+    results = await get_list(
         request,
         query=build_query_from_request(request),
         relations=EXPANDABLE_RELATIONS,
     )
+    for item in results['items']:
+        highlight = item.get('highlight')
+        if highlight:
+            item['highlight'] = cleanup_highlight(highlight)
+    return results
 
 
 @with_sync_params(SearchParams)
@@ -80,4 +86,24 @@ def build_query_from_request(request, q, location=None, include_past=False):
                 'functions': get_default_score_functions()
             }
         },
+        'highlight': {
+            'fields': {
+                'name.ngram': {},
+                'name.text': {},
+                'full_name.text': {},
+                'full_name.ngram': {},
+            }
+        }
     }
+
+
+def cleanup_highlight(highlight):
+    name = get_first(highlight, ('name.text', 'name.ngram'))
+    full_name = get_first(highlight, ('full_name.text', 'full_name.ngram'))
+
+    new_highlight = {}
+    if name is not None:
+        new_highlight['name'] = name
+    if full_name is not None:
+        new_highlight['full_name'] = full_name
+    return new_highlight

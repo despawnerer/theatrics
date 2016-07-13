@@ -4,3 +4,13 @@ def project(dictionary, keys):
 
 def compact(iterable):
     return filter(None, iterable)
+
+
+def get_first(dictionary, keys, default=None):
+    for key in keys:
+        try:
+            return dictionary[key]
+        except KeyError:
+            pass
+    else:
+        return default

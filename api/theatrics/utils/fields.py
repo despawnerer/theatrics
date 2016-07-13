@@ -1,6 +1,9 @@
 from marshmallow import fields
 
 
+__all__ = ['CommaSeparatedList']
+
+
 class CommaSeparatedList(fields.List):
     def _serialize(self, value, attr, obj):
         result = super()._serialize(value, attr, obj)

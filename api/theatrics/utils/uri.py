@@ -1,6 +1,9 @@
 from urllib.parse import parse_qs, urlencode
 
 
+__all__ = ['build_uri']
+
+
 def build_uri(path, query_string, **params):
     query = parse_qs(query_string)
     for k, v in params.items():

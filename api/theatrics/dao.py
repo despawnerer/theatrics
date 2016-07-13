@@ -1,7 +1,5 @@
 import aioes
 
-from collections import namedtuple
-
 from .connections import elastic
 from .settings import ELASTICSEARCH_INDEX
 from .utils.collections import compact
@@ -9,11 +7,8 @@ from .utils.collections import compact
 
 __all__ = [
     'search', 'fetch_item', 'fetch_multiple_items', 'expand_item',
-    'expand_multiple_items', 'simplify_item', 'SearchResults'
+    'expand_multiple_items', 'simplify_item'
 ]
-
-
-SearchResults = namedtuple('SearchResults', 'items count took')
 
 
 async def search(body, type_=None, page=1, page_size=20, fields=None):
@@ -27,7 +22,7 @@ async def search(body, type_=None, page=1, page_size=20, fields=None):
     took = response['took']
     count = hits['total']
     items = list(map(simplify_item, hits['hits']))
-    return SearchResults(items, count, took)
+    return items, count, took
 
 
 async def fetch_item(type_, id_, fields=None):

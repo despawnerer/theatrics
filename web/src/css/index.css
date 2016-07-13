@@ -1626,6 +1626,13 @@ p {
   line-height: 1.25em;
 }
 
+.search-result h2 em {
+  font-style: normal;
+  background: rgb(255, 244, 162);
+  border-radius: 2px;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
 .search-result p {
   margin: 0 0 11px 0;
 }

@@ -13,6 +13,15 @@ export default class Event {
     this.data = data;
   }
 
+  getHighlightedName() {
+    if (!this.data.highlight) return this.getName();
+    return (
+      this.data.highlight.name ||
+      capfirst(this.data.highlight.full_name) ||
+      this.getName()
+    );
+  }
+
   getName() {
     return this.data.name || this.getFullName();
   }

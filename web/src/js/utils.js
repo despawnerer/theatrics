@@ -112,6 +112,7 @@ export function makeAbsoluteURL(url) {
 /* Strings */
 
 export function capfirst(s) {
+  if (!s) return s;
   return s.slice(0, 1).toUpperCase() + s.slice(1);
 }
 

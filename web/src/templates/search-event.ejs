@@ -5,7 +5,7 @@
     </div>
 
     <h2>
-      <%- event.getName() %>
+      <%= event.getHighlightedName() %>
       <% if (event.isFestival()) { %>
         <span class="badge festival-badge">Фестиваль</span>
       <% } else if (event.isPremiere()) { %>

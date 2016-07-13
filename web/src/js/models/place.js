@@ -15,6 +15,15 @@ export default class Place {
     return typeof this.data == 'number';
   }
 
+  getHighlightedName() {
+    if (!this.data.highlight) return this.getName();
+    return (
+      capfirst(this.data.highlight.full_name) ||
+      this.data.highlight.name ||
+      this.getName()
+    );
+  }
+
   getName() {
     return capfirst(this.data.full_name);
   }

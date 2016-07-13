@@ -1,5 +1,4 @@
 from math import ceil
-from functools import wraps
 
 from aiohttp import web
 from marshmallow import Schema, fields
@@ -8,7 +7,7 @@ from marshmallow.validate import Range
 from theatrics.utils.fields import CommaSeparatedList
 from theatrics.utils.collections import project
 from theatrics.utils.uri import build_uri
-from theatrics.utils.handlers import with_params, json_response
+from theatrics.utils.handlers import with_params
 from theatrics.dao import (
     search,
     fetch_item,
@@ -29,47 +28,34 @@ class ItemParams(Schema):
     fields = CommaSeparatedList(fields.String())
 
 
-def item_handler(type_, relations={}):
-    def decorator(f):
-        @wraps(f)
-        @json_response
-        @with_params(ItemParams)
-        async def wrapper(request, fields=(), expand=()):
-            id_ = await f(request)
-            item = await fetch_item(type_, id_, fields)
-            if item is None:
-                raise web.HTTPNotFound()
-            expanding_relations = project(relations, expand)
-            return await expand_item(item, expanding_relations)
-        return wrapper
-    return decorator
+@with_params(ItemParams)
+async def get_item(request, type_, id_, relations={},
+                   fields=(), expand=()):
+    item = await fetch_item(type_, id_, fields)
+    if item is None:
+        raise web.HTTPNotFound()
+    expanding_relations = project(relations, expand)
+    return await expand_item(item, expanding_relations)
 
 
-def list_handler(type_=None, relations={}):
-    def decorator(f):
-        @wraps(f)
-        @json_response
-        @with_params(ListParams)
-        async def wrapper(request, page=1, page_size=20, fields=(), expand=()):
-            query = await f(request)
+@with_params(ListParams)
+async def get_list(request, query, type_=None, relations={},
+                   page=1, page_size=20, fields=(), expand=()):
+    items, count, took = await search(query, type_, page, page_size, fields)
 
-            items, count, took = await search(
-                {'query': query}, type_, page, page_size, fields)
-            expanding_relations = project(relations, expand)
-            items = await expand_multiple_items(items, expanding_relations)
+    expanding_relations = project(relations, expand)
+    items = await expand_multiple_items(items, expanding_relations)
 
-            previous = get_previous_page_uri(request, page, page_size)
-            next_ = get_next_page_uri(request, page, page_size, count)
+    previous = get_previous_page_uri(request, page, page_size)
+    next_ = get_next_page_uri(request, page, page_size, count)
 
-            return {
-                'count': count,
-                'items': items,
-                'took': took,
-                'previous': previous,
-                'next': next_,
-            }
-        return wrapper
-    return decorator
+    return {
+        'count': count,
+        'items': items,
+        'took': took,
+        'previous': previous,
+        'next': next_,
+    }
 
 
 def get_previous_page_uri(request, page, page_size):

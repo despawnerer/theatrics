@@ -3,9 +3,9 @@ from datetime import datetime
 from marshmallow import Schema, fields
 
 from theatrics.scoring import get_default_score_functions
-from theatrics.utils.handlers import with_params
+from theatrics.utils.handlers import with_sync_params, json_response
 
-from ..helpers import item_handler, list_handler
+from ..helpers import get_item, get_list
 
 
 __all__ = ['event', 'event_list']
@@ -32,15 +32,29 @@ class EventListParams(Schema):
     include_past = fields.Boolean()
 
 
-@item_handler('event', relations=EXPANDABLE_RELATIONS)
+@json_response
 async def event(request):
-    return request.match_info['id']
+    return await get_item(
+        request,
+        type_='event',
+        id_=request.match_info['id'],
+        relations=EXPANDABLE_RELATIONS,
+    )
 
 
-@list_handler('event', relations=EXPANDABLE_RELATIONS)
-@with_params(EventListParams)
-async def event_list(request, location=None, place=None, parent=None,
-                     date=None, include_past=False):
+@json_response
+async def event_list(request):
+    return await get_list(
+        request,
+        query=build_query_from_request(request),
+        type_='event',
+        relations=EXPANDABLE_RELATIONS,
+    )
+
+
+@with_sync_params(EventListParams)
+def build_query_from_request(request, location=None, place=None, parent=None,
+                             date=None, include_past=False):
     filters = []
 
     if location:
@@ -70,14 +84,16 @@ async def event_list(request, location=None, place=None, parent=None,
         filters.append({'range': {'end': {'gte': now}}})
 
     return {
-        'function_score': {
-            'query': {'bool': {
-                'filter': filters,
-                'should': [
-                    {'term': {'kind': 'theater'}},
-                    {'term': {'is_for_kids': False}},
-                ]
-            }},
-            'functions': get_default_score_functions()
+        'query': {
+            'function_score': {
+                'query': {'bool': {
+                    'filter': filters,
+                    'should': [
+                        {'term': {'kind': 'theater'}},
+                        {'term': {'is_for_kids': False}},
+                    ]
+                }},
+                'functions': get_default_score_functions()
+            }
         }
     }

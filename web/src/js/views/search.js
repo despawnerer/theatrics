@@ -29,6 +29,7 @@ export default class Search extends View {
   }
 
   onType(event) {
+    if (this.input.value == this.query) return;
     if (this.typeTimeout) window.clearTimeout(this.typeTimeout);
     this.typeTimeout = window.setTimeout(() => {
       const action = this.route.name == 'search' ? 'redirect' : 'navigate';

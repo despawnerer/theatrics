@@ -1,3 +1,4 @@
+import re
 from datetime import datetime
 
 from marshmallow import Schema, fields
@@ -12,6 +13,9 @@ from .events import EXPANDABLE_RELATIONS
 
 
 __all__ = ['search']
+
+
+BROKEN_UP_EM_REGEX = re.compile(r'<\/em>\s+<em>')
 
 
 class SearchParams(Schema):
@@ -103,7 +107,11 @@ def cleanup_highlight(highlight):
 
     new_highlight = {}
     if name is not None:
-        new_highlight['name'] = name
+        new_highlight['name'] = combine_broken_up_ems(name)
     if full_name is not None:
-        new_highlight['full_name'] = full_name
+        new_highlight['full_name'] = combine_broken_up_ems(full_name)
     return new_highlight
+
+
+def combine_broken_up_ems(string):
+    return BROKEN_UP_EM_REGEX.sub(' ', string)

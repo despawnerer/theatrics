@@ -5,7 +5,8 @@ import Feed from './feed';
 
 export default class TheatricsAPI {
   constructor() {
-    this.prefix = '/api/v1';
+    this.prefix = '/api';
+    this.version_prefix = '/v1'
     this.fetch = window.fetch.bind(window);
   }
 
@@ -88,8 +89,10 @@ export default class TheatricsAPI {
   buildURL(path) {
     if (path.startsWith(this.prefix)) {
       return path;
-    } else {
+    } else if (path.startsWith(this.version_prefix)) {
       return this.prefix + path;
+    } else {
+      return this.prefix + this.version_prefix + path;
     }
   }
 

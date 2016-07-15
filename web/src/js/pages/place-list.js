@@ -1,10 +1,11 @@
+import domify from 'domify';
+
 import Page from '../base/page';
 import Place from '../models/place';
 import Feeder from '../components/feeder';
 
-import FeedPlaceView from '../views/feed-place';
-
 import template from '../../templates/pages/place-list.ejs';
+import placeTemplate from '../../templates/feed-place.ejs';
 
 
 export default class PlaceListPage extends Page {
@@ -33,9 +34,8 @@ export default class PlaceListPage extends Page {
   }
 
   buildItemElement(data) {
-    const event = new Place(data);
-    const view = new FeedPlaceView({app: this.app, model: event});
-    return view.render();
+    const place = new Place(data);
+    return domify(this.app.renderTemplate(placeTemplate, {place}));
   }
 
   canTransitionFrom(other) {

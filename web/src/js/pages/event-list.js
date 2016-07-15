@@ -1,11 +1,12 @@
+import domify from 'domify';
+
 import Page from '../base/page';
 import Event from '../models/event';
 import Feeder from '../components/feeder';
-
 import Calendar from '../views/calendar';
-import FeedEventView from '../views/feed-event';
 
 import template from '../../templates/pages/event-list.ejs';
+import eventTemplate from '../../templates/feed-event.ejs';
 
 
 export default class EventListPage extends Page {
@@ -46,8 +47,7 @@ export default class EventListPage extends Page {
 
   buildItemElement(data) {
     const event = new Event(data);
-    const view = new FeedEventView({app: this.app, model: event});
-    return view.render();
+    return domify(this.app.renderTemplate(eventTemplate, {event}));
   }
 
   canTransitionFrom(other) {

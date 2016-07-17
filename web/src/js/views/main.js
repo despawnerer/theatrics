@@ -1,5 +1,3 @@
-import domify from 'domify';
-
 import View from '../base/view';
 import LocationChooser from '../views/location-chooser';
 import Search from '../views/search';

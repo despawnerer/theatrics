@@ -85,12 +85,12 @@ export function toggle(element, condition=undefined) {
 }
 
 export function show(element) {
-  element.removeAttribute('hidden');
+  element && element.removeAttribute('hidden');
 }
 
 
 export function hide(element) {
-  element.setAttribute('hidden', 'hidden');
+  element && element.setAttribute('hidden', 'hidden');
 }
 
 

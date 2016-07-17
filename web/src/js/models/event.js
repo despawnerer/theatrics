@@ -1,4 +1,5 @@
 import moment from 'moment';
+import escape from 'lodash.escape';
 
 import locations from '../core/locations';
 import {capfirst, range, makeAbsoluteURL} from '../utils';
@@ -18,7 +19,7 @@ export default class Event {
     return (
       this.data.highlight.name ||
       capfirst(this.data.highlight.full_name) ||
-      this.getName()
+      escape(this.getName())
     );
   }
 

@@ -1,3 +1,5 @@
+import escape from 'lodash.escape';
+
 import locations from '../core/locations';
 import {capfirst, makeAbsoluteURL} from '../utils';
 
@@ -20,7 +22,7 @@ export default class Place {
     return (
       capfirst(this.data.highlight.full_name) ||
       this.data.highlight.name ||
-      this.getName()
+      escape(this.getName())
     );
   }
 

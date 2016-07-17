@@ -1,5 +1,5 @@
 import moment from 'moment';
-import qs from 'querystringify';
+import qs from 'query-string';
 
 import Feed from './feed';
 

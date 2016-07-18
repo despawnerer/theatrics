@@ -306,33 +306,120 @@ p {
 #search form.active input { border-bottom-color: black; border-bottom-width: 2px; padding-top: 8px; }
 #search form.active .icon-search { color: black; }
 
-@media (max-width: 359px) {
+@media (max-width: 450px) {
   #header {
-    text-align: left;
-    justify-content: space-between;
+    height: auto;
+    margin: -10px -12px;
+    position: relative;
   }
 
   #logo {
-    letter-spacing: 2.5px;
-  }
-
-  #city {
-    margin-left: 0;
-  }
-}
-
-@media (min-width: 360px) and (max-width: 450px) {
-  #header {
-    text-align: left;
-    justify-content: space-between;
-  }
-
-  #logo {
+    flex: 1 0;
     letter-spacing: 4px;
+    line-height: 39px;
+    margin: 0 12px;
+    order: 2;
   }
 
   #city {
-    margin-left: 10px;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    margin: 0;
+    overflow: hidden;
+    order: 1;
+  }
+
+  #city:hover::before {
+    color: #888;
+  }
+
+  #city::before {
+    display: block;
+    width: 20px;
+    height: 40px;
+    line-height: 40px;
+    overflow: hidden;
+    position: absolute;
+    top: 0px;
+    left: 9px;
+    z-index: -1;
+
+    font-family: 'icons' !important;
+    speak: none;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content: "\e902";
+    font-size: 26px;
+    color: #444;
+  }
+
+  #city select {
+    opacity: 0;
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
+    border: 0;
+    cursor: pointer;
+  }
+
+  #search {
+    margin: 0;
+    padding: 0;
+    order: 3;
+  }
+
+  #search form {
+    margin: 0;
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+  }
+
+  #search form:hover .icon-search {
+    color: #888;
+  }
+
+  #search input {
+    margin: 0;
+    border: 0;
+    padding-left: 40px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  #search .icon-search {
+    top: 5px;
+    left: 11px;
+    font-size: 18px;
+  }
+
+  #search form.active {
+    position: absolute;
+    width: auto;
+    left: 0;
+    top: 0;
+    right: 0;
+    padding: 0 12px;
+    background: white;
+  }
+
+  #search form.active:hover .icon-search {
+    color: black;
+  }
+
+  #search form.active input {
+    width: 100%;
+    cursor: text;
+    border-bottom: 2px solid black;
+    padding-left: 30px;
+  }
+
+  #search form.active .icon-search {
+    left: 12px;
   }
 }
 

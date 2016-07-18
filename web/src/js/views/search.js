@@ -20,12 +20,25 @@ export default class Search extends View {
     this.element = element;
     this.input = element.querySelector('input');
 
+    const onFocus = this.onFocus.bind(this);
+    const onBlur = this.onBlur.bind(this);
     const onType = this.onType.bind(this);
     const onSubmit = this.onSubmit.bind(this);
 
     this.element.addEventListener('submit', onSubmit);
+    this.input.addEventListener('focus', onFocus);
+    this.input.addEventListener('blur', onBlur);
     this.input.addEventListener('keyup', onType);
     this.input.addEventListener('input', onType);
+  }
+
+  onFocus() {
+    this.element.classList.add('active');
+  }
+
+  onBlur() {
+    if (this.input.value) return;
+    this.element.classList.remove('active');
   }
 
   onType(event) {

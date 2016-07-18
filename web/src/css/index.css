@@ -168,12 +168,22 @@ p {
 
 .content-container {
   margin: 0 auto;
-  max-width: 630px;
+  width: 630px;
 }
 
 .content-container.unconstrained {
-  max-width: none;
-  margin: 0; /* margin: 0 auto; causes a bug in Chrome when used together with max-width */
+  width: auto;
+}
+
+.content-container.unpadded {
+  padding: 0;
+}
+
+@media (max-width: 689px) {
+  .content-container {
+    width: auto;
+    margin: 0;
+  }
 }
 
 @media (max-width: 359px) {
@@ -181,12 +191,12 @@ p {
   .content-container { padding: 0 15px; }
 }
 
-@media (min-width: 360px) and (max-width: 719px) {
+@media (min-width: 360px) and (max-width: 699px) {
   #container { padding: 30px 0; }
   .content-container { padding: 0 30px; }
 }
 
-@media (min-width: 720px) and (max-width: 1139px) {
+@media (min-width: 700px) and (max-width: 1139px) {
   #container { padding: 45px 0; }
   .content-container { padding: 0 45px; }
 }
@@ -195,7 +205,7 @@ p {
   #container { padding: 60px 0; }
   .content-container {
     padding: 0 60px;
-    max-width: 750px;
+    width: 750px;
   }
 }
 
@@ -210,9 +220,9 @@ p {
   color: #aaa;
   white-space: nowrap;
   display: flex;
-  justify-content: center;
   align-items: center;
-  height: 18px;
+  margin: -7px 0;
+  position: relative;
 }
 
 #logo {
@@ -236,6 +246,7 @@ p {
 }
 
 #city {
+  flex: 1;
   margin-left: 27px;
 }
 
@@ -306,18 +317,16 @@ p {
 #search form.active input { border-bottom-color: black; border-bottom-width: 2px; padding-top: 8px; }
 #search form.active .icon-search { color: black; }
 
-@media (max-width: 450px) {
+@media (max-width: 699px) {
   #header {
-    height: auto;
     margin: -10px -12px;
-    position: relative;
   }
 
   #logo {
     flex: 1 0;
-    letter-spacing: 4px;
     line-height: 39px;
     margin: 0 12px;
+    letter-spacing: 4px;
     order: 2;
   }
 
@@ -328,6 +337,7 @@ p {
     margin: 0;
     overflow: hidden;
     order: 1;
+    flex: auto 0;
   }
 
   #city:hover::before {
@@ -365,6 +375,13 @@ p {
     cursor: pointer;
   }
 
+  #search {
+    order: 3;
+    margin: 0 12px;
+  }
+}
+
+@media (max-width: 484px) {
   #search {
     margin: 0;
     padding: 0;
@@ -467,11 +484,11 @@ p {
   #view-container { margin: 20px 0; }
 }
 
-@media (min-width: 360px) and (max-width: 719px) {
+@media (min-width: 360px) and (max-width: 699px) {
   #view-container { margin: 25px 0 30px 0; }
 }
 
-@media (min-width: 720px) and (max-width: 1139px) {
+@media (min-width: 700px) and (max-width: 1139px) {
   #view-container { margin: 35px 0 45px 0; }
 }
 
@@ -595,7 +612,7 @@ p {
 
 .quick-calendar {
   list-style-type: none;
-  margin: -5px 0;
+  margin: -5px -10px;
   padding: 0;
   text-align: center;
   white-space: nowrap;
@@ -610,12 +627,13 @@ p {
   margin: 0;
   line-height: 1.2;
   position: relative;
+  flex: auto;
 }
 
 .quick-calendar .custom-date-button {
   border: 0;
   margin: 0;
-  padding: 5px 11px;
+  padding: 5px 0px;
   background: transparent;
   box-sizing: border-box;
   width: 100%;
@@ -638,7 +656,7 @@ p {
 .calendar-day {
   display: block;
   position: relative;
-  padding: 5px 11px;
+  padding: 5px 0;
 }
 
 .calendar-day.active::after {
@@ -665,11 +683,11 @@ p {
   .calendar-container { margin-bottom: 20px; }
 }
 
-@media (min-width: 360px) and (max-width: 719px) {
+@media (min-width: 360px) and (max-width: 699px) {
   .calendar-container { margin-bottom: 30px; }
 }
 
-@media (min-width: 720px) and (max-width: 1139px) {
+@media (min-width: 700px) and (max-width: 1139px) {
   .calendar-container { margin-bottom: 35px; }
 }
 
@@ -677,20 +695,6 @@ p {
   .calendar-container { margin-bottom: 60px; }
 }
 
-@media (max-width: 680px) {
-  .quick-calendar {
-    margin: -5px -10px;
-  }
-
-  .quick-calendar > li {
-    flex: auto;
-  }
-
-  .calendar-day,
-  .quick-calendar .custom-date-button {
-    padding: 5px 0;
-  }
-}
 
 @media (max-width: 344px) {
   .quick-calendar > li:nth-child(n+8):not(:last-child) { display: none; }
@@ -724,8 +728,12 @@ p {
   .quick-calendar > li:nth-child(n+15):not(:last-child) { display: none; }
 }
 
-@media (max-width: 1139px) {
+@media (max-width: 678px) {
   .quick-calendar > li:nth-child(n+16):not(:last-child) { display: none; }
+}
+
+@media (max-width: 1139px) {
+  .quick-calendar > li:nth-child(n+17):not(:last-child) { display: none; }
 }
 
 
@@ -1386,7 +1394,7 @@ p {
   .item-information-group:last-child { margin: 0; }
 }
 
-@media (max-width: 719px) {
+@media (max-width: 699px) {
   .big-item-title {
     font-size: 180%;
     margin-bottom: 10px;
@@ -1434,7 +1442,7 @@ p {
   .item-slider .previous-button span { left: 7.5px; }
 }
 
-@media (min-width: 720px) and (max-width: 1139px) {
+@media (min-width: 700px) and (max-width: 1139px) {
   .item-slider { margin-bottom: 35px; }
   .item-slide { height: 350px; }
   .item-slide-image { min-width: 350px; }
@@ -1565,11 +1573,11 @@ p {
   .pager-nav { margin-bottom: 15px; }
 }
 
-@media (min-width: 360px) and (max-width: 719px) {
+@media (min-width: 360px) and (max-width: 699px) {
   .pager-nav { margin-bottom: 20px; }
 }
 
-@media (min-width: 720px) and (max-width: 1139px) {
+@media (min-width: 700px) and (max-width: 1139px) {
   .pager-nav { margin-bottom: 25px; }
 }
 

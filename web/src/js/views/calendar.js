@@ -21,7 +21,7 @@ export default class Calendar extends View {
   getHTML() {
     const today = moment.tz(this.location.timezone).startOf('day');
     const current = {location: this.location, date: this.date};
-    const quickDates = range(15).map(n => today.clone().add(n, 'days'));
+    const quickDates = range(17).map(n => today.clone().add(n, 'days'));
     const firstDayOfWeek = moment.localeData().firstDayOfWeek();
     const daysOfWeek = rotateLeft(moment.weekdaysMin(), firstDayOfWeek);
     const dateToString = this.dateToString;

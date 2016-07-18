@@ -1711,6 +1711,7 @@ p {
   font-size: 21px;
   margin: 0 0 12px 0;
   line-height: 1.25em;
+  overflow: hidden;
 }
 
 .search-result h2 em {
@@ -1732,4 +1733,32 @@ p {
   letter-spacing: 0.05ex;
   font-size: 11px;
   line-height: 18px;
+}
+
+
+@media (max-width: 450px) {
+  .search-result p { display: none; }
+  .search-result .badge { display: none; }
+
+  .search-image {
+    width: 72px;
+    height: 48px;
+  }
+
+  .search-result h2 {
+    font-size: 18px;
+    margin: 0;
+  }
+}
+
+@media (max-width: 359px) {
+  .search-results { margin-top: 5px; }
+  .search-result { margin-bottom: 15px; }
+  .search-image { margin-right: 15px; }
+}
+
+@media (min-width: 360px) and (max-width: 450px) {
+  .search-results { margin-top: 10px; }
+  .search-result { margin-bottom: 25px; }
+  .search-image { margin-right: 15px; }
 }

@@ -2,7 +2,7 @@
   <div class="search-result-image-container">
     <% if (place.data.images.length) { %>
     <a href="<%- url('place', {id: place.data.id}) %>">
-      <img data-src="<%- place.data.images[0].thumbnails['144x96'] %>" class="search-result-image lazyload"/>
+      <img src="<%- place.data.images[0].thumbnails['144x96'] %>" class="search-result-image"/>
     </a>
     <% } %>
   </div>

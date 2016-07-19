@@ -1,7 +1,7 @@
 <li class="search-result<% if (!event.isActual()) { %> past<% } %>">
   <div class="search-result-image-container">
     <a href="<%- url('event', {id: event.data.id}) %>">
-      <img data-src="<%- event.data.images[0].thumbnails['144x96'] %>" class="search-result-image lazyload"/>
+      <img src="<%- event.data.images[0].thumbnails['144x96'] %>" class="search-result-image"/>
     </a>
   </div>
 

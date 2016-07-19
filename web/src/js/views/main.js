@@ -19,7 +19,7 @@ export default class MainView extends View {
 
     this.search = new Search({
       app,
-      route: state.route,
+      isOnSearchPage: state.route.name == 'search',
       query: state.route.name == 'search' ? state.query.q : ''
     });
   }

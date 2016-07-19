@@ -1,21 +1,21 @@
 import View from '../base/view';
 
-import {addClass, trigger} from '../utils';
+import {trigger} from '../utils';
 
 import template from '../../templates/search.ejs';
 
 
 export default class Search extends View {
-  constructor({app, route, query}) {
+  constructor({app, isOnSearchPage, query}) {
     super({app});
-    this.route = route;
+    this.isOnSearchPage = isOnSearchPage;
     this.query = query;
   }
 
   getHTML() {
     return this.app.renderTemplate(template, {
+      isOnSearchPage: this.isOnSearchPage,
       query: this.query,
-      isOnSearchPage: this.isOnSearchPage(),
     });
   }
 
@@ -48,7 +48,7 @@ export default class Search extends View {
     if (this.input.value == this.query) return;
     if (this.typeTimeout) window.clearTimeout(this.typeTimeout);
     this.typeTimeout = window.setTimeout(() => {
-      const action = this.isOnSearchPage() ? 'redirect' : 'navigate';
+      const action = this.isOnSearchPage ? 'redirect' : 'navigate';
       const url = this.getSearchPageURL();
       trigger(window, action, url);
     }, 100);
@@ -59,10 +59,6 @@ export default class Search extends View {
     if (this.typeTimeout) window.clearTimeout(this.typeTimeout);
     const url = this.getSearchPageURL();
     trigger(window, 'navigate', url);
-  }
-
-  isOnSearchPage() {
-    return this.route.name == 'search';
   }
 
   getSearchPageURL() {

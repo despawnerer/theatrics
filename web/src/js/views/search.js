@@ -13,7 +13,10 @@ export default class Search extends View {
   }
 
   getHTML() {
-    return this.app.renderTemplate(template, {query: this.query});
+    return this.app.renderTemplate(template, {
+      query: this.query,
+      isOnSearchPage: this.isOnSearchPage(),
+    });
   }
 
   mount(element) {
@@ -45,7 +48,7 @@ export default class Search extends View {
     if (this.input.value == this.query) return;
     if (this.typeTimeout) window.clearTimeout(this.typeTimeout);
     this.typeTimeout = window.setTimeout(() => {
-      const action = this.route.name == 'search' ? 'redirect' : 'navigate';
+      const action = this.isOnSearchPage() ? 'redirect' : 'navigate';
       const url = this.getSearchPageURL();
       trigger(window, action, url);
     }, 100);
@@ -56,6 +59,10 @@ export default class Search extends View {
     if (this.typeTimeout) window.clearTimeout(this.typeTimeout);
     const url = this.getSearchPageURL();
     trigger(window, 'navigate', url);
+  }
+
+  isOnSearchPage() {
+    return this.route.name == 'search';
   }
 
   getSearchPageURL() {

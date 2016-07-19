@@ -1,35 +1,39 @@
 <li class="search-result<% if (!event.isActual()) { %> past<% } %>">
-  <a href="<%- url('event', {id: event.data.id}) %>" class="search-result-link">
-    <div class="search-image-container">
-      <img data-src="<%- event.data.images[0].thumbnails['144x96'] %>" class="search-image lazyload"/>
-    </div>
+  <div class="search-result-image-container">
+    <a href="<%- url('event', {id: event.data.id}) %>">
+      <img data-src="<%- event.data.images[0].thumbnails['144x96'] %>" class="search-result-image lazyload"/>
+    </a>
+  </div>
 
-    <h2>
-      <%= event.getHighlightedName() %>
-      <% if (event.isFestival()) { %>
-        <span class="badge festival-badge">Фестиваль</span>
-      <% } else if (event.isPremiere()) { %>
-        <span class="badge premiere-badge">Премьера</span>
-      <% } %>
-    </h2>
-  </a>
+  <div class="search-result-details">
+    <a href="<%- url('event', {id: event.data.id}) %>">
+      <h2>
+        <%= event.getHighlightedName() %>
+        <% if (event.isFestival()) { %>
+          <span class="badge festival-badge">Фестиваль</span>
+        <% } else if (event.isPremiere()) { %>
+          <span class="badge premiere-badge">Премьера</span>
+        <% } %>
+      </h2>
+    </a>
 
-  <% var place = event.getPlace() %>
-  <% if (place) { %>
-    <p class="place">
-      <% if (place.isStub()) { %>
-        <%- place.getName() %>
-      <% } else { %>
-        <a href="<%- url('place', {id: place.data.id}) %>">
-          <span class="link-text"><%- place.getName() %></span>
-        </a>
-      <% } %>
-    </p>
-  <% } %>
+    <% var place = event.getPlace() %>
+    <% if (place) { %>
+      <p class="meta">
+        <% if (place.isStub()) { %>
+          <%- place.getName() %>
+        <% } else { %>
+          <a href="<%- url('place', {id: place.data.id}) %>">
+            <span class="link-text"><%- place.getName() %></span>
+          </a>
+        <% } %>
+      </p>
+    <% } %>
 
-  <% if (event.data.tagline) { %>
-    <p><%- event.data.tagline %></p>
-  <% } else if (event.isFestival() && event.data.lead) { %>
-    <p><%= event.data.lead %></p>
-  <% } %>
+    <% if (event.data.tagline) { %>
+      <p><%- event.data.tagline %></p>
+    <% } else if (event.isFestival() && event.data.lead) { %>
+      <p><%= event.data.lead %></p>
+    <% } %>
+  </div>
 </li>

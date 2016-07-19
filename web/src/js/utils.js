@@ -113,7 +113,13 @@ export function makeAbsoluteURL(url) {
 
 export function capfirst(s) {
   if (!s) return s;
-  return s.slice(0, 1).toUpperCase() + s.slice(1);
+  const [firstLetterMatch] = /^(?:<.*?>)?./.exec(s);
+  const firstLetterIndex = firstLetterMatch.length - 1;
+  return (
+    s.slice(0, firstLetterIndex) +
+    s.slice(firstLetterIndex, firstLetterIndex + 1).toUpperCase() +
+    s.slice(firstLetterIndex + 1)
+  );
 }
 
 

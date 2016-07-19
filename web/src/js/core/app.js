@@ -7,8 +7,6 @@ import Resolver from './resolver';
 import Router from './router';
 import * as handlers from './handlers';
 
-import MainView from '../views/main';
-
 import {
   loader,
   bigLoader,

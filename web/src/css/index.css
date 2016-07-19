@@ -1044,11 +1044,11 @@ p {
   .load-more-button { box-sizing: border-box; width: 100%; }
 }
 
-@media (min-width: 451px) and (max-width: 719px) {
+@media (min-width: 451px) and (max-width: 549px) {
   .feed-container { width: 300px; }
 }
 
-@media (max-width: 719px) {
+@media (max-width: 549px) {
   .feed {
     margin: 0 -15px;
   }
@@ -1065,6 +1065,21 @@ p {
 
   .feed-item:last-child {
     margin-bottom: 0;
+  }
+}
+
+@media (min-width: 550px) and (max-width: 719px) {
+  .feed {
+    margin: -15px;
+  }
+
+  .feed-item {
+    margin: 0;
+    display: inline-block;
+    vertical-align: top;
+    width: 50%;
+    box-sizing: border-box;
+    padding: 15px;
   }
 }
 

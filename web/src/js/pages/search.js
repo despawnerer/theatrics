@@ -5,6 +5,7 @@ import View from '../base/view';
 import Event from '../models/event';
 import Place from '../models/place';
 import Feeder from '../components/feeder';
+import {show, hide} from '../utils';
 
 import template from '../../templates/pages/search.ejs';
 import eventTemplate from '../../templates/search-event.ejs';
@@ -27,16 +28,30 @@ export default class SearchPage extends Page {
   }
 
   getTitle() {
-    return `Поиск «${this.query}»`;
+    if (this.hasRealQuery()) {
+      return `Поиск «${this.query}»`;
+    } else {
+      return `Поиск без запроса`;
+    }
   }
 
   mount(element) {
-    const feeder = new Feeder(
-      element.querySelector('.search-feed'),
-      this.feed,
-      data => this.buildItemElement(data)
-    )
-    feeder.loadNewFeed();
+    const resultList = element.querySelector('.search-results');
+    const noResultsMessage = element.querySelector('.no-results');
+    const noQueryMessage = element.querySelector('.no-query');
+    if (this.hasRealQuery()) {
+      const feeder = new Feeder(
+        element.querySelector('.search-feed'),
+        this.feed,
+        data => this.buildItemElement(data)
+      )
+      feeder.loadNewFeed();
+      hide(noQueryMessage);
+    } else {
+      hide(noResultsMessage);
+      hide(resultList);
+      show(noQueryMessage);
+    }
   }
 
   buildItemElement(data) {
@@ -49,6 +64,10 @@ export default class SearchPage extends Page {
     } else {
       throw new Error(`Unknown item type: ${data.type}`);
     }
+  }
+
+  hasRealQuery() {
+    return this.query && this.query.length > 1;
   }
 
   canTransitionFrom(other) {

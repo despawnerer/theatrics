@@ -1741,6 +1741,10 @@ p {
   border-bottom: 3px dotted black;
 }
 
+.search-result a:hover em {
+  border-bottom-color: gray;
+}
+
 .search-result-details {
   overflow: hidden;
 }

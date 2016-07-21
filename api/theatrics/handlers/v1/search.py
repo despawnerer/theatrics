@@ -15,7 +15,7 @@ from .events import EXPANDABLE_RELATIONS
 __all__ = ['search']
 
 
-BROKEN_UP_EM_REGEX = re.compile(r'<\/em>\s+<em>')
+BROKEN_UP_EM_REGEX = re.compile(r'<\/em>([ -"“”«»]*)<em>')
 
 
 class SearchParams(Schema):
@@ -114,4 +114,4 @@ def cleanup_highlight(highlight):
 
 
 def combine_broken_up_ems(string):
-    return BROKEN_UP_EM_REGEX.sub(' ', string)
+    return BROKEN_UP_EM_REGEX.sub('\\1', string)

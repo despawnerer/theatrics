@@ -13,7 +13,7 @@ test:
 	nosetests --nocapture
 
 run:
-	gunicorn theatrics:app -k aiohttp.worker.GunicornWebWorker -b 0.0.0.0:8000
+	gunicorn theatrics:app -k aiohttp.worker.GunicornWebWorker -w 10 -b 0.0.0.0:8000
 
 run-dev:
 	gunicorn theatrics:app -k aiohttp.worker.GunicornWebWorker -b 0.0.0.0:8000 --reload

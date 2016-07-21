@@ -63,7 +63,7 @@ async def expand_multiple_items(item_list, relations):
             continue
 
         related_items = await fetch_multiple_items(type_, related_ids, subfields)
-        related_by_id = {item['id']: item for item in related_items}
+        related_by_id = {item['id']: item for item in compact(related_items)}
 
         for item in item_list:
             if field in item:

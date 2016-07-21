@@ -126,7 +126,7 @@ class StateController {
 
   switch(state, {cache=false, push=false}={}) {
     const view = new MainView({app: this.app, state});
-    view.attach(document.documentElement);
+    view.sync();
 
     if (cache) {
       this.cache.put(state.id, state);

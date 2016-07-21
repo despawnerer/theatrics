@@ -52,6 +52,14 @@ export function unbreakable(string) {
 
 /* Element manipulations */
 
+export function replace(oldElement, newElement) {
+  if (oldElement.parentNode) {
+    oldElement.parentNode.replaceChild(newElement, oldElement);
+  }
+  return newElement;
+}
+
+
 export function clear(element) {
   element.innerHTML = '';
 }

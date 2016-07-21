@@ -2,7 +2,7 @@ import View from '../base/view';
 import LocationChooser from '../views/location-chooser';
 import Search from '../views/search';
 
-import {toggle, show, bigLoader} from '../utils';
+import {toggle, show, replace, bigLoader} from '../utils';
 
 
 export default class MainView extends View {
@@ -24,28 +24,28 @@ export default class MainView extends View {
     });
   }
 
-  mount() {
-    const container = document.querySelector('#view-container');
-    const city = document.querySelector('#city');
-    const search = document.querySelector('#search');
-    const loader = document.querySelector('#view-loader-container');
+  sync() {
+    const containers = {
+      view: document.querySelector('#view-container'),
+      city: document.querySelector('#city'),
+      search: document.querySelector('#search'),
+      loader: document.querySelector('#view-loader-container'),
+    }
 
-    this.locationChooser.renderInto(city);
-    this.search.renderInto(search);
+    this.locationChooser.renderInto(containers.city);
+    this.search.renderInto(containers.search);
     document.title = this.getTitle();
 
-    toggle(loader, this.state.isWaiting);
-    show(city);
-    show(search);
+    toggle(containers.loader, this.state.isWaiting);
+    show(containers.city);
+    show(containers.search);
 
-    const previousElement = this.findViewElement(container);
+    const oldElement = this.findViewElement(containers.view);
     const newElement = this.state.element;
-    if (previousElement != newElement) {
-      if (previousElement) {
-        container.replaceChild(newElement, previousElement);
-      } else {
-        container.appendChild(newElement);
-      }
+    if (oldElement) {
+      replace(oldElement, newElement);
+    } else if (newElement) {
+      containers.view.appendChild(newElement);
     }
 
     // this, for reasons unknown to me, makes Chrome and FF correctly

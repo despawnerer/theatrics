@@ -40,17 +40,17 @@ export default class Calendar extends View {
       today, current, quickDates, daysOfWeek, months, dateToString});
   }
 
-  mount(sync=false) {
+  mount() {
     new Toggle(this.element.querySelector('.custom-date-button'), this.element);
     new Slider(this.element.querySelector('.calendar'), false);
 
     this.events.bind('click .calendar .months-container', 'hideCalendar');
+  }
 
-    if (sync) {
-      this.hideCalendar();
-      this.updateLinks();
-      this.updateActiveDate();
-    }
+  sync() {
+    this.hideCalendar();
+    this.syncLinks();
+    this.syncActiveDate();
   }
 
   hideCalendar() {
@@ -58,7 +58,7 @@ export default class Calendar extends View {
     window.requestAnimationFrame(doHide);
   }
 
-  updateLinks() {
+  syncLinks() {
     const links = this.element.querySelectorAll('a.calendar-day');
     const location = this.location.slug;
     Array.from(links).forEach(element => {
@@ -69,7 +69,7 @@ export default class Calendar extends View {
     });
   }
 
-  updateActiveDate() {
+  syncActiveDate() {
     Array
       .from(this.element.querySelectorAll('a.calendar-day.active'))
       .forEach(element => element.classList.remove('active'));

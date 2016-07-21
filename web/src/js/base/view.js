@@ -21,11 +21,11 @@ export default class View {
     return element;
   }
 
-  attach(element, sync=false) {
+  attach(element) {
     if (this.isAttached) throw new Error("Cannot attach attached view.");
     this.element = element;
     this.events = new Events(element, this);
-    this.mount(sync);
+    this.mount();
     this.isAttached = true;
   }
 
@@ -41,7 +41,9 @@ export default class View {
     return '<div></div>';
   }
 
-  mount(sync=false) {}
+  mount() {}
+
+  sync() {}
 
   unmount() {}
 }

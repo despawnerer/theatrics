@@ -149,7 +149,8 @@ class StateController {
   renderPage(page) {
     if (page.canTransitionFrom(this.state.page)) {
       const element = this.state.element.cloneNode(true);
-      page.attach(element, true);
+      page.attach(element);
+      page.sync();
       return element;
     } else {
       return page.render();

@@ -34,8 +34,8 @@ export default class EventListPage extends Page {
     }
   }
 
-  mount(sync=false) {
-    this.calendar.attach(this.element.querySelector('.calendar-container'), sync);
+  mount() {
+    this.calendar.attach(this.element.querySelector('.calendar-container'));
 
     const feeder = new Feeder(
       this.element.querySelector('.feed-container'),
@@ -43,6 +43,10 @@ export default class EventListPage extends Page {
       data => this.buildItemElement(data)
     );
     feeder.loadNewFeed();
+  }
+
+  sync() {
+    this.calendar.sync();
   }
 
   buildItemElement(data) {

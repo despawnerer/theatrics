@@ -79,6 +79,7 @@ def build_query_from_request(request, q, location=None, include_past=False):
                                 'full_name.ngram',
                                 'full_name.text'
                             ],
+                            'slop': 50
                         }},
                     ],
                     'filter': filters,

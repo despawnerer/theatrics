@@ -43,13 +43,11 @@ export default class EventPage extends Page {
     return `${this.event.getFullName()} – ${this.location.name}`;
   }
 
-  mount(element) {
-    this.element = element;
-
-    new Slider(element.querySelector('.item-slider'));
+  mount() {
+    new Slider(this.element.querySelector('.item-slider'));
 
     if (this.event.isFestival() && this.event.hasChildren()) {
-      new Pager(element.querySelector('.pager'));
+      new Pager(this.element.querySelector('.pager'));
       this.loadSchedule();
     }
   }

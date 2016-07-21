@@ -24,9 +24,9 @@ export default class PlaceListPage extends Page {
     return `Театры – ${this.location.name}`
   }
 
-  mount(element) {
+  mount() {
     const feeder = new Feeder(
-      element.querySelector('.feed-container'),
+      this.element.querySelector('.feed-container'),
       this.feed,
       data => this.buildItemElement(data)
     );

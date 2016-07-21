@@ -8,6 +8,7 @@ import template from '../../templates/search.ejs';
 export default class Search extends View {
   constructor({app, isOnSearchPage, query}) {
     super({app});
+
     this.isOnSearchPage = isOnSearchPage;
     this.query = query;
   }
@@ -19,20 +20,13 @@ export default class Search extends View {
     });
   }
 
-  mount(element) {
-    this.element = element;
-    this.input = element.querySelector('input');
-
-    const onFocus = this.onFocus.bind(this);
-    const onBlur = this.onBlur.bind(this);
-    const onType = this.onType.bind(this);
-    const onSubmit = this.onSubmit.bind(this);
-
-    this.element.addEventListener('submit', onSubmit);
-    this.input.addEventListener('focus', onFocus);
-    this.input.addEventListener('blur', onBlur);
-    this.input.addEventListener('keyup', onType);
-    this.input.addEventListener('input', onType);
+  mount() {
+    this.input = this.element.querySelector('input');
+    this.events.bind('submit', 'onSubmit');
+    this.events.bind('focus input', 'onFocus');
+    this.events.bind('blur input', 'onBlur');
+    this.events.bind('keyup input', 'onType');
+    this.events.bind('input input', 'onType');
   }
 
   onFocus() {

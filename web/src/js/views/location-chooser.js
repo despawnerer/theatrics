@@ -21,8 +21,8 @@ export default class LocationChooser extends View {
       locations, targetRoute, currentLocation});
   }
 
-  mount(element) {
-    element.addEventListener('change', event => this.onSelectChange(event));
+  mount() {
+    this.events.bind('change', 'onChange');
   }
 
   getTargetRoute() {
@@ -35,9 +35,7 @@ export default class LocationChooser extends View {
     }
   }
 
-  onSelectChange(event) {
-    const element = event.target;
-    const url = element.value;
-    trigger(window, 'navigate', url);
+  onChange(event) {
+    trigger(window, 'navigate', this.element.value);
   }
 }

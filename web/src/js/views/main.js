@@ -24,11 +24,11 @@ export default class MainView extends View {
     });
   }
 
-  mount(element) {
-    const container = element.querySelector('#view-container');
-    const city = element.querySelector('#city');
-    const search = element.querySelector('#search');
-    const loader = element.querySelector('#view-loader-container');
+  mount() {
+    const container = document.querySelector('#view-container');
+    const city = document.querySelector('#city');
+    const search = document.querySelector('#search');
+    const loader = document.querySelector('#view-loader-container');
 
     this.locationChooser.renderInto(city);
     this.search.renderInto(search);

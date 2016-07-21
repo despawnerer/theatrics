@@ -126,7 +126,7 @@ class StateController {
 
   switch(state, {cache=false, push=false}={}) {
     const view = new MainView({app: this.app, state});
-    view.mount(document.documentElement);
+    view.attach(document.documentElement);
 
     if (cache) {
       this.cache.put(state.id, state);
@@ -149,7 +149,7 @@ class StateController {
   renderPage(page) {
     if (page.canTransitionFrom(this.state.page)) {
       const element = this.state.element.cloneNode(true);
-      page.mount(element, true);
+      page.attach(element, true);
       return element;
     } else {
       return page.render();

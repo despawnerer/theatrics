@@ -34,11 +34,11 @@ export default class EventListPage extends Page {
     }
   }
 
-  mount(element, sync=false) {
-    this.calendar.mount(element.querySelector('.calendar-container'), sync);
+  mount(sync=false) {
+    this.calendar.attach(this.element.querySelector('.calendar-container'), sync);
 
     const feeder = new Feeder(
-      element.querySelector('.feed-container'),
+      this.element.querySelector('.feed-container'),
       this.feed,
       data => this.buildItemElement(data)
     );

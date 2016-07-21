@@ -40,15 +40,11 @@ export default class Calendar extends View {
       today, current, quickDates, daysOfWeek, months, dateToString});
   }
 
-  mount(element, sync=false) {
-    this.element = element;
+  mount(sync=false) {
+    new Toggle(this.element.querySelector('.custom-date-button'), this.element);
+    new Slider(this.element.querySelector('.calendar'), false);
 
-    new Toggle(element.querySelector('.custom-date-button'), element);
-    new Slider(element.querySelector('.calendar'), false);
-
-    element
-      .querySelector('.calendar .months-container')
-      .addEventListener('click', event => this.hideCalendar());
+    this.events.bind('click .calendar .months-container', 'hideCalendar');
 
     if (sync) {
       this.hideCalendar();

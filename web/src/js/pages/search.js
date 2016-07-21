@@ -35,13 +35,13 @@ export default class SearchPage extends Page {
     }
   }
 
-  mount(element) {
-    const resultList = element.querySelector('.search-results');
-    const noResultsMessage = element.querySelector('.no-results');
-    const noQueryMessage = element.querySelector('.no-query');
+  mount() {
+    const resultList = this.element.querySelector('.search-results');
+    const noResultsMessage = this.element.querySelector('.no-results');
+    const noQueryMessage = this.element.querySelector('.no-query');
     if (this.hasRealQuery()) {
       const feeder = new Feeder(
-        element.querySelector('.search-feed'),
+        this.element.querySelector('.search-feed'),
         this.feed,
         data => this.buildItemElement(data)
       )

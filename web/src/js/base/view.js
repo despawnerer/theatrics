@@ -1,4 +1,5 @@
 import domify from 'domify';
+import Events from 'events-mixin';
 
 
 export default class View {
@@ -9,22 +10,38 @@ export default class View {
   render() {
     const html = this.getHTML();
     const element = domify(html);
-    this.mount(element);
+    this.attach(element);
     return element;
   }
 
   renderInto(target) {
     target.innerHTML = this.getHTML();
     const element = target.children[0];
-    this.mount(element);
+    this.attach(element);
     return element;
+  }
+
+  attach(element, sync=false) {
+    if (this.isAttached) throw new Error("Cannot attach attached view.");
+    this.element = element;
+    this.events = new Events(element, this);
+    this.mount(sync);
+    this.isAttached = true;
+  }
+
+  detach() {
+    if (!this.isAttached) throw new Error("Cannot detach unattached view.");
+    this.isAttached = false;
+    this.unmount();
+    this.events.unbindAll();
+    this.element = null;
   }
 
   getHTML() {
     return '<div></div>';
   }
 
-  mount(element, sync=false) {
-    this.element = element;
-  }
+  mount(sync=false) {}
+
+  unmount() {}
 }

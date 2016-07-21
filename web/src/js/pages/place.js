@@ -43,15 +43,13 @@ export default class PlacePage extends Page {
     return `${this.place.getName()} – ${this.location.name}`;
   }
 
-  mount(element) {
-    this.element = element;
-
-    const sliderElement = element.querySelector('.item-slider');
+  mount() {
+    const sliderElement = this.element.querySelector('.item-slider');
     if (sliderElement) {
-      new Slider(element.querySelector('.item-slider'));
+      new Slider(this.element.querySelector('.item-slider'));
     }
 
-    new Pager(element.querySelector('.pager'));
+    new Pager(this.element.querySelector('.pager'));
 
     this.loadSchedule();
   }

@@ -43,7 +43,12 @@ export default class View {
 
   mount() {}
 
-  sync() {}
+  sync() {
+    const oldElement = this.element;
+    this.detach();
+    const newElement = this.render();
+    replace(oldElement, newElement);
+  }
 
   unmount() {}
 }

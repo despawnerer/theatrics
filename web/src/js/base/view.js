@@ -2,9 +2,8 @@ import domify from 'domify';
 
 
 export default class View {
-  constructor({app, model}) {
+  constructor({app}) {
     this.app = app;
-    this.model = model;
   }
 
   render() {

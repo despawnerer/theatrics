@@ -1,4 +1,4 @@
-from bottle import route, run, response
+from bottle import Bottle, response
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import scan
 
@@ -6,6 +6,7 @@ from elasticsearch.helpers import scan
 ELASTICSEARCH_ENDPOINTS = ['elasticsearch:9200']
 ELASTICSEARCH_INDEX = 'theatrics'
 
+app = Bottle()
 
 elastic = Elasticsearch(ELASTICSEARCH_ENDPOINTS)
 
@@ -26,7 +27,7 @@ locations = (
 )
 
 
-@route('/sitemap.txt')
+@app.route('/sitemap.txt')
 def sitemap():
     response.content_type = 'text/plain'
 

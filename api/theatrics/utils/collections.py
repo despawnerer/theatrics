@@ -6,11 +6,5 @@ def compact(iterable):
     return filter(None, iterable)
 
 
-def get_first(dictionary, keys, default=None):
-    for key in keys:
-        try:
-            return dictionary[key]
-        except KeyError:
-            pass
-    else:
-        return default
+def get_all(dictionary, keys):
+    return tuple(dictionary[k] for k in keys if k in dictionary)

@@ -5,7 +5,7 @@ from marshmallow import Schema, fields
 
 from theatrics.scoring import get_default_score_functions
 from theatrics.utils.handlers import with_sync_params, json_response
-from theatrics.utils.collections import get_first
+from theatrics.utils.collections import get_all
 
 from ..helpers import get_list
 
@@ -16,6 +16,7 @@ __all__ = ['search']
 
 
 BROKEN_UP_EM_REGEX = re.compile(r'<\/em>([ -"“”«»]*)<em>')
+EM_CONTENT_REGEX = re.compile(r'<em>(.*?)<\/em>')
 
 
 class SearchParams(Schema):
@@ -103,15 +104,19 @@ def build_query_from_request(request, q, location=None, include_past=False):
 
 
 def cleanup_highlight(highlight):
-    name = get_first(highlight, ('name.text', 'name.ngram'))
-    full_name = get_first(highlight, ('full_name.text', 'full_name.ngram'))
+    name_matches = get_all(highlight, ('name.ngram', 'name.text'))
+    full_name_matches = get_all(highlight, ('full_name.text', 'full_name.ngram'))
 
     new_highlight = {}
-    if name is not None:
-        new_highlight['name'] = combine_broken_up_ems(name)
-    if full_name is not None:
-        new_highlight['full_name'] = combine_broken_up_ems(full_name)
+    if name_matches:
+        new_highlight['name'] = combine_broken_up_ems(max(name_matches, key=count_highlighted_chars))
+    if full_name_matches:
+        new_highlight['full_name'] = combine_broken_up_ems(max(full_name_matches, key=count_highlighted_chars))
     return new_highlight
+
+
+def count_highlighted_chars(string):
+    return sum(len(match.group(1)) for match in EM_CONTENT_REGEX.finditer(string))
 
 
 def combine_broken_up_ems(string):

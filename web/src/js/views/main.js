@@ -10,18 +10,6 @@ export default class MainView extends View {
     super({app});
 
     this.state = state;
-
-    this.locationChooser = new LocationChooser({
-      app,
-      route: state.route,
-      location: state.location
-    });
-
-    this.search = new Search({
-      app,
-      isOnSearchPage: state.route.name == 'search',
-      query: state.route.name == 'search' ? state.query.q : ''
-    });
   }
 
   sync() {
@@ -32,8 +20,14 @@ export default class MainView extends View {
       loader: document.querySelector('#view-loader-container'),
     }
 
-    this.locationChooser.renderInto(containers.city);
-    this.search.renderInto(containers.search);
+    const app = this.app;
+    const {route, location} = this.state;
+    const isOnSearchPage = route.name == 'search';
+    const query = isOnSearchPage ? this.state.query.q : '';
+
+    LocationChooser.render({app, route, location}, containers.city);
+    Search.render({app, isOnSearchPage, query}, containers.search);
+
     document.title = this.getTitle();
 
     toggle(containers.loader, this.state.isWaiting);

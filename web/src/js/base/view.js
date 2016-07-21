@@ -1,22 +1,30 @@
 import domify from 'domify';
 import Events from 'events-mixin';
 
+import {clear, replace} from '../utils';
+
 
 export default class View {
   constructor({app}) {
     this.app = app;
   }
 
+  static render(args, container) {
+    if (container.__view instanceof this) {
+      container.__view.update(args);
+    } else {
+      const view = new this(args);
+      const element = view.render();
+      clear(container)
+      container.appendChild(element);
+      container.__view = view;
+    }
+    return container.__view;
+  }
+
   render() {
     const html = this.getHTML();
     const element = domify(html);
-    this.attach(element);
-    return element;
-  }
-
-  renderInto(target) {
-    target.innerHTML = this.getHTML();
-    const element = target.children[0];
     this.attach(element);
     return element;
   }
@@ -27,6 +35,12 @@ export default class View {
     this.events = new Events(element, this);
     this.mount();
     this.isAttached = true;
+  }
+
+  update(args) {
+    if (!this.isAttached) throw new Error("Cannot update unattached view.");
+    this.constructor(args);
+    this.sync();
   }
 
   detach() {

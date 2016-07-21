@@ -1,6 +1,6 @@
 import View from '../base/view';
 
-import {trigger} from '../utils';
+import {trigger, toggleClass} from '../utils';
 
 import template from '../../templates/search.ejs';
 
@@ -27,6 +27,11 @@ export default class Search extends View {
     this.events.bind('blur input', 'onBlur');
     this.events.bind('keyup input', 'onType');
     this.events.bind('input input', 'onType');
+  }
+
+  sync() {
+    if (this.input.value != this.query) this.input.value = this.query;
+    toggleClass(this.element, 'active', this.isOnSearchPage);
   }
 
   onFocus() {

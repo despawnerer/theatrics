@@ -437,6 +437,7 @@ p {
 
   #search form.active .icon-search {
     left: 12px;
+    top: 4px;
   }
 }
 

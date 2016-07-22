@@ -1,8 +1,5 @@
 import 'core-js/fn/promise';
-import 'core-js/fn/symbol';
-import 'core-js/fn/array';
 
-import 'whatwg-fetch';
 import attachFastClick from 'fastclick';
 
 import 'moment-timezone/moment-timezone';

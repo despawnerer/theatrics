@@ -32,6 +32,28 @@ import pkginfo from './package.json';
 
 const ROOT_URL = 'http://theatrics.ru/'
 
+const REQUIRED_POLYFILLS = [
+  'es5',
+  'requestAnimationFrame',
+  'fetch',
+  'Intl.~locale.ru',
+  'String.prototype.startsWith',
+  'String.prototype.endsWith',
+  'Object.assign',
+  'Object.keys',
+  'Symbol',
+  'Symbol.iterator',
+  'Array.from',
+  'Array.prototype.some',
+  'Array.prototype.reduce',
+  'Array.prototype.map',
+  'Array.prototype.includes',
+  'Array.prototype.forEach',
+  'Array.prototype.find',
+  'Array.prototype.filter',
+  'Array.prototype.findIndex',
+]
+
 
 /* CSS */
 
@@ -130,6 +152,7 @@ gulp.task('build-html', () => {
     min: false,
     buildDate: new Date(),
     repositoryURL: pkginfo.repositoryURL,
+    polyfills: REQUIRED_POLYFILLS,
   }
   return gulp
     .src('src/*.ejs')
@@ -149,6 +172,7 @@ gulp.task('build-min-html', () => {
     min: true,
     buildDate: new Date(),
     repositoryURL: pkginfo.repositoryURL,
+    polyfills: REQUIRED_POLYFILLS,
   }
   return gulp
     .src('src/*.ejs')

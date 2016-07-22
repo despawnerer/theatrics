@@ -421,7 +421,6 @@ p {
     top: 0;
     right: 0;
     padding: 0 12px;
-    background: white;
   }
 
   #search form.active:hover .icon-search {
@@ -433,6 +432,7 @@ p {
     cursor: text;
     border-bottom: 2px solid black;
     padding-left: 30px;
+    background: white;
   }
 
   #search form.active .icon-search {

@@ -1,3 +1,16 @@
+import punycode from 'punycode';
+
+import {trim, unprefix} from './strings';
+
+
+export function formatURL(s) {
+  s = trim(s, '/');
+  s = unprefix(s, 'http://');
+  s = unprefix(s, 'https://');
+  return punycode.toUnicode(s);
+}
+
+
 export function formatPriceRange(lower, upper, currency) {
   if (lower == null && upper == null) {
     return '—';

@@ -10,9 +10,9 @@ import * as handlers from './handlers';
 import {capfirst} from '../utils/strings';
 import {merge} from '../utils/objects';
 import {isiOS} from '../utils/browser';
-import {niceURL} from '../utils/urls';
 import {getMapURL} from '../utils/services';
 import {
+  formatURL,
   formatPriceRange,
   formatDuration,
   formatPhoneNumber
@@ -58,7 +58,7 @@ export default class App {
       capfirst,
       isiOS,
       getMapURL,
-      niceURL,
+      formatURL,
       formatPriceRange,
       formatDuration,
       formatPhoneNumber,

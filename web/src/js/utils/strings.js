@@ -23,13 +23,15 @@ export function trim(s, char=' ') {
 
 
 export function trimStart(s, char=' ') {
-  while (s.startsWith(char)) s = s.slice(1);
-  return s;
+  let i = 0;
+  while (s.charAt(i) == char) i++;
+  return s.slice(i);
 }
 
 export function trimEnd(s, char=' ') {
-  while (s.endsWith(char)) s = s.slice(0, -1);
-  return s;
+  let i = s.length - 1;
+  while (s.charAt(i) == char) i--;
+  return s.slice(0, i+1);
 }
 
 

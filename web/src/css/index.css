@@ -446,7 +446,7 @@ p {
 
 #view-container {
   position: relative;
-  min-height: 180px;
+  min-height: 140px;
   flex: 1 0 auto;
   display: flex;
   flex-direction: column;

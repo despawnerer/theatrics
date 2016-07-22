@@ -51,7 +51,7 @@ export default class Resolver {
 
     for (let route of this.routes) {
       const nameMatches = route.name === name;
-      const argsMatch = argNames.every(x => route.argNames.indexOf(x) > -1);
+      const argsMatch = argNames.every(x => route.argNames.includes(x));
       if (!nameMatches || !argsMatch) {
         continue;
       }

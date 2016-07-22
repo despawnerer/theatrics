@@ -1,6 +1,6 @@
 import Events from 'events-mixin';
 
-import {show, toggle, toggleClass} from '../utils';
+import {show, toggle, toggleClass} from '../utils/elements';
 
 
 export default class Slider {

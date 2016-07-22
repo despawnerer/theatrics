@@ -1,7 +1,7 @@
 import domify from 'domify';
 import Events from 'events-mixin';
 
-import {clear, replace} from '../utils';
+import {clear, replace} from '../utils/elements';
 
 
 export default class View {

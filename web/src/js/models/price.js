@@ -1,4 +1,4 @@
-import {formatPriceRange} from '../utils';
+import {formatPriceRange} from '../utils/formatting';
 
 
 export default class Price {

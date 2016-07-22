@@ -6,7 +6,6 @@ import Breadcrumbs from '../models/breadcrumbs';
 import ScheduleView from '../views/schedule';
 import Slider from '../components/slider';
 import Pager from '../components/pager';
-import {clear} from '../utils';
 
 import template from '../../templates/pages/place.ejs';
 import noScheduleTemplate from '../../templates/parts/no-place-schedule.ejs';

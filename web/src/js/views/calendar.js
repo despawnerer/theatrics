@@ -5,7 +5,8 @@ import View from '../base/view';
 import Toggle from '../components/toggle';
 import Slider from '../components/slider';
 
-import {toggleClass, hide, range, rotateLeft} from '../utils';
+import {toggleClass, hide} from '../utils/elements';
+import {range, rotateLeft} from '../utils/arrays';
 
 import template from '../../templates/calendar.ejs';
 

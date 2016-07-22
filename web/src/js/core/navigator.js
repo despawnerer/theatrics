@@ -4,7 +4,10 @@ import URL from 'url-parse';
 import qs from 'query-string';
 
 import MainView from '../views/main';
-import {uuid, getURL, merge} from '../utils';
+
+import {uuid} from '../utils/strings';
+import {getURL} from '../utils/browser';
+import {merge} from '../utils/objects';
 
 import Cache from './cache';
 import Response from './response';

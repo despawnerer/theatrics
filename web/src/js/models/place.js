@@ -1,7 +1,9 @@
 import escape from 'lodash.escape';
 
 import locations from '../core/locations';
-import {capfirst, makeAbsoluteURL} from '../utils';
+
+import {capfirst} from '../utils/strings';
+import {makeAbsoluteURL} from '../utils/urls';
 
 
 export default class Place {

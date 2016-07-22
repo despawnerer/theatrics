@@ -1,6 +1,6 @@
 import Events from 'events-mixin';
 
-import {clear, toggle, show, hide} from '../utils';
+import {clear, toggle, show, hide} from '../utils/elements';
 
 
 export default class Feeder {

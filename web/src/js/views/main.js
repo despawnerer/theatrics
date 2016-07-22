@@ -2,7 +2,8 @@ import View from '../base/view';
 import LocationChooser from '../views/location-chooser';
 import Search from '../views/search';
 
-import {toggle, show, replace, bigLoader} from '../utils';
+import {toggle, show, replace} from '../utils/elements';
+import {bigLoader} from '../utils/html';
 
 
 export default class MainView extends View {

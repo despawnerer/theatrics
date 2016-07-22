@@ -1,7 +1,8 @@
 import locations from '../core/locations';
 
 import View from '../base/view';
-import {trigger} from '../utils';
+
+import {trigger} from '../utils/browser';
 
 import template from '../../templates/location-chooser.ejs';
 

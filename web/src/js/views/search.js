@@ -1,6 +1,7 @@
 import View from '../base/view';
 
-import {trigger, toggleClass} from '../utils';
+import {trigger} from '../utils/browser';
+import {toggleClass} from '../utils/elements';
 
 import template from '../../templates/search.ejs';
 

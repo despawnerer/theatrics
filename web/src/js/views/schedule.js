@@ -1,5 +1,6 @@
 import View from '../base/view';
-import {groupArray} from '../utils';
+
+import {groupArray} from '../utils/arrays';
 
 import template from '../../templates/schedule.ejs';
 

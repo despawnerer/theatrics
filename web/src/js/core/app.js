@@ -7,20 +7,22 @@ import Resolver from './resolver';
 import Router from './router';
 import * as handlers from './handlers';
 
+import {capfirst} from '../utils/strings';
+import {merge} from '../utils/objects';
+import {isiOS} from '../utils/browser';
+import {niceURL} from '../utils/urls';
+import {getMapURL} from '../utils/services';
+import {
+  formatPriceRange,
+  formatDuration,
+  formatPhoneNumber
+} from '../utils/formatting';
 import {
   loader,
   bigLoader,
-  capfirst,
-  isiOS,
-  getMapURL,
-  niceURL,
-  formatPriceRange,
-  formatDuration,
-  formatPhoneNumber,
   preventBreakingRanges,
-  unbreakable,
-  merge,
-} from '../utils';
+  unbreakable
+} from '../utils/html';
 
 
 export default class App {

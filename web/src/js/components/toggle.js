@@ -1,4 +1,4 @@
-import {show, hide, toggle} from '../utils';
+import {show, hide, toggle} from '../utils/elements';
 
 
 export default class Toggle {

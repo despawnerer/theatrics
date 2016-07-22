@@ -5,7 +5,8 @@ import View from '../base/view';
 import Event from '../models/event';
 import Place from '../models/place';
 import Feeder from '../components/feeder';
-import {show, hide} from '../utils';
+
+import {show, hide} from '../utils/elements';
 
 import template from '../../templates/pages/search.ejs';
 import eventTemplate from '../../templates/search-event.ejs';

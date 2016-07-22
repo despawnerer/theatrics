@@ -1,4 +1,5 @@
-import {regexpEscape, zipIntoObject} from '../utils';
+import {regexpEscape} from '../utils/strings';
+import {zipIntoObject} from '../utils/objects';
 
 
 export default class Resolver {

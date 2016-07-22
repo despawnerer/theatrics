@@ -1,5 +1,6 @@
 import moment from 'moment';
-import {makeAbsoluteURL} from '../utils';
+
+import {makeAbsoluteURL} from '../utils/urls';
 
 
 export default class Date {

@@ -2,7 +2,8 @@ import moment from 'moment';
 import escape from 'lodash.escape';
 
 import locations from '../core/locations';
-import {capfirst, range, makeAbsoluteURL} from '../utils';
+
+import {capfirst} from '../utils/strings';
 
 import Place from './place';
 import Date from './date';

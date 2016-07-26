@@ -27,10 +27,8 @@ export default class LocationChooser extends View {
   }
 
   getTargetRoute() {
-    if (this.route.name == 'place-list') {
-      return {name: 'place-list', args: this.route.args};
-    } else if (this.route.name == 'event-list') {
-      return {name: 'event-list', args: this.route.args};
+    if (['place-list', 'event-list'].includes(this.route.name)) {
+      return this.route;
     } else {
       return {name: 'event-list', args: {}};
     }

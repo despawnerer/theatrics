@@ -1,6 +1,7 @@
 import 'lazysizes';
 
 import moment from 'moment';
+import qs from 'query-string';
 
 import TheatricsAPI from './api';
 import Resolver from './resolver';
@@ -70,8 +71,13 @@ export default class App {
     }
   }
 
-  url(name, args) {
-    return this.resolver.reverse(name, args);
+  url(name, args, query=null) {
+    const path = this.resolver.reverse(name, args);
+    if (query) {
+      return `${path}?${qs.stringify(query)}`;
+    } else {
+      return path;
+    }
   }
 
   renderTemplate(template, context={}) {

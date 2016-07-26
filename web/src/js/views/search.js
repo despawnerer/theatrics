@@ -7,18 +7,18 @@ import template from '../../templates/search.ejs';
 
 
 export default class Search extends View {
-  constructor({app, isOnSearchPage, query}) {
+  constructor({app, isOnSearchPage, location, query}) {
     super({app});
 
     this.isOnSearchPage = isOnSearchPage;
+    this.location = location;
     this.query = query || '';
   }
 
   getHTML() {
-    return this.app.renderTemplate(template, {
-      isOnSearchPage: this.isOnSearchPage,
-      query: this.query,
-    });
+    const {isOnSearchPage, query, location} = this;
+    const searchURL = this.getSearchPageURL();
+    return this.app.renderTemplate(template, {isOnSearchPage, query, searchURL});
   }
 
   mount() {
@@ -34,6 +34,7 @@ export default class Search extends View {
 
   sync() {
     if (this.input.value != this.query) this.input.value = this.query;
+    this.element.action = this.getSearchPageURL();
     toggleClass(this.element, 'active', this.isOnSearchPage);
   }
 
@@ -60,7 +61,7 @@ export default class Search extends View {
     if (this.typeTimeout) window.clearTimeout(this.typeTimeout);
     this.typeTimeout = window.setTimeout(() => {
       const action = this.isOnSearchPage ? 'redirect' : 'navigate';
-      const url = this.getSearchPageURL();
+      const url = this.getSearchQueryURL();
       trigger(window, action, url);
     }, 100);
   }
@@ -68,13 +69,18 @@ export default class Search extends View {
   onSubmit(event) {
     event.preventDefault();
     if (this.typeTimeout) window.clearTimeout(this.typeTimeout);
-    const url = this.getSearchPageURL();
+    const url = this.getSearchQueryURL();
     trigger(window, 'navigate', url);
   }
 
   getSearchPageURL() {
-    const query = this.input.value;
-    const path = this.app.url('search', {});
-    return `${path}?q=${encodeURIComponent(query)}`;
+    const location = this.location.slug;
+    return this.app.url('search', {location});
+  }
+
+  getSearchQueryURL() {
+    const q = this.input.value;
+    const location = this.location.slug;
+    return this.app.url('search', {location}, {q});
   }
 }

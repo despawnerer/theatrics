@@ -27,7 +27,7 @@ export default class MainView extends View {
     const query = isOnSearchPage ? this.state.query.q : '';
 
     LocationChooser.render({app, route, location}, containers.city);
-    Search.render({app, isOnSearchPage, query}, containers.search);
+    Search.render({app, isOnSearchPage, location, query}, containers.search);
 
     document.title = this.getTitle();
 

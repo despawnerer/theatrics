@@ -1,4 +1,4 @@
-<form action="/search/" method="GET"<% if (isOnSearchPage) { %> class="active"<% } %>>
+<form action="<%- searchURL %>" method="GET"<% if (isOnSearchPage) { %> class="active"<% } %>>
     <input type="text" placeholder="Поиск" name="q" autocomplete="off" value="<%- query %>" <% if (isOnSearchPage) { %>autofocus<% } %>/>
     <span class="icon-search"></span>
     <span class="icon-close"></span>

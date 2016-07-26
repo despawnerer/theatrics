@@ -32,13 +32,13 @@ export default class App {
 
     this.resolver = new Resolver();
     this.resolver.addRoute('index', '/');
-    this.resolver.addRoute('search', '/search/');
     this.resolver.addRoute('location', '/{location:[a-z\-]+}/');
     this.resolver.addRoute('event-list', '/{location:[a-z\-]+}/events/');
     this.resolver.addRoute(
       'event-list',
       '/{location:[a-z\-]+}/events/{date:\\d\\d\\d\\d-\\d\\d-\\d\\d}/');
     this.resolver.addRoute('place-list', '/{location:[a-z\-]+}/places/');
+    this.resolver.addRoute('search', '/{location:[a-z\-]+}/search/');
     this.resolver.addRoute('event', '/event/{id:\\d+}/');
     this.resolver.addRoute('place', '/place/{id:\\d+}/');
 

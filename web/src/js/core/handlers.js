@@ -85,13 +85,15 @@ export function place(request, {id}) {
 }
 
 
-export function search(request) {
+export function search(request, {location}) {
+  location = locations.get(location);
+  if (!location) return notFound(request);
+
   const app = request.app;
   const query = request.query.q;
-  const location = request.state.location;
   const feed = app.api.getSearchFeed(query, location);
-  const page = new SearchPage({app, query, feed});
-  return render({page});
+  const page = new SearchPage({app, location, query, feed});
+  return render({page, location});
 }
 
 

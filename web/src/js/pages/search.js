@@ -30,9 +30,9 @@ export default class SearchPage extends Page {
 
   getTitle() {
     if (this.hasRealQuery()) {
-      return `Поиск «${this.query}»`;
+      return `Поиск «${this.query}» – ${this.location.name}`;
     } else {
-      return `Поиск без запроса`;
+      return `Поиск без запроса – ${this.location.name}`;
     }
   }
 

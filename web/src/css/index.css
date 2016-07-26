@@ -308,7 +308,10 @@ p {
   color: #444;
   font-size: 16px;
   position: absolute;
-  left: 6px;
+  text-align: center;
+  left: 0;
+  top: 0;
+  width: 25px;
   height: 30px;
   line-height: 30px;
   pointer-events: none;

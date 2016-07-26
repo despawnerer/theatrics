@@ -23,6 +23,8 @@ export default class Search extends View {
 
   mount() {
     this.input = this.element.querySelector('input');
+    this.events.bind('click .icon-search', 'onOpen');
+    this.events.bind('click .icon-close', 'onClose');
     this.events.bind('submit', 'onSubmit');
     this.events.bind('focus input', 'onFocus');
     this.events.bind('blur input', 'onBlur');
@@ -33,6 +35,15 @@ export default class Search extends View {
   sync() {
     if (this.input.value != this.query) this.input.value = this.query;
     toggleClass(this.element, 'active', this.isOnSearchPage);
+  }
+
+  onOpen() {
+    this.element.classList.add('active');
+    this.input.focus();
+  }
+
+  onClose() {
+    this.element.classList.remove('active');
   }
 
   onFocus() {

@@ -314,8 +314,19 @@ p {
   pointer-events: none;
 }
 
-#search form.active input { border-bottom-color: black; border-bottom-width: 2px; padding-top: 8px; }
+#search .icon-close {
+  display: none;
+}
+
+#search form.active input {
+  border-bottom-color: black;
+  border-bottom-width: 2px;
+  padding-top: 8px;
+  padding-right: 30px;
+}
+
 #search form.active .icon-search { color: black; }
+#search form.active .icon-close { color: black; }
 
 @media (max-width: 719px) {
   #header {
@@ -395,23 +406,22 @@ p {
     overflow: hidden;
   }
 
-  #search form:hover .icon-search {
+  #search .icon-search {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 18px;
+    pointer-events: auto;
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
+
+  #search .icon-search:hover {
     color: #888;
   }
 
   #search input {
-    margin: 0;
-    border: 0;
-    padding-left: 40px;
-    height: 40px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-
-  #search .icon-search {
-    top: 5px;
-    left: 11px;
-    font-size: 18px;
+    display: none;
   }
 
   #search form.active {
@@ -421,23 +431,45 @@ p {
     top: 0;
     right: 0;
     padding: 0 12px;
-  }
-
-  #search form.active:hover .icon-search {
-    color: black;
-  }
-
-  #search form.active input {
-    width: 100%;
-    cursor: text;
-    border-bottom: 2px solid black;
-    padding-left: 30px;
     background: white;
   }
 
   #search form.active .icon-search {
-    left: 12px;
-    top: 4px;
+    left: 0;
+    height: 38px;
+    line-height: 38px;
+    cursor: text;
+    pointer-events: none;
+  }
+
+  #search form.active input {
+    display: block;
+    padding-left: 40px;
+    height: 40px;
+    width: 100%;
+    cursor: text;
+    border-bottom: 2px solid black;
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: 16px;
+    line-height: initial;
+  }
+
+  #search form.active .icon-close {
+    display: block;
+    font-size: 18px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 38px;
+    text-align: center;
+    line-height: 38px;
+    cursor: pointer;
+  }
+
+  #search form.active .icon-close:hover {
+    color: #888;
   }
 }
 

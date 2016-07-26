@@ -21,6 +21,9 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
+.icon-close:before {
+    content: "\e903";
+}
 .icon-menu:before {
     content: "\e902";
 }

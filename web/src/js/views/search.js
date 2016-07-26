@@ -11,7 +11,7 @@ export default class Search extends View {
     super({app});
 
     this.isOnSearchPage = isOnSearchPage;
-    this.query = query;
+    this.query = query || '';
   }
 
   getHTML() {

@@ -78,6 +78,36 @@
           </div>
         <% } %>
 
+        <% var participants = event.getParticipantsByRole() %>
+        <% var names = function(participants) { return pluck(participants, 'name').map(unbreakable).join(', ') } %>
+        <% if (participants.director || participants.actors || participants.author) { %>
+          <div class="item-information-item" title="Участники">
+            <span class="item-information-icon icon-people"></span>
+            <span class="item-information-value">
+              <ul class="item-participants">
+                <% if (participants.director) { %>
+                  <li>
+                    <span class="role"><%- participants.director.length > 1 ? "Режиссеры" : "Режиссер" %></span>
+                    <span class="agents"><%= names(participants.director) %></span>
+                  </li>
+                <% } %>
+                <% if (participants.author) { %>
+                  <li>
+                    <span class="role">Пьеса</span>
+                    <span class="agents"><%= names(participants.author) %></span>
+                  </li>
+                <% } %>
+                <% if (participants.actors) { %>
+                  <li>
+                    <span class="role"><%- participants.actors.length > 1 ? "Актеры" : "Актер" %></span>
+                    <span class="agents"><%= names(participants.actors) %></span>
+                  </li>
+                <% } %>
+              </ul>
+            </span>
+          </div>
+        <% } %>
+
         <% var price = event.getPrice() %>
         <% if (price) { %>
           <div class="item-information-item" title="Цена билета">

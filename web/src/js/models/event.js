@@ -68,6 +68,16 @@ export default class Event {
     return this.data.dates.map(spec => new Date(this, spec));
   }
 
+  getParticipantsByRole() {
+    const participants = this.data.participants || [];
+    const byRole = {};
+    participants.forEach(({agent, role}) => {
+      const list = byRole[role] = byRole[role] || [];
+      list.push(agent);
+    });
+    return byRole;
+  }
+
   hasChildren() {
     return this.data.children_count > 0;
   }

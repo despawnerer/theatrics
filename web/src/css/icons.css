@@ -22,50 +22,53 @@
 }
 
 .icon-close:before {
-    content: "\e903";
+  content: "\e903";
 }
 .icon-menu:before {
-    content: "\e902";
+  content: "\e902";
 }
 .icon-chevron-thin-right:before {
-    content: "\e900";
+  content: "\e900";
 }
 .icon-chevron-thin-left:before {
-    content: "\e901";
+  content: "\e901";
 }
 .icon-search:before {
-    content: "\f002";
+  content: "\f002";
 }
 .icon-heart:before {
-    content: "\f004";
+  content: "\f004";
 }
 .icon-star:before {
-    content: "\f005";
+  content: "\f005";
 }
 .icon-clock:before {
-    content: "\f017";
+  content: "\f017";
 }
 .icon-place:before {
-    content: "\f041";
+  content: "\f041";
 }
 .icon-external-link:before {
-    content: "\f08e";
+  content: "\f08e";
 }
 .icon-phone:before {
-    content: "\f095";
+  content: "\f095";
 }
 .icon-octocat:before {
-    content: "\f09b";
+  content: "\f09b";
 }
 .icon-globe:before {
-    content: "\f0ac";
+  content: "\f0ac";
+}
+.icon-people:before {
+  content: "\f0c0";
 }
 .icon-calendar:before {
-    content: "\f133";
+  content: "\f133";
 }
 .icon-ticket:before {
-    content: "\f145";
+  content: "\f145";
 }
 .icon-subway:before {
-    content: "\f239";
+  content: "\f239";
 }

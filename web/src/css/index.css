@@ -1326,6 +1326,10 @@ p {
   font-size: 14px;
 }
 
+.item-information-icon.icon-people {
+  font-size: 14px;
+}
+
 .item-information-value {
   display: block;
   overflow: hidden;
@@ -1371,6 +1375,27 @@ p {
 .item-place-address-link {
   font-weight: normal;
   font-size: 13px;
+}
+
+.item-participants {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-top: -4px;
+}
+
+.item-participants .role {
+  display: inline-block;
+  vertical-align: text-top;
+  width: 75px;
+  color: #333;
+  font-size: 12px;
+}
+
+.item-participants .agents {
+  display: inline-block;
+  vertical-align: text-top;
+  width: 70%;
 }
 
 .item-dates {

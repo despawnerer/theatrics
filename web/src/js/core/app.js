@@ -9,7 +9,7 @@ import Router from './router';
 import * as handlers from './handlers';
 
 import {capfirst} from '../utils/strings';
-import {merge} from '../utils/objects';
+import {merge, pluck} from '../utils/objects';
 import {isiOS} from '../utils/browser';
 import {getMapURL} from '../utils/services';
 import {
@@ -66,6 +66,7 @@ export default class App {
       preventBreakingRanges,
       unbreakable,
       merge,
+      pluck,
       url: this.url.bind(this),
       app: this,
     }

@@ -1,5 +1,5 @@
 import aioes
-from funcy import collecting, compact, is_seqcont
+from funcy import collecting, compact, is_seqcont, pluck
 
 from .connections import elastic
 from .settings import ELASTICSEARCH_INDEX
@@ -58,10 +58,11 @@ async def expand_multiple_items(item_list, relations):
         path = field.split('.')
         field = path[-1]
         items_with_field = _find_items_having_path(item_list, path)
-        if not items_with_field:
+
+        related_ids = list(compact(pluck(field, items_with_field)))
+        if not related_ids:
             continue
 
-        related_ids = [item[field] for item in items_with_field]
         related_items = await fetch_multiple_items(type_, related_ids, subfields)
         related_by_id = {item['id']: item for item in compact(related_items)}
 

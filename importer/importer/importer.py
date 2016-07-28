@@ -30,8 +30,7 @@ class Importer:
 
         self.event_ids = set()
         self.place_ids = set()
-        self.stub_place_ids = set()
-        self.stub_places = []
+        self.stub_places = {}
 
         self.event_counts_by_place_id = defaultdict(int)
         self.event_children_counts_by_parent_id = defaultdict(int)
@@ -62,8 +61,7 @@ class Importer:
                 place_id = place['id']
                 self.event_counts_by_place_id[place_id] += 1
                 if place['is_stub']:
-                    if place_id not in self.stub_place_ids:
-                        self.stub_places.append(place)
+                    self.stub_places[place_id] = place
                 else:
                     self.place_ids.add(place_id)
 
@@ -98,7 +96,7 @@ class Importer:
     def import_stub_places(self):
         print("Importing %d stub places..." % len(self.stub_places))
 
-        self.index_all(map(transform_stub_place, self.stub_places))
+        self.index_all(map(transform_stub_place, self.stub_places.values()))
 
     def import_events(self):
         print("Importing events...")

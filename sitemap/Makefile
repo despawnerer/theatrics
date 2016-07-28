@@ -7,7 +7,7 @@ clean:
 	find . -name "__pycache__" -type d -exec rm -rf {} +
 
 run:
-	gunicorn sitemap:app -b 0.0.0.0:8000 -w 2
+	gunicorn sitemap:app -b 0.0.0.0:8000
 
 run-dev:
 	gunicorn sitemap:app -b 0.0.0.0:8000 --reload

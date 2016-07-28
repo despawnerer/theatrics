@@ -26,6 +26,11 @@ def transform_event(kudago_event, parent_id, children_count):
         dates = flatten(map(split_date, dates))
     dates = list(sorted(map(transform_date, dates), key=itemgetter('start')))
 
+    participants = [
+        {'role': p['role']['slug'], 'agent': p['agent']['id']}
+        for p in kudago_event['participants']
+    ]
+
     return {
         '_id': kudago_event['id'],
         '_type': 'event',
@@ -43,6 +48,7 @@ def transform_event(kudago_event, parent_id, children_count):
         'location': kudago_event['location']['slug'],
         'place': place['id'] if place else None,
         'parent': parent_id,
+        'participants': participants,
 
         'age_restriction': kudago_event['age_restriction'],
         'price': transform_price(kudago_event['price'], kudago_event['is_free']),

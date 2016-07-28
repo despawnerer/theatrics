@@ -44,8 +44,15 @@
                 "description": {"type": "string", "analyzer": "russian"},
 
                 "location": {"type": "string", "index": "not_analyzed"},
-                "place": {"type": "integer", "index": "not_analyzed"},
-                "parent": {"type": "integer", "index": "not_analyzed"},
+                "place": {"type": "integer"},
+                "parent": {"type": "integer"},
+                "participants": {
+                    "type": "nested",
+                    "properties": {
+                        "role": {"type": "string", "index": "not_analyzed"},
+                        "agent": {"type": "integer"}
+                    }
+                },
 
                 "age_restriction": {"type": "string", "index": "not_analyzed"},
                 "price": {

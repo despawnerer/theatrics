@@ -52,8 +52,7 @@ def iter_full_places_by_ids(kudago, ids):
         page_size=100,
         order_by='id',
         fields='id,title,short_title,tagline,description,body_text,images,'
-               'images,categories,tags,location,site_url,rank,user_rating,'
-               'total_visits,is_editors_choice,favorites_count,phone,'
+               'categories,tags,location,site_url,favorites_count,phone,'
                'comments_count,age_restriction,address,subway,timetable,'
                'foreign_url,coords,is_closed,is_stub',
         expand='images',

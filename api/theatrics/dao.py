@@ -1,8 +1,9 @@
 import aioes
+from funcy import collecting, compact, is_seqcont
 
 from .connections import elastic
 from .settings import ELASTICSEARCH_INDEX
-from .utils.collections import compact
+from .utils.functional import containing
 
 
 __all__ = [
@@ -49,27 +50,46 @@ async def fetch_multiple_items(type_, ids, fields=None):
 
 
 async def expand_item(item, relations):
-    for field, (type_, subfields) in relations.items():
-        id_ = item.get(field)
-        if id_ is not None:
-            item[field] = await fetch_item(type_, id_, subfields)
-    return item
+    return (await expand_multiple_items([item], relations))[0]
 
 
 async def expand_multiple_items(item_list, relations):
     for field, (type_, subfields) in relations.items():
-        related_ids = list(compact(item.get(field) for item in item_list))
-        if not related_ids:
+        path = field.split('.')
+        field = path[-1]
+        items_with_field = _find_items_having_path(item_list, path)
+        if not items_with_field:
             continue
 
+        related_ids = [item[field] for item in items_with_field]
         related_items = await fetch_multiple_items(type_, related_ids, subfields)
         related_by_id = {item['id']: item for item in compact(related_items)}
 
-        for item in item_list:
-            if field in item:
-                item[field] = related_by_id.get(item[field])
+        for item in items_with_field:
+            item[field] = related_by_id.get(item[field])
 
     return item_list
+
+
+@collecting
+def _find_items_having_path(item_list, path):
+    assert len(path) > 0
+
+    field, rest = path[0], path[1:]
+    if len(path) == 1:
+        yield from filter(containing(field), item_list)
+        return
+
+    for item in item_list:
+        try:
+            value = item[field]
+        except:
+            continue
+        else:
+            if is_seqcont(value):
+                yield from _find_items_having_path(value, rest)
+            else:
+                yield from _find_items_having_path([value], rest)
 
 
 def simplify_item(item):

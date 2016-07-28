@@ -133,6 +133,45 @@ def transform_stub_place(kudago_place):
     }
 
 
+def transform_agent(kudago_agent):
+    return {
+        '_id': kudago_agent['id'],
+        '_type': 'agent',
+
+        'kind': kudago_agent['agent_type'],
+        'is_stub': kudago_agent['is_stub'],
+
+        'name': kudago_agent['title'],
+        'lead': strip_links(kudago_agent['description']),
+        'description': strip_links(kudago_agent['body_text']),
+
+        'favorites_count': kudago_agent['favorites_count'],
+        'comments_count': kudago_agent['comments_count'],
+
+        'source': {
+            'name': 'kudago.com',
+            'url': kudago_agent['site_url'],
+        }
+    }
+
+
+def transform_stub_agent(kudago_agent):
+    return {
+        '_id': kudago_agent['id'],
+        '_type': 'agent',
+
+        'kind': kudago_agent['agent_type'],
+        'is_stub': kudago_agent['is_stub'],
+
+        'name': kudago_agent['title'],
+
+        'source': {
+            'name': 'kudago.com',
+            'url': kudago_agent['site_url'],
+        }
+    }
+
+
 # related objects
 
 def transform_price(price_text, is_free):

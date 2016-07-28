@@ -162,6 +162,51 @@
                     }
                 }
             }
+        },
+        "agent": {
+            "properties": {
+                "kind": {"type": "string", "index": "not_analyzed"},
+                "is_stub": {"type": "boolean"},
+
+                "name": {
+                    "type": "multi_field",
+                    "fields": {
+                        "ngram": {"type": "string", "analyzer": "edge_ngram_analyzer"},
+                        "text": {"type": "string", "analyzer": "russian"}
+                    }
+                },
+                "lead": {"type": "string", "analyzer": "russian"},
+                "description": {"type": "string", "analyzer": "russian"},
+
+                "comments_count": {"type": "integer"},
+                "favorites_count": {"type": "integer"},
+
+                "images": {
+                    "type": "nested",
+                    "properties": {
+                        "image": {"type": "string", "index": "no"},
+                        "source": {
+                            "properties": {
+                                "link": {"type": "string", "index": "no"},
+                                "name": {"type": "string", "index": "no"}
+                            }
+                        },
+                        "thumbnails": {
+                            "properties": {
+                                "144x96": {"type": "string", "index": "no"},
+                                "640x384": {"type": "string", "index": "no"}
+                            }
+                        }
+                    }
+                },
+
+                "source": {
+                    "properties": {
+                        "name": {"type": "string", "index": "no"},
+                        "url": {"type": "string", "index": "no"}
+                    }
+                }
+            }
         }
     }
 }

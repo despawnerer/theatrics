@@ -233,7 +233,7 @@ def split_date(spec):
     for day in range(days + 1):
         this_date = start_date + timedelta(days=day)
         schedule = some(
-            lambda s: this_date.isoweekday() in s['days_of_week'],
+            lambda s: this_date.isoweekday() - 1 in s['days_of_week'],
             schedules
         )
         if schedule:

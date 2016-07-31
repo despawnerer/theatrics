@@ -1,6 +1,6 @@
 test_project = docker-compose -p theatrics_test
 
-.PHONY: test clean-test
+.PHONY: build test clean-test
 
 build:
 	docker-compose build

@@ -237,7 +237,7 @@ def split_date(spec):
             schedules
         )
         if schedule:
-            date_string = datetime.combine(this_date, time(0, 0)).isoformat()
+            date_string = this_date.isoformat()
             yield {
                 'is_continuous': False,
                 'start_date': date_string,

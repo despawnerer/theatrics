@@ -24,6 +24,11 @@ export function preventBreakingRanges(string) {
 }
 
 
+export function preventBreakingOrdinals(string) {
+  return string.replace(/(\d+?-[хейя])/g, unbreakable('$1'));
+}
+
+
 export function unbreakable(string) {
   return `<span class="unbreakable">${escape(string)}</span>`;
 }

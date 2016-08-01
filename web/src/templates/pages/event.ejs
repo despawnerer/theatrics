@@ -37,7 +37,7 @@
 
     <h1 class="big-item-title">
       <%- event.getName() %>
-      <span class="big-item-tagline"><%- event.data.tagline %></span>
+      <span class="big-item-tagline"><%= preventBreakingOrdinals(event.data.tagline) %></span>
     </h1>
 
     <div class="item-information">

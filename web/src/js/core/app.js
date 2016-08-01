@@ -22,6 +22,7 @@ import {
   loader,
   bigLoader,
   preventBreakingRanges,
+  preventBreakingOrdinals,
   unbreakable
 } from '../utils/html';
 
@@ -64,6 +65,7 @@ export default class App {
       formatDuration,
       formatPhoneNumber,
       preventBreakingRanges,
+      preventBreakingOrdinals,
       unbreakable,
       merge,
       url: this.url.bind(this),

@@ -13,6 +13,8 @@ export default class Search extends View {
     this.isOnSearchPage = isOnSearchPage;
     this.location = location;
     this.query = query || '';
+
+    this.onClose = this.onClose.bind(this);
   }
 
   getHTML() {
@@ -30,6 +32,11 @@ export default class Search extends View {
     this.events.bind('blur input', 'onBlur');
     this.events.bind('keyup input', 'onType');
     this.events.bind('input input', 'onType');
+    window.addEventListener('closekeyboard', this.onClose);
+  }
+
+  unmount() {
+    window.removeEventListener('closekeyboard', this.onClose);
   }
 
   sync() {
@@ -45,6 +52,7 @@ export default class Search extends View {
 
   onClose() {
     this.element.classList.remove('active');
+    this.input.blur();
   }
 
   onFocus() {

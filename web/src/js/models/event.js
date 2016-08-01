@@ -1,7 +1,7 @@
 import moment from 'moment';
 import escape from 'lodash.escape';
 
-import locations from '../core/locations';
+import {locations} from '../core/data';
 
 import {capfirst} from '../utils/strings';
 

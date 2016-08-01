@@ -1,7 +1,7 @@
 import moment from 'moment';
 import escape from 'lodash.escape';
 
-import {locations} from '../core/data';
+import {locations, roles} from '../core/data';
 
 import {capfirst} from '../utils/strings';
 
@@ -72,6 +72,7 @@ export default class Event {
     const participants = this.data.participants || [];
     const byRole = {};
     participants.forEach(({agent, role}) => {
+      if (!roles.has(role)) return;
       const list = byRole[role] = byRole[role] || [];
       list.push(agent);
     });

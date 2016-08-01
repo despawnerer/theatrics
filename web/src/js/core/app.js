@@ -6,6 +6,7 @@ import qs from 'query-string';
 import TheatricsAPI from './api';
 import Resolver from './resolver';
 import Router from './router';
+import {roles} from './data';
 import * as handlers from './handlers';
 
 import {capfirst} from '../utils/strings';
@@ -67,6 +68,7 @@ export default class App {
       unbreakable,
       merge,
       pluck,
+      roles,
       url: this.url.bind(this),
       app: this,
     }

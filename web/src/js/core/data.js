@@ -1,4 +1,5 @@
 import locationList from '../../data/locations.json';
+import roleList from '../../data/roles.json';
 
 
 class UniquelyIndexedArray {
@@ -21,3 +22,4 @@ class UniquelyIndexedArray {
 
 
 export const locations = new UniquelyIndexedArray('slug', locationList);
+export const roles = new UniquelyIndexedArray('slug', roleList);

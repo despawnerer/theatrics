@@ -1,5 +1,5 @@
 from operator import itemgetter
-from funcy import flatten, some, project
+from funcy import flatten, project
 from datetime import datetime, time, timedelta
 from isodate import parse_date
 
@@ -239,16 +239,16 @@ def split_date(spec):
 
     for day in range(days + 1):
         this_date = start_date + timedelta(days=day)
-        schedule = some(
+        this_date_string = this_date.isoformat()
+        matching_schedules = filter(
             lambda s: this_date.isoweekday() - 1 in s['days_of_week'],
             schedules
         )
-        if schedule:
-            date_string = this_date.isoformat()
+        for schedule in matching_schedules:
             yield {
                 'is_continuous': False,
-                'start_date': date_string,
-                'end_date': date_string,
+                'start_date': this_date_string,
+                'end_date': this_date_string,
                 'start_time': schedule['start_time'],
                 'end_time': schedule['end_time'],
             }

@@ -135,3 +135,54 @@ class SplitDateTestCase(TestCase):
                 'is_continuous': False,
             },
         ])
+
+    def test_multiple_schedules_on_one_day(self):
+        spec = {
+            'start_date': '2016-08-01',
+            'start_time': None,
+            'end_date': '2016-08-07',
+            'end_time': None,
+            'is_continuous': False,
+            'schedules': [
+                {
+                    'days_of_week': [0, 6],
+                    'start_time': '14:00:00',
+                    'end_time': None,
+                },
+                {
+                    'days_of_week': [0, 6],
+                    'start_time': '19:00:00',
+                    'end_time': None,
+                },
+            ],
+        }
+        self.assertCountEqual(split_date(spec), [
+            {
+                'start_date': '2016-08-01',
+                'start_time': '14:00:00',
+                'end_date': '2016-08-01',
+                'end_time': None,
+                'is_continuous': False,
+            },
+            {
+                'start_date': '2016-08-01',
+                'start_time': '19:00:00',
+                'end_date': '2016-08-01',
+                'end_time': None,
+                'is_continuous': False,
+            },
+            {
+                'start_date': '2016-08-07',
+                'start_time': '14:00:00',
+                'end_date': '2016-08-07',
+                'end_time': None,
+                'is_continuous': False,
+            },
+            {
+                'start_date': '2016-08-07',
+                'start_time': '19:00:00',
+                'end_date': '2016-08-07',
+                'end_time': None,
+                'is_continuous': False,
+            },
+        ])

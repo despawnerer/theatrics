@@ -1,6 +1,7 @@
 from operator import itemgetter
 from funcy import flatten, some
 from datetime import datetime, time, timedelta
+from isodate import parse_date
 
 from .utils import (
     maybe_parse_date,
@@ -220,8 +221,8 @@ def split_date(spec):
         yield spec
         return
 
-    start_date = maybe_parse_date(spec['start_date'])
-    end_date = maybe_parse_date(spec['end_date'])
+    start_date = parse_date(spec['start_date'])
+    end_date = parse_date(spec['end_date'])
 
     days = int((end_date - start_date).total_seconds() / (60 * 60 * 24))
     schedules = spec['schedules'] or [{

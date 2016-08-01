@@ -17,5 +17,5 @@ test.run:
 	touch test.run
 
 clean-test:
-	$(test_project) down
+	$(test_project) down --rmi local
 	rm test.run

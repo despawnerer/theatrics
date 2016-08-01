@@ -56,7 +56,7 @@ export function event(request, {id}) {
       const location = event.getLocation();
       return render({page, location});
     })
-    .catch(error => error.response.status == 404 ? notFound(app) : undefined);
+    .catch(error => error.response.status == 404 ? notFound(request) : undefined);
 }
 
 
@@ -81,7 +81,7 @@ export function place(request, {id}) {
       const location = place.getLocation();
       return render({page, location});
     })
-    .catch(error => error.response.status == 404 ? notFound(app) : undefined);
+    .catch(error => error.response.status == 404 ? notFound(request) : undefined);
 }
 
 

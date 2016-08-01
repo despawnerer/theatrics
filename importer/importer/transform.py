@@ -154,6 +154,8 @@ def transform_agent(kudago_agent):
         'favorites_count': kudago_agent['favorites_count'],
         'comments_count': kudago_agent['comments_count'],
 
+        'images': kudago_agent['images'],
+
         'source': {
             'name': 'kudago.com',
             'url': kudago_agent['site_url'],

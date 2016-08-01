@@ -5,6 +5,8 @@ from .transform import (
     transform_event,
     transform_place,
     transform_stub_place,
+    transform_agent,
+    transform_stub_agent,
 )
 from .fetch import (
     iter_event_children_stubs,
@@ -12,6 +14,7 @@ from .fetch import (
     iter_theatrical_place_stubs,
     iter_full_events_by_ids,
     iter_full_places_by_ids,
+    iter_full_agents_by_ids,
 )
 from .utils import print_progress
 
@@ -30,8 +33,9 @@ class Importer:
 
         self.event_ids = set()
         self.place_ids = set()
-        self.stub_place_ids = set()
-        self.stub_places = []
+        self.agent_ids = set()
+        self.stub_places = {}
+        self.stub_agents = {}
 
         self.event_counts_by_place_id = defaultdict(int)
         self.event_children_counts_by_parent_id = defaultdict(int)
@@ -42,7 +46,9 @@ class Importer:
         self.collect_events()
 
         self.import_stub_places()
+        self.import_stub_agents()
         self.import_places()
+        self.import_agents()
         self.import_events()
 
     # collecting
@@ -55,6 +61,7 @@ class Importer:
             id_ = event['id']
             categories = event['categories'] or []
             place = event['place']
+            participants = event['participants']
 
             self.event_ids.add(id_)
 
@@ -62,10 +69,18 @@ class Importer:
                 place_id = place['id']
                 self.event_counts_by_place_id[place_id] += 1
                 if place['is_stub']:
-                    if place_id not in self.stub_place_ids:
-                        self.stub_places.append(place)
+                    self.stub_places[place_id] = place
                 else:
                     self.place_ids.add(place_id)
+
+            if participants:
+                for participation in participants:
+                    agent = participation['agent']
+                    agent_id = agent['id']
+                    if agent['is_stub']:
+                        self.stub_agents[agent_id] = agent
+                    else:
+                        self.agent_ids.add(agent_id)
 
             if 'festival' in categories:
                 self.collect_event_children(id_)
@@ -88,6 +103,16 @@ class Importer:
 
     # importing
 
+    def import_stub_places(self):
+        print("Importing %d stub places..." % len(self.stub_places))
+
+        self.index_all(map(transform_stub_place, self.stub_places.values()))
+
+    def import_stub_agents(self):
+        print("Importing %d stub agents..." % len(self.stub_agents))
+
+        self.index_all(map(transform_stub_agent, self.stub_agents.values()))
+
     def import_places(self):
         print("Importing places...")
 
@@ -95,10 +120,12 @@ class Importer:
         docs = map(self.transform_place, places)
         self.index_all(print_progress(docs, "Imported %d places"))
 
-    def import_stub_places(self):
-        print("Importing %d stub places..." % len(self.stub_places))
+    def import_agents(self):
+        print("Importing agents...")
 
-        self.index_all(map(transform_stub_place, self.stub_places))
+        agents = iter_full_agents_by_ids(self.kudago, self.agent_ids)
+        docs = map(transform_agent, agents)
+        self.index_all(print_progress(docs, "Imported %d agents"))
 
     def import_events(self):
         print("Importing events...")

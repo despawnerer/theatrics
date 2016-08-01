@@ -199,6 +199,17 @@ gulp.task('watch-static', () => {
 /* Data */
 
 const DISABLED_LOCATIONS = ['ufa', 'vbg', 'smr', 'krd'];
+const DISABLED_ROLES = ['stage-theatre', 'organizer'];
+
+const ROLE_ORDER_OVERRIDE = [
+  'director',
+  'author',
+  'writer',
+  'screenwriter',
+  'artist',
+  'musician',
+  'sculptor',
+];
 
 const LOCATION_TIMEZONE_OVERRIDES = {
   spb: 'Europe/Moscow',
@@ -250,6 +261,32 @@ gulp.task('update-locations', () => {
           return location;
         });
       file.contents = new Buffer(JSON.stringify(locations));
+      callback(null, file);
+    }))
+    .pipe(gulp.dest('src/data'));
+});
+
+gulp.task('update-roles', () => {
+  const url = 'https://kudago.com/public-api/v1.3/agent-roles/';
+  const qs = {
+    lang: 'ru',
+    fields: 'slug,name,name_plural',
+  };
+  return request.get(url, {qs})
+    .pipe(source('roles.json'))
+    .pipe(buffer())
+    .pipe(through.obj((file, encoding, callback) => {
+      const contents = file.contents.toString(encoding);
+      const fetchedRoles = JSON.parse(contents).results;
+      const roles = fetchedRoles
+        .filter(role => !DISABLED_ROLES.includes(role.slug))
+        .sort((a, b) => {
+          const normalizeIndex = index => index < 0 ? fetchedRoles.length : index;
+          const indexA = ROLE_ORDER_OVERRIDE.indexOf(a.slug);
+          const indexB = ROLE_ORDER_OVERRIDE.indexOf(b.slug);
+          return normalizeIndex(indexA) - normalizeIndex(indexB);
+        });
+      file.contents = new Buffer(JSON.stringify(roles));
       callback(null, file);
     }))
     .pipe(gulp.dest('src/data'));

@@ -10,3 +10,8 @@ export function zipIntoObject(keys, values) {
 export function merge(...objects) {
   return Object.assign({}, ...objects);
 }
+
+
+export function pluck(objects, key) {
+  return objects.map(o => o[key]);
+}

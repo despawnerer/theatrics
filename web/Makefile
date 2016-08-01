@@ -25,5 +25,8 @@ clean-node-modules:
 update-locations:
 	./node_modules/.bin/gulp update-locations
 
+update-roles:
+	./node_modules/.bin/gulp update-roles
+
 update-timezones:
 	./node_modules/.bin/gulp update-timezones

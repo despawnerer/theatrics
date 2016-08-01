@@ -6,10 +6,11 @@ import qs from 'query-string';
 import TheatricsAPI from './api';
 import Resolver from './resolver';
 import Router from './router';
+import {roles} from './data';
 import * as handlers from './handlers';
 
 import {capfirst} from '../utils/strings';
-import {merge} from '../utils/objects';
+import {merge, pluck} from '../utils/objects';
 import {isiOS} from '../utils/browser';
 import {getMapURL} from '../utils/services';
 import {
@@ -68,6 +69,8 @@ export default class App {
       preventBreakingOrdinals,
       unbreakable,
       merge,
+      pluck,
+      roles,
       url: this.url.bind(this),
       app: this,
     }

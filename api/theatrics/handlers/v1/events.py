@@ -21,6 +21,9 @@ EXPANDABLE_RELATIONS = {
         'location', 'name', 'full_name', 'tagline', 'kind', 'is_for_kids',
         'is_premiere', 'tagline', 'age_restriction',
     )),
+    'participants.agent': ('agent', (
+        'name', 'kind', 'is_stub',
+    ))
 }
 
 

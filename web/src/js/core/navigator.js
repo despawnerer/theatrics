@@ -9,9 +9,9 @@ import {uuid} from '../utils/strings';
 import {getURL} from '../utils/browser';
 import {merge} from '../utils/objects';
 
+import {locations} from './data';
 import Cache from './cache';
 import Response from './response';
-import locations from './locations';
 
 
 export default class Navigator {

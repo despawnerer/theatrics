@@ -3,9 +3,9 @@ from math import ceil
 from aiohttp import web
 from marshmallow import Schema, fields
 from marshmallow.validate import Range
+from funcy import project
 
 from theatrics.utils.fields import CommaSeparatedList
-from theatrics.utils.collections import project
 from theatrics.utils.uri import build_uri
 from theatrics.utils.handlers import with_params
 from theatrics.dao import (

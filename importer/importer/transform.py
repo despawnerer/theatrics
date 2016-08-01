@@ -27,6 +27,11 @@ def transform_event(kudago_event, parent_id, children_count):
         dates = flatten(map(split_date, dates))
     dates = list(sorted(map(transform_date, dates), key=itemgetter('start')))
 
+    participants = [
+        {'role': p['role']['slug'], 'agent': p['agent']['id']}
+        for p in kudago_event['participants']
+    ]
+
     return {
         '_id': kudago_event['id'],
         '_type': 'event',
@@ -44,6 +49,7 @@ def transform_event(kudago_event, parent_id, children_count):
         'location': kudago_event['location']['slug'],
         'place': place['id'] if place else None,
         'parent': parent_id,
+        'participants': participants,
 
         'age_restriction': kudago_event['age_restriction'],
         'price': transform_price(kudago_event['price'], kudago_event['is_free']),
@@ -130,6 +136,47 @@ def transform_stub_place(kudago_place):
         'source': {
             'name': 'kudago.com',
             'url': kudago_place['site_url'],
+        }
+    }
+
+
+def transform_agent(kudago_agent):
+    return {
+        '_id': kudago_agent['id'],
+        '_type': 'agent',
+
+        'kind': kudago_agent['agent_type'],
+        'is_stub': kudago_agent['is_stub'],
+
+        'name': kudago_agent['title'],
+        'lead': strip_links(kudago_agent['description']),
+        'description': strip_links(kudago_agent['body_text']),
+
+        'favorites_count': kudago_agent['favorites_count'],
+        'comments_count': kudago_agent['comments_count'],
+
+        'images': kudago_agent['images'],
+
+        'source': {
+            'name': 'kudago.com',
+            'url': kudago_agent['site_url'],
+        }
+    }
+
+
+def transform_stub_agent(kudago_agent):
+    return {
+        '_id': kudago_agent['id'],
+        '_type': 'agent',
+
+        'kind': kudago_agent['agent_type'],
+        'is_stub': kudago_agent['is_stub'],
+
+        'name': kudago_agent['title'],
+
+        'source': {
+            'name': 'kudago.com',
+            'url': kudago_agent['site_url'],
         }
     }
 

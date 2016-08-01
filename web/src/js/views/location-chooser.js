@@ -1,4 +1,4 @@
-import locations from '../core/locations';
+import {locations} from '../core/data';
 
 import View from '../base/view';
 

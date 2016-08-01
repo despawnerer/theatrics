@@ -12,7 +12,7 @@ export default class TheatricsAPI {
   }
 
   fetchEvent(id) {
-    return this.get(`/events/${id}/`, {expand: 'place,parent'});
+    return this.get(`/events/${id}/`, {expand: 'place,parent,participants.agent'});
   }
 
   fetchPlace(id) {

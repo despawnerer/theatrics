@@ -94,6 +94,26 @@
           </div>
         <% } %>
 
+        <% var participantsByRole = event.getParticipantsByRole() %>
+        <% if (Object.keys(participantsByRole).length > 0) { %>
+          <div class="item-information-item" title="Участники">
+            <span class="item-information-icon icon-people"></span>
+            <span class="item-information-value">
+              <ul class="item-participants">
+                <% roles.forEach(function(role) { %>
+                  <% var agents = participantsByRole[role.slug] %>
+                  <% if (agents && agents.length > 0) { %>
+                    <li>
+                      <span class="role"><%- capfirst(agents.length > 1 ? role.name_plural : role.name) %></span>
+                      <span class="agents"><%= pluck(agents, 'name').map(unbreakable).join(', ') %></span>
+                    </li>
+                  <% } %>
+                <% }) %>
+              </ul>
+            </span>
+          </div>
+        <% } %>
+
         <% var dates = event.getDisplayDates() %>
         <% if (dates.length) { %>
         <div class="item-information-item" title="Даты">

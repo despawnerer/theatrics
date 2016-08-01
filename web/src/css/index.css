@@ -1387,9 +1387,8 @@ p {
 .item-participants .role {
   display: inline-block;
   vertical-align: text-top;
-  width: 75px;
+  width: 85px;
   color: #333;
-  font-size: 12px;
 }
 
 .item-participants .agents {

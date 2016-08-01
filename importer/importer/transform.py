@@ -1,5 +1,5 @@
 from operator import itemgetter
-from funcy import flatten, some
+from funcy import flatten, some, project
 from datetime import datetime, time, timedelta
 from isodate import parse_date
 
@@ -218,7 +218,13 @@ def transform_date(spec):
 
 def split_date(spec):
     if spec['is_continuous'] or not spec['end_date']:
-        yield spec
+        yield project(spec, (
+            'is_continuous',
+            'start_date',
+            'end_date',
+            'start_time',
+            'end_time',
+        ))
         return
 
     start_date = parse_date(spec['start_date'])

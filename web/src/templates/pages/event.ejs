@@ -78,6 +78,22 @@
           </div>
         <% } %>
 
+        <% var price = event.getPrice() %>
+        <% if (price) { %>
+          <div class="item-information-item" title="Цена билета">
+            <span class="item-information-icon icon-ticket"></span>
+            <span class="item-information-value"><%- price %></span>
+          </div>
+        <% } %>
+
+        <% var duration = event.getDisplayDuration() %>
+        <% if (duration && duration.asMinutes() > 0) { %>
+          <div class="item-information-item" title="Продолжительность">
+            <span class="item-information-icon icon-clock"></span>
+            <span class="item-information-value"><%- formatDuration(duration) %></span>
+          </div>
+        <% } %>
+
         <% var participantsByRole = event.getParticipantsByRole() %>
         <% if (Object.keys(participantsByRole).length > 0) { %>
           <div class="item-information-item" title="Участники">
@@ -95,22 +111,6 @@
                 <% }) %>
               </ul>
             </span>
-          </div>
-        <% } %>
-
-        <% var price = event.getPrice() %>
-        <% if (price) { %>
-          <div class="item-information-item" title="Цена билета">
-            <span class="item-information-icon icon-ticket"></span>
-            <span class="item-information-value"><%- price %></span>
-          </div>
-        <% } %>
-
-        <% var duration = event.getDisplayDuration() %>
-        <% if (duration && duration.asMinutes() > 0) { %>
-          <div class="item-information-item" title="Продолжительность">
-            <span class="item-information-icon icon-clock"></span>
-            <span class="item-information-value"><%- formatDuration(duration) %></span>
           </div>
         <% } %>
 

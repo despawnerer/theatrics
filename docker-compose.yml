@@ -4,21 +4,17 @@ services:
     build: ./web
     volumes:
       - ./web:/app
-    ports:
-      - "8000:8000"
     depends_on:
       - api
       - sitemap
   sitemap:
     build: ./sitemap
-    command: make run-dev
     volumes:
       - ./sitemap:/app
     depends_on:
       - elasticsearch
   api:
     build: ./api
-    command: make run-dev
     volumes:
       - ./api:/app
     depends_on:

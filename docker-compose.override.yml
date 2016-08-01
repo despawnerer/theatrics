@@ -1,0 +1,9 @@
+version: '2'
+services:
+  web:
+    ports:
+      - 8000:8000
+  sitemap:
+    command: make run-dev
+  api:
+    command: make run-dev

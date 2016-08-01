@@ -1,4 +1,4 @@
-test_project = docker-compose -p theatrics_test
+test_project = docker-compose -p theatrics_test -f docker-compose.yml
 
 .PHONY: build test clean-test
 

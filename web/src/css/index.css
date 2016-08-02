@@ -1068,6 +1068,7 @@ p {
 }
 
 @media (max-width: 359px) {
+  .feed-item { margin: 20px 15px; }
   .load-more-container { margin-top: 20px; }
 }
 
@@ -1084,13 +1085,16 @@ p {
   .feed-container { width: 300px; }
 }
 
+@media (min-width: 360px) and (max-width: 549px) {
+  .feed-item { margin: 30px 15px; }
+}
+
 @media (max-width: 549px) {
   .feed {
     margin: 0 -15px;
   }
 
   .feed-item {
-    margin: 25px 15px;
     display: block;
     width: auto;
   }

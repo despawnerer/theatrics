@@ -1,7 +1,7 @@
 from elasticsearch import Elasticsearch
 
-from .utils import wait_for_all_services
 from .settings import ELASTICSEARCH_ENDPOINTS
+from .utils.services import wait_for_all_services
 
 
 def connect_to_elasticsearch():

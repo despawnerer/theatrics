@@ -3,10 +3,9 @@ from funcy import flatten, project
 from datetime import datetime, time, timedelta
 from isodate import parse_date
 
-from .utils import (
-    maybe_parse_date,
-    maybe_parse_time,
-    find_first,
+from .utils.parsing import maybe_parse_date, maybe_parse_time
+from .utils.collections import find_first
+from .utils.strings import (
     strip_links,
     find_numbers,
     is_from_string,

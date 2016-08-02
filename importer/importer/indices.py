@@ -2,7 +2,7 @@ import elasticsearch
 import os.path
 from datetime import datetime
 
-from .utils import read_json_file
+from .utils.files import read_json_file
 from .settings import ELASTICSEARCH_ALIAS
 
 

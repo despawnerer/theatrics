@@ -16,7 +16,7 @@ from .fetch import (
     iter_full_places_by_ids,
     iter_full_agents_by_ids,
 )
-from .utils import print_progress
+from .utils.logging import print_progress
 
 
 def import_data(kudago, elastic, index_name, since=None):

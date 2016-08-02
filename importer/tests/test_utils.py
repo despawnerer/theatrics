@@ -1,11 +1,8 @@
 from unittest import TestCase
 
-from importer.utils import (
-    safe_crash,
-    maybe,
-    find_first,
-    strip_links,
-)
+from importer.utils.decorators import safe_crash, maybe
+from importer.utils.collections import find_first
+from importer.utils.strings import strip_links
 
 from .utils import capture_output
 

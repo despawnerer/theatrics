@@ -1271,6 +1271,7 @@ p {
   padding: 0;
   margin: 0 15px;
   flex: 0 0 auto;
+  background: silver;  /* for lazyloaded images */
 }
 
 .item-slide:first-child { margin-left: 0; }

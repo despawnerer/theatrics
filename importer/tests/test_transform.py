@@ -164,6 +164,21 @@ class TransformDateTestCase(TestCase):
             }
         )
 
+    def test_date_based_one_day(self):
+        self.assertEqual(
+            transform_date({
+                'start_date': '2016-04-04',
+                'start_time': None,
+                'end_date': None,
+                'end_time': None,
+                'is_continuous': False
+            }),
+            {
+                'start': '2016-04-04',
+                'end': '2016-04-04',
+            }
+        )
+
     def test_continuous(self):
         self.assertEqual(
             transform_date({

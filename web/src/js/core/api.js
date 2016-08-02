@@ -44,7 +44,7 @@ export default class TheatricsAPI {
 
   getEventsFeed(location, date) {
     const query = {
-      fields: 'name,full_name,place,images,tagline,lead,is_premiere,kind,end,start,location,price',
+      fields: 'name,full_name,place,images,lead,is_premiere,kind,end,start,location,price',
       expand: 'place',
       page_size: 24,
       location: location.slug,

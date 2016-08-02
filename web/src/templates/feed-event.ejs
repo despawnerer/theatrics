@@ -13,9 +13,7 @@
     </h2>
   </a>
 
-  <% if (event.data.tagline) { %>
-    <div class="tagline"><%- event.data.tagline %></div>
-  <% } else if (event.isFestival() && event.data.lead) { %>
+  <% if (event.data.lead) { %>
     <div class="tagline"><%= event.data.lead %></div>
   <% } %>
 

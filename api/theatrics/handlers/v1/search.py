@@ -15,7 +15,7 @@ from .events import EXPANDABLE_RELATIONS
 __all__ = ['search']
 
 
-BROKEN_UP_EM_REGEX = re.compile(r'<\/em>([ -"“”«»\.,;:]*)<em>')
+BROKEN_UP_EM_REGEX = re.compile(r'<\/em>([ \-"“”«»\.,;:]*)<em>')
 EM_CONTENT_REGEX = re.compile(r'<em>(.*?)<\/em>')
 
 

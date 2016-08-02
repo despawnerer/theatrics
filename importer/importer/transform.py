@@ -286,7 +286,6 @@ def split_date(spec):
 
     for day in range(days + 1):
         this_date = start_date + timedelta(days=day)
-        this_date_string = this_date.isoformat()
         matching_schedules = filter(
             lambda s: this_date.isoweekday() - 1 in s['days_of_week'],
             schedules
@@ -294,8 +293,8 @@ def split_date(spec):
         for schedule in matching_schedules:
             yield {
                 'is_continuous': False,
-                'start_date': this_date_string,
-                'end_date': this_date_string,
+                'start_date': this_date.isoformat(),
+                'end_date': None,
                 'start_time': schedule['start_time'],
                 'end_time': schedule['end_time'],
             }

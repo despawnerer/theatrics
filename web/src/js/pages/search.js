@@ -6,7 +6,7 @@ import Event from '../models/event';
 import Place from '../models/place';
 import Feeder from '../components/feeder';
 
-import {show, hide} from '../utils/elements';
+import {show, hide, toggle, isVisible} from '../utils/elements';
 
 import template from '../../templates/pages/search.ejs';
 import eventTemplate from '../../templates/search-event.ejs';
@@ -40,6 +40,7 @@ export default class SearchPage extends Page {
     const resultList = this.element.querySelector('.search-results');
     const noResultsMessage = this.element.querySelector('.no-results');
     const noQueryMessage = this.element.querySelector('.no-query');
+    const loader = this.element.querySelector('.big-loader-container');
     if (this.hasRealQuery()) {
       const feeder = new Feeder(
         this.element.querySelector('.search-feed'),
@@ -48,9 +49,11 @@ export default class SearchPage extends Page {
       )
       feeder.loadNewFeed();
       hide(noQueryMessage);
+      toggle(loader, !isVisible(resultList));
     } else {
       hide(noResultsMessage);
       hide(resultList);
+      hide(loader);
       show(noQueryMessage);
     }
   }

@@ -46,3 +46,8 @@ export function show(element) {
 export function hide(element) {
   element && element.setAttribute('hidden', 'hidden');
 }
+
+
+export function isVisible(element) {
+  return element && !element.hasAttribute('hidden');
+}

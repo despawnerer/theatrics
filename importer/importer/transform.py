@@ -229,7 +229,7 @@ def transform_coords(coords):
 
 
 def transform_date(spec):
-    start_date = maybe_parse_date(spec['start_date'])
+    start_date = parse_date(spec['start_date'])
     start_time = maybe_parse_time(spec['start_time']) or time(0, 0)
     end_date = maybe_parse_date(spec['end_date']) or start_date
     end_time = maybe_parse_time(spec['end_time']) or start_time

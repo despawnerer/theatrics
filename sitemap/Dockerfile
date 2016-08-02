@@ -1,5 +1,6 @@
 FROM python:3.5
 
+ENV PYTHONUNBUFFERED true
 RUN pip install --upgrade pip
 
 WORKDIR /app/

@@ -264,7 +264,7 @@ def transform_date(spec):
 
 
 def split_date(spec):
-    if spec['is_continuous'] or not spec['end_date']:
+    if spec['is_continuous']:
         yield project(spec, (
             'is_continuous',
             'start_date',
@@ -275,7 +275,7 @@ def split_date(spec):
         return
 
     start_date = parse_date(spec['start_date'])
-    end_date = parse_date(spec['end_date'])
+    end_date = maybe_parse_date(spec['end_date']) or start_date
 
     days = int((end_date - start_date).total_seconds() / (60 * 60 * 24))
     schedules = spec['schedules'] or [{

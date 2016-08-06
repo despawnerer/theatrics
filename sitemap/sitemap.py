@@ -39,4 +39,6 @@ def sitemap():
     for doc in scan(elastic, query=query, index=ELASTICSEARCH_INDEX):
         type_ = doc['_type']
         id_ = doc['_id']
-        yield 'http://theatrics.ru/{}/{}/\n'.format(type_, id_)
+        location = doc.get('location')
+        if location is None or location in locations:
+            yield 'http://theatrics.ru/{}/{}/\n'.format(type_, id_)

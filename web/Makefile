@@ -1,6 +1,6 @@
 .PHONY: all install-deps build build-min watch clean clean-build clean-node-modules update-locations update-timezones
 
-all: clean install-deps build-min
+all: install-deps build-min
 
 install-deps:
 	npm install

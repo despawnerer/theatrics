@@ -2,7 +2,8 @@ import click
 import schedule
 from time import sleep
 
-from importer.utils import get_today, safe_crash
+from importer.utils.dates import get_today
+from importer.utils.decorators import safe_crash
 from importer import (
     update as do_update,
     migrate as do_migrate,

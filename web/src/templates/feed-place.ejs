@@ -1,8 +1,8 @@
 <li class="feed-item">
   <a href="<%- url('place', {id: place.data.id}) %>" class="feed-item-link">
     <div class="feed-image-container">
-      <% if (place.data.images.length) { %>
-      <img data-src="<%- place.data.images[0].thumbnails['640x384'] %>" class="feed-image lazyload"/>
+      <% if (place.data.first_image) { %>
+      <img data-src="<%- place.data.first_image.thumbnails['640x384'] %>" class="feed-image lazyload"/>
       <% } %>
     </div>
     <h2 class="item-header">

@@ -1,7 +1,7 @@
 from marshmallow import Schema, fields
 
 from theatrics.scoring import get_default_score_functions
-from theatrics.utils.handlers import with_sync_params, json_response
+from theatrics.utils.handlers import with_params, json_response
 
 from ..helpers import get_item, get_list
 
@@ -31,7 +31,7 @@ async def place_list(request):
     )
 
 
-@with_sync_params(PlaceListParams)
+@with_params(PlaceListParams)
 def build_query_from_request(request, location=None):
     filters = [
         {'term': {'is_stub': False}}

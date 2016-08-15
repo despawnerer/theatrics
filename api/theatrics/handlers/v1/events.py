@@ -3,7 +3,7 @@ from datetime import datetime
 from marshmallow import Schema, fields
 
 from theatrics.scoring import get_default_score_functions
-from theatrics.utils.handlers import with_sync_params, json_response
+from theatrics.utils.handlers import with_params, json_response
 
 from ..helpers import get_item, get_list
 
@@ -55,7 +55,7 @@ async def event_list(request):
     )
 
 
-@with_sync_params(EventListParams)
+@with_params(EventListParams)
 def build_query_from_request(request, location=None, place=None, parent=None,
                              date=None, include_past=False):
     filters = []

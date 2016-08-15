@@ -3,22 +3,12 @@ from functools import wraps
 from aiohttp import web
 
 
-__all__ = ['with_params', 'with_sync_params', 'json_response', 'parse_params']
+__all__ = ['with_params', 'json_response', 'parse_params']
 
 
 def with_params(schema_cls):
     schema = schema_cls()
-    def decorator(f):
-        @wraps(f)
-        async def wrapper(request, *args, **kwargs):
-            kwargs.update(parse_params(request, schema))
-            return await f(request, *args, **kwargs)
-        return wrapper
-    return decorator
 
-
-def with_sync_params(schema_cls):
-    schema = schema_cls()
     def decorator(f):
         @wraps(f)
         def wrapper(request, *args, **kwargs):

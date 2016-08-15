@@ -4,7 +4,7 @@ from datetime import datetime
 from marshmallow import Schema, fields
 
 from theatrics.scoring import get_default_score_functions
-from theatrics.utils.handlers import with_sync_params, json_response
+from theatrics.utils.handlers import with_params, json_response
 from theatrics.utils.collections import get_all
 
 from ..helpers import get_list
@@ -39,7 +39,7 @@ async def search(request):
     return results
 
 
-@with_sync_params(SearchParams)
+@with_params(SearchParams)
 def build_query_from_request(request, q, location=None, include_past=False):
     filters = [
         {

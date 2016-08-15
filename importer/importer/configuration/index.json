@@ -36,6 +36,24 @@
                 "favorites_count": {"type": "integer"},
                 "comments_count": {"type": "integer"},
 
+                "first_image": {
+                    "type": "object",
+                    "properties": {
+                        "image": {"type": "string", "index": "no"},
+                        "source": {
+                            "properties": {
+                                "link": {"type": "string", "index": "no"},
+                                "name": {"type": "string", "index": "no"}
+                            }
+                        },
+                        "thumbnails": {
+                            "properties": {
+                                "144x96": {"type": "string", "index": "no"},
+                                "640x384": {"type": "string", "index": "no"}
+                            }
+                        }
+                    }
+                },
                 "images": {
                     "type": "nested",
                     "properties": {

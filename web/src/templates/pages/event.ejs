@@ -25,8 +25,12 @@
   </div>
 
   <div class="content-container">
-    <% if (event.isFestival() || event.isPremiere()) { %>
+    <% if (event.isFestival() || event.isPremiere() || event.data.age_restriction) { %>
     <div class="badges-block">
+      <% if (event.data.age_restriction) { %>
+        <span class="badge age-restriction-badge"><%= event.data.age_restriction %></span>
+      <% } %>
+
       <% if (event.isFestival()) { %>
         <span class="badge festival-badge">Фестиваль</span>
       <% } else if (event.isPremiere()) { %>

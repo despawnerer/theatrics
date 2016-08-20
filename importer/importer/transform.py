@@ -1,5 +1,5 @@
 from operator import itemgetter
-from funcy import flatten, project
+from funcy import flatten, project, first
 from datetime import datetime, time, timedelta
 from isodate import parse_date
 
@@ -61,6 +61,7 @@ def transform_event(kudago_event, parent_id, children_count):
         'start': dates[0]['start'] if dates else None,
         'end': dates[-1]['end'] if dates else None,
 
+        'first_image': first(kudago_event['images']),
         'images': kudago_event['images'],
         'dates': dates,
 
@@ -107,6 +108,7 @@ def transform_place(kudago_place, events_count):
         'favorites_count': kudago_place['favorites_count'],
         'comments_count': kudago_place['comments_count'],
 
+        'first_image': first(kudago_place['images']),
         'images': kudago_place['images'],
 
         'source': {
@@ -154,6 +156,7 @@ def transform_agent(kudago_agent):
         'favorites_count': kudago_agent['favorites_count'],
         'comments_count': kudago_agent['comments_count'],
 
+        'first_image': first(kudago_agent['images']),
         'images': kudago_agent['images'],
 
         'source': {

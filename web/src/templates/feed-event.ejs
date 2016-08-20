@@ -1,7 +1,9 @@
 <li class="feed-item<% if (!event.isActual()) { %> past<% } %>">
   <a href="<%- url('event', {id: event.data.id}) %>" class="feed-item-link">
     <div class="feed-image-container">
-      <img data-src="<%- event.data.images[0].thumbnails['640x384'] %>" class="feed-image lazyload"/>
+      <% if (event.data.first_image) { %>
+      <img data-src="<%- event.data.first_image.thumbnails['640x384'] %>" class="feed-image lazyload"/>
+      <% } %>
     </div>
     <h2 class="item-header">
       <%- event.getName() %>

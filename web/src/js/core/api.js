@@ -44,7 +44,7 @@ export default class TheatricsAPI {
 
   getEventsFeed(location, date) {
     const query = {
-      fields: 'name,full_name,place,images,lead,is_premiere,kind,end,start,location,price,age_restriction',
+      fields: 'name,full_name,place,first_image,lead,is_premiere,kind,end,start,location,price,age_restriction',
       expand: 'place',
       page_size: 24,
       location: location.slug,
@@ -57,7 +57,7 @@ export default class TheatricsAPI {
 
   getPlacesFeed(location) {
     const query = {
-      fields: 'full_name,name,images,address,url,location',
+      fields: 'full_name,name,first_image,address,url,location',
       page_size: 24,
       location: location.slug,
     };
@@ -66,7 +66,7 @@ export default class TheatricsAPI {
 
   getSearchFeed(q, location) {
     const query = {
-      fields: 'full_name,name,images,address,working_hours,location,start,end,tagline,place,is_premiere,kind,lead,dates,age_restriction',
+      fields: 'full_name,name,first_image,address,working_hours,location,start,end,tagline,place,is_premiere,kind,lead,dates,age_restriction',
       expand: 'place',
       page_size: 24,
       q: q,

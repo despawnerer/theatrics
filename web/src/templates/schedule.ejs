@@ -23,6 +23,11 @@
               <h2 class="schedule-item-title">
                 <a href="<%- url('event', {id: event.data.id }) %>">
                   <span class="link-text"><%- event.getName() %></span>
+
+                  <% if (event.data.age_restriction) { %>
+                    <span class="badge age-restriction-badge"><%= event.data.age_restriction %></span>
+                  <% } %>
+
                   <% if (event.isFestival()) { %>
                     <span class="badge festival-badge">Фестиваль</span>
                   <% } else if (event.isPremiere()) { %>
@@ -53,6 +58,11 @@
               <h2 class="schedule-item-title">
                 <a href="<%- url('event', {id: event.data.id }) %>">
                   <span class="link-text"><%- event.getName() %></span>
+
+                  <% if (event.data.age_restriction) { %>
+                    <span class="badge age-restriction-badge"><%= event.data.age_restriction %></span>
+                  <% } %>
+
                   <% if (event.isFestival()) { %>
                     <span class="badge festival-badge">Фестиваль</span>
                   <% } else if (event.isPremiere()) { %>

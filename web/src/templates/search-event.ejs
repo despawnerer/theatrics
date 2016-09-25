@@ -40,7 +40,7 @@
     <% if (event.data.tagline) { %>
       <p><%- event.data.tagline %></p>
     <% } else if (event.isFestival() && event.data.lead) { %>
-      <p><%= event.data.lead %></p>
+      <%= event.data.lead %>
     <% } %>
   </div>
 </li>

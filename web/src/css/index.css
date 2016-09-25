@@ -66,6 +66,7 @@ p {
 .past a:hover .link-text { color: #999; }
 .past .link-text { border-color: #ccc; }
 .past .badge { filter: grayscale(); color: white; }
+.past .age-restriction-badge { color: #888; }
 
 .unbreakable { white-space: nowrap; }
 

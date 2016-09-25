@@ -637,7 +637,7 @@ p {
   vertical-align: baseline;
   font-weight: normal;
   line-height: 11px;
-  margin-right: 2px;
+  margin-right: 3px;
 }
 
 .festival-badge { background: #ff0000; }
@@ -1835,7 +1835,7 @@ p {
 }
 
 .search-result-header {
-  margin: 0 0 12px 0;
+  margin: 0 0 9px 0;
 }
 
 .search-result-header a {
@@ -1847,8 +1847,8 @@ p {
 .search-result-title {
   display: inline;
   font-size: 21px;
-  line-height: 1.25em;
   margin-right: 3px;
+  line-height: 1.25em;
 }
 
 .search-result-title em {
@@ -1899,7 +1899,6 @@ p {
 
   .search-result-title {
     font-size: 18px;
-    margin: 0;
   }
 
   .search-result-title em {

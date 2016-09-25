@@ -25,24 +25,31 @@
   </div>
 
   <div class="content-container">
-    <% if (event.isFestival() || event.isPremiere() || event.data.age_restriction) { %>
-    <div class="badges-block">
-      <% if (event.data.age_restriction) { %>
-        <span class="badge age-restriction-badge"><%= event.data.age_restriction %></span>
+    <header class="big-item-header-container">
+      <h1 class="big-item-header"><%- event.getName() %></h1>
+
+      <% var isFestival = event.isFestival() %>
+      <% var isPremiere = event.isPremiere() %>
+      <% if (event.data.age_restriction || isFestival || isPremiere) { %>
+        <span class="badges">
+          <% if (event.data.age_restriction) { %>
+            <span class="badge age-restriction-badge"><%= event.data.age_restriction %></span>
+          <% } %>
+
+          <% if (isFestival) { %>
+            <span class="badge festival-badge">Фестиваль</span>
+          <% } else if (isPremiere) { %>
+            <span class="badge premiere-badge">Премьера</span>
+          <% } %>
+        </span>
       <% } %>
 
-      <% if (event.isFestival()) { %>
-        <span class="badge festival-badge">Фестиваль</span>
-      <% } else if (event.isPremiere()) { %>
-        <span class="badge premiere-badge">Премьера</span>
+      <% if (event.data.tagline) { %>
+        <p class="big-item-tagline">
+          <%= preventBreakingOrdinals(event.data.tagline) %>
+        </p>
       <% } %>
-    </div>
-    <% } %>
-
-    <h1 class="big-item-title">
-      <%- event.getName() %>
-      <span class="big-item-tagline"><%= preventBreakingOrdinals(event.data.tagline) %></span>
-    </h1>
+    </header>
 
     <div class="item-information">
       <div class="item-information-group">

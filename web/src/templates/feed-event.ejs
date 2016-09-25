@@ -5,19 +5,25 @@
       <img data-src="<%- event.data.first_image.thumbnails['640x384'] %>" class="feed-image lazyload"/>
       <% } %>
     </div>
-    <h2 class="item-header">
-      <%- event.getName() %>
+    <div class="feed-item-header-container">
+      <h2 class="feed-item-header"><%- event.getName() %></h2>
 
-      <% if (event.data.age_restriction) { %>
-        <span class="badge age-restriction-badge"><%= event.data.age_restriction %></span>
-      <% } %>
+      <% var isFestival = event.isFestival() %>
+      <% var isPremiere = event.isPremiere() %>
+      <% if (event.data.age_restriction || isFestival || isPremiere) { %>
+        <span class="badges">
+          <% if (event.data.age_restriction) { %>
+            <span class="badge age-restriction-badge"><%= event.data.age_restriction %></span>
+          <% } %>
 
-      <% if (event.isFestival()) { %>
-        <span class="badge festival-badge">Фестиваль</span>
-      <% } else if (event.isPremiere()) { %>
-        <span class="badge premiere-badge">Премьера</span>
+          <% if (isFestival) { %>
+            <span class="badge festival-badge">Фестиваль</span>
+          <% } else if (isPremiere) { %>
+            <span class="badge premiere-badge">Премьера</span>
+          <% } %>
+        </span>
       <% } %>
-    </h2>
+    </div>
   </a>
 
   <% if (event.data.lead) { %>

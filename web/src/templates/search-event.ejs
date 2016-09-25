@@ -8,21 +8,27 @@
   </div>
 
   <div class="search-result-details">
-    <a href="<%- url('event', {id: event.data.id}) %>">
-      <h2>
-        <%= event.getHighlightedName() %>
+    <div class="search-result-header">
+      <a href="<%- url('event', {id: event.data.id}) %>">
+        <h2 class="search-result-title"><%= event.getHighlightedName() %></h2>
 
-        <% if (event.data.age_restriction) { %>
-          <span class="badge age-restriction-badge"><%= event.data.age_restriction %></span>
-        <% } %>
+        <% var isFestival = event.isFestival() %>
+        <% var isPremiere = event.isPremiere() %>
+        <% if (event.data.age_restriction || isFestival || isPremiere) { %>
+          <span class="badges">
+            <% if (event.data.age_restriction) { %>
+              <span class="badge age-restriction-badge"><%= event.data.age_restriction %></span>
+            <% } %>
 
-        <% if (event.isFestival()) { %>
-          <span class="badge festival-badge">Фестиваль</span>
-        <% } else if (event.isPremiere()) { %>
-          <span class="badge premiere-badge">Премьера</span>
+            <% if (isFestival) { %>
+              <span class="badge festival-badge">Фестиваль</span>
+            <% } else if (isPremiere) { %>
+              <span class="badge premiere-badge">Премьера</span>
+            <% } %>
+          </span>
         <% } %>
-      </h2>
-    </a>
+      </a>
+    </div>
 
     <% var place = event.getPlace() %>
     <% if (place) { %>

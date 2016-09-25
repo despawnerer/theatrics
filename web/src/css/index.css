@@ -619,8 +619,13 @@ p {
 
 /* Badges */
 
-.badges-block {
-  margin-bottom: 12px;
+.badges {
+  display: inline-block;
+  white-space: nowrap;
+  font-size: 11px;
+  margin-top: 8px;
+  position: relative;
+  top: -3px;
 }
 
 .badge {
@@ -629,10 +634,10 @@ p {
   font-size: 11px;
   color: white;
   padding: 2px 4px;
-  vertical-align: middle;
+  vertical-align: baseline;
   font-weight: normal;
   line-height: 11px;
-  margin: 5px 0;
+  margin-right: 2px;
 }
 
 .festival-badge { background: #ff0000; }
@@ -643,11 +648,6 @@ p {
   font-size: 10px;
   border: 1px solid #bbb;
   padding: 1px 2px;
-}
-
-@media (max-width: 719px) {
-  .badges-block { margin-bottom: 10px; }
-  .badges-block .badge { margin: 0; }
 }
 
 
@@ -1164,10 +1164,16 @@ p {
 
 /* Items */
 
-.item-header {
-  font-size: 21px;
+.feed-item-header-container {
   margin: 20px 0 11px 0;
+}
+
+.feed-item-header {
+  display: inline;
+  margin: 0;
+  font-size: 21px;
   line-height: 1.25em;
+  margin-right: 5px;
 }
 
 .tagline {
@@ -1202,7 +1208,7 @@ p {
 }
 
 @media (max-width: 1139px) {
-  .item-header {
+  .feed-item-header-container {
     margin: 14px 0 6px 0;
   }
 
@@ -1292,20 +1298,20 @@ p {
   max-width: 85vw;
 }
 
-.big-item-title {
-  font-size: 220%;
+.big-item-header-container {
   margin: 0 0 20px 0;
 }
 
-.big-item-title:first-child {
-  margin-top: 0;
+.big-item-header {
+  display: inline;
+  margin-right: 5px;
+  font-size: 220%;
 }
 
 .big-item-tagline {
+  margin: 5px 0;
   font-family: Liberation Serif, Times New Roman, serif;
-  font-weight: normal;
-  margin-left: 5px;
-  font-size: 90%;
+  font-size: 200%;
 }
 
 .item-information {
@@ -1497,15 +1503,13 @@ p {
 }
 
 @media (max-width: 719px) {
-  .big-item-title {
+  .big-item-header {
     font-size: 180%;
     margin-bottom: 10px;
   }
 
   .big-item-tagline {
-    display: block;
-    margin: 5px 0;
-    font-size: 80%;
+    font-size: 175%;
   }
 
   .item-information {
@@ -1729,17 +1733,23 @@ p {
 }
 
 .schedule-item-title {
+  display: inline;
   line-height: 21px;
   font-size: 15px;
   font-weight: bolder;
-  margin: 0;
+  margin: 0 3px 0 0;
   padding: 0;
 }
 
-.schedule-item-title a {
+.schedule-item-title-container a {
   display: inline-block;
   padding: 5px 10px;
   margin: -5px -10px;
+}
+
+.schedule-item-title-container .badges {
+  margin: 0;
+  top: -1px;
 }
 
 .schedule-item-tagline {
@@ -1817,23 +1827,34 @@ p {
   margin-right: 20px;
 }
 
-.search-result h2 {
-  font-size: 21px;
-  margin: 0 0 12px 0;
-  line-height: 1.25em;
+.search-result-details {
+  overflow: hidden;
 }
 
-.search-result h2 em {
+.search-result-header {
+  margin: 0 0 12px 0;
+}
+
+.search-result-header a {
+  display: block;
+  padding: 2.5px 5px;
+  margin: -2.5px -5px;
+}
+
+.search-result-title {
+  display: inline;
+  font-size: 21px;
+  line-height: 1.25em;
+  margin-right: 3px;
+}
+
+.search-result-title em {
   font-style: normal;
   border-bottom: 3px dotted black;
 }
 
 .search-result a:hover em {
   border-bottom-color: gray;
-}
-
-.search-result-details {
-  overflow: hidden;
 }
 
 .search-result p {
@@ -1873,12 +1894,12 @@ p {
     height: 48px;
   }
 
-  .search-result h2 {
+  .search-result-title {
     font-size: 18px;
     margin: 0;
   }
 
-  .search-result h2 em {
+  .search-result-title em {
     border-bottom-width: 2px;
   }
 }

@@ -20,21 +20,28 @@
             <% var event = date.event %>
             <% var isLastThisDay = index === group.items.length - 1 %>
             <td class="schedule-title-cell">
-              <h2 class="schedule-item-title">
+              <div class="schedule-item-title-container">
                 <a href="<%- url('event', {id: event.data.id }) %>">
-                  <span class="link-text"><%- event.getName() %></span>
+                  <h2 class="schedule-item-title link-text"><%- event.getName() %></h2>
 
-                  <% if (event.data.age_restriction) { %>
-                    <span class="badge age-restriction-badge"><%= event.data.age_restriction %></span>
-                  <% } %>
+                  <% var isFestival = event.isFestival() %>
+                  <% var isPremiere = event.isPremiere() %>
+                  <% if (event.data.age_restriction || isFestival || isPremiere) { %>
+                    <span class="badges">
+                      <% if (event.data.age_restriction) { %>
+                        <span class="badge age-restriction-badge"><%= event.data.age_restriction %></span>
+                      <% } %>
 
-                  <% if (event.isFestival()) { %>
-                    <span class="badge festival-badge">Фестиваль</span>
-                  <% } else if (event.isPremiere()) { %>
-                    <span class="badge premiere-badge">Премьера</span>
+                      <% if (isFestival) { %>
+                        <span class="badge festival-badge">Фестиваль</span>
+                      <% } else if (isPremiere) { %>
+                        <span class="badge premiere-badge">Премьера</span>
+                      <% } %>
+                    </span>
                   <% } %>
                 </a>
-              </h2>
+              </div>
+
               <% if (event.data.tagline) { %>
                 <p class="schedule-item-tagline"><%- event.data.tagline %></p>
               <% } %>
@@ -55,21 +62,28 @@
               <% if (!date.isDateBased) { %><div class="schedule-time"><%- date.start.format('LT') %></div><% } %>
             </td>
             <td class="schedule-title-cell">
-              <h2 class="schedule-item-title">
+              <div class="schedule-item-title-container">
                 <a href="<%- url('event', {id: event.data.id }) %>">
-                  <span class="link-text"><%- event.getName() %></span>
+                  <h2 class="schedule-item-title link-text"><%- event.getName() %></h2>
 
-                  <% if (event.data.age_restriction) { %>
-                    <span class="badge age-restriction-badge"><%= event.data.age_restriction %></span>
-                  <% } %>
+                  <% var isFestival = event.isFestival() %>
+                  <% var isPremiere = event.isPremiere() %>
+                  <% if (event.data.age_restriction || isFestival || isPremiere) { %>
+                    <span class="badges">
+                      <% if (event.data.age_restriction) { %>
+                        <span class="badge age-restriction-badge"><%= event.data.age_restriction %></span>
+                      <% } %>
 
-                  <% if (event.isFestival()) { %>
-                    <span class="badge festival-badge">Фестиваль</span>
-                  <% } else if (event.isPremiere()) { %>
-                    <span class="badge premiere-badge">Премьера</span>
+                      <% if (isFestival) { %>
+                        <span class="badge festival-badge">Фестиваль</span>
+                      <% } else if (isPremiere) { %>
+                        <span class="badge premiere-badge">Премьера</span>
+                      <% } %>
+                    </span>
                   <% } %>
                 </a>
-              </h2>
+              </div>
+
               <% if (event.data.tagline) { %>
                 <p class="schedule-item-tagline"><%- event.data.tagline %></p>
               <% } %>

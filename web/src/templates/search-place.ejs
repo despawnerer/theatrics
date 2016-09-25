@@ -8,11 +8,11 @@
   </div>
 
   <div class="search-result-details">
-    <a href="<%- url('place', {id: place.data.id}) %>">
-      <h2>
-        <%= place.getHighlightedName() %>
-      </h2>
-    </a>
+    <div class="search-result-header">
+      <a href="<%- url('place', {id: place.data.id}) %>">
+        <h2 class="search-result-title"><%= place.getHighlightedName() %></h2>
+      </a>
+    </div>
 
     <% if (place.data.address) { %>
       <p class="meta">

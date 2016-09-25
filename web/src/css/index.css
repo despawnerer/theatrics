@@ -1817,14 +1817,17 @@ p {
 
 .search-result-image-container {
   float: left;
+  width: 144px;
+  height: 96px;
+  background: silver;  /* for lazyloaded images */
+  margin-right: 20px;
 }
 
 .search-result-image {
-  width: 144px;
-  height: 96px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   vertical-align: top;
-  margin-right: 20px;
 }
 
 .search-result-details {
@@ -1889,7 +1892,7 @@ p {
   .search-result .meta .link-text { border: none; }
   .search-result .badge { font-size: 10px; }
 
-  .search-result-image {
+  .search-result-image-container {
     width: 72px;
     height: 48px;
   }
@@ -1907,11 +1910,11 @@ p {
 @media (max-width: 359px) {
   .search-results { margin-top: 5px; }
   .search-result { margin-bottom: 15px; }
-  .search-result-image { margin-right: 15px; }
+  .search-result-image-container { margin-right: 15px; }
 }
 
 @media (min-width: 360px) and (max-width: 450px) {
   .search-results { margin-top: 10px; }
   .search-result { margin-bottom: 25px; }
-  .search-result-image { margin-right: 15px; }
+  .search-result-image-container { margin-right: 15px; }
 }

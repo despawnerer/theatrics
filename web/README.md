@@ -58,3 +58,7 @@ Update location list if it needs changes:
 Update timezone list:
 
     make update-timezones
+
+Update role list:
+
+    make update-roles

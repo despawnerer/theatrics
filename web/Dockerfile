@@ -1,4 +1,4 @@
-FROM node:6.3
+FROM node:7.1
 
 RUN apt-get update && apt-get install -y \
     nginx-light \
